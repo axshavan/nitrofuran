@@ -9,6 +9,8 @@
 </head>
 <body>
 
+<a class="reset" href="/kassa/">&laquo; вернуться в кассу</a>
+
 <div class="stats-column-1">
 	
 	<!-- суммы прихода и расхода по месяцам -->

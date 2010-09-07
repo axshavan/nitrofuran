@@ -254,7 +254,7 @@
 		<div class="linx">
 			<strong>Ссылки</strong><br>
 			<a href="/admin?module=kassa&page=1">настройки кассы</a><br>
-			<a href="/kassa/stats">статистика</a>
+			<a href="/kassa/stats/">статистика</a>
 		</div>
 		<!-- /ссылки -->
 	</div>

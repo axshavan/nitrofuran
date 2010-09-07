@@ -66,7 +66,7 @@ krsort($_months);
 foreach($_months as $k => &$_m)
 {
 	$_m['name'] = explode('-', $k);
-	$_m['name'] = rudate('M Y', mktime(0, 0, 0, $_m['name'][1], 0, $_m['name'][0]));
+	$_m['name'] = rudate('M Y', mktime(0, 0, 0, $_m['name'][1] + 1, 0, $_m['name'][0]));
 }
 
 $tplengine->assign('_operation_max',   $_operation_max);

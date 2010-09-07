@@ -72,9 +72,9 @@ table.optable tr.daysum .inc { color: #006600; }
 table.optable tr.daysum .exp { color: #800000; }
 table.optable td.dayhead { font-size: 10pt; height: 30px; vertical-align: bottom; }
 
-.stats-column-1 { position: absolute; width: 32%; left: 0.5%; }
-.stats-column-2 { position: absolute; width: 32%; left: 33%; }
-.stats-column-3 { position: absolute; width: 32%; left: 65.5%; }
+.stats-column-1 { position: absolute; width: 32%; left: 0.5%; top: 30px; }
+.stats-column-2 { position: absolute; width: 32%; left: 33%; top: 30px; }
+.stats-column-3 { position: absolute; width: 32%; left: 65.5%; top: 30px; }
 
 table.stat_table { background-color: #BABABA; width: 100%; border-left: 1px solid #303030; border-top: 1px solid #303030; empty-cells: show; }
 table.stat_table th { padding: 2px; text-align: left; border-right: 1px solid #303030; border-bottom: 1px solid #303030; background-color: white; }
