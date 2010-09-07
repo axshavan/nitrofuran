@@ -71,7 +71,7 @@
 	</div>
 	
 	<div class="container" id="main_container">
-		<a class="reset" href="<?= HTTP_ROOT ?>/kassa">сбросить все фильтры</a>
+		<a class="reset" href="<?= HTTP_ROOT ?>/kassa/">сбросить все фильтры</a>
 		<div class="add-form" id="add_form">
 			<form action="<?= HTTP_ROOT ?>/kassa/add/" method="post">
 				<strong>Добавить запись</strong><br>
