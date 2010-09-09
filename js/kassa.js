@@ -52,6 +52,24 @@ function ge(id)
 }
 
 /*
+	Обработка подтверждения формы переноса денег со счёта на счёт.
+*/
+function onTransAccountSubmit()
+{
+	if(ge('transaccount_from').value == ge('transaccount_to').value)
+	{
+		alert('Счета должны быть разными');
+		return false;
+	}
+	if(!ge('transaccount_sum').value)
+	{
+		alert('Укажите сумму');
+		return false;
+	}
+	return true;
+}
+
+/*
 	Обработка нажатия на "тип операции".
 	@param obj {HTML Element} объект, вызвавший событие
 	@param type_id {integer} идентификатор типа

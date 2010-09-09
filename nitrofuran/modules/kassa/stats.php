@@ -60,7 +60,10 @@ while($_row = $DB->Fetch($res))
 	}
 	$_operation_count[$_row['type_id']][$_row['currency_id']]++;
 	$_operation_sum[$_row['type_id']][$_row['currency_id']]  += $_row['amount'];
-	$_months[date('Y-m', $_row['time'])][$_optypes[$_row['type_id']]['is_income'] ? 'income' : 'expenditure'] += $_row['amount'];
+	if(!$_optypes[$_row['type_id']]['is_service'])
+	{
+		$_months[date('Y-m', $_row['time'])][$_optypes[$_row['type_id']]['is_income'] ? 'income' : 'expenditure'] += $_row['amount'];
+	}
 }
 krsort($_months);
 foreach($_months as $k => &$_m)

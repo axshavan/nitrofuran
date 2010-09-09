@@ -8,6 +8,8 @@
 	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/jquery-1.4.2.min.js"></script>
 </head>
 <body>
+	
+	<!-- календарики -->
     <div id="calendar_container" class="container">
 		<!-- фильтр начала периода -->
 		<div class="year">
@@ -69,7 +71,9 @@
 		<a class="reset" href="<?= string_request_replace('to', 0) ?>">сбросить</a>
 		<!-- /фильтр конца периода -->
 	</div>
+	<!-- /календарики -->
 	
+	<!-- основная часть -->
 	<div class="container" id="main_container">
 		<a class="reset" href="<?= HTTP_ROOT ?>/kassa/">сбросить все фильтры</a>
 		<div class="add-form" id="add_form">
@@ -258,6 +262,7 @@
 		</div>
 		<!-- /ссылки -->
 	</div>
+	<!-- /основная часть -->
 	
 	<!-- форма редактирования события -->
 	<div id="event_edit_form">
@@ -292,5 +297,36 @@
 		</form>
 	</div>
 	<!-- /форма редактирования события -->
+	
+	<!-- форма переноса со счёта на счёт -->
+	<div id="transaccount" class="container">
+		<form action="<?= HTTP_ROOT ?>/kassa/tran_ac/" method="post" onsubmit="return onTransAccountSubmit();">
+			<label for="transaccount_from">Со счёта:</label>
+			<select name="account_from" id="transaccount_from">
+				<? foreach($_accounts as $_a): ?>
+					<option value="<?= $_a['id'] ?>"><?= $_a['name'] ?></option>
+				<? endforeach; ?>
+			</select>
+			<label for="transaccount_from">На счёт:</label>
+			<select name="account_to" id="transaccount_to">
+				<? foreach($_accounts as $_a): ?>
+					<option value="<?= $_a['id'] ?>"><?= $_a['name'] ?></option>
+				<? endforeach; ?>
+			</select>
+			<label for="transaccount_sum">Сумма:</label>
+			<input type="text" name="sum" id="transaccount_sum">
+			<label for="transaccount_currency">Валюта:</label>
+			<select name="currency" id="transaccount_currency">
+				<? foreach($_currencies as $_c): ?>
+					<option value="<?= $_c['id'] ?>"><?= $_c['symbol'].' '.$_c['name'] ?></option>
+				<? endforeach; ?>
+			</select>
+			<br>
+			<input type="submit" value="Перенести">
+		</form>
+	</div>
+	<!-- /форма переноса со счёта на счёт -->
+	
+	
 </body>
 </html>

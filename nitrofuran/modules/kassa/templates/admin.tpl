@@ -78,8 +78,9 @@
 			<tr>
 				<td><?= $vv['id'] ?></td>
 				<td><input type="text" id="kassa_editoptype<?= $vv['id'] ?>_name" value="<?= $vv['name'] ?>"></td>
-				<td><input type="checkbox" id="kassa_editoptype<?= $vv['id'] ?>_is_income"<?= $vv['is_income'] ? ' checked' : '' ?>> <label for="kassa_editoptype<?= $vv['id']?>_is_income">приход</label></td>
-				<td><input type="button" value="Сохранить" onclick="location='?module=kassa&page=1&editoptype=<?= $vv['id'] ?>&name='+ge('kassa_editoptype<?= $vv['id'] ?>_name').value+'&is_income='+ge('kassa_editoptype<?= $vv['id'] ?>_is_income').checked"></td>
+				<td><input type="checkbox" id="kassa_editoptype<?= $vv['id'] ?>_is_income"<?= $vv['is_income']   ? ' checked' : '' ?>> <label for="kassa_editoptype<?= $vv['id']?>_is_income">приход</label></td>
+				<td><input type="checkbox" id="kassa_editoptype<?= $vv['id'] ?>_is_service"<?= $vv['is_service'] ? ' checked' : '' ?>> <label for="kassa_editoptype<?= $vv['id']?>_is_service">сервисная операция</label></td>
+				<td><input type="button" value="Сохранить" onclick="location='?module=kassa&page=1&editoptype=<?= $vv['id'] ?>&name='+ge('kassa_editoptype<?= $vv['id'] ?>_name').value+'&is_income='+ge('kassa_editoptype<?= $vv['id'] ?>_is_income').checked+'&is_service='+ge('kassa_editoptype<?= $vv['id'] ?>_is_service').checked"></td>
 				<td><input type="button" value="Удалить" onclick="location='?module=kassa&page=1&deloptype=<?= $vv['id'] ?>'"></td>
 			</tr>
 		<? endforeach; ?>

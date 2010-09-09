@@ -55,14 +55,15 @@ $_operations   = array();
 $_sum_filtered = array();
 $sql = "select
 	k.`id`,
-	c.`symbol`    as currency_symbol,
-	c.`id`        as currency_id,
-	c.`name`      as currency,
-	a.`id`        as account_id,
-	a.`name`      as account,
-	o.`id`        as optype_id,
-	o.`name`      as optype,
-	o.`is_income` as income,
+	c.`symbol`     as currency_symbol,
+	c.`id`         as currency_id,
+	c.`name`       as currency,
+	a.`id`         as account_id,
+	a.`name`       as account,
+	o.`id`         as optype_id,
+	o.`name`       as optype,
+	o.`is_income`  as income,
+	o.`is_service` as service,
 	k.`amount`,
 	k.`time`,
 	k.`comment`
@@ -79,7 +80,7 @@ $res = $DB->Query($sql);
 while($_row = $DB->Fetch($res))
 {
 	$_operations[] = $_row;
-	$_sum_filtered[$_row['currency_symbol']] += ($_row['income'] ? 1 : -1) * $_row['amount'];
+	$_sum_filtered[$_row['currency_symbol']] += $_row['service'] ? 0 : (($_row['income'] ? 1 : -1) * $_row['amount']);
 }
 $tplengine->assign('_operations',   $_operations);
 $tplengine->assign('_sum_filtered', $_sum_filtered);

@@ -60,6 +60,10 @@ a.reset:hover { color: #505050; }
 #accountfilter span:hover { color: #202020; border-bottom: 1px dashed #606060; }
 #accountfilter div { background-color: #DCE884; padding: 2px; border: 1px solid #A4AF4D; -moz-border-radius: 3px; margin-bottom: 2px; }
 
+#transaccount { position: absolute; left: 5px; top: 350px; width: 142px; }
+#transaccount label { font-weight: bold; display: block; margin-top: 5px; }
+#transaccount input { width: 100px; }
+
 table.optable { border-top: 1px solid #303030; border-left: 1px solid #303030; empty-cells: show; }
 table.optable td { border-bottom: 1px solid #303030; border-right: 1px solid #303030; padding: 2px; vertical-align: top; }
 table.optable th { border-bottom: 1px solid #303030; border-right: 1px solid #303030; padding: 2px; background-color: white; }
