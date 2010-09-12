@@ -87,14 +87,15 @@ $tplengine->assign('_sum_filtered', $_sum_filtered);
 
 // в кассе всего
 $_sum_all = array();
-$res = $DB->Query("select sum(k.`amount` * if(o.`is_income`, 1, -1)) as s, c.`symbol`
+$res = $DB->Query("select sum(k.`amount` * if(o.`is_income`, 1, -1)) as s, c.`symbol`, a.`name`
 	from `".KASSA_OPERATION_TABLE."` k
+	join `".KASSA_ACCOUNT_TABLE."` a on (a.`id` = k.`account_id`)
 	join `".KASSA_OPERATION_TYPE_TABLE."` o on (o.`id` = k.`type_id`)
 	join `".KASSA_CURRENCY_TABLE."` c on (c.`id` = k.`currency_id`)
-	group by c.`symbol`");
+	group by a.`name`, c.`symbol`");
 while($_row = $DB->Fetch($res))
 {
-	$_sum_all[$_row['symbol']] = $_row['s'];
+	$_sum_all[$_row['name']][$_row['symbol']] = $_row['s'];
 }
 $tplengine->assign('_sum_all', $_sum_all);
 

@@ -244,8 +244,11 @@
 		<!-- итого -->
 		<div class="itogo">
 			<strong>В кассе всего</strong><br>
-			<? foreach($_sum_all as $currency => $amount): ?>
-				<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= $amount.'&nbsp;'.$currency ?></span><br>
+			<? foreach($_sum_all as $account => $data): ?>
+				<?= $account ?> &mdash;<br>
+				<? foreach($data as $currency => $amount): ?>
+					<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= $amount.'&nbsp;'.$currency ?></span><br>
+				<? endforeach; ?>
 			<? endforeach; ?>
 			<strong>С выбранным фильтром</strong><br>
 			<? foreach($_sum_filtered as $currency => $amount): ?>
