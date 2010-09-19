@@ -34,6 +34,64 @@
 		</table>
 	</div>
 	<!-- /суммы прихода и расхода по месяцам -->
+	<br>
+	<!-- статистика за последний 31 день -->
+	<div class="container">
+		<strong>За последний 31 день</strong>
+		<p><strong>max</strong> &mdash; максимальное значение, <strong>&sum;</strong>
+		&mdash; сумма операций данного типа, <strong>cnt</strong> &mdash; количество
+		операций данного типа, <strong>~</strong> &mdash; средняя сумма операции.</p>
+		<table class="optable" cellspacing="0">
+			<tr>
+				<th>Операция</th>
+				<th>max</th>
+				<th>&sum;</th>
+				<th>cnt</th>
+				<th>~</th>
+			</tr>
+			<? foreach($_optypes_g as $g => $_group): ?>
+				<tr>
+					<th colspan="5"><?= $_optypegroups[$g]['name'] ?></th>
+				</tr>
+				<? foreach($_group as $_optype): $bOdd = !$bOdd; ?>
+					<?
+						if(
+						   !sizeof($_operation_max_m[$_optype['id']]) &&
+						   !sizeof($_operation_count_m[$_optype['id']]) &&
+						   !sizeof($_operation_sum_m[$_optype['id']])
+						)
+						{
+							continue;
+						}
+					?>
+					<tr class="<?= ($_optype['is_income'] ? 'inc' : 'exp').($bOdd ? '_odd' : '') ?>">
+						<td><?= $_optype['name'] ?></td>
+						<td>
+							<? foreach($_operation_max_m[$_optype['id']] as $c => $v): ?>
+								<?= $v['amount'] ?>&nbsp;<?= $_currencies[$c]['symbol'] ?><br>
+							<? endforeach; ?>
+						</td>
+						<td>
+							<? foreach($_operation_sum_m[$_optype['id']] as $c => $v): ?>
+								<?= $v ?>&nbsp;<?= $_currencies[$c]['symbol'] ?><br>
+							<? endforeach; ?>
+						</td>
+						<td>
+							<? foreach($_operation_count_m[$_optype['id']] as $c => $v): ?>
+								<?= $_currencies[$c]['symbol'] ?>&mdash;<?= $v ?><br>
+							<? endforeach; ?>
+						</td>
+						<td>
+							<? foreach($_operation_sum_m[$_optype['id']] as $c => $v): ?>
+								<?= round($v / $_operation_count_m[$_optype['id']][$c], 2) ?>&nbsp;<?= $_currencies[$c]['symbol'] ?><br>
+							<? endforeach; ?>
+						</td>
+					</tr>
+				<? endforeach; ?>
+			<? endforeach; ?>
+		</table>
+	</div>
+	<!-- /статистика за последний 31 день -->
 	
 </div>
 

@@ -50,6 +50,11 @@ $_operation_max   = array();
 $_operation_count = array();
 $_operation_sum   = array();
 $_months          = array();
+// всякая статистика за последний месяц
+$_operation_count_m = array();
+$_operation_max_m   = array();
+$_operation_sum_m   = array();
+$last_month         = time() - 86400 * 31;
 
 $res = $DB->Query("select * from `kassa_operation`");
 while($_row = $DB->Fetch($res))
@@ -64,6 +69,15 @@ while($_row = $DB->Fetch($res))
 	{
 		$_months[date('Y-m', $_row['time'])][$_optypes[$_row['type_id']]['is_income'] ? 'income' : 'expenditure'] += $_row['amount'];
 	}
+	if($_row['time'] > $last_month)
+	{
+		if($_row['amount'] > $_operation_max_m[$_row['type_id']][$_row['currency_id']]['amount'])
+		{
+			$_operation_max_m[$_row['type_id']][$_row['currency_id']] = $_row;
+		}
+		$_operation_count_m[$_row['type_id']][$_row['currency_id']]++;
+		$_operation_sum_m[$_row['type_id']][$_row['currency_id']]  += $_row['amount'];
+	}
 }
 krsort($_months);
 foreach($_months as $k => &$_m)
@@ -72,10 +86,13 @@ foreach($_months as $k => &$_m)
 	$_m['name'] = rudate('M Y', mktime(0, 0, 0, $_m['name'][1] + 1, 0, $_m['name'][0]));
 }
 
-$tplengine->assign('_operation_max',   $_operation_max);
-$tplengine->assign('_operation_count', $_operation_count);
-$tplengine->assign('_operation_sum',   $_operation_sum);
-$tplengine->assign('_months',          $_months);
+$tplengine->assign('_operation_max',     $_operation_max);
+$tplengine->assign('_operation_count',   $_operation_count);
+$tplengine->assign('_operation_sum',     $_operation_sum);
+$tplengine->assign('_operation_max_m',   $_operation_max_m);
+$tplengine->assign('_operation_count_m', $_operation_count_m);
+$tplengine->assign('_operation_sum_m',   $_operation_sum_m);
+$tplengine->assign('_months',            $_months);
 
 $tplengine->template('stats.tpl');
 
