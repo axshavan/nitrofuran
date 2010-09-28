@@ -109,9 +109,10 @@ while($_row = $DB->Fetch($res))
 $tplengine->assign('_optypegroups', $_optypegroups);
 
 // типы операций
-$_optypes = array();
-$group    = 0;
-$res      = $DB->Query("select * from `".KASSA_OPERATION_TYPE_TABLE."` order by `group_id` asc");
+$_optypes       = array();
+$_optypes_by_id = array();
+$group          = 0;
+$res            = $DB->Query("select * from `".KASSA_OPERATION_TYPE_TABLE."` order by `group_id` asc");
 while($_row = $DB->Fetch($res))
 {
 	if($group != $_row['group_id'])
@@ -120,12 +121,14 @@ while($_row = $DB->Fetch($res))
 		$_optypes[$group] = array();
 	}
 	$_optypes[$group][] = $_row;
+	$_optypes_by_id[$_row['id']] = $_row;
 	if($_row['id'] == $filter_type)
 	{
 		$tplengine->assign('show_group', $group);
 	}
 }
-$tplengine->assign('_optypes', $_optypes);
+$tplengine->assign('_optypes',       $_optypes);
+$tplengine->assign('_optypes_by_id', $_optypes_by_id);
 
 // валюты
 $_currencies = array();
@@ -144,6 +147,63 @@ while($_row = $DB->Fetch($res))
 	$_accounts[] = $_row;
 }
 $tplengine->assign('_accounts', $_accounts);
+
+// ближайшие планы
+$_plans = array();
+$res = $DB->Query("select * from `".KASSA_PLANS_TABLE."` where `active`");
+while($_row = $DB->Fetch($res))
+{
+	switch($_row['repeat_type'])
+	{
+		case 'none':
+		{
+			$_row['repeat'] = date('Y-m-d', strtotime($_row['repeat']));
+			if($_row['repeat'] > date('Y-m-d'))
+			{
+				$_plans[$_row['repeat']][] = $_row;
+			}
+			break;
+		}
+		case 'daily':
+		{
+			for($i = 0; $i < 14; $i++)
+			{
+				$_plans[date('Y-m-d', time() + 86400 * $i)][] = $_row;
+			}
+			break;
+		}
+		case 'weekly':
+		{
+			for($i = 0; $i < 14; $i++)
+			{
+				if(strpos($_row['repeat'], date('w', time() + $i * 86400)) !== false)
+				{
+					$_plans[date('Y-m-d', time() + 86400 * $i)][] = $_row;
+				}
+			}
+			break;
+		}
+		case 'monthly':
+		{
+			$_mdays = explode(',', $_row['repeat']);
+			foreach($_mdays as $mday)
+			{
+				$mtime = mktime(0, 0, 0, date('n'), $mday, date('Y'));
+				if($mtime > time() - 86400 && $mtime < time() + 14* 86400)
+				{
+					$_plans[date('Y-m-d', $mtime)][] = $_row;
+				}
+				$mtime = mktime(0, 0, 0, date('n') + 1, $mday, date('Y'));
+				if($mtime > time() - 86400 && $mtime < time() + 14* 86400)
+				{
+					$_plans[date('Y-m-d', $mtime)][] = $_row;
+				}
+			}
+		}
+	}
+}
+ksort($_plans);
+$tplengine->assign('_plans', $_plans);
 
 $tplengine->assign('filter_from_year',  $filter_from_year);
 $tplengine->assign('filter_from_month', $filter_from_month);

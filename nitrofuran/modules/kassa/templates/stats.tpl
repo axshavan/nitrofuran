@@ -53,7 +53,7 @@
 				<tr>
 					<th colspan="5"><?= $_optypegroups[$g]['name'] ?></th>
 				</tr>
-				<? foreach($_group as $_optype): $bOdd = !$bOdd; ?>
+				<? foreach($_group as $_optype): ?>
 					<?
 						if(
 						   !sizeof($_operation_max_m[$_optype['id']]) &&
@@ -63,6 +63,7 @@
 						{
 							continue;
 						}
+						$bOdd = !$bOdd;
 					?>
 					<tr class="<?= ($_optype['is_income'] ? 'inc' : 'exp').($bOdd ? '_odd' : '') ?>">
 						<td><?= $_optype['name'] ?></td>

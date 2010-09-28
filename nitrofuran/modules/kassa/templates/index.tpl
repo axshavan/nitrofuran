@@ -257,13 +257,25 @@
 		</div>
 		<!-- /итого -->
 		
-		<!-- ссылки -->
-		<div class="linx">
-			<strong>Ссылки</strong><br>
-			<a href="/admin?module=kassa&page=1">настройки кассы</a><br>
-			<a href="/kassa/stats/">статистика</a>
+		<!-- планирование -->
+		<div class="plans">
+			<strong>Предстоящие расходы и приходы; планы</strong>
+			<table class="optable" cellspacing="0">
+			<? foreach($_plans as $date => $_dateplans): ?>
+				<tr>
+					<th colspan="3"><?= $date ?></th>
+				</tr>
+				<? foreach($_dateplans as $_plan): $bOdd = !$bOdd; ?>
+					<tr class="<?= $_optypes_by_id[$_plan['operation_type_id']]['is_income'] ? 'inc' : 'exp' ?><?= $bOdd ? '_odd' : '' ?>">
+						<td><?= $_plan['name'] ?></td>
+						<td><?= $_plan['amount'] ?></td>
+						<td><?= $_optypes_by_id[$_plan['operation_type_id']]['name'] ?></td>
+					</tr>
+				<? endforeach; ?>
+			<? endforeach; ?>
+			</table>
 		</div>
-		<!-- /ссылки -->
+		<!-- /планирование -->
 	</div>
 	<!-- /основная часть -->
 	
@@ -330,6 +342,13 @@
 	</div>
 	<!-- /форма переноса со счёта на счёт -->
 	
+	<!-- ссылки -->
+	<div id="linx" class="container">
+		<strong>Ссылки</strong><br>
+		<a href="/admin?module=kassa&page=1">настройки кассы</a><br>
+		<a href="/kassa/stats/">статистика</a>
+	</div>
+	<!-- /ссылки -->
 	
 </body>
 </html>

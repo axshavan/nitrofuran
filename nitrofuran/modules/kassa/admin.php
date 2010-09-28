@@ -139,6 +139,31 @@ switch($_REQUEST['page'])
 	 *************************/
 	case 2:
 	{
+		// редактирование плана
+		if($_REQUEST['editplan'])
+		{
+			$sql = "update `".KASSA_PLANS_TABLE."` set
+				`name`              = '".$DB->EscapeString($_REQUEST['name'])."',
+				`operation_type_id` = '".(int)$_REQUEST['optype']."',
+				`amount`            = '".(float)$_REQUEST['amount']."',
+				`repeat_type`       = '".$DB->EscapeString($_REQUEST['type'])."',
+				`repeat`            = '".$DB->EscapeString($_REQUEST['repeat'])."',
+				`active`            = '".($_REQUEST['active'] == 'true')."'
+				where `id` = '".(int)$_REQUEST['editplan']."'";
+		}
+		
+		// удаление плана
+		if($_REQUEST['delplan'])
+		{
+			$sql = "delete from `".KASSA_PLANS_TABLE."` where `id` = '".(int)$_REQUEST['delplan']."'";
+		}
+		
+		if($sql)
+		{
+			$DB->Query($sql);
+			redirect('/admin/?module=kassa&page=2');
+		}
+		
 		// список планируемых операций
 		$_plans = array();
 		$res = $DB->Query("select * from `".KASSA_PLANS_TABLE."`");

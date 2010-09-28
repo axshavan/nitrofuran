@@ -49,7 +49,7 @@ class CDatabase
 	*/
 	public function EscapeString($str)
 	{
-		return str_replace("'", '"', $str);
+		return str_replace("'", '"', str_replace('`', "'", $str));
 		//return mysql_escape_string($str);
 	}
 	
