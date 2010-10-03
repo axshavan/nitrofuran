@@ -7,12 +7,12 @@
 require_once('config.php');
 global $DB;
 
-$res = $DB->Query("select `name`, `value` from `".PARAMS_TABLE."` where `module` = 'kassa' and `name` in ('OPTYPE_TRANSACTON_FROM_ID', 'OPTYPE_TRANSACTON_TO_ID')");
+$res = $DB->Query("select `name`, `value` from `".PARAMS_TABLE."` where `module` = 'kassa' and `name` in ('OPTYPE_TRANSACTION_FROM_ID', 'OPTYPE_TRANSACTION_TO_ID', 'OPTYPE_TRANSACTION_COMISSION_ID')");
 while($r = $DB->Fetch($res))
 {
 	${$r['name']} = $r['value'];
 }
-if(!$OPTYPE_TRANSACTON_TO_ID && !$OPTYPE_TRANSACTON_FROM_ID)
+if(!$OPTYPE_TRANSACTION_TO_ID && !$OPTYPE_TRANSACTION_FROM_ID)
 {
 	echo 'Ошибка. Не определены необходимые номера типов операций.';
 	die();
@@ -23,11 +23,20 @@ while($r = $DB->Fetch($res))
 {
 	$_accounts[$r['id']] = $r['name'];
 }
-$_POST['sum'] = str_replace(',', '.', $_POST['sum']);
+$sum_from = $sum_to = (float)str_replace(',', '.', $_POST['sum']);
+if($OPTYPE_TRANSACTION_COMISSION_ID)
+{
+	$sum_comission = ($_POST['comission'] / 100) * $sum_from;
+}
 $DB->Query("insert into `".KASSA_OPERATION_TABLE."` (`currency_id`, `account_id`, `type_id`, `amount`, `time`, `comment`)
-	values ('".(int)$_POST['currency']."', '".(int)$_POST['account_from']."', '".$OPTYPE_TRANSACTON_FROM_ID."', '".(float)$_POST['sum']."', unix_timestamp(), 'На счёт ".$_accounts[$_POST['account_to']]."')");
+	values ('".(int)$_POST['currency']."', '".(int)$_POST['account_from']."', '".$OPTYPE_TRANSACTION_FROM_ID."', '".$sum_from."', unix_timestamp(), 'На счёт ".$_accounts[$_POST['account_to']]."')");
 $DB->Query("insert into `".KASSA_OPERATION_TABLE."` (`currency_id`, `account_id`, `type_id`, `amount`, `time`, `comment`)
-	values ('".(int)$_POST['currency']."', '".(int)$_POST['account_to']."', '".$OPTYPE_TRANSACTON_TO_ID."', '".(float)$_POST['sum']."', unix_timestamp(), 'Со счёта ".$_accounts[$_POST['account_from']]."')");
+	values ('".(int)$_POST['currency']."', '".(int)$_POST['account_to']."', '".$OPTYPE_TRANSACTION_TO_ID."', '".$sum_to."', unix_timestamp(), 'Со счёта ".$_accounts[$_POST['account_from']]."')");
+if($OPTYPE_TRANSACTION_COMISSION_ID && $sum_comission)
+{
+	$DB->Query("insert into `".KASSA_OPERATION_TABLE."` (`currency_id`, `account_id`, `type_id`, `amount`, `time`, `comment`)
+		values ('".(int)$_POST['currency']."', '".(int)$_POST['account_to']."', '".$OPTYPE_TRANSACTION_COMISSION_ID."', '".$sum_comission."', unix_timestamp(), 'С переноса со счёта ".$_accounts[$_POST['account_from']]."')");
+}
 redirect('..');
 
 ?>

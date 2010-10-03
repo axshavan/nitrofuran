@@ -336,6 +336,8 @@
 					<option value="<?= $_c['id'] ?>"><?= $_c['symbol'].' '.$_c['name'] ?></option>
 				<? endforeach; ?>
 			</select>
+			<label for="transaccount_comission">Комиссия, %:</label>
+			<input type="text" name="comission" id="transaccount_comission">
 			<br>
 			<input type="submit" value="Перенести">
 		</form>

@@ -158,6 +158,21 @@ switch($_REQUEST['page'])
 			$sql = "delete from `".KASSA_PLANS_TABLE."` where `id` = '".(int)$_REQUEST['delplan']."'";
 		}
 		
+		// добавление плана
+		if(isset($_REQUEST['addplan']))
+		{
+			$sql = "insert into `".KASSA_PLANS_TABLE."`
+				(`name`, `operation_type_id`, `amount`, `repeat_type`, `repeat`, `active`)
+				values (
+					'".$DB->EscapeString($_REQUEST['name'])."',
+					'".(int)$_REQUEST['optype']."',
+					'".(float)$_REQUEST['amount']."',
+					'".$DB->EscapeString($_REQUEST['repeat_type'])."',
+					'".$DB->EscapeString($_REQUEST['repeat'])."',
+					'".($_REQUEST['active'] == 'true')."'
+				)";
+		}
+		
 		if($sql)
 		{
 			$DB->Query($sql);

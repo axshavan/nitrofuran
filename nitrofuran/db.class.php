@@ -54,6 +54,15 @@ class CDatabase
 	}
 	
 	/*
+		Показать последнюю ошибку из БД.
+		@return string
+	*/
+	public function Error()
+	{
+		return mysql_errno($this->cid).' '.mysql_error($this->cid);
+	}
+	
+	/*
 		Взять строку из результата выборки.
 		@param resourse $result
 		@return array

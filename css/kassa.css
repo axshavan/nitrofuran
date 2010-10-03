@@ -27,7 +27,7 @@ a.reset:hover { color: #505050; }
 #calendar_container .calendar span.active a { color: white; }
 
 #main_container { position: absolute; left: 175px; right: 5px; top: 5px; }
-#main_container .add-form { background-color: #9EB77E; padding: 4px; border: 1px solid #516637; -moz-border-radius: 3px; width: 400px; }
+#main_container .add-form { background-color: #9EB77E; padding: 4px; border: 1px solid #516637; -moz-border-radius: 3px; width: 400px; min-height: 200px; }
 #main_container .add-form span { cursor: pointer; }
 #main_container .add-form span.selected, #main_container .add-form span.selected_g { font-weight: bold; }
 #main_container .add-form span:hover { color: #202020; border-bottom: 1px dashed #606060; }
@@ -36,13 +36,13 @@ a.reset:hover { color: #505050; }
 #main_container .add-form .optypegroup .inc { color: #006600; }
 #main_container .add-form .optypegroup .exp { color: #800000; }
 #main_container div.optable { background-color: #9EB77E; padding: 4px; border: 1px solid #516637; -moz-border-radius: 3px; margin-top: 10px; }
-#main_container .itogo { background-color: #9EB77E; padding: 4px; border: 1px solid #516637; -moz-border-radius: 3px; position: absolute; top: 10px; left: 430px; width: 200px; }
+#main_container .itogo { background-color: #9EB77E; padding: 4px; border: 1px solid #516637; -moz-border-radius: 3px; position: absolute; top: 10px; left: 430px; width: 200px; min-height: 210px; }
 #main_container .itogo .inc { color: #006600; font-weight: bold; font-size: 12pt; }
 #main_container .itogo .exp { color: #800000; font-weight: bold; font-size: 12pt; }
-#main_container .plans { position: absolute; left: 650px; top: 10px; right: 10px; background-color: #9EB77E; padding: 8px; border: 1px solid #516637; -moz-border-radius: 3px; height: 166px; overflow-y: scroll}
+#main_container .plans { position: absolute; left: 650px; top: 10px; right: 10px; background-color: #9EB77E; padding: 8px; border: 1px solid #516637; -moz-border-radius: 3px; height: 202px; overflow-y: scroll}
 #main_container .plans .optable { width: 100%; }
 
-#linx {  position: absolute; top: 577px; left: 5px; width: 142px; }
+#linx {  position: absolute; top: 624px; left: 5px; width: 142px; }
 #linx a { color: #202020; text-decoration: underline; }
 #linx a:hover { color: #303030; }
 
