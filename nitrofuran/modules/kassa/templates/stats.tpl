@@ -131,7 +131,8 @@
 		<strong>Сводная статистика по операциям</strong>
 		<p><strong>max</strong> &mdash; максимальное значение, <strong>&sum;</strong>
 		&mdash; сумма операций данного типа, <strong>cnt</strong> &mdash; количество
-		операций данного типа, <strong>~</strong> &mdash; средняя сумма операции.</p>
+		операций данного типа, <strong>~</strong> &mdash; средняя сумма операции,
+		<strong>~m</strong> &mdash; средняя сумма операций за месяц.</p>
 		<table class="optable" cellspacing="0">
 			<tr>
 				<th>Операция</th>
@@ -139,10 +140,11 @@
 				<th>&sum;</th>
 				<th>cnt</th>
 				<th>~</th>
+				<th>~m</th>
 			</tr>
 			<? foreach($_optypes_g as $g => $_group): ?>
 				<tr>
-					<th colspan="5"><?= $_optypegroups[$g]['name'] ?></th>
+					<th colspan="6"><?= $_optypegroups[$g]['name'] ?></th>
 				</tr>
 				<? foreach($_group as $_optype): $bOdd = !$bOdd; ?>
 					<tr class="<?= ($_optype['is_income'] ? 'inc' : 'exp').($bOdd ? '_odd' : '') ?>">
@@ -165,6 +167,11 @@
 						<td>
 							<? foreach($_operation_sum[$_optype['id']] as $c => $v): ?>
 								<?= round($v / $_operation_count[$_optype['id']][$c], 2) ?>&nbsp;<?= $_currencies[$c]['symbol'] ?><br>
+							<? endforeach; ?>
+						</td>
+						<td>
+							<? foreach($_operation_sum[$_optype['id']] as $c => $v): ?>
+								<?= round($v / $kassa_action_time, 2) ?>&nbsp;<?= $_currencies[$c]['symbol'] ?><br>
 							<? endforeach; ?>
 						</td>
 					</tr>

@@ -19,7 +19,7 @@ class CDatabase
 	*/
 	public function Connect($host, $user, $password, $database)
 	{
-		$this->cid = mysql_connect($host, $user, $password);
+		$this->cid = mysql_connect($host, $user, $password, true);
 		if(!$this->cid)
 		{
 			echo mysql_error();

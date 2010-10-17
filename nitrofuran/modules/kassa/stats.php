@@ -55,6 +55,7 @@ $_operation_count_m = array();
 $_operation_max_m   = array();
 $_operation_sum_m   = array();
 $last_month         = time() - 86400 * 31;
+$first_operation    = time();
 
 $res = $DB->Query("select * from `kassa_operation`");
 while($_row = $DB->Fetch($res))
@@ -78,6 +79,10 @@ while($_row = $DB->Fetch($res))
 		$_operation_count_m[$_row['type_id']][$_row['currency_id']]++;
 		$_operation_sum_m[$_row['type_id']][$_row['currency_id']]  += $_row['amount'];
 	}
+	if($first_operation > $_row['time'])
+	{
+		$first_operation = $_row['time'];
+	}
 }
 krsort($_months);
 foreach($_months as $k => &$_m)
@@ -86,6 +91,11 @@ foreach($_months as $k => &$_m)
 	$_m['name'] = rudate('M Y', mktime(0, 0, 0, $_m['name'][1] + 1, 0, $_m['name'][0]));
 }
 
+// количество месяцев, за которое мы собираем статистику (ну, сколько всего касса работает)
+$first_operation = explode(' ', date('Y n', $first_operation));
+$kassa_action_time = explode(' ', date('Y n'));
+$kassa_action_time = ($kassa_action_time[0] - $first_operation[0]) * 12 + $kassa_action_time[1] - $first_operation[1];
+
 $tplengine->assign('_operation_max',     $_operation_max);
 $tplengine->assign('_operation_count',   $_operation_count);
 $tplengine->assign('_operation_sum',     $_operation_sum);
@@ -93,6 +103,7 @@ $tplengine->assign('_operation_max_m',   $_operation_max_m);
 $tplengine->assign('_operation_count_m', $_operation_count_m);
 $tplengine->assign('_operation_sum_m',   $_operation_sum_m);
 $tplengine->assign('_months',            $_months);
+$tplengine->assign('kassa_action_time',  $kassa_action_time);
 
 $tplengine->template('stats.tpl');
 
