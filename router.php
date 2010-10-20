@@ -14,6 +14,7 @@ require_once(DOCUMENT_ROOT.'/nitrofuran/db.class.php');
 require_once(DOCUMENT_ROOT.'/nitrofuran/auth.class.php');
 require_once(DOCUMENT_ROOT.'/nitrofuran/module.class.php');
 require_once(DOCUMENT_ROOT.'/nitrofuran/te.class.php');
+require_once(DOCUMENT_ROOT.'/nitrofuran/tracer.class.php');
 
 global $DB;
 $DB = new CDatabase();

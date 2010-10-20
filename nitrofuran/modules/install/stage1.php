@@ -2,6 +2,7 @@
 
 // stage 1
 
+// возврат обратно на форму с ошибкой
 function go_back_to_stage0($cid = false)
 {
 	$tplengine = new CTemplateEngine('install');
@@ -77,6 +78,15 @@ foreach($sql as $query)
 	}
 }
 mysql_query("commit", $cid);
+
+// запись параметров в конфиг
+$conf_text = file_get_contents(DOCUMENT_ROOT.'/nitrofuran/config.php');
+$conf_text = preg_replace('/define[\s]*\([\s]*(\'|\")MYSQL_HOST\1[\s]*,[\s]*(\'|\")([\w\d\:\_\-\/]+)\2/',   "define('MYSQL_HOST', '".$_POST['mysql_host']."'", $conf_text);
+$conf_text = preg_replace('/define[\s]*\([\s]*(\'|\")MYSQL_USER\1[\s]*,[\s]*(\'|\")([\w\d\:\_\-\/]+)\2/',   "define('MYSQL_USER', '".$_POST['mysql_user']."'", $conf_text);
+$conf_text = preg_replace('/define[\s]*\([\s]*(\'|\")MYSQL_PASSWORD\1[\s]*,[\s]*(\'|\")([\s\S]+)\2/U',      "define('MYSQL_PASSWORD', '".$_POST['mysql_password']."'", $conf_text);
+$conf_text = preg_replace('/define[\s]*\([\s]*(\'|\")MYSQL_DATABASE\1[\s]*,[\s]*(\'|\")([\w\d\:\_\-]+)\2/', "define('MYSQL_DATABASE', '".$_POST['mysql_database']."'", $conf_text);
+file_put_contents(DOCUMENT_ROOT.'/nitrofuran/config.php', $conf_text);
+
 header("location: install.php?stage=2");
 
 ?>

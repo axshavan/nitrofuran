@@ -5,7 +5,7 @@
     <title><?= $title ?></title>
 	<link rel="stylesheet" type="text/css" href="<?= HTTP_ROOT ?>/css/kassa.css">
 	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/kassa.js"></script>
-	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/jquery-1.4.2.min.js"></script>
+	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/jquery-1.4.3.min.js"></script>
 </head>
 <body>
 	
