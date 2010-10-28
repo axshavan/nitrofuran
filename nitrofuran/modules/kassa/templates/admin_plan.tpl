@@ -19,11 +19,11 @@
 <? foreach($_plans as $id => $_plan): ?>
 	<tr>
 		<td><?= $id ?></td>
-		<td><input type="text" id="plan_<?= $id ?>_name" value="<?= $_plan['name'] ?>"></td>
+		<td><input type="text" id="plan_<?= $id ?>_name" value="<?= h($_plan['name']) ?>"></td>
 		<td>
 			<select id="plan_<?= $id ?>_optype">
 				<? foreach($_kassa_optype_byid as $_optype): ?>
-					<option value="<?= $_optype['id'] ?>"<?= $_optype['id'] == $_plan['operation_type_id'] ? ' selected' : '' ?>><?= $_optype['name'] ?></option>
+					<option value="<?= $_optype['id'] ?>"<?= $_optype['id'] == $_plan['operation_type_id'] ? ' selected' : '' ?>><?= h($_optype['name']) ?></option>
 				<? endforeach; ?>
 			</select>
 		</td>

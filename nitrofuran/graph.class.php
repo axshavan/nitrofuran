@@ -16,6 +16,7 @@
 class graph_node
 {
 	public    $id;          // для самоидентификации
+	public    $data;        // некие данные
 	protected $_children;   // массив ссылок на детей
 	protected $parent_node; // сылка на родителя
 	
@@ -23,10 +24,14 @@ class graph_node
 		Конструктор.
 		@param mixed $id что-нибудь, чтоб узел графа знал себя по имени
 	*/
-	public function __construct($id)
+	public function __construct($id, $data = false)
 	{
 		$this->id          = $id;
 		$this->_children   = array();
+		if($data)
+		{
+			$this->data = $data;
+		}
 	}
 	
 	/*
@@ -107,6 +112,31 @@ class graph_node
 			}
 		}
 		return false;
+	}
+	
+	/*
+		Получить узел и его детей в виде массива.
+		@param  bool $bWithData включать в массив содержимое $this->data или нет
+		@return array
+	*/
+	public function GetAsArray($bWithData)
+	{
+		$result = array(
+			'id' => $this->id
+		);
+		if($bWithData)
+		{
+			$result['data'] = $this->data;
+		}
+		if(sizeof($this->_children))
+		{
+			$result['children'] = array();
+			foreach($this->_children as &$child)
+			{
+				$result['children'][$child->id] = $child->GetAsArray($bWithData);
+			}
+		}
+		return $result;
 	}
 	
 	/*
@@ -215,15 +245,26 @@ class graph_node
 	/*
 		Служебная функция для отладки. Показать свой айдишник и всех детей
 		рекурсивно.
-		@param int $spaces уровень вложенности текущего узла
+		@param int  $spaces уровень вложенности текущего узла
+		@param bool $bShowData показывать или нет $this->data
 	*/
-	public function Trace($spaces = 0)
+	public function Trace($spaces = 0, $bShowData = false)
 	{
 		$s = str_repeat(' ', $spaces);
 		echo $s.$this->id." => (\n";
+		if($this->data && $bShowData)
+		{
+			echo $s."  [data] =>\n".$s."  {\n";
+			$out = explode("\n", print_r($this->data, true));
+			foreach($out as $str)
+			{
+				echo $s.'    '.$str."\n";
+			}
+			echo $s."  }\n";
+		}
 		foreach($this->_children as $k => &$child)
 		{
-			$child->Trace($spaces + 2);
+			$child->Trace($spaces + 2, $bShowData);
 		}
 		echo $s.")\n";
 	}
@@ -258,7 +299,7 @@ class graph
 			$node = &$this->root_node->FindChildById($_node['parent_id']);
 			if($node)
 			{
-				$node->CreateChild($id);
+				$node->CreateChild($id, $array[$id]);
 				unset($_array[$id]);
 			}
 		}
@@ -269,7 +310,7 @@ class graph
 			$node = &$this->root_node->FindChildById($_node['parent_id']);
 			if($node)
 			{
-				$node->CreateChild($id);
+				$node->CreateChild($id, $array[$id]);
 				unset($_array[$id]);
 			}
 		}
@@ -320,12 +361,24 @@ class graph
 	}
 	
 	/*
-		Показать граф для отладки.
+		Получить весь граф в виде массива, в котором дети узла представлены
+		элементами массива, который является сам элементом массива, являющегося
+		узлом.
+		@param bool $bWithData включать или нет в массив данные, хранящиеся в узлах
 	*/
-	public function Trace()
+	public function GetAsArray($bWithData = false)
+	{
+		return $this->root_node->GetAsArray($bWithData);
+	}
+	
+	/*
+		Показать граф для отладки.
+		@param bool $bShowData включать или нет в вывод данные, хранящиеся в узлах
+	*/
+	public function Trace($bShowData = false)
 	{
 		echo '<pre>';
-		$this->root_node->Trace();
+		$this->root_node->Trace(0, $bShowData);
 		echo '</pre>';
 	}
 }

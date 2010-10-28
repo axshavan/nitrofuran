@@ -147,7 +147,7 @@
 					<th>Счёт</th>
 					<th>Тип операции</th>
 					<th>Комментарий</th>
-					<th></th>
+					<th colspan="2"></th>
 				</tr>
 				<?
 				$prevdate   = false;
@@ -172,14 +172,14 @@
 							{
 								echo $v.'&nbsp;'.$k.'<br>';
 							}
-							?></td><td colspan="5">Итого: <?
+							?></td><td colspan="6">Итого: <?
 							foreach($daysum as $k => $v)
 							{
 								echo $v.'&nbsp;'.$k.'<br>';
 							}
 							?></td></tr><?
 						}
-						?><tr><td class="dayhead" colspan="7"><?= rudate('d M Y', $_op['time']) ?></td></tr><?
+						?><tr><td class="dayhead" colspan="8"><?= rudate('d M Y', $_op['time']) ?></td></tr><?
 						$prevdate   = date('N', $_op['time']);
 						$daysum_inc = array();
 						$daysum_exp = array();
@@ -202,6 +202,19 @@
 						<td><?= $_op['account'] ?></td>
 						<td><?= $_op['optype'] ?></td>
 						<td><?= $_op['comment'] ?></td>
+						<td>
+							<img
+								class="button"
+								src="<?= HTTP_ROOT ?>/i/kassa/del.gif"
+								alt="Удалить"
+								title="Удалить"
+								onclick="
+									if(confirm('Что, правда удалить?'))
+									{
+										document.location = '/kassa/delete/?id=<?= $_op['id'] ?>'
+									}
+								">
+						</td>
 						<td>
 							<img
 								class="button"

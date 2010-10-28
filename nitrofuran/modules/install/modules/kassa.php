@@ -28,8 +28,7 @@ $pid = $DB->InsertedId();
 if(!$pid)
 {
 	$DB->TransactionRollback();
-	// обработка ошибки
-	// ...
+	return false;
 	die();
 }
 $DB->Query("insert into `".TREE_TABLE."`
@@ -104,8 +103,7 @@ $income_id = $DB->InsertedId();
 if(!$income_id)
 {
 	$DB->TransactionRollback();
-	// обработка ошибки
-	// ...
+	return false;
 	die();
 }
 $DB->Query("insert into `".KASSA_OPERATION_TYPE_GROUP_TABLE."` (`name`) values ('Прочее')");
@@ -113,8 +111,7 @@ $other_id = $DB->InsertedId();
 if(!$other_id)
 {
 	$DB->TransactionRollback();
-	// обработка ошибки
-	// ...
+	return false;
 	die();
 }
 $DB->Query("insert into `".KASSA_OPERATION_TYPE_TABLE."` (`group_id`, `name`, `is_income`, `is_service`) values
@@ -123,8 +120,7 @@ $OPTYPE_TRANSACTION_FROM_ID = $DB->InsertedId();
 if(!$OPTYPE_TRANSACTION_FROM_ID)
 {
 	$DB->TransactionRollback();
-	// обработка ошибки
-	// ...
+	return false;
 	die();
 }
 $DB->Query("insert into `".KASSA_OPERATION_TYPE_TABLE."` (`group_id`, `name`, `is_income`, `is_service`) values
@@ -133,8 +129,7 @@ $OPTYPE_TRANSACTION_TO_ID = $DB->InsertedId();
 if(!$OPTYPE_TRANSACTION_TO_ID)
 {
 	$DB->TransactionRollback();
-	// обработка ошибки
-	// ...
+	return false;
 	die();
 }
 $DB->Query("insert into `".KASSA_OPERATION_TYPE_TABLE."` (`group_id`, `name`, `is_income`, `is_service`) values
@@ -143,8 +138,7 @@ $OPTYPE_TRANSACTION_COMISSION_ID = $DB->InsertedId();
 if(!$OPTYPE_TRANSACTION_COMISSION_ID)
 {
 	$DB->TransactionRollback();
-	// обработка ошибки
-	// ...
+	return false;
 	die();
 }
 $DB->Query("insert into `".KASSA_ACCOUNT_TABLE."` (`name`) values ('Наличные')");
@@ -156,23 +150,24 @@ $r = unserialize($r);
 if(is_array($r))
 {
 	$r['kassa'] = 'Касса';
+	$r = serialize($r);
+	set_param('admin', 'modules_installed', $r);
 }
 else
 {
-	$r = array('kassa' => 'Касса');
+	new_param('admin', 'modules_installed', 'Установленные модули', 'textarray', 'a:1:{s:5:"kassa";s:10:"Касса";}');
 }
-$r = serialize($r);
-set_param('admin', 'modules_installed', $r);
+
 
 // добавление параметров модуля кассы
-set_param('kassa', 'OPTYPE_TRANSACTION_FROM_ID',      $OPTYPE_TRANSACTION_FROM_ID);
-set_param('kassa', 'OPTYPE_TRANSACTION_TO_ID',        $OPTYPE_TRANSACTION_TO_ID);
-set_param('kassa', 'OPTYPE_TRANSACTION_COMISSION_ID', $OPTYPE_TRANSACTION_COMISSION_ID);
-
-set_param('kassa', 'admin_menu',  'a:2:{i:1;s:29:\"Настройки кассы\";i:2;s:24:\"Планирование\";}');
-set_param('kassa', 'stats_title', 'Статистика');
-set_param('kassa', 'title',       'Касса');
+new_param('kassa', 'OPTYPE_TRANSACTION_FROM_ID', 'Перенос со счёта', 'text', $OPTYPE_TRANSACTION_FROM_ID);
+new_param('kassa', 'OPTYPE_TRANSACTION_TO_ID', 'Пеоренос на счёт', 'text', $OPTYPE_TRANSACTION_TO_ID);
+new_param('kassa', 'OPTYPE_TRANSACTION_COMISSION_ID', 'Комиссия', 'text', $OPTYPE_TRANSACTION_COMISSION_ID);
+new_param('kassa', 'admin_menu', 'Пункты админского меню', 'textarray', 'a:2:{i:1;s:29:\"Настройки кассы\";i:2;s:24:\"Планирование\";}');
+new_param('kassa', 'stats_title', 'Сверху что написано на странице статистики', 'text', 'Статистика');
+new_param('kassa', 'title', 'Сверху что написано', 'text',  'Касса');
 
 $DB->TransactionCommit();
+return true;
 
 ?>

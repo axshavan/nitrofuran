@@ -36,6 +36,16 @@ function get_param($module, $param_name)
 }
 
 /*
+	htmlspecialchars писать слишком длинно.
+	@param  string $s строка, которую надо обработать
+	@return string
+*/
+function h($s)
+{
+	return htmlspecialchars($s);
+}
+
+/*
 	Добавить новый параметр.
 	@param string $module       название модуля
 	@param string $param_name   название параметра

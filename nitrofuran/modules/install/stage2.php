@@ -31,6 +31,10 @@ foreach($_modules_installed as $module)
 
 $tplengine = new CTemplateEngine('install');
 $tplengine->assign('_modules', $_modules);
+if($error_text)
+{
+	$tplengine->assign('error_text', $error_text);
+}
 $tplengine->template('stage2.tpl');
 $DB->Disconnect();
 

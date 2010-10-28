@@ -7,6 +7,7 @@ function go_back_to_stage2($fail_module)
 {
 	global $stage;
 	$stage = 2;
+	$error_text = 'Не удалось установить модуль '.$fail_module;
 	require_once(DOCUMENT_ROOT.'/nitrofuran/modules/install/stage2.php');
 	die();
 }
@@ -39,8 +40,12 @@ foreach($_POST as $k => $v)
 		if(file_exists(DOCUMENT_ROOT.'/nitrofuran/modules/install/modules/'.$_modules[$module]['file']))
 		{
 			ob_start();
-			require(DOCUMENT_ROOT.'/nitrofuran/modules/install/modules/'.$_modules[$module]['file']);
+			$result = require(DOCUMENT_ROOT.'/nitrofuran/modules/install/modules/'.$_modules[$module]['file']);
 			$_modules[$module]['output'] = ob_get_clean();
+			if(!$result)
+			{
+				go_back_to_stage2($module);
+			}
 		}
 		else
 		{
@@ -49,9 +54,14 @@ foreach($_POST as $k => $v)
 	}
 }
 
-// ...
-//trace($_modules);
+$htaccess = explode("\n", file_get_contents($_SERVER['DOCUMENT_ROOT'].'/.htaccess'));
+foreach($htaccess as &$str)
+{
+	$str = ltrim($str, ' #');
+}
+file_put_contents($_SERVER['DOCUMENT_ROOT'].'/.htaccess', implode("\n", $htaccess));
 
 $DB->Disconnect();
+redirect('/');
 
 ?>

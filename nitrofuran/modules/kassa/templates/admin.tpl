@@ -10,7 +10,7 @@
 	<tr>
 		<td><?= $v['id'] ?></td>
 		<td><input type="text" id="kassa_editcurrency<?= $v['id'] ?>_symbol" size="1" value="<?= $v['symbol'] ?>"></td>
-		<td><input type="text" id="kassa_editcurrency<?= $v['id'] ?>_name" value="<?= $v['name'] ?>"></td>
+		<td><input type="text" id="kassa_editcurrency<?= $v['id'] ?>_name" value="<?= h($v['name']) ?>"></td>
 		<td><input type="button" value="Сохранить" onclick="location='?module=kassa&page=1&editcurrency=<?= $v['id'] ?>&symbol='+ge('kassa_editcurrency<?= $v['id'] ?>_symbol').value+'&name='+ge('kassa_editcurrency<?= $v['id'] ?>_name').value"></td>
 		<td><input type="button" value="Удалить" onclick="location='?module=kassa&page=1&delcurrency=<?= $v['id'] ?>'"></td>
 	</tr>
@@ -41,7 +41,7 @@
 <? foreach($_kassa_account as $v): ?>
 	<tr>
 		<td><?= $v['id'] ?></td>
-		<td><input type="text" id="kassa_editaccount<?= $v['id'] ?>" value="<?= $v['name'] ?>"></td>
+		<td><input type="text" id="kassa_editaccount<?= $v['id'] ?>" value="<?= h($v['name']) ?>"></td>
 		<td><input type="button" value="Сохранить" onclick="location='?module=kassa&page=1&editaccount=<?= $v['id'] ?>&name='+ge('kassa_editaccount<?= $v['id'] ?>').value"></td>
 		<td><input type="button" value="Удалить" onclick="location='?module=kassa&page=1&delaccount=<?= $v['id'] ?>'"></td>
 	</tr>
@@ -65,7 +65,7 @@
 <!-- группы типов операций -->
 <h3>Типы операций</h3>
 <? foreach($_kassa_optype as $v): ?>
-	<input type="text" id="kassa_editoptypegroup<?= $v['id'] ?>" value="<?= $v['name'] ?>">
+	<input type="text" id="kassa_editoptypegroup<?= $v['id'] ?>" value="<?= h($v['name']) ?>">
 	<? if($v['id']): ?>
 		<input type="button" value="Сохранить" onclick="location='?module=kassa&page=1&editoptypegroup=<?= $v['id'] ?>&name='+ge('kassa_editoptypegroup<?= $v['id'] ?>').value">
 		<input type="button" value="Удалить" onclick="location='?module=kassa&page=1&deloptypegroup=<?= $v['id'] ?>'">
@@ -77,7 +77,7 @@
 		<? foreach($v['operation_types'] as $vv): ?>
 			<tr>
 				<td><?= $vv['id'] ?></td>
-				<td><input type="text" id="kassa_editoptype<?= $vv['id'] ?>_name" value="<?= $vv['name'] ?>"></td>
+				<td><input type="text" id="kassa_editoptype<?= $vv['id'] ?>_name" value="<?= h($vv['name']) ?>"></td>
 				<td><input type="checkbox" id="kassa_editoptype<?= $vv['id'] ?>_is_income"<?= $vv['is_income']   ? ' checked' : '' ?>> <label for="kassa_editoptype<?= $vv['id']?>_is_income">приход</label></td>
 				<td><input type="checkbox" id="kassa_editoptype<?= $vv['id'] ?>_is_service"<?= $vv['is_service'] ? ' checked' : '' ?>> <label for="kassa_editoptype<?= $vv['id']?>_is_service">сервисная операция</label></td>
 				<td><input type="button" value="Сохранить" onclick="location='?module=kassa&page=1&editoptype=<?= $vv['id'] ?>&name='+ge('kassa_editoptype<?= $vv['id'] ?>_name').value+'&is_income='+ge('kassa_editoptype<?= $vv['id'] ?>_is_income').checked+'&is_service='+ge('kassa_editoptype<?= $vv['id'] ?>_is_service').checked"></td>

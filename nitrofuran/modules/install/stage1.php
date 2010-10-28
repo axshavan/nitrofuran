@@ -67,13 +67,11 @@ foreach($sql as $query)
 {
 	if(strlen(trim($query)))
 	{
-		echo $query.'<br>';
 		mysql_query($query, $cid);
 		if(mysql_errno($cid))
 		{
 			mysql_query("rollback", $cid);
-			echo mysql_error($cid);
-			//go_back_to_stage0();
+			go_back_to_stage0($cid);
 		}
 	}
 }

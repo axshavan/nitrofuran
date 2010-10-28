@@ -22,7 +22,7 @@ $_params_types = array(
 	<div class="admin_left_panel">
 		<? foreach($_left_menu as $item): ?>
 		<div class="item <?= $item['active'] ? '' : 'in' ?>active">
-			<a href="?module=<?= $item['module'] ?>"><?= $item['name'] ?></a>
+			<a href="?module=<?= $item['module'] ?>"><?= h($item['name']) ?></a>
 		</div>
 		<? endforeach; ?>
 	</div>
@@ -33,7 +33,7 @@ $_params_types = array(
 		<div class="module_menu">
 			<? foreach($_module_menu as $item): ?>
 				<div class="item <?= $item['active'] ? '' : 'in' ?>active">
-					<?= $item['active'] ? '' : '<a href="?module='.$module.'&page='.$item['page'].'">' ?><?= $item['name'] ?><?= $item['active'] ? '' : '</a>' ?>
+					<?= $item['active'] ? '' : '<a href="?module='.$module.'&page='.$item['page'].'">' ?><?= h($item['name']) ?><?= $item['active'] ? '' : '</a>' ?>
 				</div>
 			<? endforeach; ?>
 		</div>
@@ -43,7 +43,7 @@ $_params_types = array(
 			<? foreach($_options as $_option): ?>
 			<tr>
 				<td>
-					<?= strlen($_option['display_name']) ? $_option['display_name'] : $_option['name'] ?><br>
+					<?= strlen($_option['display_name']) ? h($_option['display_name']) : $_option['name'] ?><br>
 					<span class="comment"><?= $_option['name'] ?>:
 					<?= $_params_types[$_option['type']] ?>
 					</span>
@@ -61,7 +61,7 @@ $_params_types = array(
 							?><input type="hidden" name="o[<?= $_option['name'] ?>]" id="o_<?= $_option['name'] ?>" value=""><?
 							foreach($_option['value'] as $k => $v)
 							{
-								?><input type="text" size="2" maxsize="5" id="o_<?= $_option['name']?>_key_<?= $option_sub_id ?>" name="o[<?= $_option['name']?>_key_<?= $option_sub_id ?>]" value="<?= $k ?>">&nbsp;<input type="text" size="20" id="o_<?= $_option['name'] ?>_value_<?= $option_sub_id ?>" name="o[<?= $_option['name'] ?>_value_<?= $option_sub_id ?>]" value="<?= $v ?>"><br><?
+								?><input type="text" size="2" maxsize="5" id="o_<?= $_option['name']?>_key_<?= $option_sub_id ?>" name="o[<?= $_option['name']?>_key_<?= $option_sub_id ?>]" value="<?= h($k) ?>">&nbsp;<input type="text" size="20" id="o_<?= $_option['name'] ?>_value_<?= $option_sub_id ?>" name="o[<?= $_option['name'] ?>_value_<?= $option_sub_id ?>]" value="<?= h($v) ?>"><br><?
 								$option_sub_id++;
 							}
 							?><span class="comment">Добавить ключ (не обязательно) и значение:</span><br><input type="text" size="2" maxsize="5" id="o_<?= $_option['name']?>_key_<?= $option_sub_id ?>" name="o[<?= $_option['name']?>_key_<?= $option_sub_id ?>]" value="">&nbsp;<input type="text" size="20" id="o_<?= $_option['name'] ?>_value_<?= $option_sub_id ?>" name="o[<?= $_option['name'] ?>_value_<?= $option_sub_id ?>]" value=""><?
@@ -71,7 +71,7 @@ $_params_types = array(
 						case 'textarea':
 						{
 							$_option['value'] = htmlspecialchars($_option['value']);
-							?><textarea id="o_<?= $_option['name'] ?>" name="o[<?= $_option['name'] ?>]" rows="5" cols="25"><?= $_option['value'] ?></textarea><?
+							?><textarea id="o_<?= $_option['name'] ?>" name="o[<?= $_option['name'] ?>]" rows="5" cols="25"><?= h($_option['value']) ?></textarea><?
 							break;
 						}
 						// всё остальное
@@ -79,7 +79,7 @@ $_params_types = array(
 						default:
 						{
 							$_option['value'] = htmlspecialchars($_option['value']);
-							?><input type="text" id="o_<?= $_option['name'] ?>" name="o[<?= $_option['name'] ?>]" size="25" value="<?= $_option['value'] ?>"><?
+							?><input type="text" id="o_<?= $_option['name'] ?>" name="o[<?= $_option['name'] ?>]" size="25" value="<?= h($_option['value']) ?>"><?
 						}
 					}
 					?>
