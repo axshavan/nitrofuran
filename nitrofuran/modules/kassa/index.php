@@ -238,6 +238,25 @@ while(true)
 			'text'  => date('j', $d)
 		);
 		$d += 86400;
+		switch(date('H', $d))
+		{
+			// при переводе часов на зимнее время
+			case 23:
+			{
+				$d += 3600;
+				break;
+			}
+			// при переводе часов на летнее время
+			case 1:
+			{
+				$d -= 3600;
+				break;
+			}
+			default:
+			{
+				break;
+			}
+		}
 		if(date('n', $d) > $filter_from_month)
 		{
 			$bBreak = true;
@@ -266,6 +285,25 @@ while(true)
 			'text'  => date('j', $d)
 		);
 		$d += 86400;
+		switch(date('H', $d))
+		{
+			// при переводе часов на зимнее время
+			case 23:
+			{
+				$d += 3600;
+				break;
+			}
+			// при переводе часов на летнее время
+			case 1:
+			{
+				$d -= 3600;
+				break;
+			}
+			default:
+			{
+				break;
+			}
+		}
 		if(date('n', $d) > $filter_to_month)
 		{
 			$bBreak = true;

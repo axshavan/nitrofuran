@@ -80,12 +80,13 @@ class graph_node
 	
 	/*
 		Создать узлу графа ребёнка.
-		@param  mixed      $id с каким айдишником будет ребёнок
+		@param  mixed      $id    с каким айдишником будет ребёнок
+		@param  mixed      $_data внутренние данные, которые он будет хранить
 		@return graph_node созданный ребёнок
 	*/
-	public function CreateChild($id)
+	public function CreateChild($id, $data = false)
 	{
-		$new_child = new TGraphNode($id);
+		$new_child = new graph_node($id, $data);
 		$new_child->MakeAdoptedBy($this);
 		return $new_child;
 	}
@@ -291,7 +292,7 @@ class graph
 		{
 			$this->root_node->__destruct();
 		}
-		$this->root_node = new TGraphNode(0);
+		$this->root_node = new graph_node(0);
 		
 		// первый проход
 		foreach($_array as $id => $_node)
@@ -299,7 +300,7 @@ class graph
 			$node = &$this->root_node->FindChildById($_node['parent_id']);
 			if($node)
 			{
-				$node->CreateChild($id, $array[$id]);
+				$node->CreateChild($id, $_node);
 				unset($_array[$id]);
 			}
 		}
@@ -310,7 +311,7 @@ class graph
 			$node = &$this->root_node->FindChildById($_node['parent_id']);
 			if($node)
 			{
-				$node->CreateChild($id, $array[$id]);
+				$node->CreateChild($id, $_node);
 				unset($_array[$id]);
 			}
 		}
