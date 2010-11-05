@@ -14,7 +14,6 @@
 	<th>Тип расписания</th>
 	<th>Расписание</th>
 	<th></th>
-	<th></th>
 </tr>
 <? foreach($_plans as $id => $_plan): ?>
 	<tr>
@@ -41,10 +40,8 @@
 			<input type="text" id="plan_<?= $id ?>_repeat" size="8" value="<?= $_plan['repeat'] ?>">
 		</td>
 		<td>
-			<input type="button" value="Сохранить" onclick="location='?module=kassa&page=2&editplan=<?= $id ?>&name='+ge('plan_<?= $id ?>_name').value+'&optype='+ge('plan_<?= $id ?>_optype').value+'&amount='+ge('plan_<?= $id ?>_amount').value+'&type='+ge('plan_<?= $id ?>_repeat_type').value+'&repeat='+ge('plan_<?= $id ?>_repeat').value+'&active='+ge('plan_<?= $id ?>_active').checked">
-		</td>
-		<td>
-			<input type="button" value="Удалить" onclick="location='?module=kassa&page=2&delplan=<?= $id ?>'">
+			<img src="/i/admin/ok.gif" class="button" alt="Сохранить" onclick="location='?module=kassa&page=2&editplan=<?= $id ?>&name='+ge('plan_<?= $id ?>_name').value+'&optype='+ge('plan_<?= $id ?>_optype').value+'&amount='+ge('plan_<?= $id ?>_amount').value+'&type='+ge('plan_<?= $id ?>_repeat_type').value+'&repeat='+ge('plan_<?= $id ?>_repeat').value+'&active='+ge('plan_<?= $id ?>_active').checked">
+			<img src="/i/admin/del.gif" class="button" alt="Удалить" onclick="location='?module=kassa&page=2&delplan=<?= $id ?>'">
 		</td>
 	</tr>
 <? endforeach; ?>

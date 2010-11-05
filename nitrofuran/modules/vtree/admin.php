@@ -9,6 +9,67 @@
 global $DB;
 require_once(DOCUMENT_ROOT.'/nitrofuran/graph.class.php');
 
+// сохранение
+if($_REQUEST['saveid'])
+{
+	$saveid = (int)$_REQUEST['saveid'];
+	if($saveid)
+	{
+		$sql = "update `".TREE_TABLE."` set
+			`name`     = '".$DB->EscapeString($_REQUEST['n'])."',
+			`module`   = '".$DB->EscapeString($_REQUEST['m'])."',
+			`action`   = '".$DB->EscapeString($_REQUEST['a'])."',
+			`template` = '".$DB->EscapeString($_REQUEST['t'])."',
+			`access`   = '".($_REQUEST['s'] == 'true' ? 1 : 0)."'
+			where `id` = '".$saveid."'";
+	}
+}
+// удаление
+elseif($_REQUEST['delid'])
+{
+	$delid = (int)$_REQUEST['delid'];
+	$res   = $DB->Query("select count(`id`) as cnt from `".TREE_TABLE."` where `pid` = '".$delid."'");
+	$res   = $DB->Fetch($res);
+	if($res['cnt'] > 0)
+	{
+		$tplengine->assign('error_text', 'Невозможно удалить папку, имеющую подпапки');
+	}
+	else
+	{
+		$sql = "delete from `".TREE_TABLE."` where `id` = '".$delid."'";
+	}
+}
+// добавление
+elseif($_REQUEST['add'])
+{
+	$pid = (int)$_REQUEST['add'];
+	if($pid)
+	{
+		$sql = "insert into `".TREE_TABLE."` (`pid`, `name`, `module`, `action`, `template`, `access`) values (
+			'".$pid."',
+			'".$DB->EscapeString($_REQUEST['n'])."',
+			'".$DB->EscapeString($_REQUEST['m'])."',
+			'".$DB->EscapeString($_REQUEST['a'])."',
+			'".$DB->EscapeString($_REQUEST['t'])."',
+			'".($_REQUEST['s'] == 'true' ? 1 : 0)."'
+		)";
+	}
+}
+
+// выполнение
+if($sql)
+{
+	if(!$DB->Query($sql))
+	{
+		$tplengine->assign('error_text', $DB->Error());
+	}
+	else
+	{
+		redirect('/admin/?module=vtree&page=1');
+	}
+}
+
+
 $res    = $DB->Query("select * from `".TREE_TABLE."` order by `pid` asc, `id` asc");
 $_vtree = array();
 while($r = $DB->Fetch($res))
@@ -18,9 +79,10 @@ while($r = $DB->Fetch($res))
 }
 $graph = new graph();
 $graph->CreateFromArray($_vtree);
-$graph->Trace(1);
+$_vtree = $graph->GetAsArray(true);
+$_vtree = $_vtree['children'];
 
-die();
+$tplengine->assign('_vtree', $_vtree);
 $tplengine->assign('inner_template_name', DOCUMENT_ROOT.'/nitrofuran/modules/vtree/templates/admin.tpl');
 
 ?>

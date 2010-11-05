@@ -118,7 +118,8 @@ foreach($_modules_installed as $k => $v)
 		'active' => $module == $k
 	);
 }
-$tplengine->assign("_left_menu", $_left_menu);
+$tplengine->assign("_modules_installed", $_modules_installed);
+$tplengine->assign("_left_menu",         $_left_menu);
 $_module_menu_param = unserialize(get_param($module, 'admin_menu'));
 $_module_menu = array(
 	array(

@@ -24,12 +24,13 @@ fieldset { margin: 5px 0 5px 0; border: 1px solid #45BC51; background-color: #EC
 .admin_right_panel .module_menu .inactive:hover { background-color: #DBDBDB; }
 .admin_right_panel .module_menu .active { background-color: #FC9562; }
 .admin_right_panel h3 { margin: 10px 0 3px 0; border-bottom: 1px solid #3D3D3D; font-weight: normal; font-size: 14pt; }
+img.button { border: none; cursor: pointer; }
 
 /* Админская таблица */
 .admin_table { border-left: 1px solid #B0B0B0; border-top: 1px solid #B0B0B0; empty-cells: show; margin: 5px 0 5px 0; background-color: #f8f8f8; }
 .admin_table td { border-right: 1px solid #B0B0B0; border-bottom: 1px solid #B0B0B0; padding: 4px; vertical-align: top; }
 .admin_table td:first-child { text-align: right; font-weight: bold; }
 .admin_table td .comment { font-size: smaller; color: #373737; }
-.admin_table th { border-right: 1px solid #B0B0B0; border-bottom: 1px solid #B0B0B0; padding: 4px; vertical-align: top; }
+.admin_table th { border-right: 1px solid #B0B0B0; border-bottom: 1px solid #B0B0B0; padding: 4px; vertical-align: top; background-color: #f0f0f0; }
 .admin_table a { color: #606060; text-decoration: underline; }
 .admin_table a:hover { color: black; }
