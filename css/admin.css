@@ -24,6 +24,8 @@ fieldset { margin: 5px 0 5px 0; border: 1px solid #45BC51; background-color: #EC
 .admin_right_panel .module_menu .inactive { background-color: #C1C1C1; }
 .admin_right_panel .module_menu .inactive:hover { background-color: #DBDBDB; }
 .admin_right_panel .module_menu .active { background-color: #FC9562; }
+.admin_right_panel a { text-decoration: none; color: #808080; }
+.admin_right_panel a:hover { text-decoration: underline; }
 .admin_right_panel h3 { margin: 10px 0 3px 0; border-bottom: 1px solid #3D3D3D; font-weight: normal; font-size: 14pt; }
 img.button { border: none; cursor: pointer; }
 

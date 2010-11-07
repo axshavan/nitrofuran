@@ -101,7 +101,7 @@
 						<option value="<?= $_a['id'] ?>"><?= $_a['name'] ?></option>
 					<? endforeach; ?>
 				</select> <label for="inp_account">Счёт</label><br>
-				<input type="text" name="amount" id="inp_amount"> <label for="inp_amount">Сумма</label><br>
+				<input type="text" name="amount" id="inp_amount"> <label for="inp_amount">Сумма</label> <span class="command" onclick="calc.show(ge('inp_amount'))">Калькулятор</span><br>
 				<input type="text" name="comment" id="inp_comment"> <label for="inp_comment">Комментарий</label><br>
 				<input type="hidden" name="optype" id="inp_optype">
 				<input type="submit" onclick="return checkAddForm()" value="Добавить запись">
@@ -364,6 +364,42 @@
 		<a href="/kassa/stats/">статистика</a>
 	</div>
 	<!-- /ссылки -->
+	
+	<!-- калькулятор -->
+	<div id="calculator">
+		<input type="text" id="inp_calc" onkeypress="calc.inp_keypress(event)"><br>
+		<table>
+			<tr>
+				<td onclick="calc.button(7)">7</td>
+				<td onclick="calc.button(8)">8</td>
+				<td onclick="calc.button(9)">9</td>
+				<td onclick="calc.clear()">C</td>
+			</tr>
+			<tr>
+				<td onclick="calc.button(4)">4</td>
+				<td onclick="calc.button(5)">5</td>
+				<td onclick="calc.button(6)">6</td>
+				<td onclick="calc.button('/')">/</td>
+			</tr>
+			<tr>
+				<td onclick="calc.button(1)">1</td>
+				<td onclick="calc.button(2)">2</td>
+				<td onclick="calc.button(3)">3</td>
+				<td onclick="calc.button('*')">*</td>
+			</tr>
+			<tr>
+				<td onclick="calc.button(0)">0</td>
+				<td onclick="calc.button('.')">,</td>
+				<td onclick="calc.button('+')">+</td>
+				<td onclick="calc.button('-')">-</td>
+				
+			</tr>
+		</table>
+		<span class="button" onclick="calc.calculate();">= <small>(enter)</small></span>
+		<span class="button" onclick="calc.calculate(); $('#calculator').fadeOut();">=<small>&amp;close (ctrl+enter)</small></span>
+		<span class="button" onclick="$('#calculator').fadeOut();">exit<small> (esc)</small></span>
+	</div>
+	<!-- /калькулятор -->
 	
 </body>
 </html>

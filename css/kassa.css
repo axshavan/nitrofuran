@@ -66,6 +66,13 @@ a.reset:hover { color: #505050; }
 #transaccount label { font-weight: bold; display: block; margin-top: 5px; }
 #transaccount input { width: 100px; }
 
+#calculator { position: absolute; border: 1px solid #C98D4C; background-color: #EAD8C5; -moz-border-radius: 5px; padding: 5px; display: none; }
+#calculator span.button { display: inline-block; border: 1px solid #C98D4C; background-color: #FFEEDD; -moz-border-radius: 2px; padding: 3px; cursor: pointer; margin: 2px; font-size: 12px; width: 60px; height: 30px; text-align: center; vertical-align: middle; }
+#calculator span.button:hover { background-color: #FFE1C4; }
+#calculator input { border: 1px solid #C98D4C; margin: 2px; text-align: right; }
+#calculator table td { border: 1px solid #C98D4C; background-color: #FFEEDD; -moz-border-radius: 2px; padding: 3px; cursor: pointer; margin: 2px; width: 20px; text-align: center; }
+#calculator table td:hover { background-color: #FFE1C4; }
+
 table.optable { border-top: 1px solid #303030; border-left: 1px solid #303030; empty-cells: show; }
 table.optable td { border-bottom: 1px solid #303030; border-right: 1px solid #303030; padding: 2px; vertical-align: top; }
 table.optable th { border-bottom: 1px solid #303030; border-right: 1px solid #303030; padding: 2px; background-color: white; }

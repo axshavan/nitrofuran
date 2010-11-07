@@ -132,3 +132,119 @@ function startEditEvent(obj, event_params)
 	$('#event_edit_form').css('left', $(obj).offset().left - 11);
 	$('#event_edit_form').fadeIn(300);
 }
+
+/*
+ * Калькулятор
+ */
+calc = {
+	// объект, к которому привязан калькулятор
+	bindobj: null,
+	
+	/*
+		Добавить к значению в поле калькулятора строку.
+		@param value {string} строка, которую добавить
+	*/
+	button: function(value)
+	{
+		ge('inp_calc').value += value;
+		ge('inp_calc').focus();
+	},
+	
+	/*
+		Вычисление значения.
+	*/
+	calculate: function()
+	{
+		var process_str = ge('inp_calc').value + '=';
+		var current_sum = 0;
+		var operand     = '';
+		var current_char;
+		var prev_op     = '+';
+		for(var c in process_str)
+		{
+			current_char = process_str[c];
+			if(parseInt(current_char))
+			{
+				operand += current_char;
+			}
+			else
+			{
+				if(
+					current_char == '+' ||
+					current_char == '-' ||
+					current_char == '*' ||
+					current_char == '/' ||
+					current_char == '='
+				)
+				{
+					operand = parseFloat(operand);
+					if(operand)
+					{
+						switch(prev_op)
+						{
+							case '+': current_sum += operand; break;
+							case '-': current_sum -= operand; break;
+							case '*': current_sum *= operand; break;
+							case '/': current_sum /= operand; break;
+						}
+					}
+					prev_op     = current_char;
+					current_sum = parseFloat(current_sum);
+					operand     = '';
+				}
+				else if(
+					current_char == '.' ||
+					current_char == ','
+				)
+				{
+					operand += '.';
+				}
+			}
+		}
+		this.bindobj.value   = Math.round(current_sum * 100) / 100;
+		ge('inp_calc').value = current_sum;
+		ge('inp_calc').focus();
+	},
+	
+	/*
+		Очистить содержимое калькулятора.
+	*/
+	clear: function()
+	{
+		ge('inp_calc').value = '';
+		ge('inp_calc').focus();
+	},
+	
+	inp_keypress: function(event)
+	{
+		if(event.keyCode == 13)
+		{
+			this.calculate();
+			if(event.ctrlKey)
+			{
+				$('#calculator').fadeOut();
+			}
+		}
+		else if(event.keyCode == 27)
+		{
+			$('#calculator').fadeOut();
+		}
+	},
+	
+	/*
+		Показать калькулятор.
+		@param obj {HTML Input Element} объект, к которому привяжется калькулятор
+	*/
+	show: function(obj)
+	{
+		if(obj)
+		{
+			this.bindobj = obj;
+			$('#calculator').css('top', $(obj).offset().top + 20);
+			$('#calculator').css('left', $(obj).offset().left);
+			$('#calculator').fadeIn();
+			ge('inp_calc').value = '';
+			ge('inp_calc').focus();
+		}
+	}
+};

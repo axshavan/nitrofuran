@@ -3,6 +3,8 @@
 	<div class="error"><?= $error ?></div>
 <? endif; ?>
 
+<a href="/kassa/">&laquo; назад в кассу</a>
+
 <!-- валюты -->
 <h3>Валюты</h3>
 <table class="admin_table" cellspacing="0">
