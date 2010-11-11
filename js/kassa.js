@@ -176,7 +176,7 @@ calc = {
 		for(var c in process_str)
 		{
 			current_char = process_str[c];
-			if(parseInt(current_char))
+			if(parseInt(current_char) || current_char === '0')
 			{
 				operand += current_char;
 			}
