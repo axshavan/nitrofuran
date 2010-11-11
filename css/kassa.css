@@ -6,9 +6,13 @@ img.button { cursor: pointer; }
 a.reset { color: #303030; display: block; margin-bottom: 2px; text-decoration: underline; }
 a.reset:hover { color: #505050; }
 
-#event_edit_form { position: absolute; z-index: 2; border: 1px solid #a0a0a0; background-color: #f0f0f0; -moz-border-radius: 6px; padding: 6px; left: 200px; display: none; }
+#event_edit_form { position: absolute; z-index: 2; border: 1px solid #a0a0a0; background-color: #f0f0f0; -moz-border-radius: 6px; padding: 6px; display: none; }
 #event_edit_form img { position: absolute; top: -30px; }
 #event_edit_form span { text-decoration: underline; cursor: pointer; }
+
+#debtor_form { position: absolute; z-index: 2; border: 1px solid #a0a0a0; background-color: #f0f0f0; -moz-border-radius: 6px; padding: 6px; display: none; }
+#debtor_form img { position: absolute; top: -30px; }
+#debtor_form span { text-decoration: underline; cursor: pointer; }
 
 #calendar_container { position: absolute; left: 5px; top: 5px; width: 142px; }
 #calendar_container a { color: black; text-decoration: none; }
@@ -25,6 +29,11 @@ a.reset:hover { color: #505050; }
 #calendar_container .calendar span.end { background-color: #62B541; }
 #calendar_container .calendar span.today { background-color: #54D319; }
 #calendar_container .calendar span.active a { color: white; }
+
+#debtors a { color: #303030; }
+#debtors span { display: inline-block; padding: 3px; margin: 2px; border: 1px solid #505050; font-size: 9px; }
+#debtors span.credit1 { background-color: #7CFF5B; }
+#debtors span.credit2 { background-color: #FF6B6B; }
 
 #main_container { position: absolute; left: 175px; right: 5px; top: 5px; }
 #main_container .add-form { background-color: #9EB77E; padding: 4px; border: 1px solid #516637; -moz-border-radius: 3px; width: 400px; min-height: 200px; }

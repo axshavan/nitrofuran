@@ -137,6 +137,31 @@
 		</div>
 		<!-- /фильтр по счёту -->
 		
+		<!-- долги -->
+		<div class="optable" id="debtors">
+			<span class="credit1">Должник</span> <span class="credit2">Кредитор</span><br>
+			<table class="optable" cellspacing="0">
+				<? foreach($_debtors as &$_debtor): $bOdd = !$bOdd; ?>
+					<tr class="<?= $_debtor['amount'] < 0 ? 'exp' : 'inc' ?><?= $bOdd ? '_odd' : '' ?>">
+						<td><?= $_debtor['name'] ?></td>
+						<td>
+							<img
+								class="button"
+								src="<?= HTTP_ROOT ?>/i/kassa/add.gif"
+								alt="Добавить операцию"
+								title="Добавить операцию"
+								onclick="showDebtorForm(this, '<?= $_debtor['id'] ?>')"
+							>
+						</td>
+						<td><?= $_debtor['amount'] ?>&nbsp;<?= $_debtor['symbol'] ?></td>
+					</tr>
+				<? endforeach; ?>
+			</table>
+			<a href="/admin/?module=kassa&page=3">Управление должниками &raquo;</a>
+		</div>
+		
+		<!-- /долги -->
+		
 		<!-- таблица с операциями -->
 		<div class="optable">
 			<table class="optable" cellspacing="0">
@@ -401,5 +426,26 @@
 	</div>
 	<!-- /калькулятор -->
 	
+	<!-- форма операции по долгам -->
+	<div id="debtor_form">
+		<span onclick="$('#debtor_form').fadeOut(300);">отмена</span><br>
+		<img src="<?= HTTP_ROOT ?>/i/kassa/event_edit_form_arrow.gif">
+		<form action="<?= HTTP_ROOT ?>/kassa/debtor/" method="post">
+			<select id="debtor_operation" name="debtor_operation">
+				<option value="0">я взял денег</option>
+				<option value="1">я дал денег</option>
+			</select> <label for="debtor_operation">Взял/дал в долг</label><br>
+			<select name="debtor_currency" id="debtor_currency">
+				<? foreach($_currencies as $_c): ?>
+					<option value="<?= $_c['id'] ?>"><?= $_c['symbol'].' '.$_c['name'] ?></option>
+				<? endforeach; ?>
+			</select> <label for="debtor_currency">Валюта</label><br>
+			<input type="text" id="debtor_amount" name="debtor_amount"> <label for="debtor_amount">Сколько денег</label><br>
+			<input type="text" id="debtor_comment" name="debtor_comment"> <label for="debtor_comment">Комментарий</label><br>
+			<input type="hidden" id="debtor_id" name="debtor_id">
+			<input type="submit" value="Добавить">
+		</form>
+	</div>
+	<!-- /форма операции по долгам -->
 </body>
 </html>

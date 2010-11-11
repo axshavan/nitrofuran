@@ -191,6 +191,56 @@ switch($_REQUEST['page'])
 		$admin_tpl_name = 'admin_plan.tpl';
 		break;
 	}
+	/**************************
+	 *    admin_debtor.tpl    *
+	 **************************/
+	case 3:
+	{
+		// редактирование должника
+		if($_REQUEST['edit'])
+		{
+			$id = (int)$_REQUEST['edit'];
+			if($id)
+			{
+				$sql = "update `".KASSA_DEBTORS_TABLE."` set `name` = '".$DB->EscapeString($_REQUEST['name'])."' where `id` = '".$id."'";
+			}
+		}
+		
+		// добавление должника
+		if($_REQUEST['add'])
+		{
+			$sql = "insert into `".KASSA_DEBTORS_TABLE."` set `name` = '".$DB->EscapeString($_REQUEST['add'])."'";
+		}
+		
+		// удаление должника
+		if($_REQUEST['delete'])
+		{
+			$id = (int)$_REQUEST['delete'];
+			if($id)
+			{
+				$DB->Query("delete from `".KASSA_DEBTORS_OPERATION_TABLE."` where `debtor_id` = '".$id."'");
+				$sql = "delete from `".KASSA_DEBTORS_TABLE."` where `id` = '".$id."'";
+			}
+		}
+		
+		// привнесение измнений
+		if($sql)
+		{
+			$DB->Query($sql);
+			redirect('/admin/?module=kassa&page=3');
+		}
+		
+		// список должников и кредиторов
+		$res = $DB->Query("select `id`, `name` from `".KASSA_DEBTORS_TABLE."`");
+		$_debtors = array();
+		while($r = $DB->Fetch($res))
+		{
+			$_debtors[$r['id']] = $r;
+		}
+		$tplengine->assign('_debtors', $_debtors);
+		$admin_tpl_name = 'admin_debtor.tpl';
+		break;
+	}
 }
 
 $_kassa_currency    = array();

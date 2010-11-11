@@ -33,8 +33,15 @@ function run_script($filename, &$error_text)
 		case 'php':
 		default:
 		{
-			require($filename);
-			return true;
+			$result = require($filename);
+			if($result === false)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
 		}
 	}
 }

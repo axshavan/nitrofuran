@@ -317,6 +317,20 @@ while(true)
 }
 $tplengine->assign('_filter_to_calendar', $_filter_to_calendar);
 
+// должники
+$res = $DB->Query("select d.`id`, d.`name`, sum(o.`amount`) as 'amount', c.`symbol`
+	from `".KASSA_DEBTORS_TABLE."` d
+	left join `".KASSA_DEBTORS_OPERATION_TABLE."` o on (o.`debtor_id` = d.`id`)
+	left join `".KASSA_CURRENCY_TABLE."` c          on (o.`currency_id` = c.`id`)
+	group by d.`id`, o.`currency_id` order by d.`id`");
+$_debtors  = array();
+while($r = $DB->Fetch($res))
+{
+	$r['amount'] = (float)$r['amount'];
+	$_debtors[] = $r;
+}
+$tplengine->assign('_debtors', $_debtors);
+
 $tplengine->template('index.tpl');
 
 ?>

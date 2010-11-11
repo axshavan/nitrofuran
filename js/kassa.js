@@ -116,6 +116,19 @@ function onTypeGroupClick2(obj, group_id)
 }
 
 /*
+	Показать форму добавления/списания/увеличения долга.
+	@param obj {HTML Element} элемент, возле которого показывать форму
+	@param debtor_id {integer} номер должника, к которому привяжется операция
+*/
+function showDebtorForm(obj, debtor_id)
+{
+	$('#debtor_form').css('top',  $(obj).offset().top + 36);
+	$('#debtor_form').css('left', $(obj).offset().left - 11);
+	ge('debtor_id').value = debtor_id;
+	$('#debtor_form').fadeIn(300);
+}
+
+/*
 	Обработка нажатия на кнопку "редактировать операцию".
 	@param obj {HTML Element} объект, вызвавший событие
 	@param event_params {array} параметры операции
@@ -222,12 +235,12 @@ calc = {
 			this.calculate();
 			if(event.ctrlKey)
 			{
-				$('#calculator').fadeOut();
+				$('#calculator').fadeOut(300);
 			}
 		}
 		else if(event.keyCode == 27)
 		{
-			$('#calculator').fadeOut();
+			$('#calculator').fadeOut(300);
 		}
 	},
 	
@@ -242,7 +255,7 @@ calc = {
 			this.bindobj = obj;
 			$('#calculator').css('top', $(obj).offset().top + 20);
 			$('#calculator').css('left', $(obj).offset().left);
-			$('#calculator').fadeIn();
+			$('#calculator').fadeIn(300);
 			ge('inp_calc').value = '';
 			ge('inp_calc').focus();
 		}
