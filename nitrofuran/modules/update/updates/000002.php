@@ -43,9 +43,9 @@ $_pages[3] = 'Должники и кредиторы';
 set_param('kassa', 'admin_menu', serialize($_pages));
 
 // тип операций "взял денег"
-$res  = $DB->Query("select `id` from `".KASSA_OPERATION_TYPE_GROUP_TABLE."` where name = 'Прибыль'");
+$res  = $DB->Query("select `id` from `".KASSA_OPERATION_TYPE_GROUP_TABLE."` where `name` = 'Прибыль'");
 $_row = $DB->Fetch($res);
-$group_id = !$_row['id'];
+$group_id = $_row['id'];
 if(!$group_id)
 {
 	$group_id = 1;
@@ -60,9 +60,9 @@ if(!$insert_id)
 new_param('kassa', 'OPTYPE_DEBTOR_DEBIT', 'Взял денег', 'text', $insert_id);
 
 // тип операций "дал денег"
-$res  = $DB->Query("select `id` from `".KASSA_OPERATION_TYPE_GROUP_TABLE."` where name = 'Прочее'");
+$res  = $DB->Query("select `id` from `".KASSA_OPERATION_TYPE_GROUP_TABLE."` where `name` = 'Прочее'");
 $_row = $DB->Fetch($res);
-$group_id = !$_row['id'];
+$group_id = $_row['id'];
 if(!$group_id)
 {
 	$group_id = 1;
