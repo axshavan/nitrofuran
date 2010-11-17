@@ -12,6 +12,9 @@
 
 class tracer
 {
+	// внутренний счётчик div'ов
+	protected static $div_counter = 0;
+	
 	/*
 		Осуществить вывод информации о переменной.
 		@param string $dump результат выполнения функции var_dump
@@ -43,6 +46,7 @@ class tracer
 				$tdstyle2 = $tdstyle;
 				$type     = $_desc[1];
 				$value    = $_desc[2];
+				$bFold    = false;
 				break;
 			}
 			case 'int':
@@ -51,6 +55,7 @@ class tracer
 				$tdstyle2 .= 'background-color: #ff8080; color: black;';
 				$type      = $_desc[1];
 				$value     = $_desc[2];
+				$bFold     = false;
 				break;
 			}
 			case 'float':
@@ -59,6 +64,7 @@ class tracer
 				$tdstyle2 .= 'background-color: #ff80ff; color: black;';
 				$type      = $_desc[1];
 				$value     = $_desc[2];
+				$bFold     = false;
 				break;
 			}
 			case 'string':
@@ -67,6 +73,7 @@ class tracer
 				$tdstyle2 .= 'background-color: #8080ff; color: black;';
 				$type      = $_desc[1].'('.$_desc[2].')';
 				$value     = nl2br($_desc[4]);
+				$bFold     = false;
 				break;
 			}
 			case 'array':
@@ -75,6 +82,7 @@ class tracer
 				$tdstyle2 .= 'background-color: #60a060; color: black;';
 				$type      = $_desc[1].'('.$_desc[2].')';
 				$value     = '';
+				$bFold     = true;
 				break;
 			}
 			case 'resource':
@@ -83,6 +91,7 @@ class tracer
 				$tdstyle2 .= 'background-color: #ffa040; color: black;';
 				$type      = $_desc[1];
 				$value     = $_desc[5];
+				$bFold     = false;
 				break;
 			}
 			case 'object':
@@ -91,6 +100,7 @@ class tracer
 				$tdstyle2 .= 'background-color: #80ff00; color: black;';
 				$type      = $_desc[1].'('.$_desc[2].')';
 				$value     = '';
+				$bFold     = true;
 				break;
 			}
 			case 'recursion':
@@ -100,7 +110,6 @@ class tracer
 				$type      = $_desc[1];
 				$value     = '';
 				break;
-				break;
 			}
 			case 'NULL':
 			default:
@@ -109,8 +118,19 @@ class tracer
 				$tdstyle2 = $tdstyle;
 				$type     = $_desc[1];
 				$value    = '';
+				$bFold    = false;
 			}
 		}
+		$value_div_id = 'tracer_div_'.tracer::$div_counter;
+		tracer::$div_counter++;
+		$value =
+			($bFold ?
+				'<span style="cursor: pointer; color: #404040; font-size: smaller;" onclick="document.getElementById(\''.$value_div_id.'\').style.display=\'none\';">[-]</span> '
+				.'<span style="cursor: pointer; color: #404040; font-size: smaller;" onclick="document.getElementById(\''.$value_div_id.'\').style.display=\'block\';document.getElementById(\''.$value_div_id.'\').style.maxHeight=\'\';document.getElementById(\''.$value_div_id.'\').style.overflow=\'\';">[+]</span> '
+				.'<span style="cursor: pointer; color: #404040; font-size: smaller;" onclick="document.getElementById(\''.$value_div_id.'\').style.display=\'block\';document.getElementById(\''.$value_div_id.'\').style.maxHeight=\'200px\';document.getElementById(\''.$value_div_id.'\').style.overflowY=\'scroll\';">[o]</span>'
+			: '')
+			.'<div id="'.$value_div_id.'">'.$value;
+		$tdstyle .= '; vertical-align: top;';
 		return '<tr><td style="'.$tdstyle.'">'.$name.'</td>'
 			.'<td style="'.$tdstyle.'">'.$type.'</td>'
 			.'<td style="'.$tdstyle2.'">'.$value;
@@ -207,7 +227,7 @@ class tracer
 			}
 		}
 		$result .= tracer::parse_dump(implode("\n", $_dump), $_desc[2]);
-		$result .= '</table>';
+		$result .= '</table></div>';
 		return $result;
 	}
 }

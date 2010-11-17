@@ -3,6 +3,7 @@
 	<div class="error"><?= $error ?></div>
 <? endif; ?>
 
+<script type="text/javascript" src="/js/kassa.js"></script>
 <a href="/kassa/">&laquo; назад в кассу</a>
 
 <h3>Запланированные операции</h3>
@@ -77,8 +78,8 @@
 		<tr>
 			<td>Тип расписания</td>
 			<td>
-				<select id="kassa_addplan_form_repeattype">
-					<option value="none">единоразовый расход</option>
+				<select id="kassa_addplan_form_repeattype" onchange="adminPlanRepeatTypeChange2(this.value)">
+					<option value="none" selected>единоразовый расход</option>
 					<option value="daily">ежедневный расход</option>
 					<option value="weekly">еженедельный расход</option>
 					<option value="monthly">ежемесячный расход</option>
@@ -87,7 +88,48 @@
 		</tr>
 		<tr>
 			<td>Расписание</td>
-			<td><input type="text" id="kassa_addplan_form_repeat"></td>
+			<td>
+				<input type="hidden" id="kassa_addplan_form_repeat">
+				<div id="repeattype_none">
+					<span class="comment">Дата в формате YYYY-MM-DD</span><br>
+					<input type="text" onkeyup="ge('kassa_addplan_form_repeat').value = this.value;">
+				</div>
+				<div id="repeattype_daily"><span class="comment">Особых опций не требуется</span></div>
+				<div id="repeattype_weekly">
+					<span class="comment">Дни недели</span>
+					<table class="admin_table" cellspacing="0">
+						<tr>
+							<td><label for="week_day_1">Пн</label></td>
+							<td><label for="week_day_2">Вт</label></td>
+							<td><label for="week_day_3">Ср</label></td>
+							<td><label for="week_day_4">Чт</label></td>
+							<td><label for="week_day_5">Пт</label></td>
+							<td><label for="week_day_6">Сб</label></td>
+							<td><label for="week_day_7">Вс</label></td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" id="week_day_1" onclick="adminPlanRepeatTypeD1(1, this.checked)"></td>
+							<td><input type="checkbox" id="week_day_2" onclick="adminPlanRepeatTypeD1(2, this.checked)"></td>
+							<td><input type="checkbox" id="week_day_3" onclick="adminPlanRepeatTypeD1(3, this.checked)"></td>
+							<td><input type="checkbox" id="week_day_4" onclick="adminPlanRepeatTypeD1(4, this.checked)"></td>
+							<td><input type="checkbox" id="week_day_5" onclick="adminPlanRepeatTypeD1(5, this.checked)"></td>
+							<td><input type="checkbox" id="week_day_6" onclick="adminPlanRepeatTypeD1(6, this.checked)"></td>
+							<td><input type="checkbox" id="week_day_7" onclick="adminPlanRepeatTypeD1(7, this.checked)"></td>
+						</tr>
+					</table>
+				</div>
+				<div id="repeattype_monthly">
+					<span class="comment">Дни месяца</span>
+					<table class="admin_table" cellspacing="0">
+						<tr>
+						<? for($i = 1; $i <= 31; $i++): ?>
+							<?= ($i - 1) % 7 ? '' : '</tr><tr>' ?>
+							<td><input type="checkbox" id="month_day_<?= $i ?>" onclick="adminPlanRepeatTypeD2(<?= $i ?>, this.checked)"><label for="month_day_<?= $i ?>"><?= $i ?></label></td>
+						<? endfor; ?>
+						</tr>
+					</table>
+				</div>
+			</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -97,3 +139,7 @@
 		</tr>
 	</table>
 </div>
+<script type="text/javascript">
+	ge('kassa_addplan_form_repeattype').value = 'none';
+	adminPlanRepeatTypeChange2('none')
+</script>

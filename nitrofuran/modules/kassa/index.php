@@ -238,7 +238,7 @@ while(true)
 			'text'  => date('j', $d)
 		);
 		$d += 86400;
-		switch(date('H', $d))
+		switch(date('Yz', $d))
 		{
 			// при переводе часов на зимнее время
 			case 23:
@@ -330,6 +330,22 @@ while($r = $DB->Fetch($res))
 	$_debtors[] = $r;
 }
 $tplengine->assign('_debtors', $_debtors);
+
+// наиболее частые типы операций
+$res = $DB->Query("select t.`id` as tid, t.`name` as tname,
+	g.`id` as gid, g.`name` as gname from
+	`".KASSA_OPERATION_TABLE."` o
+	join `".KASSA_OPERATION_TYPE_TABLE."` t on (t.`id` = o.`type_id`)
+	join `".KASSA_OPERATION_TYPE_GROUP_TABLE."` g on (g.`id` = t.`group_id`)
+	group by t.`id`
+	order by count(o.`id`)
+	limit 5");
+$_frequent_types = array();
+while($r = $DB->Fetch($res))
+{
+	$_frequent_types[] = $r;
+}
+$tplengine->assign('_frequent_types', $_frequent_types);
 
 $tplengine->template('index.tpl');
 

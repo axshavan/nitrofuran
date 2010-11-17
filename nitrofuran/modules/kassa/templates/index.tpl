@@ -78,16 +78,20 @@
 		<a class="reset" href="<?= HTTP_ROOT ?>/kassa/">сбросить все фильтры</a>
 		<div class="add-form" id="add_form">
 			<form action="<?= HTTP_ROOT ?>/kassa/add/" method="post">
-				<strong>Добавить запись</strong><br>
+				<strong>Добавить запись</strong>
+				<? foreach($_frequent_types as $_type): ?>
+					<span class="command" title="<?= $_type['gname'] ?>/<?= $_type['tname'] ?>" onclick="onFrequentTypeClick(<?= $_type['tid'] ?>, <?= $_type['gid'] ?>)"><?= $_type['tname'] ?></span>
+				<? endforeach; ?>
+				<br>
 				<div class="optypegroups">
 					<? foreach($_optypegroups as $_group): ?>
-					<span onclick="onTypeGroupClick(this, '<?= $_group['id'] ?>')"><?= $_group['name'] ?></span>
+					<span id="span_group_<?= $_group['id'] ?>" onclick="onTypeGroupClick(this, '<?= $_group['id'] ?>')"><?= $_group['name'] ?></span>
 					<? endforeach; ?>
 				</div>
 				<? foreach($_optypes as $k => $_group): ?>
 					<div class="optypegroup" id="optypegroup<?= $k?>">
 						<? foreach($_group as $_optype): ?>
-							<span class="<?= $_optype['is_income'] ? 'inc' : 'exp' ?>" onclick="onTypeClick(this, '<?= $_optype['id'] ?>')"><?= $_optype['name'] ?></span>
+							<span id="span_type_<?= $_optype['id'] ?>" class="<?= $_optype['is_income'] ? 'inc' : 'exp' ?>" onclick="onTypeClick(this, '<?= $_optype['id'] ?>')"><?= $_optype['name'] ?></span>
 						<? endforeach; ?>
 					</div>
 				<? endforeach; ?>
@@ -108,59 +112,66 @@
 			</form>
 		</div>
 		
-		<!-- фильтр по типам операций -->
-		<div class="optable" id="optypefilter">
-			<strong>Фильтр по типам операций</strong> (<a href="<?= string_request_replace('type', 0) ?>">сбросить фильтр</a>)<br>
-			<div class="optypegroups">
-				<? foreach($_optypegroups as $_group): ?>
-				<span onclick="onTypeGroupClick2(this, '<?= $_group['id'] ?>')"><?= $_group['name'] ?></span>
-				<? endforeach; ?>
-			</div>
-			<? foreach($_optypes as $k => $_group): ?>
-				<div class="optypegroupf<?= $show_group == $k ? '' : ' hidden' ?>" id="optypegroupf<?= $k?>">
-					<? foreach($_group as $_optype): ?>
-						<span class="<?= $_optype['is_income'] ? 'inc' : 'exp' ?><?= $_optype['id'] == $filter_type ? ' selectedf' : '' ?>" onclick="document.location='<?= string_request_replace('type', $_optype['id'] ) ?>'"><?= $_optype['name'] ?></span>
+		<!-- всякое -->
+		<span class="command" onclick="$('#some').slideToggle(300);">Всякое [+/-]</span>
+		<div id="some">
+		
+			<!-- фильтр по типам операций -->
+			<div class="optable" id="optypefilter">
+				<strong>Фильтр по типам операций</strong> (<a href="<?= string_request_replace('type', 0) ?>">сбросить фильтр</a>)<br>
+				<div class="optypegroups">
+					<? foreach($_optypegroups as $_group): ?>
+					<span onclick="onTypeGroupClick2(this, '<?= $_group['id'] ?>')"><?= $_group['name'] ?></span>
 					<? endforeach; ?>
 				</div>
-			<? endforeach; ?>
-		</div>
-		<!-- /фильтр по типам операций -->
-		
-		<!-- фильтр по счёту -->
-		<div class="optable" id="accountfilter">
-			<strong>Фильтр по счёту</strong> (<a href="<?= string_request_replace('account', 0) ?>">сбросить фильтр</a>)<br>
-			<div>
-				<? foreach($_accounts as $_a): ?>
-					<span class="<?= $_a['id'] == $filter_account ? ' selectedf1' : '' ?>" onclick="document.location='<?= string_request_replace('account', $_a['id'] ) ?>'"><?= $_a['name'] ?></span>
+				<? foreach($_optypes as $k => $_group): ?>
+					<div class="optypegroupf<?= $show_group == $k ? '' : ' hidden' ?>" id="optypegroupf<?= $k?>">
+						<? foreach($_group as $_optype): ?>
+							<span class="<?= $_optype['is_income'] ? 'inc' : 'exp' ?><?= $_optype['id'] == $filter_type ? ' selectedf' : '' ?>" onclick="document.location='<?= string_request_replace('type', $_optype['id'] ) ?>'"><?= $_optype['name'] ?></span>
+						<? endforeach; ?>
+					</div>
 				<? endforeach; ?>
 			</div>
-		</div>
-		<!-- /фильтр по счёту -->
+			<!-- /фильтр по типам операций -->
+			
+			<!-- фильтр по счёту -->
+			<div class="optable" id="accountfilter">
+				<strong>Фильтр по счёту</strong> (<a href="<?= string_request_replace('account', 0) ?>">сбросить фильтр</a>)<br>
+				<div>
+					<? foreach($_accounts as $_a): ?>
+						<span class="<?= $_a['id'] == $filter_account ? ' selectedf1' : '' ?>" onclick="document.location='<?= string_request_replace('account', $_a['id'] ) ?>'"><?= $_a['name'] ?></span>
+					<? endforeach; ?>
+				</div>
+			</div>
+			<!-- /фильтр по счёту -->
+			
+			<!-- долги -->
+			<div class="optable" id="debtors">
+				<span class="credit1">Должник</span> <span class="credit2">Кредитор</span><br>
+				<table class="optable" cellspacing="0">
+					<? foreach($_debtors as &$_debtor): $bOdd = !$bOdd; ?>
+						<tr class="<?= $_debtor['amount'] < 0 ? 'exp' : 'inc' ?><?= $bOdd ? '_odd' : '' ?>">
+							<td><?= $_debtor['name'] ?></td>
+							<td>
+								<img
+									class="button"
+									src="<?= HTTP_ROOT ?>/i/kassa/add.gif"
+									alt="Добавить операцию"
+									title="Добавить операцию"
+									onclick="showDebtorForm(this, '<?= $_debtor['id'] ?>')"
+								>
+							</td>
+							<td><?= $_debtor['amount'] ?>&nbsp;<?= $_debtor['symbol'] ?></td>
+						</tr>
+					<? endforeach; ?>
+				</table>
+				<a href="/admin/?module=kassa&page=3">Управление должниками &raquo;</a>
+			</div>
+			
+			<!-- /долги -->
 		
-		<!-- долги -->
-		<div class="optable" id="debtors">
-			<span class="credit1">Должник</span> <span class="credit2">Кредитор</span><br>
-			<table class="optable" cellspacing="0">
-				<? foreach($_debtors as &$_debtor): $bOdd = !$bOdd; ?>
-					<tr class="<?= $_debtor['amount'] < 0 ? 'exp' : 'inc' ?><?= $bOdd ? '_odd' : '' ?>">
-						<td><?= $_debtor['name'] ?></td>
-						<td>
-							<img
-								class="button"
-								src="<?= HTTP_ROOT ?>/i/kassa/add.gif"
-								alt="Добавить операцию"
-								title="Добавить операцию"
-								onclick="showDebtorForm(this, '<?= $_debtor['id'] ?>')"
-							>
-						</td>
-						<td><?= $_debtor['amount'] ?>&nbsp;<?= $_debtor['symbol'] ?></td>
-					</tr>
-				<? endforeach; ?>
-			</table>
-			<a href="/admin/?module=kassa&page=3">Управление должниками &raquo;</a>
 		</div>
-		
-		<!-- /долги -->
+		<!-- /всякое -->
 		
 		<!-- таблица с операциями -->
 		<div class="optable">
@@ -269,7 +280,7 @@
 				{
 					echo $v.'&nbsp;'.$k.'<br>';
 				}
-				?></td><td colspan="5">Итого: <?
+				?></td><td colspan="6">Итого: <?
 				foreach($daysum as $k => $v)
 				{
 					echo $v.'&nbsp;'.$k.'<br>';

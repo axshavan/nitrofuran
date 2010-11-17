@@ -1,4 +1,69 @@
 /*
+	Смена типа расписание в админке в форме добавления нового события
+	в планировании.
+	@param repeattype {string} тип расписания
+*/
+function adminPlanRepeatTypeChange2(repeattype)
+{
+	ge('kassa_addplan_form_repeat').value  = '';
+	ge('repeattype_none').style.display    = 'none';
+	ge('repeattype_daily').style.display   = 'none';
+	ge('repeattype_weekly').style.display  = 'none';
+	ge('repeattype_monthly').style.display = 'none';
+	if(ge('repeattype_' + repeattype))
+	{
+		ge('repeattype_' + repeattype).style.display = 'block';
+	}
+}
+
+/*
+	Добавить или убрать день недели из инпута с расписанием в планировании.
+	@param day  {int}  номер дня недели (1-Пн, 7-Вс)
+	@param bAdd {bool} добавить или убрать
+*/
+function adminPlanRepeatTypeD1(day, bAdd)
+{
+	var inp = ge('kassa_addplan_form_repeat');
+	var schedule = new String(inp.value);
+	if(schedule.indexOf(day) > -1 && !bAdd)
+	{
+		inp.value = schedule.replace(day, '');
+	}
+	else if(schedule.indexOf(day) < 0 && bAdd)
+	{
+		inp.value += day;
+	}
+}
+
+/*
+	Добавить или убрать день месяца из инпута с расписанием в планировании.
+	@param day  {int}  номер дня месяца (1-31)
+	@param bAdd {bool} добавить или убрать
+*/
+function adminPlanRepeatTypeD2(day, bAdd)
+{
+	var inp = ge('kassa_addplan_form_repeat');
+	var schedule = new String(inp.value);
+	if(schedule.length)
+	{
+		schedule = schedule.split(',');
+	}
+	else
+	{
+		schedule = new Array();
+	}
+	if(schedule.indexOf(day) > -1 && !bAdd)
+	{
+		schedule[schedule.indexOf(day)] = '';
+		inp.value = schedule.toString();
+	}
+	else if(schedule.indexOf(day) < 0 && bAdd)
+	{
+		inp.value += day + ',';
+	}
+}
+
+/*
 	Проверка данных перед окончательной отправкой формы.
 */
 function checkAddForm()
@@ -49,6 +114,20 @@ function checkAddForm()
 function ge(id)
 {
 	return document.getElementById(id);
+}
+
+/*
+	Обработка нажатия на часто используемый тип операций.
+	@param type_id {int} идентификатор типа
+	@param group_id {int} идентификатор группы типа
+*/
+function onFrequentTypeClick(type_id, group_id)
+{
+	if(type_id && group_id)
+	{
+		onTypeGroupClick(ge('span_group_' + group_id), group_id);
+		onTypeClick(ge('span_type_' + type_id), type_id);
+	}
 }
 
 /*
@@ -147,8 +226,8 @@ function startEditEvent(obj, event_params)
 }
 
 /*
- * Калькулятор
- */
+	Калькулятор
+*/
 calc = {
 	// объект, к которому привязан калькулятор
 	bindobj: null,
@@ -261,3 +340,15 @@ calc = {
 		}
 	}
 };
+
+Array.prototype.indexOf = function(val)
+{
+	for(var i = this.length - 1; i >=0 ; i--)
+	{
+		if(this[i] == val)
+		{
+			return i;
+		}
+	}
+	return -1;
+}

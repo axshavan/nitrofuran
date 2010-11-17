@@ -142,6 +142,7 @@ switch($_REQUEST['page'])
 		// редактирование плана
 		if($_REQUEST['editplan'])
 		{
+			$_REQUEST['repeat'] = str_replace(',,', ',', trim($_REQUEST['repeat'], ','));
 			$sql = "update `".KASSA_PLANS_TABLE."` set
 				`name`              = '".$DB->EscapeString($_REQUEST['name'])."',
 				`operation_type_id` = '".(int)$_REQUEST['optype']."',
@@ -161,6 +162,7 @@ switch($_REQUEST['page'])
 		// добавление плана
 		if(isset($_REQUEST['addplan']))
 		{
+			$_REQUEST['repeat'] = str_replace(',,', ',', trim($_REQUEST['repeat'], ','));
 			$sql = "insert into `".KASSA_PLANS_TABLE."`
 				(`name`, `operation_type_id`, `amount`, `repeat_type`, `repeat`, `active`)
 				values (
