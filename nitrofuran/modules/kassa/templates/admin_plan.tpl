@@ -12,8 +12,7 @@
 	<th>id</th>
 	<th>Название</th>
 	<th>Тип операции</th>
-	<th>Сумма</th>
-	<th>Активность</th>
+	<th>Сумма, активность</th>
 	<th>Тип расписания</th>
 	<th>Расписание</th>
 	<th></th>
@@ -29,10 +28,12 @@
 				<? endforeach; ?>
 			</select>
 		</td>
-		<td><input type="text" size="6" id="plan_<?= $id ?>_amount" value="<?= $_plan['amount'] ?>"></td>
-		<td><input type="checkbox" id="plan_<?= $id ?>_active"<?= $_plan['active'] ? ' checked ' : '' ?>> <label for="plan<?= $id ?>">активен</label></td>
 		<td>
-			<select id="plan_<?= $id ?>_repeat_type">
+			<input type="text" size="6" id="plan_<?= $id ?>_amount" value="<?= $_plan['amount'] ?>"><br>
+			<input type="checkbox" id="plan_<?= $id ?>_active"<?= $_plan['active'] ? ' checked ' : '' ?>> <label for="plan_<?= $id ?>_active">активен</label>
+		</td>
+		<td>
+			<select id="plan_<?= $id ?>_repeat_type" onchange="adminPlanRepeatTypeChange(this.value, '<?= $id ?>')">
 				<option value="none"   <?= $_plan['repeat_type'] == 'none'    ? ' selected' : '' ?>>единоразовый расход</option>
 				<option value="daily"  <?= $_plan['repeat_type'] == 'daily'   ? ' selected' : '' ?>>ежедневный расход</option>
 				<option value="weekly" <?= $_plan['repeat_type'] == 'weekly'  ? ' selected' : '' ?>>еженедельный расход</option>
@@ -40,7 +41,49 @@
 			</select>
 		</td>
 		<td>
-			<input type="text" id="plan_<?= $id ?>_repeat" size="8" value="<?= $_plan['repeat'] ?>">
+			<input type="hidden" id="plan_<?= $id ?>_repeat" value="<?= $_plan['repeat'] ?>">
+			<div id="repeattype_<?= $id ?>_none"<?= $_plan['repeat_type'] == 'none' ? '' : ' class="invisible"' ?>>
+				<span class="comment">Дата в формате YYYY-MM-DD</span><br>
+				<input type="text" onkeyup="ge('kassa_addplan_form_repeat').value = this.value;" value="<?= $_plan['repeat_type'] == 'none' ? $_plan['repeat'] : '' ?>">
+			</div>
+			<div id="repeattype_<?= $id ?>_daily"<?= $_plan['repeat_type'] == 'daily' ? '' : ' class="invisible"' ?>><span class="comment">Особых опций не требуется</span></div>
+			<div id="repeattype_<?= $id ?>_weekly"<?= $_plan['repeat_type'] == 'weekly' ? '' : ' class="invisible"' ?>>
+				<span class="comment">Дни недели</span>
+				<table class="admin_table" cellspacing="0">
+					<tr>
+						<td><label for="week_day_<?= $id ?>_1">Пн</label></td>
+						<td><label for="week_day_<?= $id ?>_2">Вт</label></td>
+						<td><label for="week_day_<?= $id ?>_3">Ср</label></td>
+						<td><label for="week_day_<?= $id ?>_4">Чт</label></td>
+						<td><label for="week_day_<?= $id ?>_5">Пт</label></td>
+						<td><label for="week_day_<?= $id ?>_6">Сб</label></td>
+						<td><label for="week_day_<?= $id ?>_7">Вс</label></td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" id="week_day_<?= $id ?>_1" onclick="adminPlanRepeatTypeC1('<?= $id ?>', 1, this.checked)"<?= $_plan['repeat_type'] == 'weekly' && strpos($_plan['repeat'], '1') !== false ? ' checked' : '' ?>></td>
+						<td><input type="checkbox" id="week_day_<?= $id ?>_2" onclick="adminPlanRepeatTypeC1('<?= $id ?>', 2, this.checked)"<?= $_plan['repeat_type'] == 'weekly' && strpos($_plan['repeat'], '2') !== false ? ' checked' : '' ?>></td>
+						<td><input type="checkbox" id="week_day_<?= $id ?>_3" onclick="adminPlanRepeatTypeC1('<?= $id ?>', 3, this.checked)"<?= $_plan['repeat_type'] == 'weekly' && strpos($_plan['repeat'], '3') !== false ? ' checked' : '' ?>></td>
+						<td><input type="checkbox" id="week_day_<?= $id ?>_4" onclick="adminPlanRepeatTypeC1('<?= $id ?>', 4, this.checked)"<?= $_plan['repeat_type'] == 'weekly' && strpos($_plan['repeat'], '4') !== false ? ' checked' : '' ?>></td>
+						<td><input type="checkbox" id="week_day_<?= $id ?>_5" onclick="adminPlanRepeatTypeC1('<?= $id ?>', 5, this.checked)"<?= $_plan['repeat_type'] == 'weekly' && strpos($_plan['repeat'], '5') !== false ? ' checked' : '' ?>></td>
+						<td><input type="checkbox" id="week_day_<?= $id ?>_6" onclick="adminPlanRepeatTypeC1('<?= $id ?>', 6, this.checked)"<?= $_plan['repeat_type'] == 'weekly' && strpos($_plan['repeat'], '6') !== false ? ' checked' : '' ?>></td>
+						<td><input type="checkbox" id="week_day_<?= $id ?>_7" onclick="adminPlanRepeatTypeC1('<?= $id ?>', 7, this.checked)"<?= $_plan['repeat_type'] == 'weekly' && strpos($_plan['repeat'], '7') !== false ? ' checked' : '' ?>></td>
+					</tr>
+				</table>
+			</div>
+			<div id="repeattype_<?= $id ?>_monthly"<?= $_plan['repeat_type'] == 'monthly' ? '' : ' class="invisible"' ?>>
+				<span class="comment">Дни месяца</span>
+				<table class="admin_table" cellspacing="0">
+					<tr>
+					<?
+					$repeat = explode(',', $_plan['repeat']);
+					?>
+					<? for($i = 1; $i <= 31; $i++): ?>
+						<?= ($i - 1) % 7 ? '' : '</tr><tr>' ?>
+						<td><input type="checkbox" id="month_day_<?= $id ?>_<?= $i ?>" onclick="adminPlanRepeatTypeC2('<?= $id ?>', '<?= $i ?>', this.checked)"<?= $_plan['repeat_type'] == 'monthly' && in_array($i, $repeat) !== false ? ' checked' : '' ?>><label for="month_day_<?= $i ?>"><?= $i ?></label></td>
+					<? endfor; ?>
+					</tr>
+				</table>
+			</div>
 		</td>
 		<td>
 			<img src="/i/admin/ok.gif" class="button" alt="Сохранить" onclick="location='?module=kassa&page=2&editplan=<?= $id ?>&name='+ge('plan_<?= $id ?>_name').value+'&optype='+ge('plan_<?= $id ?>_optype').value+'&amount='+ge('plan_<?= $id ?>_amount').value+'&type='+ge('plan_<?= $id ?>_repeat_type').value+'&repeat='+ge('plan_<?= $id ?>_repeat').value+'&active='+ge('plan_<?= $id ?>_active').checked">
@@ -124,7 +167,7 @@
 						<tr>
 						<? for($i = 1; $i <= 31; $i++): ?>
 							<?= ($i - 1) % 7 ? '' : '</tr><tr>' ?>
-							<td><input type="checkbox" id="month_day_<?= $i ?>" onclick="adminPlanRepeatTypeD2(<?= $i ?>, this.checked)"><label for="month_day_<?= $i ?>"><?= $i ?></label></td>
+							<td><input type="checkbox" id="month_day_<?= $i ?>" onclick="adminPlanRepeatTypeD2('<?= $i ?>', this.checked)"><label for="month_day_<?= $i ?>"><?= $i ?></label></td>
 						<? endfor; ?>
 						</tr>
 					</table>

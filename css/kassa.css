@@ -42,6 +42,7 @@ a.reset:hover { color: #505050; }
 #main_container .add-form span:hover { color: #202020; border-bottom: 1px dashed #606060; }
 #main_container .add-form .optypegroups { background-color: #DCE884; padding: 2px; border: 1px solid #A4AF4D; -moz-border-radius: 3px; margin-bottom: 2px; }
 #main_container .add-form .optypegroup { background-color: #EDFF6B; padding: 2px; border: 1px solid #B3C41B; -moz-border-radius: 3px; margin-bottom: 2px; display: none; }
+#main_container .add-form .optypegroup span { border-bottom: none; }
 #main_container .add-form .optypegroup .inc { color: #006600; background-color: #D7FF6B; display: inline-block; margin: 2px; padding: 1px; }
 #main_container .add-form .optypegroup .inc:hover { background-color: #C1FF16; }
 #main_container .add-form .optypegroup .exp { color: #800000; background-color: #FFF17A; display: inline-block; margin: 2px; padding: 1px; }

@@ -1,4 +1,23 @@
 /*
+	Смена типа расписание в админке в форме редактирования события
+	в планировании.
+	@param repeattype {string}  тип расписания
+	@param id         {integer} номер записи
+*/
+function adminPlanRepeatTypeChange(repeattype, id)
+{
+	ge('plan_' + id + '_repeat').value                = '';
+	ge('repeattype_' + id + '_none').style.display    = 'none';
+	ge('repeattype_' + id + '_daily').style.display   = 'none';
+	ge('repeattype_' + id + '_weekly').style.display  = 'none';
+	ge('repeattype_' + id + '_monthly').style.display = 'none';
+	if(ge('repeattype_' + id + '_' + repeattype))
+	{
+		ge('repeattype_' + id + '_' + repeattype).style.display = 'block';
+	}
+}
+
+/*
 	Смена типа расписание в админке в форме добавления нового события
 	в планировании.
 	@param repeattype {string} тип расписания
@@ -13,6 +32,55 @@ function adminPlanRepeatTypeChange2(repeattype)
 	if(ge('repeattype_' + repeattype))
 	{
 		ge('repeattype_' + repeattype).style.display = 'block';
+	}
+}
+
+/*
+	Добавить или убрать день недели из инпута с расписанием в планировании.
+	@param id   {int}  номер записи
+	@param day  {int}  номер дня недели (1-Пн, 7-Вс)
+	@param bAdd {bool} добавить или убрать
+*/
+function adminPlanRepeatTypeC1(id, day, bAdd)
+{
+	var inp = ge('plan_' + id + '_repeat');
+	var schedule = new String(inp.value);
+	if(schedule.indexOf(day) > -1 && !bAdd)
+	{
+		inp.value = schedule.replace(day, '');
+	}
+	else if(schedule.indexOf(day) < 0 && bAdd)
+	{
+		inp.value += day;
+	}
+}
+
+/*
+	Добавить или убрать день месяца из инпута с расписанием в планировании.
+	@param id   {int}  номер записи
+	@param day  {int}  номер дня месяца (1-31)
+	@param bAdd {bool} добавить или убрать
+*/
+function adminPlanRepeatTypeC2(id, day, bAdd)
+{
+	var inp = ge('plan_' + id + '_repeat');
+	var schedule = new String(inp.value);
+	if(schedule.length)
+	{
+		schedule = schedule.split(',');
+	}
+	else
+	{
+		schedule = new Array();
+	}
+	if(schedule.indexOf(day) > -1 && !bAdd)
+	{
+		schedule[schedule.indexOf(day)] = '';
+		inp.value = schedule.toString();
+	}
+	else if(schedule.indexOf(day) < 0 && bAdd)
+	{
+		inp.value += ',' + day;
 	}
 }
 

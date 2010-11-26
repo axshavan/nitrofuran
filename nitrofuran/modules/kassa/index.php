@@ -338,7 +338,7 @@ $res = $DB->Query("select t.`id` as tid, t.`name` as tname,
 	join `".KASSA_OPERATION_TYPE_TABLE."` t on (t.`id` = o.`type_id`)
 	join `".KASSA_OPERATION_TYPE_GROUP_TABLE."` g on (g.`id` = t.`group_id`)
 	group by t.`id`
-	order by count(o.`id`)
+	order by count(o.`id`) desc
 	limit 5");
 $_frequent_types = array();
 while($r = $DB->Fetch($res))

@@ -6,6 +6,7 @@ div.hidden_form { background-color: #FFF9D1; border: 1px solid #EFE28B; padding:
 div.error { border: 1px solid #E20000; color: #8C0000; background-color: #FFEA91; padding: 10px; -moz-border-radius: 6px; margin: 3px 0 10px 0; }
 div.success { border: 1px solid #17AF07; color: #00540C; background-color: #BEFF9E; padding: 10px; -moz-border-radius: 6px; margin: 3px 0 10px 0; }
 fieldset { margin: 5px 0 5px 0; border: 1px solid #45BC51; background-color: #ECFFE8; -moz-border-radius: 6px; }
+.invisible { display: none; }
 
 /* Левая панель */
 .admin_left_panel { position: absolute; left: 0; top: 0; width: 250px; padding: 20px 0 20px 10px; z-index: 2; }

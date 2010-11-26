@@ -131,7 +131,7 @@ class tracer
 			: '')
 			.'<div id="'.$value_div_id.'">'.$value;
 		$tdstyle .= '; vertical-align: top;';
-		return '<tr><td style="'.$tdstyle.'">'.$name.'</td>'
+		return '<tr><td style="'.$tdstyle.'">'.$name.'&nbsp;</td>'
 			.'<td style="'.$tdstyle.'">'.$type.'</td>'
 			.'<td style="'.$tdstyle2.'">'.$value;
 	}
