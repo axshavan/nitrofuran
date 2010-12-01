@@ -226,10 +226,10 @@ $tplengine->assign('href_filter_to_nextmonth', string_request_replace('to', date
 // формирование календаря фильтра даты ОТ
 $_filter_from_calendar = array();
 $d = mktime(0, 0, 0, $filter_from_month, 2 - date('N', mktime(0, 0, 0, $filter_from_month, 1, $filter_from_year)), $filter_from_year);
+$bBreak = false;
 while(true)
 {
 	$_week  = array();
-	$bBreak = false;
 	for($i = 0; $i < 7; $i++)
 	{
 		$_week[] = array(
@@ -238,7 +238,7 @@ while(true)
 			'text'  => date('j', $d)
 		);
 		$d += 86400;
-		switch(date('Yz', $d))
+		switch(date('H', $d))
 		{
 			// при переводе часов на зимнее время
 			case 23:
@@ -257,7 +257,7 @@ while(true)
 				break;
 			}
 		}
-		if(date('n', $d) > $filter_from_month)
+		if(date('n', $d) > $filter_from_month || (date('n', $d) < $filter_from_month - 10))
 		{
 			$bBreak = true;
 		}
@@ -273,10 +273,10 @@ $tplengine->assign('_filter_from_calendar', $_filter_from_calendar);
 // формирование календаря фильтра даты ДО
 $_filter_to_calendar = array();
 $d = mktime(0, 0, 0, $filter_to_month, 2 - date('N', mktime(0, 0, 0, $filter_to_month, 1, $filter_to_year)), $filter_to_year);
+$bBreak = false;
 while(true)
 {
 	$_week  = array();
-	$bBreak = false;
 	for($i = 0; $i < 7; $i++)
 	{
 		$_week[] = array(
@@ -304,7 +304,7 @@ while(true)
 				break;
 			}
 		}
-		if(date('n', $d) > $filter_to_month)
+		if(date('n', $d) > $filter_to_month || (date('n', $d) < $filter_to_month - 10))
 		{
 			$bBreak = true;
 		}
