@@ -193,7 +193,7 @@
 				foreach($_operations as $_op)
 				{
 					$bOdd = !$bOdd;
-					if(date('N', $_op['time']) != $prevdate)
+					if(date('Yz', $_op['time']) != $prevdate)
 					{
 						// другая дата, надо вставить сепаратор
 						if($prevdate !== false)
@@ -216,7 +216,7 @@
 							?></td></tr><?
 						}
 						?><tr><td class="dayhead" colspan="8"><?= rudate('d M Y', $_op['time']) ?></td></tr><?
-						$prevdate   = date('N', $_op['time']);
+						$prevdate   = date('Yz', $_op['time']);
 						$daysum_inc = array();
 						$daysum_exp = array();
 						$daysum     = array();
@@ -296,19 +296,20 @@
 			<? foreach($_sum_all as $account => $data): ?>
 				<?= $account ?> &mdash;<br>
 				<? foreach($data as $currency => $amount): ?>
-					<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= $amount.'&nbsp;'.$currency ?></span><br>
+					<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= round($amount, 2).'&nbsp;'.$currency ?></span><br>
 				<? endforeach; ?>
 			<? endforeach; ?>
 			<strong>С выбранным фильтром</strong><br>
 			<? foreach($_sum_filtered as $currency => $amount): ?>
-				<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= $amount.'&nbsp;'.$currency ?></span><br>
+				<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= round($amount, 2).'&nbsp;'.$currency ?></span><br>
 			<? endforeach; ?>
 		</div>
 		<!-- /итого -->
 		
 		<!-- планирование -->
 		<div class="plans">
-			<strong>Предстоящие расходы и приходы; планы</strong>
+			<strong>Напоминания о предстоящих расходах и приходах</strong><br>
+			<a href="/kassa/plans/" class="reset">перейти в планирование &raquo;</a>
 			<table class="optable" cellspacing="0">
 			<? foreach($_plans as $date => $_dateplans): ?>
 				<tr>
@@ -397,7 +398,8 @@
 	<div id="linx" class="container">
 		<strong>Ссылки</strong><br>
 		<a href="/admin?module=kassa&page=1">настройки кассы</a><br>
-		<a href="/kassa/stats/">статистика</a>
+		<a href="/kassa/stats/">статистика</a><br>
+		<a href="/kassa/plans/">планирование</a>
 	</div>
 	<!-- /ссылки -->
 	

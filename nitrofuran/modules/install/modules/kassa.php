@@ -116,8 +116,8 @@ if(!$other_id)
 }
 $DB->Query("insert into `".KASSA_OPERATION_TYPE_TABLE."` (`group_id`, `name`, `is_income`, `is_service`) values
 	('".$income_id."', 'Перенос с другого счёта', 1, 1)");
-$OPTYPE_TRANSACTION_FROM_ID = $DB->InsertedId();
-if(!$OPTYPE_TRANSACTION_FROM_ID)
+$OPTYPE_TRANSACTION_TO_ID = $DB->InsertedId();
+if(!$OPTYPE_TRANSACTION_TO_ID)
 {
 	$DB->TransactionRollback();
 	return false;
@@ -125,8 +125,8 @@ if(!$OPTYPE_TRANSACTION_FROM_ID)
 }
 $DB->Query("insert into `".KASSA_OPERATION_TYPE_TABLE."` (`group_id`, `name`, `is_income`, `is_service`) values
 	('".$other_id."', 'Перенос на другой счёт', 0, 1)");
-$OPTYPE_TRANSACTION_TO_ID = $DB->InsertedId();
-if(!$OPTYPE_TRANSACTION_TO_ID)
+$OPTYPE_TRANSACTION_FROM_ID = $DB->InsertedId();
+if(!$OPTYPE_TRANSACTION_FROM_ID)
 {
 	$DB->TransactionRollback();
 	return false;

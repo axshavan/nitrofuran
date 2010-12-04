@@ -257,7 +257,7 @@ while(true)
 				break;
 			}
 		}
-		if(date('n', $d) > $filter_from_month || (date('n', $d) < $filter_from_month - 10))
+		if(date('n', $d) > $filter_from_month || (date('n', $d) < $filter_from_month - 10)) // следующий месяц или следующий год
 		{
 			$bBreak = true;
 		}
@@ -304,7 +304,7 @@ while(true)
 				break;
 			}
 		}
-		if(date('n', $d) > $filter_to_month || (date('n', $d) < $filter_to_month - 10))
+		if(date('n', $d) > $filter_to_month || (date('n', $d) < $filter_to_month - 10)) // следующий месяц или следующий год
 		{
 			$bBreak = true;
 		}

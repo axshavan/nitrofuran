@@ -34,6 +34,7 @@ img.button { border: none; cursor: pointer; }
 .admin_table { border-left: 1px solid #B0B0B0; border-top: 1px solid #B0B0B0; empty-cells: show; margin: 5px 0 5px 0; background-color: #f8f8f8; }
 .admin_table td { border-right: 1px solid #B0B0B0; border-bottom: 1px solid #B0B0B0; padding: 4px; vertical-align: top; }
 .admin_table td:first-child { text-align: right; font-weight: bold; }
+.admin_table td.nowrap { white-space: nowrap; }
 .admin_table td .comment { font-size: smaller; color: #808080; }
 .admin_table th { border-right: 1px solid #B0B0B0; border-bottom: 1px solid #B0B0B0; padding: 4px; vertical-align: top; background-color: #f0f0f0; }
 .admin_table a { color: #606060; text-decoration: underline; }

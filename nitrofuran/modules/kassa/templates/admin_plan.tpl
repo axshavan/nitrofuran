@@ -34,10 +34,10 @@
 		</td>
 		<td>
 			<select id="plan_<?= $id ?>_repeat_type" onchange="adminPlanRepeatTypeChange(this.value, '<?= $id ?>')">
-				<option value="none"   <?= $_plan['repeat_type'] == 'none'    ? ' selected' : '' ?>>единоразовый расход</option>
-				<option value="daily"  <?= $_plan['repeat_type'] == 'daily'   ? ' selected' : '' ?>>ежедневный расход</option>
-				<option value="weekly" <?= $_plan['repeat_type'] == 'weekly'  ? ' selected' : '' ?>>еженедельный расход</option>
-				<option value="monthly"<?= $_plan['repeat_type'] == 'monthly' ? ' selected' : '' ?>>ежемесячный расход</option>
+				<option value="none"   <?= $_plan['repeat_type'] == 'none'    ? ' selected' : '' ?>>единоразовая операция</option>
+				<option value="daily"  <?= $_plan['repeat_type'] == 'daily'   ? ' selected' : '' ?>>ежедневная операция</option>
+				<option value="weekly" <?= $_plan['repeat_type'] == 'weekly'  ? ' selected' : '' ?>>еженедельная операция</option>
+				<option value="monthly"<?= $_plan['repeat_type'] == 'monthly' ? ' selected' : '' ?>>ежемесячная операция</option>
 			</select>
 		</td>
 		<td>
@@ -79,7 +79,7 @@
 					?>
 					<? for($i = 1; $i <= 31; $i++): ?>
 						<?= ($i - 1) % 7 ? '' : '</tr><tr>' ?>
-						<td><input type="checkbox" id="month_day_<?= $id ?>_<?= $i ?>" onclick="adminPlanRepeatTypeC2('<?= $id ?>', '<?= $i ?>', this.checked)"<?= $_plan['repeat_type'] == 'monthly' && in_array($i, $repeat) !== false ? ' checked' : '' ?>><label for="month_day_<?= $i ?>"><?= $i ?></label></td>
+						<td class="nowrap"><input type="checkbox" id="month_day_<?= $id ?>_<?= $i ?>" onclick="adminPlanRepeatTypeC2('<?= $id ?>', '<?= $i ?>', this.checked)"<?= $_plan['repeat_type'] == 'monthly' && in_array($i, $repeat) !== false ? ' checked' : '' ?>><label for="month_day_<?= $i ?>"><?= $i ?></label></td>
 					<? endfor; ?>
 					</tr>
 				</table>
@@ -122,10 +122,10 @@
 			<td>Тип расписания</td>
 			<td>
 				<select id="kassa_addplan_form_repeattype" onchange="adminPlanRepeatTypeChange2(this.value)">
-					<option value="none" selected>единоразовый расход</option>
-					<option value="daily">ежедневный расход</option>
-					<option value="weekly">еженедельный расход</option>
-					<option value="monthly">ежемесячный расход</option>
+					<option value="none" selected>единоразовая операция</option>
+					<option value="daily">ежедневная операция</option>
+					<option value="weekly">еженедельная операция</option>
+					<option value="monthly">ежемесячная операция</option>
 				</select>
 			</td>
 		</tr>

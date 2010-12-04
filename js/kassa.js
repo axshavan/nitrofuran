@@ -226,6 +226,7 @@ function onTypeClick(obj, type_id)
 	ge('inp_optype').value = type_id;
 	$('.selected').removeClass('selected');
 	obj.className += ' selected';
+	ge('inp_amount').focus();
 }
 
 /*
