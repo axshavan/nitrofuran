@@ -9,9 +9,9 @@ define('DOCUMENT_ROOT', $_SERVER['DOCUMENT_ROOT'].HTTP_ROOT); // физичес�
 
 // параметры соединения с базой данных
 define('MYSQL_HOST',     'localhost');
-define('MYSQL_USER',     'nitrofuran');
-define('MYSQL_PASSWORD', '123');
-define('MYSQL_DATABASE', 'nitrofuran');
+define('MYSQL_USER',     'user');
+define('MYSQL_PASSWORD', 'password');
+define('MYSQL_DATABASE', 'database-name');
 
 // имена некоторых таблиц
 define('TREE_TABLE',     'tree');
