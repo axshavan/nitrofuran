@@ -76,7 +76,7 @@ foreach($_opbytype as $optype_id => &$_op)
 	}
 }
 
-$tplengine = new CTemplateEngine('kassa');
+$tplengine = new template_engine('kassa');
 $tplengine->assign('title', get_param('kassa', 'plans_title'));
 
 $tplengine->assign('_optypes',    $_optypes);

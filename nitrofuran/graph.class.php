@@ -283,9 +283,10 @@ class graph
 		@param array $_array массив вида array(
 			'id' => array('parent_id' => parent_id, ...)
 		)
+		@param  string $pid_key_name название ключа, который является идентификатором родителя
 		@return true или остатки массива $_array, не вписавшиеся в граф
 	*/
-	public function CreateFromArray($_array)
+	public function CreateFromArray($_array, $pid_key_name = 'parent_id')
 	{
 		// если граф уже был, надо его грохнуть
 		if($this->root_node != null)
@@ -297,7 +298,7 @@ class graph
 		// первый проход
 		foreach($_array as $id => $_node)
 		{
-			$node = &$this->root_node->FindChildById($_node['parent_id']);
+			$node = &$this->root_node->FindChildById($_node[$pid_key_name]);
 			if($node)
 			{
 				$node->CreateChild($id, $_node);
@@ -308,7 +309,7 @@ class graph
 		// второй проход. Наверное, достаточно
 		foreach($_array as $id => $_node)
 		{
-			$node = &$this->root_node->FindChildById($_node['parent_id']);
+			$node = &$this->root_node->FindChildById($_node[$pid_key_name]);
 			if($node)
 			{
 				$node->CreateChild($id, $_node);

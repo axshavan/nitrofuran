@@ -141,7 +141,7 @@ class CAuth
 	/*
 		Начать сессию незарегистрированного пользователя или обнулить
 		текущую сессию.
-		@return 0
+		@return false
 	*/
 	protected function GuestSession()
 	{
@@ -157,7 +157,7 @@ class CAuth
 	protected function KillOldSessions()
 	{
 		global $DB;
-		$DB->Query("delete from `".SESSIONS_TABLE."` where `last_action` < UNIX_TIMESTAMP() - ".SESSION_LIFETIME);
+		return $DB->Query("delete from `".SESSIONS_TABLE."` where `last_action` < UNIX_TIMESTAMP() - ".SESSION_LIFETIME);
 	}
 	
 	/*

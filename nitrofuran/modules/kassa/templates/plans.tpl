@@ -8,6 +8,8 @@
 	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/jquery-1.4.3.min.js"></script>
 </head>
 <body>
+
+<a class="reset" href="/kassa/">&laquo; вернуться в кассу</a>
 	
 <div class="container">
 	
@@ -37,6 +39,7 @@
 			<th>В среднем</th>
 			<th>В среднем в месяц</th>
 			<th>В этом месяце ещё</th>
+			<th>&nbsp;</th>
 		</tr>
 		<? foreach($_opbytype as $optype_id => $_opbycur): ?>
 			<? foreach($_opbycur as $currency_id => $_op): ?>
@@ -62,6 +65,7 @@
 								</strong>
 							<? endif; ?>
 						</td>
+						<td></td>
 					</tr>
 				<? endif; ?>
 			<? endforeach; ?>

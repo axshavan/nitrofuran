@@ -32,7 +32,7 @@ CHARACTER SET utf8 COLLATE utf8_general_ci;");
 $DB->Query("CREATE TABLE `".KOKOL_PASSWORDS_TABLE."` (
   `id` integer UNSIGNED NOT NULL AUTO_INCREMENT,
   `category_id` integer UNSIGNED NOT NULL,
-  `resourse` varchar(255)  NOT NULL,
+  `resource` varchar(255)  NOT NULL,
   `login` varchar(255)  NOT NULL,
   `password` varchar(255)  NOT NULL,
   PRIMARY KEY (`id`)

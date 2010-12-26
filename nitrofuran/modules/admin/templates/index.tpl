@@ -61,10 +61,10 @@ $_params_types = array(
 							?><input type="hidden" name="o[<?= $_option['name'] ?>]" id="o_<?= $_option['name'] ?>" value=""><?
 							foreach($_option['value'] as $k => $v)
 							{
-								?><input type="text" size="2" maxsize="5" id="o_<?= $_option['name']?>_key_<?= $option_sub_id ?>" name="o[<?= $_option['name']?>_key_<?= $option_sub_id ?>]" value="<?= h($k) ?>">&nbsp;<input type="text" size="20" id="o_<?= $_option['name'] ?>_value_<?= $option_sub_id ?>" name="o[<?= $_option['name'] ?>_value_<?= $option_sub_id ?>]" value="<?= h($v) ?>"><br><?
+								?><input type="text" size="4" maxsize="5" id="o_<?= $_option['name']?>_key_<?= $option_sub_id ?>" name="o[<?= $_option['name']?>_key_<?= $option_sub_id ?>]" value="<?= h($k) ?>">&nbsp;<input type="text" size="20" id="o_<?= $_option['name'] ?>_value_<?= $option_sub_id ?>" name="o[<?= $_option['name'] ?>_value_<?= $option_sub_id ?>]" value="<?= h($v) ?>"><br><?
 								$option_sub_id++;
 							}
-							?><span class="comment">Добавить ключ (не обязательно) и значение:</span><br><input type="text" size="2" maxsize="5" id="o_<?= $_option['name']?>_key_<?= $option_sub_id ?>" name="o[<?= $_option['name']?>_key_<?= $option_sub_id ?>]" value="">&nbsp;<input type="text" size="20" id="o_<?= $_option['name'] ?>_value_<?= $option_sub_id ?>" name="o[<?= $_option['name'] ?>_value_<?= $option_sub_id ?>]" value=""><?
+							?><span class="comment">Добавить ключ (не обязательно) и значение:</span><br><input type="text" size="4" maxsize="5" id="o_<?= $_option['name']?>_key_<?= $option_sub_id ?>" name="o[<?= $_option['name']?>_key_<?= $option_sub_id ?>]" value="">&nbsp;<input type="text" size="20" id="o_<?= $_option['name'] ?>_value_<?= $option_sub_id ?>" name="o[<?= $_option['name'] ?>_value_<?= $option_sub_id ?>]" value=""><?
 							break;
 						}
 						// текстареа

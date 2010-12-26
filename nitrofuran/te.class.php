@@ -3,7 +3,7 @@
 /*
  * Процессор шаблонов.
  */
-class CTemplateEngine
+class template_engine
 {
 	public $_tpl_vars = array();
 	public $module    = '';
@@ -101,7 +101,7 @@ class CTemplateEngine
 	*/
 	protected function IncludeTemplate($tpl_name)
 	{
-		$tplengine = new CTemplateEngine();
+		$tplengine = new template_engine();
 		$tplengine->_tpl_vars = $this->_tpl_vars;
 		return $tplengine->template($tpl_name);
 	}

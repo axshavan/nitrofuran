@@ -5,7 +5,7 @@
  */
 
 $template_name = 'index.tpl';
-$tplengine     = new CTemplateEngine('admin');
+$tplengine     = new template_engine('admin');
 $module        = $DB->EscapeString($_GET['module']);
 if(!$module)
 {

@@ -5,7 +5,7 @@
 // возврат обратно на форму с ошибкой
 function go_back_to_stage0($cid = false)
 {
-	$tplengine = new CTemplateEngine('install');
+	$tplengine = new template_engine('install');
 	$tplengine->assign('error_text',      mysql_errno($cid).': '.mysql_error($cid));
 	$tplengine->assign('mysql_host',      $_POST['mysql_host']);
 	$tplengine->assign('mysql_user',      $_POST['mysql_user']);
@@ -78,7 +78,7 @@ foreach($sql as $query)
 mysql_query("commit", $cid);
 
 // запись параметров в конфиг
-$conf_text = file_get_contents(DOCUMENT_ROOT.'/nitrofuran/config.php');
+$conf_text = file_get_contents(DOCUMENT_ROOT.'/nitrofuran/config.php-dist');
 $conf_text = preg_replace('/define[\s]*\([\s]*(\'|\")MYSQL_HOST\1[\s]*,[\s]*(\'|\")([\w\d\:\_\-\/]+)\2/',   "define('MYSQL_HOST', '".$_POST['mysql_host']."'", $conf_text);
 $conf_text = preg_replace('/define[\s]*\([\s]*(\'|\")MYSQL_USER\1[\s]*,[\s]*(\'|\")([\w\d\:\_\-\/]+)\2/',   "define('MYSQL_USER', '".$_POST['mysql_user']."'", $conf_text);
 $conf_text = preg_replace('/define[\s]*\([\s]*(\'|\")MYSQL_PASSWORD\1[\s]*,[\s]*(\'|\")([\s\S]+)\2/U',      "define('MYSQL_PASSWORD', '".$_POST['mysql_password']."'", $conf_text);

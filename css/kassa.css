@@ -98,7 +98,7 @@ table.optable tr.exp_odd { background-color: #E57070; }
 table.optable tr.daysum { background-color: #FFFAE5; font-weight: bold; }
 table.optable tr.daysum .inc { color: #006600; }
 table.optable tr.daysum .exp { color: #800000; }
-table.optable td.dayhead { font-size: 10px; height: 30px; vertical-align: bottom; }
+table.optable td.dayhead { font-size: 13px; height: 30px; vertical-align: bottom; }
 table.optable td.itogo { font-size: 14px; }
 
 .stats-column-1 { position: absolute; width: 32%; left: 0.5%; top: 30px; }

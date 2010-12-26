@@ -38,7 +38,7 @@ if($cid)
 }
 if(!$stage)
 {
-	$tplengine = new CTemplateEngine('install');
+	$tplengine = new template_engine('install');
 	$tplengine->template('stage0.tpl');
 }
 

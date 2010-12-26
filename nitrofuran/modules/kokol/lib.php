@@ -51,8 +51,17 @@ function kokol_str_replace($alphabet1, $alphabet2, $string)
 	$l      = strlen($string);
 	for($i = 0; $i < $l; $i++)
 	{
-		
+		$s = $_replace[$string[$i]];
+		if(strlen($s))
+		{
+			$result .= $s;
+		}
+		else
+		{
+			$result .= $string[$i];
+		}
 	}
+	return $result;
 }
 
 ?>
