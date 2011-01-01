@@ -8,6 +8,12 @@
 
 error_reporting(E_ERROR);
 
+if(!file_exists('nitrofuran/config.php'))
+{
+	header('Content-Type: text/plain; charset=utf8');
+	echo 'Не существует или не доступен файл nitrofuran/config.php. Убедитесь, что он существует и что веб-сервер имеет права на его чтение.';
+	die();
+}
 require_once('nitrofuran/config.php');
 require_once(DOCUMENT_ROOT.'/nitrofuran/libfunc.php');
 require_once(DOCUMENT_ROOT.'/nitrofuran/db.class.php');

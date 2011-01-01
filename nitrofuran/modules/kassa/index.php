@@ -261,6 +261,10 @@ while(true)
 		{
 			$bBreak = true;
 		}
+		elseif(date('n', $d) == $filter_to_month)
+		{
+			$bBreak = false;
+		}
 	}
 	$_filter_from_calendar[] = $_week;
 	if($bBreak)
@@ -307,6 +311,10 @@ while(true)
 		if(date('n', $d) > $filter_to_month || (date('n', $d) < $filter_to_month - 10)) // следующий месяц или следующий год
 		{
 			$bBreak = true;
+		}
+		elseif(date('n', $d) == $filter_to_month)
+		{
+			$bBreak = false;
 		}
 	}
 	$_filter_to_calendar[] = $_week;
