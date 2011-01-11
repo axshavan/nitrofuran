@@ -28,14 +28,14 @@ if($OPTYPE_TRANSACTION_COMISSION_ID)
 {
 	$sum_comission = ($_POST['comission'] / 100) * $sum_from;
 }
-$DB->Query("insert into `".KASSA_OPERATION_TABLE."` (`currency_id`, `account_id`, `type_id`, `amount`, `time`, `comment`)
-	values ('".(int)$_POST['currency']."', '".(int)$_POST['account_from']."', '".$OPTYPE_TRANSACTION_FROM_ID."', '".$sum_from."', unix_timestamp(), 'На счёт ".$_accounts[$_POST['account_to']]."')");
-$DB->Query("insert into `".KASSA_OPERATION_TABLE."` (`currency_id`, `account_id`, `type_id`, `amount`, `time`, `comment`)
-	values ('".(int)$_POST['currency']."', '".(int)$_POST['account_to']."', '".$OPTYPE_TRANSACTION_TO_ID."', '".$sum_to."', unix_timestamp(), 'Со счёта ".$_accounts[$_POST['account_from']]."')");
+$DB->Query("insert into `".KASSA_OPERATION_TABLE."` (`currency_id`, `account_id`, `type_id`, `amount`, `time`, `comment`, `backtime`)
+	values ('".(int)$_POST['currency']."', '".(int)$_POST['account_from']."', '".$OPTYPE_TRANSACTION_FROM_ID."', '".$sum_from."', unix_timestamp(), 'На счёт ".$_accounts[$_POST['account_to']]."',    unix_timestamp())");
+$DB->Query("insert into `".KASSA_OPERATION_TABLE."` (`currency_id`, `account_id`, `type_id`, `amount`, `time`, `comment`, `backtime`)
+	values ('".(int)$_POST['currency']."', '".(int)$_POST['account_to']."',   '".$OPTYPE_TRANSACTION_TO_ID."',   '".$sum_to."',   unix_timestamp(), 'Со счёта ".$_accounts[$_POST['account_from']]."', unix_timestamp())");
 if($OPTYPE_TRANSACTION_COMISSION_ID && $sum_comission)
 {
-	$DB->Query("insert into `".KASSA_OPERATION_TABLE."` (`currency_id`, `account_id`, `type_id`, `amount`, `time`, `comment`)
-		values ('".(int)$_POST['currency']."', '".(int)$_POST['account_to']."', '".$OPTYPE_TRANSACTION_COMISSION_ID."', '".$sum_comission."', unix_timestamp(), 'С переноса со счёта ".$_accounts[$_POST['account_from']]."')");
+	$DB->Query("insert into `".KASSA_OPERATION_TABLE."` (`currency_id`, `account_id`, `type_id`, `amount`, `time`, `comment`, `backtime`)
+		values ('".(int)$_POST['currency']."', '".(int)$_POST['account_to']."', '".$OPTYPE_TRANSACTION_COMISSION_ID."', '".$sum_comission."', unix_timestamp(), 'С переноса со счёта ".$_accounts[$_POST['account_from']]."', unix_timestamp())");
 }
 redirect('..');
 

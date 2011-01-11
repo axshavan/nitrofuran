@@ -66,16 +66,17 @@ $sql = "select
 	o.`is_service` as service,
 	k.`amount`,
 	k.`time`,
-	k.`comment`
+	k.`comment`,
+	k.`backtime`
 	from `".KASSA_OPERATION_TABLE."` k
 	join `".KASSA_CURRENCY_TABLE."` c on (c.`id` = k.`currency_id`)
 	join `".KASSA_OPERATION_TYPE_TABLE."` o on (o.`id` = k.`type_id`)
 	join `".KASSA_ACCOUNT_TABLE."` a on (a.`id` = k.`account_id`)
-	where `time` > '".mktime(0, 0, 0, $filter_from_month, $filter_from_day, $filter_from_year)."'
-	and `time` < '".mktime(23, 59, 50, $filter_to_month, $filter_to_day, $filter_to_year)."'"
+	where `backtime` > '".mktime(0, 0, 0, $filter_from_month, $filter_from_day, $filter_from_year)."'
+	and `backtime` < '".mktime(23, 59, 50, $filter_to_month, $filter_to_day, $filter_to_year)."'"
 	.($filter_type    ? " and k.`type_id`    = '".$filter_type."'"    : '')
 	.($filter_account ? " and k.`account_id` = '".$filter_account."'" : '');
-$sql .= " order by `id` desc";
+$sql .= " order by `backtime` desc";
 $res = $DB->Query($sql);
 while($_row = $DB->Fetch($res))
 {

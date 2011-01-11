@@ -109,6 +109,27 @@
 				<input type="text" name="comment" id="inp_comment"> <label for="inp_comment">Комментарий</label><br>
 				<input type="hidden" name="optype" id="inp_optype">
 				<input type="submit" onclick="return checkAddForm()" value="Добавить запись">
+				<span class="command" onclick="$('#backtimediv').slideToggle(); ge('backyear_select').value=''; ge('backmonth_select').value=''; ge('backday_select').value=''; ">задним числом</span>
+				<div class="hidden" id="backtimediv">
+					<select id="backyear_select" name="backyear">
+						<option value=""></option>
+						<? for($y = date('Y'); $y >= date('Y') - 3; $y--): ?>
+							<option value="<?= $y ?>"><?= $y ?></option>
+						<? endfor; ?>
+					</select>
+					<select id="backmonth_select" name="backmonth">
+						<option value=""></option>
+						<? for($m = 1; $m <= 12; $m++): ?>
+							<option value="<?= $m ?>"><?= $m ?></option>
+						<? endfor; ?>
+					</select>
+					<select id="backday_select" name="backday">
+						<option value=""></option>
+						<? for($d = 1; $d <= 31; $d++): ?>
+							<option value="<?= $d ?>"><?= $d ?></option>
+						<? endfor; ?>
+					</select>
+				</div>
 			</form>
 		</div>
 		
@@ -193,7 +214,7 @@
 				foreach($_operations as $_op)
 				{
 					$bOdd = !$bOdd;
-					if(date('Yz', $_op['time']) != $prevdate)
+					if(date('Yz', $_op['backtime']) != $prevdate)
 					{
 						// другая дата, надо вставить сепаратор
 						if($prevdate !== false)
@@ -215,8 +236,8 @@
 							}
 							?></td></tr><?
 						}
-						?><tr><td class="dayhead" colspan="8"><?= rudate('d M Y', $_op['time']) ?></td></tr><?
-						$prevdate   = date('Yz', $_op['time']);
+						?><tr><td class="dayhead" colspan="8"><?= rudate('d M Y', $_op['backtime']) ?></td></tr><?
+						$prevdate   = date('Yz', $_op['backtime']);
 						$daysum_inc = array();
 						$daysum_exp = array();
 						$daysum     = array();
@@ -265,7 +286,8 @@
 										optype:   '<?= $_op['optype_id']?>',
 										comment:  '<?= $_op['comment']?>',
 										currency: '<?= $_op['currency_id']?>',
-										account:  '<?= $_op['account_id']?>'
+										account:  '<?= $_op['account_id']?>',
+										backtime: '<?= $_op['backtime'] ?>'
 									})">
 						</td>
 					</tr>
@@ -357,6 +379,25 @@
 			</select> <label for="event_edit_form_account">Счёт</label><br>
 			<input type="text" name="amount" id="event_edit_form_amount"> <label for="event_edit_form_amount">Сумма</label><br>
 			<input type="text" name="comment" id="event_edit_form_comment"> <label for="event_edit_form_comment">Комментарий</label><br>
+			<select id="event_edit_form_backyear" name="backyear">
+				<option value=""></option>
+				<? for($y = date('Y'); $y >= date('Y') - 3; $y--): ?>
+					<option value="<?= $y ?>"><?= $y ?></option>
+				<? endfor; ?>
+			</select>
+			<select id="event_edit_form_backmonth" name="backmonth">
+				<option value=""></option>
+				<? for($m = 1; $m <= 12; $m++): ?>
+					<option value="<?= $m ?>"><?= $m ?></option>
+				<? endfor; ?>
+			</select>
+			<select id="event_edit_form_backday" name="backday">
+				<option value=""></option>
+				<? for($d = 1; $d <= 31; $d++): ?>
+					<option value="<?= $d ?>"><?= $d ?></option>
+				<? endfor; ?>
+			</select> <label>Запись задним числом</label>
+			<br>
 			<input type="hidden" name="id" id="event_edit_form_hidden">
 			<input type="submit" value="Сохранить">
 		</form>

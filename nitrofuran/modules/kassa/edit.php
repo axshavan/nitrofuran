@@ -15,7 +15,9 @@ if($_POST['id'] && $_POST['account'] && $_POST['optype'] && $_POST['currency'])
 		`account_id`  = '".(int)$_POST['account']."',
 		`type_id`     = '".(int)$_POST['optype']."',
 		`amount`      = '".(float)$_POST['amount']."',
-		`comment`     = '".$DB->EscapeString($_POST['comment'])."' where `id` = '".(int)$_POST['id']."'");
+		`comment`     = '".$DB->EscapeString($_POST['comment'])."',
+		`backtime`    = '".mktime(0, 0, 0, $_POST['backmonth'], $_POST['backday'], $_POST['backyear'])."'
+		where `id` = '".(int)$_POST['id']."'");
 }
 redirect('..');
 

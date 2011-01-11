@@ -283,12 +283,16 @@ function showDebtorForm(obj, debtor_id)
 */
 function startEditEvent(obj, event_params)
 {
-	ge('event_edit_form_hidden').value   = event_params['id'];
-	ge('event_edit_form_optype').value   = event_params['optype'];
-	ge('event_edit_form_currency').value = event_params['currency'];
-	ge('event_edit_form_amount').value   = event_params['amount'];
-	ge('event_edit_form_comment').value  = event_params['comment'];
-	ge('event_edit_form_account').value  = event_params['account'];
+	var backtime = new Date(event_params['backtime'] * 1000);
+	ge('event_edit_form_hidden').value    = event_params['id'];
+	ge('event_edit_form_optype').value    = event_params['optype'];
+	ge('event_edit_form_currency').value  = event_params['currency'];
+	ge('event_edit_form_amount').value    = event_params['amount'];
+	ge('event_edit_form_comment').value   = event_params['comment'];
+	ge('event_edit_form_account').value   = event_params['account'];
+	ge('event_edit_form_backyear').value  = backtime.getFullYear();
+	ge('event_edit_form_backmonth').value = backtime.getMonth() + 1;
+	ge('event_edit_form_backday').value   = backtime.getDate();
 	$('#event_edit_form').css('top', $(obj).offset().top + 36);
 	$('#event_edit_form').css('left', $(obj).offset().left - 11);
 	$('#event_edit_form').fadeIn(300);

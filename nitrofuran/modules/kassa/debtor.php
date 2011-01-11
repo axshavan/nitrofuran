@@ -28,8 +28,8 @@ if($_REQUEST['debtor_id'])
 	$DB->Query("insert into `".KASSA_DEBTORS_OPERATION_TABLE."`
 		(`debtor_id`, `date`, `amount`, `currency_id`)
 		values ('".$_REQUEST['debtor_id']."', unix_timestamp(), '".$amount."', '".(int)$_REQUEST['debtor_currency']."')");
-	$DB->Query("insert into `".KASSA_OPERATION_TABLE."` (`currency_id`, `account_id`, `type_id`, `amount`, `time`, `comment`) values
-		('".(int)$_REQUEST['debtor_currency']."', 1, '".$OPTYPE_DEBTOR."', '".($amount * ($amount > 0 ? 1 : -1))."', unix_timestamp(), '(".$debtor_name.") ".$DB->EscapeString($_REQUEST['debtor_comment'])."')");
+	$DB->Query("insert into `".KASSA_OPERATION_TABLE."` (`currency_id`, `account_id`, `type_id`, `amount`, `time`, `comment`, `backtime`) values
+		('".(int)$_REQUEST['debtor_currency']."', 1, '".$OPTYPE_DEBTOR."', '".($amount * ($amount > 0 ? 1 : -1))."', unix_timestamp(), '(".$debtor_name.") ".$DB->EscapeString($_REQUEST['debtor_comment'])."', unix_timestamp())");
 }
 redirect('..');
 

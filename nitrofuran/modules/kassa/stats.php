@@ -68,7 +68,7 @@ while($_row = $DB->Fetch($res))
 	$_operation_sum[$_row['type_id']][$_row['currency_id']]  += $_row['amount'];
 	if(!$_optypes[$_row['type_id']]['is_service'])
 	{
-		$_months[date('Y-m', $_row['time'])][$_optypes[$_row['type_id']]['is_income'] ? 'income' : 'expenditure'] += $_row['amount'];
+		$_months[date('Y-m', $_row['backtime'])][$_optypes[$_row['type_id']]['is_income'] ? 'income' : 'expenditure'] += $_row['amount'];
 	}
 	if($_row['time'] > $last_month)
 	{
@@ -79,9 +79,9 @@ while($_row = $DB->Fetch($res))
 		$_operation_count_m[$_row['type_id']][$_row['currency_id']]++;
 		$_operation_sum_m[$_row['type_id']][$_row['currency_id']]  += $_row['amount'];
 	}
-	if($first_operation > $_row['time'])
+	if($first_operation > $_row['backtime'])
 	{
-		$first_operation = $_row['time'];
+		$first_operation = $_row['backtime'];
 	}
 }
 krsort($_months);
