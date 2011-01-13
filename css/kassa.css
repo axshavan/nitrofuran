@@ -56,7 +56,7 @@ a.reset:hover { color: #505050; }
 #main_container .plans .optable { width: 100%; }
 #main_container span.command { display: inline-block; margin: 10px 0 5px 0; border-bottom: 1px dashed #303030; color: #303030; cursor: pointer; }
 
-#linx {  position: absolute; top: 600px; left: 5px; width: 142px; }
+#linx {  position: absolute; top: 610px; left: 5px; width: 142px; }
 #linx a { color: #202020; text-decoration: underline; }
 #linx a:hover { color: #303030; }
 
@@ -76,7 +76,7 @@ a.reset:hover { color: #505050; }
 #accountfilter span:hover { color: #202020; border-bottom: 1px dashed #606060; }
 #accountfilter div { background-color: #DCE884; padding: 2px; border: 1px solid #A4AF4D; -moz-border-radius: 3px; margin-bottom: 2px; }
 
-#transaccount { position: absolute; left: 5px; top: 330px; width: 142px; }
+#transaccount { position: absolute; left: 5px; top: 340px; width: 142px; }
 #transaccount label { font-weight: bold; display: block; margin-top: 5px; }
 #transaccount input { width: 100px; }
 
@@ -107,7 +107,7 @@ table.optable td.itogo { font-size: 14px; }
 .stats-column-3 { position: absolute; width: 32%; left: 65.5%; top: 30px; }
 .stats-column-1 table td,
 .stats-column-2 table td,
-.stats-column-3 table td { font-size: 8px; }
+.stats-column-3 table td { font-size: 9px; }
 
 table.stat_table { background-color: #BABABA; width: 100%; border-left: 1px solid #303030; border-top: 1px solid #303030; empty-cells: show; }
 table.stat_table th { padding: 2px; text-align: left; border-right: 1px solid #303030; border-bottom: 1px solid #303030; background-color: white; }
