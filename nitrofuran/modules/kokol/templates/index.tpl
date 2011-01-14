@@ -26,35 +26,38 @@ function te_draw_category_recursively(&$_cat)
 				<table cellspacing="0">
 					<? foreach($_cat['data']['passwords'] as $_password): ?>
 						<tr>
-							<td>
-								<input
-									type="text"
-									id="form_<?= $_password['id'] ?>_resource"
-									name="form_<?= $_password['id'] ?>_resource"
-									value="<?= $_password['resource'] ?>">
-							</td>
-							<td>
-								<input
-									type="text"
-									id="form_<?= $_password['id'] ?>_login"
-									name="form_<?= $_password['id'] ?>_login"
-									value="<?= $_password['login'] ?>"
-									onclick="this.select()">
-							</td>
-							<td>
-								<input
-									type="text"
-									id="form_<?= $_password['id'] ?>_password"
-									name="form_<?= $_password['id'] ?>_password"
-									value="<?= $_password['password'] ?>"
-									onclick="this.select()">
-							</td>
-							<td><img
-								src="/i/kokol/save.gif"
-								onclick="document.location='<?= HTTP_ROOT ?>/kokol/edit/?updpwdid=<?= $_password['id']?>&updpwdr=' + ge('form_<?= $_password['id'] ?>_resource').value + '&updpwdl=' + ge('form_<?= $_password['id'] ?>_login').value + '&updpwdp=' + ge('form_<?= $_password['id'] ?>_password').value"></td>
-							<td><img
-								src="/i/kokol/del.gif"
-								onclick="if(confirm('Точно удалить?')) document.location='<?= HTTP_ROOT ?>/kokol/edit/?delpwd=<?= $_password['id'] ?>'"></td>
+							<form action="<?= HTTP_ROOT ?>/kokol/edit/" method="post" id="form_<?= $_password['id'] ?>">
+								<td>
+									<input
+										type="text"
+										id="form_<?= $_password['id'] ?>_resource"
+										name="updpwdr"
+										value="<?= $_password['resource'] ?>">
+								</td>
+								<td>
+									<input
+										type="text"
+										id="form_<?= $_password['id'] ?>_login"
+										name="updpwdl"
+										value="<?= $_password['login'] ?>"
+										onclick="this.select()">
+								</td>
+								<td>
+									<input
+										type="text"
+										id="form_<?= $_password['id'] ?>_password"
+										name="updpwdp"
+										value="<?= $_password['password'] ?>"
+										onclick="this.select()">
+								</td>
+								<td><img
+									src="/i/kokol/save.gif"
+									onclick="ge('form_<?= $_password['id']?>').submit();"></td>
+								<td><img
+									src="/i/kokol/del.gif"
+									onclick="if(confirm('Точно удалить?')) document.location='<?= HTTP_ROOT ?>/kokol/edit/?delpwd=<?= $_password['id'] ?>'"></td>
+								<input type="hidden" name="updpwdid" value="<?= $_password['id'] ?>">
+							</form>
 						</tr>
 					<? endforeach; ?>
 				</table>
@@ -69,10 +72,13 @@ function te_draw_category_recursively(&$_cat)
 				<input type="button" value="Добавить категорию" onclick="document.location='<?= HTTP_ROOT ?>/kokol/edit/?addcat=' + ge('addcatname<?= $_cat['id'] ?>').value + '&root_cat=<?= $_cat['id'] ?>'">
 			</div>
 			<div class="addcat">
-				<input type="text" id="addpwdr<?= $_cat['id'] ?>"> <label for="addpwdr<?= $_cat['id'] ?>">Ресурс</label><br>
-				<input type="text" id="addpwdl<?= $_cat['id'] ?>"> <label for="addpwdl<?= $_cat['id'] ?>">Логин</label><br>
-				<input type="text" id="addpwdp<?= $_cat['id'] ?>"> <label for="addpwdp<?= $_cat['id'] ?>">Пароль</label><br>
-				<input type="button" value="Добавить пароль" onclick="document.location='<?= HTTP_ROOT ?>/kokol/edit/?addpwdr=' + ge('addpwdr<?= $_cat['id'] ?>').value + '&addpwdl=' + ge('addpwdl<?= $_cat['id'] ?>').value + '&addpwdp=' + ge('addpwdp<?= $_cat['id'] ?>').value + '&root_cat=<?= $_cat['id'] ?>'">
+				<form action="<?= HTTP_ROOT ?>/kokol/edit/" method="post">
+					<input type="text" name="addpwdr" id="addpwdr<?= $_cat['id'] ?>"> <label for="addpwdr<?= $_cat['id'] ?>">Ресурс</label><br>
+					<input type="text" name="addpwdl" id="addpwdl<?= $_cat['id'] ?>"> <label for="addpwdl<?= $_cat['id'] ?>">Логин</label><br>
+					<input type="text" name="addpwdp" id="addpwdp<?= $_cat['id'] ?>"> <label for="addpwdp<?= $_cat['id'] ?>">Пароль</label><br>
+					<input type="hidden" name="root_cat" value="<?= $_cat['id'] ?>">
+					<input type="submit" value="Добавить пароль">
+				</form>
 			</div>
 		</div>
 	</div>
