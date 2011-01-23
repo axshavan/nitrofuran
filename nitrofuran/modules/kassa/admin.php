@@ -101,7 +101,7 @@ switch($_REQUEST['page'])
 		// добавление типа
 		elseif($_REQUEST['addoptype'])
 		{
-			$sql = "insert into `".KASSA_OPERATION_TYPE_TABLE."` set `name` = '".$DB->EscapeString($_REQUEST['addoptype'])."', `group_id` = '".(int)$_REQUEST['group']."', `is_income` = '".($_REQUEST['is_income'] == 'true' ? 1 : 0)."', `is_service` = '".($_REQUEST['is_service'] == 'true' ? 1 : 0)."'";
+			$sql = "insert into `".KASSA_OPERATION_TYPE_TABLE."` set `name` = '".$DB->EscapeString($_REQUEST['addoptype'])."', `group_id` = '".(int)$_REQUEST['group']."', `is_income` = '".($_REQUEST['kassa_addoptype'.((int)$_REQUEST['group']).'_form_income'] ? 1 : 0)."', `is_service` = '".($_REQUEST['is_service'] == 'true' ? 1 : 0)."'";
 		}
 		
 		// удаление типа
@@ -122,7 +122,7 @@ switch($_REQUEST['page'])
 		// изменение типа
 		elseif($_REQUEST['editoptype'])
 		{
-			$sql = "update `".KASSA_OPERATION_TYPE_TABLE."` set `name` = '".$DB->EscapeString($_REQUEST['name'])."', `is_income` = '".($_REQUEST['is_income'] == 'true' ? 1 : 0)."', `is_service` = '".($_REQUEST['is_service'] == 'true' ? 1 : 0)."' where `id` = '".(int)$_REQUEST['editoptype']."'";
+			$sql = "update `".KASSA_OPERATION_TYPE_TABLE."` set `name` = '".$DB->EscapeString($_REQUEST['name'])."', `is_income` = '".(isset($_REQUEST['is_income']) ? 1 : 0)."', `is_service` = '".(isset($_REQUEST['is_service']) ? 1 : 0)."' where `id` = '".(int)$_REQUEST['editoptype']."'";
 		}
 		
 		if($sql)
