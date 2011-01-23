@@ -72,6 +72,22 @@ class CDatabase
 	}
 	
 	/*
+		Осуществить запрос к БД и получить сразу отфетченный результат.
+		@param  string $str запрос
+		@return array или false
+	*/
+	public function QueryFetched($str)
+	{
+		$res     = $this->Query($str);
+		$_result = array();
+		while($_row = $this->Fetch($res))
+		{
+			$_result[] = $_row;
+		}
+		return $_result;
+	}
+	
+	/*
 		Последнее значение автоинкрементного поля.
 		@return int mysql_insert_id
 	*/

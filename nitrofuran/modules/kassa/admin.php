@@ -129,6 +129,7 @@ switch($_REQUEST['page'])
 		{
 			$DB->Query($sql);
 			redirect('/admin/?module=kassa&page=1');
+			die();
 		}
 		
 		$admin_tpl_name = 'admin.tpl';
@@ -179,6 +180,7 @@ switch($_REQUEST['page'])
 		{
 			$DB->Query($sql);
 			redirect('/admin/?module=kassa&page=2');
+			die();
 		}
 		
 		// список планируемых операций
@@ -230,6 +232,7 @@ switch($_REQUEST['page'])
 		{
 			$DB->Query($sql);
 			redirect('/admin/?module=kassa&page=3');
+			die();
 		}
 		
 		// список должников и кредиторов
@@ -241,6 +244,85 @@ switch($_REQUEST['page'])
 		}
 		$tplengine->assign('_debtors', $_debtors);
 		$admin_tpl_name = 'admin_debtor.tpl';
+		break;
+	}
+	/*************************
+	 *   admin_optypes.tpl   *
+	 *************************/
+	case 4:
+	{
+		// свойства операций
+		$_kassa_properties = $DB->QueryFetched("select * from `".KASSA_OPERATION_PROPNAMES_TABLE."`");
+		$tplengine->assign('_kassa_properties', $_kassa_properties);
+		
+		// значения свойств операций
+		$res = $DB->Query("select * from `".KASSA_OPERATION_PROPVALUES_TABLE."`");
+		while($_row = $DB->Fetch($res))
+		{
+			$_kassa_propvalues[$_row['operation_type_id']][$_row['option_id']] = $_row['value'];
+		}
+		$tplengine->assign('_kassa_propvalues', $_kassa_propvalues);
+		
+		// редактирование типа операций
+		if($_REQUEST['optype_id'])
+		{
+			$optype_id = (int)$_REQUEST['optype_id'];
+			if($optype_id)
+			{
+				// основные свойства
+				$sql = "update `".KASSA_OPERATION_TYPE_TABLE."` set
+					`name`       = '".$DB->EscapeString($_REQUEST['name'])."',
+					`is_income`  = '".($_REQUEST['is_income']  ? 1 : 0)."',
+					`is_service` = '".($_REQUEST['is_service'] ? 1 : 0)."'
+					where `id` = '".$optype_id."'";
+				$DB->Query($sql);
+				
+				// дополнительные свойства
+				foreach($_kassa_properties as $_prop)
+				{
+					$sql = false;
+					if($_prop['type'] == 'checkbox')
+					{
+						$sql = "replace into `".KASSA_OPERATION_PROPVALUES_TABLE."` set `value` = '".($_REQUEST['prop_'.$_prop['id']] ? 1 : 0)."', `operation_type_id` = '".$optype_id."', `option_id` = '".$_prop['id']."'";
+					}
+					else
+					{
+						$sql = "replace into `".KASSA_OPERATION_PROPVALUES_TABLE."` set `value` = '".$DB->EscapeString($_REQUEST['prop_'.$_prop['id']])."', `operation_type_id` = '".$optype_id."', `option_id` = '".$_prop['id']."'";
+					}
+					
+					// выполнение запроса
+					if($sql)
+					{
+						$DB->Query($sql);
+					}
+				}
+			}
+			redirect('/admin/?module=kassa&page=4');
+			die();
+		}
+		
+		// добавление нового свойства
+		if($_REQUEST['newpropname'] && $_REQUEST['newproptype'])
+		{
+			$DB->Query("insert into `".KASSA_OPERATION_PROPNAMES_TABLE."` (`name`, `type`)
+				values ('".$DB->EscapeString($_REQUEST['newpropname'])."', '".($_REQUEST['newproptype'] == 'text' ? 'text' : 'checkbox')."')");
+			redirect('/admin/?module=kassa&page=4');
+			die();
+		}
+		
+		// удаление свойства
+		$delproperty = (int)$_REQUEST['delproperty'];
+		if($delproperty)
+		{
+			$DB->TransactionStart();
+			$DB->Query("delete from `".KASSA_OPERATION_PROPNAMES_TABLE."` where `id` = '".$delproperty."'");
+			$DB->Query("delete from `".KASSA_OPERATION_PROPVALUES_TABLE."` where `option_id` = '".$delproperty."'");
+			$DB->TransactionCommit();
+			redirect('/admin/?module=kassa&page=4');
+			die();
+		}
+		
+		$admin_tpl_name = 'admin_optypes.tpl';
 		break;
 	}
 }
