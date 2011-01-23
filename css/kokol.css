@@ -1,4 +1,4 @@
-body { background-color: #566E77; font-size: 13px; color: black; }
+body { background-color: #566E77; font-size: 13px; color: black; font-family: sans-serif; }
 
 span.command { font-size: 10px; color: #404040; border-bottom: 1px dashed #404040; cursor: pointer; }
 span.command:hover { color: #505050; border-bottom-color: #505050; }
