@@ -11,6 +11,15 @@ class CDatabase
 	protected $cid = false;
 	
 	/*
+		Количество записей, на которые повлиял предыдущий запрос.
+		@return int
+	*/
+	public function AffectedRows()
+	{
+		return mysql_affected_rows($this->cid);
+	}
+	
+	/*
 		Соединение с базой данных.
 		@param string $host хост, куда цепляться
 		@param string $user пользователь

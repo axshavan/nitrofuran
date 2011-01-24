@@ -7,6 +7,20 @@
 require_once('config.php');
 global $DB;
 
+if($_REQUEST['switch'])
+{
+	$switch_id = (int)$_REQUEST['switch'];
+	if($switch_id)
+	{
+		$DB->Query("update `".KASSA_OPERATION_PROPVALUES_TABLE."` set `value` = if(`value` = 1, 0, 1) where `operation_type_id` = '".$switch_id."' and `option_id` = 1");
+		if(!$DB->AffectedRows())
+		{
+			$DB->Query("insert into `".KASSA_OPERATION_PROPVALUES_TABLE."` (`operation_type_id`, `option_id`, `value`) values ('".$switch_id."', '1', '1')");
+		}
+		redirect('.');
+	}
+}
+
 $_opbytype   = array();
 $_sumbyacc   = array();
 $_currencies = array();
@@ -49,6 +63,17 @@ while($_op = $DB->Fetch($op_res))
 // итоговая сумма по валютам
 $_result_sum_by_cur = array();
 
+// достаём свойство "считаем в планировании" операций
+$_count_in_plans = array();
+$res = $DB->Query("select * from `".KASSA_OPERATION_PROPVALUES_TABLE."` where `option_id` = 1");
+while($_row = $DB->Fetch($res))
+{
+	if($_row['value'])
+	{
+		$_count_in_plans[] = $_row['operation_type_id'];
+	}
+}
+
 // постобработка операций
 foreach($_opbytype as $optype_id => &$_op)
 {
@@ -61,17 +86,24 @@ foreach($_opbytype as $optype_id => &$_op)
 		$_op[$c]['average_m'] = $_op[$c]['sum'] / $_op[$c]['months'];
 		$_op[$c]['left_m']    = round($_op[$c]['average_m'] * $mprogress, 2);
 		$_op[$c]['average_m'] = round($_op[$c]['average_m'], 2);
-		if($_op[$c]['last_time'] < time() - 5184000) // последний раз ранее, чем 60 суток назад
+		if(in_array($optype_id, $_count_in_plans))
 		{
-			$_op[$c]['do_not_count'] = true;
-		}
-		elseif($_optypes[$optype_id]['is_service'])
-		{
-			$_op[$c]['do_not_count'] = true;
+			if($_op[$c]['last_time'] < time() - 5184000) // последний раз ранее, чем 60 суток назад
+			{
+				$_op[$c]['do_not_count'] = 'ancient';
+			}
+			elseif($_optypes[$optype_id]['is_service'])
+			{
+				$_op[$c]['do_not_count'] = 'service';
+			}
+			else
+			{
+				$_result_sum_by_cur[$c] += $_op[$c]['left_m'];
+			}
 		}
 		else
 		{
-			$_result_sum_by_cur[$c] += $_op[$c]['left_m'];
+			$_op[$c]['do_not_count'] = 'disabled';
 		}
 	}
 }

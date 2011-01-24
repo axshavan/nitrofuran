@@ -10,7 +10,7 @@ if(!$DB->Query("CREATE TABLE `".KASSA_OPERATION_PROPVALUES_TABLE."` (
 		`operation_type_id` integer UNSIGNED NOT NULL,
 		`option_id` integer NOT NULL,
 		`value` varchar(255) NOT NULL,
-	PRIMARY KEY (`operation_id`, `option_id`)
+	PRIMARY KEY (`operation_type_id`, `option_id`)
 	)
 	ENGINE = InnoDB
 	CHARACTER SET utf8 COLLATE utf8_general_ci"))
@@ -26,7 +26,7 @@ if(!$DB->Query("CREATE TABLE `".KASSA_OPERATION_PROPNAMES_TABLE."` (
 	)
 	ENGINE = InnoDB
 	CHARACTER SET utf8 COLLATE utf8_general_ci"))
-{	
+{
 	$DB->TransactionRollback();
 	return false;
 }

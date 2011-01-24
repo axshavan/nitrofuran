@@ -39,7 +39,7 @@
 			<th>В среднем</th>
 			<th>В среднем в месяц</th>
 			<th>В этом месяце ещё</th>
-			<th>&nbsp;</th>
+			<th>Считаем?</th>
 		</tr>
 		<? foreach($_opbytype as $optype_id => $_opbycur): ?>
 			<? foreach($_opbycur as $currency_id => $_op): ?>
@@ -60,12 +60,28 @@
 							<? endif; ?>
 							<?= $_op['left_m'] ?>
 							<? if($_op['do_not_count']): ?>
-								(не считаем)
+								( не считаем
+								<?
+								switch($_op['do_not_count'])
+								{
+									case 'ancient':  echo ', давно не было операций'; break;
+									case 'service':  echo ', служебный тип'; break;
+									case 'disabled':
+									default: break;
+								}
+								?>
+								)
 							<? else: ?>
 								</strong>
 							<? endif; ?>
 						</td>
-						<td></td>
+						<td>
+							<? if($_op['do_not_count'] == 'disabled'): ?>
+								<img src="/i/kassa/add.gif" class="button" onclick="document.location='?switch=<?= $optype_id ?>'">
+							<? elseif(!$_op['do_not_count']):  ?>
+								<img src="/i/kassa/minus.gif" class="button" onclick="document.location='?switch=<?= $optype_id ?>'">
+							<? endif; ?>
+						</td>
 					</tr>
 				<? endif; ?>
 			<? endforeach; ?>
