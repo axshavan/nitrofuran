@@ -78,7 +78,7 @@
 						<td>
 							<? if($_op['do_not_count'] == 'disabled'): ?>
 								<img src="/i/kassa/add.gif" class="button" onclick="document.location='?switch=<?= $optype_id ?>'">
-							<? elseif(!$_op['do_not_count']):  ?>
+							<? else:  ?>
 								<img src="/i/kassa/minus.gif" class="button" onclick="document.location='?switch=<?= $optype_id ?>'">
 							<? endif; ?>
 						</td>

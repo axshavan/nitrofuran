@@ -225,6 +225,8 @@ $tplengine->assign('href_filter_to_prevmonth', string_request_replace('to', date
 $tplengine->assign('href_filter_to_nextmonth', string_request_replace('to', date('Ymd', mktime(0, 0, 0, $filter_to_month + 1, $filter_to_day, $filter_to_year))));
 
 // формирование календаря фильтра даты ОТ
+$filter_from_day   = (int)$filter_from_day;
+$filter_from_month = (int)$filter_from_month;
 $_filter_from_calendar = array();
 $d = mktime(0, 0, 0, $filter_from_month, 2 - date('N', mktime(0, 0, 0, $filter_from_month, 1, $filter_from_year)), $filter_from_year);
 $bBreak = false;
@@ -262,7 +264,7 @@ while(true)
 		{
 			$bBreak = true;
 		}
-		elseif(date('n', $d) == $filter_to_month)
+		if(date('n', $d) == $filter_from_month)
 		{
 			$bBreak = false;
 		}
@@ -313,7 +315,7 @@ while(true)
 		{
 			$bBreak = true;
 		}
-		elseif(date('n', $d) == $filter_to_month)
+		if(date('n', $d) == $filter_to_month)
 		{
 			$bBreak = false;
 		}
