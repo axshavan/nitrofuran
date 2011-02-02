@@ -1,10 +1,13 @@
+<link rel="stylesheet" type="text/css" href="/css/vtree.css">
+<script type="text/javascript" src="/js/jquery-1.4.3.min.js"></script>
+
 <?
 if(!function_exists('draw_vtree_item'))
 {
 	// функция для рекурсивной отрисовки дерева
-	function draw_vtree_item(&$item, $_modules_installed)
+	function draw_vtree_item(&$item, $bLast, $_modules_installed)
 	{
-		?>
+		/*?>
 		<tr>
 			<td><?= $item['id'] ?></td>
 			<td>
@@ -80,6 +83,57 @@ if(!function_exists('draw_vtree_item'))
 				</div>
 			</td>
 		</tr>
+		<?*/
+		?>
+		
+		<li class="<?= $bLast ? 'last' : '' ?>">
+			<span class="name" onclick="$('#data<?= $item['id'] ?>').slideToggle();"><?= $item['data']['name'] ?></span>
+			<div class="data" id="data<?= $item['id'] ?>">
+				<form action="/admin/?module=vtree&page=1" method="post">
+					<input type="hidden" name="saveid" value="<?= $item['id'] ?>">
+					<table class="admin_table" cellspacing="0">
+						<tr>
+							<td><label for="name<?= $item['id'] ?>">Название</label></td>
+							<td><input type="text" id="name<?= $item['id'] ?>" name="n" value="<?= $item['data']['name'] ?>"></td>
+						</tr>
+						<tr>
+							<td><label for="module<?= $item['id'] ?>">Модуль</label></td>
+							<td>
+								<select name="m" id="module<?= $item['id'] ?>">
+									<option value=""<?= $item['data']['module'] ? '' : ' selected' ?>></option>
+									<? foreach($_modules_installed as $module => $name): ?>
+										<option value="<?= $module ?>"<?= $item['data']['module'] == $module ? ' selected' : '' ?>><?= $name ?></option>
+									<? endforeach; ?>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td><label for="template<?= $item['id'] ?>">Шаблон</label></td>
+							<td><input type="text" id="template<?= $item['id'] ?>" name="t" value="<?= $item['data']['template'] ?>"></td>
+						</tr>
+						<tr>
+							<td><label for="action<?= $item['id'] ?>">Действие</label></td>
+							<td><input type="text" id="action<?= $item['id'] ?>" name="a" value="<?= $item['data']['action'] ?>"></td>
+						</tr>
+						<tr>
+							<td><label for="access<?= $item['id'] ?>">Доступен всем</label></td>
+							<td><input type="checkbox" id="access<?= $item['id'] ?>" name="s" value="true"<?= $item['data']['access'] ? ' checked' : '' ?>"></td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td><input type="submit" value="Сохранить"></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<? if(sizeof($item['children'])): ?>
+				<ul class="ul-tree">
+					<? foreach($item['children'] as &$subitem): ?>
+						<? draw_vtree_item(&$subitem, !($a = prev($item['children'])), $_modules_installed); ?>
+					<? endforeach; ?>
+				</ul>
+			<? endif; ?>
+		</li>
 		<?
 	}
 }
@@ -89,17 +143,9 @@ if(!function_exists('draw_vtree_item'))
 	<div class="error"><?= $error_text ?></div>
 <? endif; ?>
 
-<table class="admin_table" cellspacing="0">
-	<tr>
-		<th>id</th>
-		<th>Папка</th>
-		<th>Модуль</th>
-		<th>Действие</th>
-		<th>Шаблон</th>
-		<th>Доступен всем</th>
-		<th>Действия</th>
-	</tr>
+<ul class="ul-root">
+	<li><span class="name" onclick="$('#data1').slideToggle();">/</span></li>
 	<? foreach($_vtree as &$item): ?>
-		<? draw_vtree_item(&$item, $_modules_installed); ?>
+		<? draw_vtree_item(&$item, false, $_modules_installed); ?>
 	<? endforeach; ?>
-</table>
+</ul>

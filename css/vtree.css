@@ -1,0 +1,11 @@
+ul.ul-root { list-style: none; }
+
+ul.ul-tree { padding: 0; margin: 0; list-style: none; background-image: url("/i/vtree/tree_bg.gif"); background-position: left; background-repeat: repeat-y; }
+ul.ul-tree li { padding-left: 22px; margin: 0; background-image: url("/i/vtree/tree1.gif"); background-position: left top; background-repeat: no-repeat; min-height: 20px;  }
+ul.ul-tree li.last { background-image: url("/i/vtree/tree2.gif"); background-color: white; }
+
+li span.name { cursor: pointer; }
+li span.name:hover { text-decoration: underline; }
+li div.data { -moz-border-radius: 4px; padding: 4px; background-color: #d8d8d8; -webkit-border-radius: 4px; font-size: 75%; display: none; }
+li div.data input { font-size: 100%; }
+li div.data select { font-size: 100%; }
