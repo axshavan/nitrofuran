@@ -135,7 +135,7 @@
 		
 		<!-- всякое -->
 		<span class="command" onclick="$('#some').slideToggle(300);">Всякое [+/-]</span>
-		<div id="some">
+		<div id="some"<?= sizeof($_debtor_operations) ? 'style="display: block;"' : '' ?>>
 		
 			<!-- фильтр по типам операций -->
 			<div class="optable" id="optypefilter">
@@ -168,11 +168,11 @@
 			
 			<!-- долги -->
 			<div class="optable" id="debtors">
-				<span class="credit1">Должник</span> <span class="credit2">Кредитор</span><br>
+				<span class="credit1">Человек должен вам</span> <span class="credit2">Вы ему должны</span><br>
 				<table class="optable" cellspacing="0">
 					<? foreach($_debtors as &$_debtor): $bOdd = !$bOdd; ?>
 						<tr class="<?= $_debtor['amount'] < 0 ? 'exp' : 'inc' ?><?= $bOdd ? '_odd' : '' ?>">
-							<td><?= $_debtor['name'] ?></td>
+							<td><a href="?debtor=<?= $_debtor['id'] ?>"><?= $_debtor['name'] ?></a></td>
 							<td>
 								<img
 									class="button"
@@ -187,8 +187,18 @@
 					<? endforeach; ?>
 				</table>
 				<a href="/admin/?module=kassa&page=3">Управление должниками &raquo;</a>
+				<? if(sizeof($_debtor_operations)): ?>
+					<br><br>
+					<table class="optable" cellspacing="0">
+						<? foreach($_debtor_operations as $_op): $bOdd = !$bOdd; ?>
+							<tr class="<?= $_op['amount'] > 0 ? 'inc' : 'exp' ?><?= $bOdd ? '_odd' : '' ?>">
+								<td><?= $_op['date'] ? date('Y-m-d H:i', $_op['date']) : '' ?></td>
+								<td><?= $_op['amount'] ?>&nbsp;<?= $_currencies[$_op['currency_id']]['symbol'] ?></td>
+							</td>
+						<? endforeach; ?>
+					</table>
+				<? endif; ?>
 			</div>
-			
 			<!-- /долги -->
 		
 		</div>

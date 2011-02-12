@@ -136,7 +136,7 @@ $_currencies = array();
 $res = $DB->Query("select * from `".KASSA_CURRENCY_TABLE."`");
 while($_row = $DB->Fetch($res))
 {
-	$_currencies[] = $_row;
+	$_currencies[$_row['id']] = $_row;
 }
 $tplengine->assign('_currencies', $_currencies);
 
@@ -341,6 +341,19 @@ while($r = $DB->Fetch($res))
 	$_debtors[] = $r;
 }
 $tplengine->assign('_debtors', $_debtors);
+
+// типы операций должников
+if(isset($_REQUEST['debtor']))
+{
+	$debtor_id = (int)$_REQUEST['debtor'];
+	$res = $DB->Query("select * from `".KASSA_DEBTORS_OPERATION_TABLE."` where `debtor_id` = '".$debtor_id."' order by `id` desc");
+	$_debtor_operations = array();
+	while($_op = $DB->Fetch($res))
+	{
+		$_debtor_operations[] = $_op;
+	}
+	$tplengine->assign('_debtor_operations', $_debtor_operations);
+}
 
 // наиболее частые типы операций
 $res = $DB->Query("select t.`id` as tid, t.`name` as tname,
