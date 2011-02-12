@@ -21,6 +21,7 @@ if($_REQUEST['debtor_id'])
 		echo 'Ошибка. Не определён тип операций.';
 		die();
 	}
+	$_REQUEST['debtor_amount'] = str_replace(',', '.', $_REQUEST['debtor_amount']);
 	$amount      = (float)$_REQUEST['debtor_amount'] * ($_REQUEST['debtor_operation'] ? 1 : -1);
 	$res         = $DB->Query("select `name` from `".KASSA_DEBTORS_TABLE."` where `id` = '".$_REQUEST['debtor_id']."'");
 	$debtor_name = $DB->Fetch($res);
