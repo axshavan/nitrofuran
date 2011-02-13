@@ -12,10 +12,13 @@ if($_REQUEST['switch'])
 	$switch_id = (int)$_REQUEST['switch'];
 	if($switch_id)
 	{
-		$DB->Query("update `".KASSA_OPERATION_PROPVALUES_TABLE."` set `value` = if(`value` = 1, 0, 1) where `operation_type_id` = '".$switch_id."' and `option_id` = 1");
+		$res = $DB->Query("select `id` from `".KASSA_OPERATION_PROPNAMES_TABLE."` where `code` = 'showinplans'");
+		$option_id = $DB->Fetch($res);
+		$option_id = $option_id['id'];
+		$DB->Query("update `".KASSA_OPERATION_PROPVALUES_TABLE."` set `value` = if(`value` = 1, 0, 1) where `operation_type_id` = '".$switch_id."' and `option_id` = '".$option_id."'");
 		if(!$DB->AffectedRows())
 		{
-			$DB->Query("insert into `".KASSA_OPERATION_PROPVALUES_TABLE."` (`operation_type_id`, `option_id`, `value`) values ('".$switch_id."', '1', '1')");
+			$DB->Query("insert into `".KASSA_OPERATION_PROPVALUES_TABLE."` (`operation_type_id`, `option_id`, `value`) values ('".$switch_id."', '".$option_id."', '1')");
 		}
 		redirect('.');
 	}
@@ -65,7 +68,7 @@ $_result_sum_by_cur = array();
 
 // достаём свойство "считаем в планировании" операций
 $_count_in_plans = array();
-$res = $DB->Query("select * from `".KASSA_OPERATION_PROPVALUES_TABLE."` where `option_id` = 1");
+$res = $DB->Query("select pv.* from `".KASSA_OPERATION_PROPVALUES_TABLE."` pv, `".KASSA_OPERATION_PROPNAMES_TABLE."` pn where pn.`code` = 'showinplans' and pn.`id` = pv.`option_id`");
 while($_row = $DB->Fetch($res))
 {
 	if($_row['value'])

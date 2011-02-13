@@ -1,3 +1,5 @@
+<a href="/kassa/">&laquo; назад в кассу</a>
+
 <table cellspacing="0" class="admin_table">
 	<tr>
 		<th colspan="3">&nbsp;</th>
