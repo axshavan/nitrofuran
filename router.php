@@ -121,6 +121,7 @@ if($TREE_INFO['current']['module'])
 		{
 			case 'NO MODULE FILE':
 			{
+				header('Content-Type: text/plain; charset=utf8');
 				echo 'Ошибка подключения модуля. Требуемый файл не найден.';
 				die();
 				break;

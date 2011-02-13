@@ -158,7 +158,6 @@ else
 	new_param('admin', 'modules_installed', 'Установленные модули', 'textarray', 'a:1:{s:5:"kassa";s:10:"Касса";}');
 }
 
-
 // добавление параметров модуля кассы
 new_param('kassa', 'OPTYPE_TRANSACTION_FROM_ID', 'Перенос со счёта', 'text', $OPTYPE_TRANSACTION_FROM_ID);
 new_param('kassa', 'OPTYPE_TRANSACTION_TO_ID', 'Пеоренос на счёт', 'text', $OPTYPE_TRANSACTION_TO_ID);

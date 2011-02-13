@@ -1,6 +1,6 @@
 <?php
 
-// 000004
+// 000005
 // записи в кассе задним числом
 
 require_once(DOCUMENT_ROOT.'/nitrofuran/modules/kassa/config.php');
