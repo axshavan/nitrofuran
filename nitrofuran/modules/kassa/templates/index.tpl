@@ -4,8 +4,8 @@
 	<meta http-equiv="Content-Type: text/html; charset=UTF-8">
     <title><?= $title ?></title>
 	<link rel="stylesheet" type="text/css" href="<?= HTTP_ROOT ?>/css/kassa.css">
-	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/kassa.js"></script>
 	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/jquery-1.4.3.min.js"></script>
+	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/kassa.js"></script>
 </head>
 <body>
 	
@@ -76,6 +76,7 @@
 	<!-- основная часть -->
 	<div class="container" id="main_container">
 		<a class="reset" href="<?= HTTP_ROOT ?>/kassa/">сбросить все фильтры</a>
+		<!-- форма добавления -->
 		<div class="add-form" id="add_form">
 			<form action="<?= HTTP_ROOT ?>/kassa/add/" method="post">
 				<strong>Добавить запись</strong>
@@ -106,7 +107,14 @@
 					<? endforeach; ?>
 				</select> <label for="inp_account">Счёт</label><br>
 				<input type="text" name="amount" id="inp_amount"> <label for="inp_amount">Сумма</label> <span class="command" onclick="calc.show(ge('inp_amount'))">Калькулятор</span><br>
-				<input type="text" name="comment" id="inp_comment"> <label for="inp_comment">Комментарий</label><br>
+				<input type="text" name="comment" id="inp_comment" onkeyup="onCommentKeyUp()"> <label for="inp_comment">Комментарий</label><br>
+				<div id="div_comment_tip">
+					<div class="close">
+						<span onclick="$('#div_comment_tip').slideUp(300);">[ X ]</span><br>
+					</div>
+					<div id="div_comment_tip_content">
+					</div>
+				</div>
 				<input type="hidden" name="optype" id="inp_optype">
 				<input type="submit" onclick="return checkAddForm()" value="Добавить запись">
 				<span class="command" onclick="$('#backtimediv').slideToggle(); ge('backyear_select').value=''; ge('backmonth_select').value=''; ge('backday_select').value=''; ">задним числом</span>
@@ -132,6 +140,7 @@
 				</div>
 			</form>
 		</div>
+		<!-- /форма добавления -->
 		
 		<!-- всякое -->
 		<span class="command" onclick="$('#some').slideToggle(300);">Всякое [+/-]</span>

@@ -185,6 +185,38 @@ function ge(id)
 }
 
 /*
+	Обработка события onkeyup в инпуте с комментарием.
+*/
+function onCommentKeyUp()
+{
+	var obj = ge('inp_comment');
+	if(!obj)
+	{
+		return;
+	}
+	var val = obj.value;
+	if(!val || val.length < 3)
+	{
+		ge('div_comment_tip_content').innerHTML = '';
+		$('#div_comment_tip').slideUp(300);
+		return;
+	}
+	jQuery.post
+	(
+		'/kassa/ajax/',
+		{
+			mode:    'comment',
+			comment: val
+		},
+		function(data)
+		{
+			ge('div_comment_tip_content').innerHTML = data;
+			$('#div_comment_tip').slideDown(300);
+		}
+	);
+}
+
+/*
 	Обработка нажатия на часто используемый тип операций.
 	@param type_id {int} идентификатор типа
 	@param group_id {int} идентификатор группы типа
@@ -261,6 +293,20 @@ function onTypeGroupClick2(obj, group_id)
 		$('#optypegroupf' + group_id).slideDown(300);
 	}
 	$('.selectedf').removeClass('selectedf');
+}
+
+/*
+	Установить значение комментария в форме добавления.
+	@param {string} val
+*/
+function setComment(val)
+{
+	var obj = ge('inp_comment');
+	if(obj)
+	{
+		obj.value = val;
+	}
+	$('#div_comment_tip').slideUp(300);
 }
 
 /*

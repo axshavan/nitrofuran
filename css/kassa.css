@@ -88,6 +88,12 @@ a.reset:hover { color: #505050; }
 #calculator table td:hover { background-color: #FFE1C4; }
 
 #some { display: none; }
+#div_comment_tip { border: 1px solid black; -moz-border-radius: 3px; -webkit-border-radius: 3px; position: absolute; width: 450px; z-index: 2; padding: 4px; background-color: #f0f0f0; display: none; }
+#div_comment_tip .close { text-align: right; }
+#div_comment_tip .close span:hover { border: none; }
+#div_comment_tip_content span.comment { display: block; padding: 3px; margin-bottom: 1px; }
+#div_comment_tip_content span.comment:hover { border-bottom: none; background-color: #e0e0e0; }
+
 
 table.optable { border-top: 1px solid #303030; border-left: 1px solid #303030; empty-cells: show; }
 table.optable td { border-bottom: 1px solid #303030; border-right: 1px solid #303030; padding: 2px; vertical-align: top; }
