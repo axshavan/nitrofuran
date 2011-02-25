@@ -187,8 +187,13 @@ function ge(id)
 /*
 	Обработка события onkeyup в инпуте с комментарием.
 */
-function onCommentKeyUp()
+function onCommentKeyUp(event)
 {
+	if(event && event.keyCode == 27)
+	{
+		$('#div_comment_tip').slideUp(300);
+		return;
+	}
 	var obj = ge('inp_comment');
 	if(!obj)
 	{
@@ -211,7 +216,14 @@ function onCommentKeyUp()
 		function(data)
 		{
 			ge('div_comment_tip_content').innerHTML = data;
-			$('#div_comment_tip').slideDown(300);
+			if(data.length)
+			{
+				$('#div_comment_tip').slideDown(300);
+			}
+			else
+			{
+				$('#div_comment_tip').slideUp(300);
+			}
 		}
 	);
 }

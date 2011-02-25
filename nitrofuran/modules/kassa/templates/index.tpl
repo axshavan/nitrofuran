@@ -107,7 +107,7 @@
 					<? endforeach; ?>
 				</select> <label for="inp_account">Счёт</label><br>
 				<input type="text" name="amount" id="inp_amount"> <label for="inp_amount">Сумма</label> <span class="command" onclick="calc.show(ge('inp_amount'))">Калькулятор</span><br>
-				<input type="text" name="comment" id="inp_comment" onkeyup="onCommentKeyUp()"> <label for="inp_comment">Комментарий</label><br>
+				<input type="text" name="comment" id="inp_comment" onkeyup="onCommentKeyUp(event)"> <label for="inp_comment">Комментарий</label><br>
 				<div id="div_comment_tip">
 					<div class="close">
 						<span onclick="$('#div_comment_tip').slideUp(300);">[ X ]</span><br>
