@@ -173,7 +173,7 @@ while($_row = $DB->Fetch($res))
 }
 foreach($_plans as &$_plan)
 {
-	$_result_sum_by_cur[1] += ($_opbytype[$_plan['operation_type_id']]['is_income'] ? 1 : -1) * $_plan['amount'];
+	$_result_sum_by_cur[$_plan['currency_id']] += ($_optypes[$_plan['operation_type_id']]['is_income'] ? 1 : -1) * $_plan['amount'];
 }
 
 $tplengine = new template_engine('kassa');

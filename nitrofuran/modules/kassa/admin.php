@@ -150,7 +150,8 @@ switch($_REQUEST['page'])
 				`amount`            = '".(float)$_REQUEST['amount']."',
 				`repeat_type`       = '".$DB->EscapeString($_REQUEST['type'])."',
 				`repeat`            = '".$DB->EscapeString($_REQUEST['repeat'])."',
-				`active`            = '".($_REQUEST['active'] == 'true')."'
+				`active`            = '".($_REQUEST['active'] == 'on')."',
+				`currency_id`       = '".(int)$_REQUEST['currency']."'
 				where `id` = '".(int)$_REQUEST['editplan']."'";
 		}
 		
@@ -165,14 +166,15 @@ switch($_REQUEST['page'])
 		{
 			$_REQUEST['repeat'] = str_replace(',,', ',', trim($_REQUEST['repeat'], ','));
 			$sql = "insert into `".KASSA_PLANS_TABLE."`
-				(`name`, `operation_type_id`, `amount`, `repeat_type`, `repeat`, `active`)
+				(`name`, `operation_type_id`, `amount`, `repeat_type`, `repeat`, `currency_id`, `active`)
 				values (
 					'".$DB->EscapeString($_REQUEST['name'])."',
 					'".(int)$_REQUEST['optype']."',
 					'".(float)$_REQUEST['amount']."',
 					'".$DB->EscapeString($_REQUEST['repeat_type'])."',
 					'".$DB->EscapeString($_REQUEST['repeat'])."',
-					'".($_REQUEST['active'] == 'true')."'
+					'".(int)$_REQUEST['currency']."',
+					'".($_REQUEST['active'] == 'on')."'
 				)";
 		}
 		

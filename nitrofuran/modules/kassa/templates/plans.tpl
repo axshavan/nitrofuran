@@ -93,7 +93,7 @@
 		<? foreach($_plans as $_plan): $bOdd = !$bOdd; ?>
 			<tr class="<?= ($_optypes[$_plan['operation_type_id']]['is_income'] ? 'inc' : 'exp').($bOdd ? '_odd' : '') ?>">
 				<td><?= $_plan['name'] == $_optypes[$_plan['operation_type_id']]['name'] ? $_plan['name'] : $_plan['name'].' / '.$_optypes[$_plan['operation_type_id']]['name'] ?></td>
-				<td><?= $_currencies[1]['symbol'] ?></td>
+				<td><?= $_currencies[$_plan['currency_id']]['symbol'] ?></td>
 				<td><?= $_plan['amount'] ?></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
@@ -119,9 +119,9 @@
 		</tr>
 		<? foreach($_result_sum as $currency_id => $sum): $bOdd = !$bOdd; ?>
 			<tr class="<?= ($sum < 0 ? 'exp' : 'inc').($bOdd ? '_odd' : '') ?>">
-				<td><?= $_sumbycur[$currency_id] ?>&nbsp;<?= $_currencies[$currency_id]['symbol'] ?></td>
-				<td><?= $sum ?>&nbsp;<?= $_currencies[$currency_id]['symbol'] ?></td>
-				<td class="itogo"><?= $_sumbycur[$currency_id] + $sum ?>&nbsp;<?= $_currencies[$currency_id]['symbol'] ?></td>
+				<td><?= (float)$_sumbycur[$currency_id] ?>&nbsp;<?= $_currencies[$currency_id]['symbol'] ?></td>
+				<td><?= (float)$sum ?>&nbsp;<?= $_currencies[$currency_id]['symbol'] ?></td>
+				<td class="itogo"><?= (float)($_sumbycur[$currency_id] + $sum) ?>&nbsp;<?= $_currencies[$currency_id]['symbol'] ?></td>
 			</tr>
 		<? endforeach; ?>
 	</table>
