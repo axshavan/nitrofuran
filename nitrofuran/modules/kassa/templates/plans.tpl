@@ -41,6 +41,8 @@
 			<th>В этом месяце ещё</th>
 			<th>Считаем?</th>
 		</tr>
+		
+		<!-- статистика -->
 		<? foreach($_opbytype as $optype_id => $_opbycur): ?>
 			<? foreach($_opbycur as $currency_id => $_op): ?>
 				<? if($_op['average_c']): $bOdd = !$bOdd; ?>
@@ -85,6 +87,23 @@
 					</tr>
 				<? endif; ?>
 			<? endforeach; ?>
+		<? endforeach; ?>
+		
+		<!-- планы -->
+		<? foreach($_plans as $_plan): $bOdd = !$bOdd; ?>
+			<tr class="<?= ($_optypes[$_plan['operation_type_id']]['is_income'] ? 'inc' : 'exp').($bOdd ? '_odd' : '') ?>">
+				<td><?= $_plan['name'] == $_optypes[$_plan['operation_type_id']]['name'] ? $_plan['name'] : $_plan['name'].' / '.$_optypes[$_plan['operation_type_id']]['name'] ?></td>
+				<td><?= $_currencies[1]['symbol'] ?></td>
+				<td><?= $_plan['amount'] ?></td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td><?= $_plan['repeat'] ?></td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td><strong><?= $_plan['amount'] ?></strong></td>
+				<td>&nbsp;</td>
+			</tr>
 		<? endforeach; ?>
 	</table>
 	<br>

@@ -44,7 +44,7 @@
 			<input type="hidden" id="plan_<?= $id ?>_repeat" value="<?= $_plan['repeat'] ?>">
 			<div id="repeattype_<?= $id ?>_none"<?= $_plan['repeat_type'] == 'none' ? '' : ' class="invisible"' ?>>
 				<span class="comment">Дата в формате YYYY-MM-DD</span><br>
-				<input type="text" onkeyup="ge('kassa_addplan_form_repeat').value = this.value;" value="<?= $_plan['repeat_type'] == 'none' ? $_plan['repeat'] : '' ?>">
+				<input type="text" onkeyup="ge('plan_<?= $id ?>_repeat').value = this.value;" value="<?= $_plan['repeat_type'] == 'none' ? $_plan['repeat'] : '' ?>">
 			</div>
 			<div id="repeattype_<?= $id ?>_daily"<?= $_plan['repeat_type'] == 'daily' ? '' : ' class="invisible"' ?>><span class="comment">Особых опций не требуется</span></div>
 			<div id="repeattype_<?= $id ?>_weekly"<?= $_plan['repeat_type'] == 'weekly' ? '' : ' class="invisible"' ?>>

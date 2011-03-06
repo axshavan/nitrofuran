@@ -111,9 +111,74 @@ foreach($_opbytype as $optype_id => &$_op)
 	}
 }
 
-$tplengine = new template_engine('kassa');
-$tplengine->assign('title', get_param('kassa', 'plans_title'));
+// планируемые операции
+$_plans = array();
+$res = $DB->Query("select * from `".KASSA_PLANS_TABLE."` where `active`");
+while($_row = $DB->Fetch($res))
+{
+	switch($_row['repeat_type'])
+	{
+		case 'daily':
+		{
+			$_row['repeat'] = strtotime($_row['repeat']);
+			$start_time = mktime(0,   0,  0, date('n'), date('d'), date('Y'));
+			$end_time   = mktime(23, 59, 59, date('n'), date('t'), date('Y'));
+			for($time = $start_time; $time < $end_time; $time += 86400)
+			{
+				$_row['repeat'] = date('Y-m-d', $time);
+				$_plans[] = $_row;
+			}
+			break;
+		}
+		case 'weekly':
+		{
+			$repeat     = $_row['repeat'];
+			$start_time = mktime(0,   0,  0, date('n'), date('d'), date('Y'));
+			$end_time   = mktime(23, 59, 59, date('n'), date('t'), date('Y'));
+			for($time = $start_time; $time < $end_time; $time += 86400)
+			{
+				if(strpos($repeat, date('N', $time)) !== false)
+				{
+					$_row['repeat'] = date('Y-m-d', $time);
+					$_plans[] = $_row;
+				}
+			}
+			break;
+		}
+		case 'monthly':
+		{
+			if($_row['repeat'] >= date('j'))
+			{
+				$_row['repeat'] = date('Y-m-').$_row['repeat'];
+				$_plans[] = $_row;
+			}
+			break;
+		}
+		case 'none':
+		default:
+		{
+			$_row['repeat'] = strtotime($_row['repeat']);
+			if
+			(
+				$_row['repeat']    > mktime(0,  0,  0,  date('n'),         1, date('Y'))
+				&& $_row['repeat'] < mktime(23, 59, 59, date('n'), date('t'), date('Y'))
+			)
+			{
+				$_row['repeat'] = date('Y-m-d', $_row['repeat']);
+				$_plans[] = $_row;
+			}
+			break;
+		}
+	}
+}
+foreach($_plans as &$_plan)
+{
+	$_result_sum_by_cur[1] += ($_opbytype[$_plan['operation_type_id']]['is_income'] ? 1 : -1) * $_plan['amount'];
+}
 
+$tplengine = new template_engine('kassa');
+$tplengine->assign('title',       get_param('kassa', 'plans_title'));
+$tplengine->assign('_plans',      $_plans);
 $tplengine->assign('_optypes',    $_optypes);
 $tplengine->assign('_opbytype',   $_opbytype);
 $tplengine->assign('_currencies', $_currencies);

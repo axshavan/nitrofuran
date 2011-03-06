@@ -156,15 +156,6 @@ while($_row = $DB->Fetch($res))
 {
 	switch($_row['repeat_type'])
 	{
-		case 'none':
-		{
-			$_row['repeat'] = date('Y-m-d', strtotime($_row['repeat']));
-			if($_row['repeat'] > date('Y-m-d'))
-			{
-				$_plans[$_row['repeat']][] = $_row;
-			}
-			break;
-		}
 		case 'daily':
 		{
 			for($i = 0; $i < 14; $i++)
@@ -200,6 +191,16 @@ while($_row = $DB->Fetch($res))
 					$_plans[date('Y-m-d', $mtime)][] = $_row;
 				}
 			}
+		}
+		case 'none':
+		default:
+		{
+			$_row['repeat'] = date('Y-m-d', strtotime($_row['repeat']));
+			if($_row['repeat'] > date('Y-m-d'))
+			{
+				$_plans[$_row['repeat']][] = $_row;
+			}
+			break;
 		}
 	}
 }
