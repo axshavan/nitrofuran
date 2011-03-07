@@ -459,6 +459,7 @@
 		<strong>Ссылки</strong><br>
 		<a href="/admin?module=kassa&page=1">настройки кассы</a><br>
 		<a href="/kassa/stats/">статистика</a><br>
+		<a href="/kassa/stats_graph/">графики</a><br>
 		<a href="/kassa/plans/">планирование</a>
 	</div>
 	<!-- /ссылки -->

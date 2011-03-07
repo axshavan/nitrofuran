@@ -94,6 +94,7 @@ a.reset:hover { color: #505050; }
 #div_comment_tip_content span.comment { display: block; padding: 3px; margin-bottom: 1px; }
 #div_comment_tip_content span.comment:hover { border-bottom: none; background-color: #e0e0e0; }
 
+div.stats_graph img.stats_graph_image { margin-top: 20px; border: 1px solid black; }
 
 table.optable { border-top: 1px solid #303030; border-left: 1px solid #303030; empty-cells: show; }
 table.optable td { border-bottom: 1px solid #303030; border-right: 1px solid #303030; padding: 2px; vertical-align: top; }
