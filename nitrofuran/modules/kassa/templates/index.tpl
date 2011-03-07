@@ -505,8 +505,9 @@
 		<img src="<?= HTTP_ROOT ?>/i/kassa/event_edit_form_arrow.gif">
 		<form action="<?= HTTP_ROOT ?>/kassa/debtor/" method="post">
 			<select id="debtor_operation" name="debtor_operation">
-				<option value="0">я взял денег</option>
-				<option value="1">я дал денег</option>
+				<option value="0">я взял денег (-)</option>
+				<option value="1">я дал денег (+)</option>
+				<option value="2">изменить сумму долга (+/-)</option>
 			</select> <label for="debtor_operation">Взял/дал в долг</label><br>
 			<select name="debtor_currency" id="debtor_currency">
 				<? foreach($_currencies as $_c): ?>

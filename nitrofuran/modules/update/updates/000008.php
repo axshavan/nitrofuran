@@ -1,7 +1,7 @@
 <?php
 
 // 000008
-// Привязка свойств операций по коду в кассе
+// привязка свойств операций по коду в кассе
 
 global $DB;
 require_once(DOCUMENT_ROOT.'/nitrofuran/modules/kassa/config.php');
