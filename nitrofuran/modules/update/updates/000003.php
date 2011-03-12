@@ -3,6 +3,12 @@
 // 000003
 // страница с планированием бюджета на месяц в кассе
 
+if(!CModule::IsModuleInstalled('kassa'))
+{
+	// касса не установлена
+	return true;
+}
+
 global $DB;
 $DB->TransactionStart();
 

@@ -7,7 +7,7 @@
 require_once('config.php');
 global $DB;
 
-$tplengine = new template_engine('kassa');
+$tplengine = new CTemplateEngine('kassa');
 $tplengine->assign('title', get_param('kassa', 'stats_title'));
 
 // валюты

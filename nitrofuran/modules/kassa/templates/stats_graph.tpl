@@ -49,11 +49,12 @@
 			</tr>
 		</table>
 		Фильтрация по дате (YYYY-MM-DD):<br>
-		<input type="text" name="filter_from" value="<?= $filter_from ?>"> &mdash; <input type="text" name="filter_to" value="<?= $filter_to ?>">
-		<!--<span class="command">неделя</span>
-		<span class="command">месяц</span>
-		<span class="command">квартал</span>
-		<span class="command">год</span>--><br>
+		<input type="text" name="filter_from" id="filter_from" value="<?= $filter_from ?>"> &mdash; <input type="text" name="filter_to" id="filter_to" value="<?= $filter_to ?>">
+		<span class="command" onclick="stat_period2inputs('week');">неделя</span>
+		<span class="command" onclick="stat_period2inputs('month');">месяц</span>
+		<span class="command" onclick="stat_period2inputs('quartal');">квартал</span>
+		<span class="command" onclick="stat_period2inputs('year');">год</span><br>
+		<input type="checkbox" name="weekaverage" id="weekaverage" value="1"<?= $weekaverage ? ' checked' : '' ?>> <label for="weekaverage">Строить среднее по неделям</label><br>
 		<input type="submit" value="Построить выборку"> <input type="button" value="Сбросить" onclick="document.location=document.location;">
 	</form>
 	

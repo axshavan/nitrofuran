@@ -38,36 +38,79 @@ if(isset($_REQUEST['image']))
 	{
 		$sql_str .= " and `type_id` = '".(int)$_REQUEST['optype']."'";
 	}
-	$_op_by_date = array();
-	$res         = $DB->Query($sql_str);
+	$_op_by_date  = array();
+	$_avg_by_week = array();
+	$res          = $DB->Query($sql_str);
 	while($_row = $DB->Fetch($res))
 	{
 		$_op_by_date[date('Y-m-d', $_row['backtime'])][] = $_row['amount'];
+		//$_avg_by_week[date('Y-j', $_row['backtime'])][] = $_row['amount'];
 	}
+	/*foreach($_avg_by_week as &$v)
+	{
+		if(sizeof($v))
+		{
+			$v = array_sum($v) / sizeof($v);
+		}
+		else
+		{
+			$v = 0;
+		}
+	}*/
+	//print_r($_avg_by_week); die();
 	
-	// нахождение средних значений для каждой даты
-	$_median_by_date = array();
-	$bDataExists = false;
+	// нахождение суммарных значений для каждой даты
+	$_sum_by_date = array();
+	$iwd          = array();
+	$bDataExists  = false;
 	for($i = $filter_from; $i <= $filter_to; $i += 86400)
 	{
 		$idate = date('Y-m-d', $i);
-		$isize  = sizeof($_op_by_date[$idate]);
+		if(!date('w', $i))
+		{
+			for($wd = 0; $wd < 7; $wd++)
+			{
+				$iwd[$wd] = date('Y-m-d', $i + 86400 * $wd);
+			}
+		}
+		$isize = sizeof($_op_by_date[$idate]);
 		if($isize)
 		{
-			$_median_by_date[$idate] = array_sum($_op_by_date[$idate]) / $isize;
+			$_sum_by_date[$idate] = array_sum($_op_by_date[$idate]);
+			if($iwd)
+			{
+				for($wd = 0; $wd < 7; $wd++)
+				{
+					$_avg_by_week[$iwd[$wd]] += $_sum_by_date[$idate];
+				}
+			}
 			$bDataExists = true;
 		}
 		else
 		{
-			$_median_by_date[$idate] = 0;
+			$_sum_by_date[$idate] = 0;
+			if($iwd)
+			{
+				for($wd = 0; $wd < 7; $wd++)
+				{
+					$_avg_by_week[$iwd[$wd]] += $_sum_by_date[$idate];
+				}
+			}
 		}
 	}
 	unset($_op_by_date);
 	
-	// сама картинка
-	if(sizeof($_median_by_date) && $bDataExists)
+	// усреднение по неделям
+	foreach($_avg_by_week as &$v)
 	{
-		imagepng(chart::multiline_graph
+		$v /= 7;
+	}
+	
+	// сама картинка
+	if(sizeof($_sum_by_date) && $bDataExists)
+	{
+		header("Content-Type: image/png");
+		imagepng(CChart::multiline_graph
 		(
 			array
 			(
@@ -75,11 +118,16 @@ if(isset($_REQUEST['image']))
 				'height' => 500,
 				'colors' => array
 				(
-					'ff0000'
+					'ff0000',
+					'00ff00'
 				),
-				'xtick' => ceil(sizeof($_median_by_date) / 20)
+				'xtick' => ceil(sizeof($_sum_by_date) / 20)
 			),
-			array($_median_by_date)
+			array
+			(
+				$_sum_by_date,
+				$_avg_by_week
+			)
 		));
 	}
 	else
@@ -91,7 +139,7 @@ if(isset($_REQUEST['image']))
 else
 {
 	// генерация собственно страницы
-	$tplengine = new template_engine('kassa');
+	$tplengine = new CTemplateEngine('kassa');
 	$tplengine->assign('title', get_param('kassa', 'stats_title'));
 	
 	// группы типов операций
@@ -154,8 +202,10 @@ else
 	{
 		$filter_to = time();
 	}
+	$weekaverage = $_POST['weekaverage'] ? 1 : 0;
 	$tplengine->assign('filter_from', date('Y-m-d', $filter_from));
 	$tplengine->assign('filter_to',   date('Y-m-d', $filter_to));
+	$tplengine->assign('weekaverage', $weekaverage);
 	
 	if($_REQUEST['draw'])
 	{
@@ -165,7 +215,8 @@ else
 			.'&account='. (int)($_REQUEST['account'])
 			.'&optype='.  (int)($_REQUEST['optype'])
 			.'&from='.    $filter_from
-			.'&to='.      $filter_to;
+			.'&to='.      $filter_to
+			.($weekaverage ? '&weekaverage=1' : '');
 		$tplengine->assign('image_src', $image_src);
 	}
 	

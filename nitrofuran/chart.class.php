@@ -10,7 +10,7 @@
 	открытым. И автор этого кода не несёт за него никакой ответственности.
 */
 
-class chart
+class CChart
 {
 	/*
 		Обычный график с несколькими линиями. Подробнее о параметрах см. в теле
@@ -65,7 +65,7 @@ class chart
 		}
 		else
 		{
-			$bgcolor = chart::web2color($_params['bgcolor']);
+			$bgcolor = CChart::web2color($_params['bgcolor']);
 		}
 		$c = imagecolorallocate($result, $bgcolor[0], $bgcolor[1], $bgcolor[2]);
 		imagefill($result, 0, 0, $c);
@@ -175,7 +175,7 @@ class chart
 			$brush = imagecreatetruecolor(3, 3);
 			if($_params['colors'][$g])
 			{
-				$c = chart::web2color($_params['colors'][$g]);
+				$c = CChart::web2color($_params['colors'][$g]);
 				$c = imagecolorallocate($brush, $c[0], $c[1], $c[2]);
 			}
 			else
@@ -254,7 +254,7 @@ class chart
 		}
 		else
 		{
-			$bgcolor = chart::web2color($_params['bgcolor']);
+			$bgcolor = CChart::web2color($_params['bgcolor']);
 		}
 		$c = imagecolorallocate($result, $bgcolor[0], $bgcolor[1], $bgcolor[2]);
 		imagefill($result, 0, 0, $c);

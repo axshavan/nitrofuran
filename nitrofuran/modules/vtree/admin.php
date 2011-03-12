@@ -77,7 +77,7 @@ while($r = $DB->Fetch($res))
 	$r['parent_id']   = $r['pid'];
 	$_vtree[$r['id']] = $r;
 }
-$graph = new graph();
+$graph = new CGraph();
 $graph->CreateFromArray($_vtree);
 $_vtree = $graph->GetAsArray(true);
 $_vtree = $_vtree['children'];

@@ -29,7 +29,7 @@ foreach($_modules_installed as $module)
 	$_modules[$module]['installed'] = true;
 }
 
-$tplengine = new template_engine('install');
+$tplengine = new CTemplateEngine('install');
 $tplengine->assign('_modules', $_modules);
 if($error_text)
 {

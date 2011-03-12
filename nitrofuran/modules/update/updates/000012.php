@@ -3,6 +3,12 @@
 // 000012
 // привязка операций по должнику к операциям по кассе
 
+if(!CModule::IsModuleInstalled('kassa'))
+{
+	// касса не установлена
+	return true;
+}
+
 global $DB;
 require_once(DOCUMENT_ROOT.'/nitrofuran/modules/kassa/config.php');
 

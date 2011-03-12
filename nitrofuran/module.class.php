@@ -7,6 +7,16 @@
 class CModule
 {
 	/*
+		Проверка, установлен ли модуль с таким именем.
+		@param  string $module_name название модуля
+		@return bool
+	*/
+	public static function IsModuleInstalled($module_name)
+	{
+		return array_key_exists($module_name, unserialize(get_param('admin', 'modules_installed')));
+	}
+	
+	/*
 		Вызвать модуль.
 		@param  string $module_name имя модуля
 		@param  string &$error код ошибки

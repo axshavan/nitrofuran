@@ -26,10 +26,10 @@ while($_r = $DB->Fetch($res))
 	$_categories[$_r['category_id']]['passwords'][] = $_r;
 }
 
-$graph = new graph();
+$graph = new CGraph();
 $graph->CreateFromArray($_categories, 'pid');
 
-$tplengine = new template_engine('kokol');
+$tplengine = new CTemplateEngine('kokol');
 $tplengine->assign('_data', $graph->GetAsArray(true));
 $tplengine->template('index.tpl');
 

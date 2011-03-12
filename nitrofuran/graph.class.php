@@ -13,7 +13,7 @@
 /*
 	Класс, описывающий узел графа.
 */
-class graph_node
+class CGraphNode
 {
 	public    $id;          // для самоидентификации
 	public    $data;        // некие данные
@@ -44,7 +44,7 @@ class graph_node
 	
 	/*
 		Добавить ребёнка узлу.
-		@param  graph_node $node узел, добавляемый в качестве ребёнка
+		@param  CGraphNode $node узел, добавляемый в качестве ребёнка
 		@return bool       success
 	*/
 	public function AppendChild(&$node)
@@ -82,11 +82,11 @@ class graph_node
 		Создать узлу графа ребёнка.
 		@param  mixed      $id    с каким айдишником будет ребёнок
 		@param  mixed      $_data внутренние данные, которые он будет хранить
-		@return graph_node созданный ребёнок
+		@return CGraphNode созданный ребёнок
 	*/
 	public function CreateChild($id, $data = false)
 	{
-		$new_child = new graph_node($id, $data);
+		$new_child = new CGraphNode($id, $data);
 		$new_child->MakeAdoptedBy($this);
 		return $new_child;
 	}
@@ -94,7 +94,7 @@ class graph_node
 	/*
 		Найти среди детей графа ребёнка с нужным идентификатором.
 		@param  mixed      $id идентификатор
-		@return graph_node найденный ребёнок или false
+		@return CGraphNode найденный ребёнок или false
 	*/
 	public function FindChildById($id)
 	{
@@ -189,7 +189,7 @@ class graph_node
 	
 	/*
 		Усыновить данный узел другим узлом.
-		@param  graph_node $node новый родитель
+		@param  CGraphNode $node новый родитель
 		@return bool       success
 	*/
 	public function MakeAdoptedBy(&$node)
@@ -230,9 +230,9 @@ class graph_node
 	
 	/*
 		Служебная функция для сброса ссылки на родительский узел и установки
-		нового родителя. Лучше пользоваться функцией graph_node::MakeAdoptedBy,
+		нового родителя. Лучше пользоваться функцией CGraphNode::MakeAdoptedBy,
 		чтоб не нарушить связи между узлами.
-		@param graph_node $node новый родитель
+		@param CGraphNode $node новый родитель
 	*/
 	public function SetParent(&$node)
 	{
@@ -274,7 +274,7 @@ class graph_node
 /*
 	Класс, описывающий граф
 */
-class graph
+class CGraph
 {
 	protected $root_node; // корневой узел графа
 	
@@ -293,7 +293,7 @@ class graph
 		{
 			$this->root_node->__destruct();
 		}
-		$this->root_node = new graph_node(0);
+		$this->root_node = new CGraphNode(0);
 		
 		// первый проход
 		foreach($_array as $id => $_node)

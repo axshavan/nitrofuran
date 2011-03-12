@@ -10,7 +10,7 @@
 	открытым. И автор этого кода не несёт за него никакой ответственности.
 */
 
-class tracer
+class CTracer
 {
 	// внутренний счётчик div'ов
 	protected static $div_counter = 0;
@@ -22,7 +22,7 @@ class tracer
 	*/
 	public static function trace($dump, $var_name = '')
 	{
-		return '<table cellpadding=3 cellspacing=0>'.tracer::parse_dump($dump, $var_name).'</table>';
+		return '<table cellpadding=3 cellspacing=0>'.CTracer::parse_dump($dump, $var_name).'</table>';
 	}
 	
 	/*
@@ -121,8 +121,8 @@ class tracer
 				$bFold    = false;
 			}
 		}
-		$value_div_id = 'tracer_div_'.tracer::$div_counter;
-		tracer::$div_counter++;
+		$value_div_id = 'tracer_div_'.CTracer::$div_counter;
+		CTracer::$div_counter++;
 		$value =
 			($bFold ?
 				'<span style="cursor: pointer; color: #404040; font-size: smaller;" onclick="document.getElementById(\''.$value_div_id.'\').style.display=\'none\';">[-]</span> '
@@ -183,12 +183,12 @@ class tracer
 				}
 			}
 		}
-		$result .= tracer::draw_element($_desc, $var_name);
+		$result .= CTracer::draw_element($_desc, $var_name);
 		if($_desc[0][strlen($_desc[0]) - 1] == '{')
 		{
 			array_pop($_text);
 			array_shift($_text);
-			$result .= tracer::parse_elements($_text);
+			$result .= CTracer::parse_elements($_text);
 		}
 		return $result.' ';
 	}
@@ -217,7 +217,7 @@ class tracer
 			}
 			elseif($element_level == $level && strpos(ltrim($_elements[$i]), '[') === 0)
 			{
-				$result .= tracer::parse_dump(implode("\n", $_dump), $_desc[2]);
+				$result .= CTracer::parse_dump(implode("\n", $_dump), $_desc[2]);
 				$_dump   = array();
 				preg_match('/\[(\"|)([\S\s]+)\1\]/', $_elements[$i], $_desc);
 			}
@@ -226,7 +226,7 @@ class tracer
 				$_dump[count($_dump) - 1] .= "\n".$_elements[$i];
 			}
 		}
-		$result .= tracer::parse_dump(implode("\n", $_dump), $_desc[2]);
+		$result .= CTracer::parse_dump(implode("\n", $_dump), $_desc[2]);
 		$result .= '</table></div>';
 		return $result;
 	}
@@ -244,11 +244,11 @@ function trace($var, $return = false)
 	$raw = trim(ob_get_clean());
 	if($return)
 	{
-		return tracer::trace($raw);
+		return CTracer::trace($raw);
 	}
 	else
 	{
-		echo tracer::trace($raw);
+		echo CTracer::trace($raw);
 		return true;
 	}
 }

@@ -5,7 +5,7 @@
 // возврат обратно на форму с ошибкой
 function go_back_to_stage0($cid = false)
 {
-	$tplengine = new template_engine('install');
+	$tplengine = new CTemplateEngine('install');
 	$tplengine->assign('error_text',      mysql_errno($cid).': '.mysql_error($cid));
 	$tplengine->assign('mysql_host',      $_POST['mysql_host']);
 	$tplengine->assign('mysql_user',      $_POST['mysql_user']);

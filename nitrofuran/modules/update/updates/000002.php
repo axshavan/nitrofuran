@@ -5,7 +5,7 @@
 
 global $DB;
 
-if(!array_key_exists('kassa', unserialize(get_param('admin', 'modules_installed'))))
+if(!CModule::IsModuleInstalled('kassa'))
 {
 	// касса не установлена
 	return true;

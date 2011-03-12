@@ -27,7 +27,7 @@ $filter_to_year  = substr($filter_to, 0, 4);
 $filter_to_month = substr($filter_to, 4, 2);
 $filter_to_day   = substr($filter_to, 6, 2);
 
-$tplengine = new template_engine('kassa');
+$tplengine = new CTemplateEngine('kassa');
 $tplengine->assign('title', get_param('kassa', 'title'));
 
 // фильтр по типу

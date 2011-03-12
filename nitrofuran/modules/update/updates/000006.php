@@ -3,6 +3,12 @@
 // 000006
 // создание таблиц со свойствами операций и страницы с административным интерфейсом
 
+if(!CModule::IsModuleInstalled('kassa'))
+{
+	// касса не установлена
+	return true;
+}
+
 require_once(DOCUMENT_ROOT.'/nitrofuran/modules/kassa/config.php');
 global $DB;
 $DB->TransactionStart();

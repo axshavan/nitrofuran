@@ -10,7 +10,7 @@
 	открытым. И автор этого кода не несёт за него никакой ответственности.
 */
 
-class mail_sender
+class CMailSender
 {
 	public static $last_error = ''; // текст последней ошибки
 	public static $smtp_log   = ''; // лог общения с SMTP-сервером
@@ -27,7 +27,7 @@ class mail_sender
 	*/
 	public static function Send($email_from, $email_to, $subject, $text)
 	{
-		return mail_sender::SendComplicated($email_from, $email_to, $subject, array(array('CONTENT' => $text)));
+		return CMailSender::SendComplicated($email_from, $email_to, $subject, array(array('CONTENT' => $text)));
 	}
 	
 	/*
@@ -85,7 +85,7 @@ class mail_sender
 		}
 		$mailHeader .=
 			"To: ".$email_to."\n".
-			"Subject: ".mail_sender::mail_subject_RFC1522($subject)."\n";
+			"Subject: ".CMailSender::mail_subject_RFC1522($subject)."\n";
 		$mailRcpt = explode(',', $email_to);
 		if(strlen($bcc))
 		{
@@ -128,36 +128,36 @@ class mail_sender
 			$f = fsockopen($smtp_server, $smtp_port, $errno, $errstr, 5);
 			if(!$f)
 			{
-				mail_sender::$last_error = $errno.' ('.$errstr.')';
+				CMailSender::$last_error = $errno.' ('.$errstr.')';
 				break;
 			}
-			mail_sender::$smtp_log .= "socket opened\n";
+			CMailSender::$smtp_log .= "socket opened\n";
 			$s = fgets($f);
-			mail_sender::$smtp_log .= "-> ".$s."\n";
+			CMailSender::$smtp_log .= "-> ".$s."\n";
 			if(substr($s, 0, 3) != '220')
 			{
 				// SMTP-сервер не готов нас обслужить
-				mail_sender::$last_error = $s;
+				CMailSender::$last_error = $s;
 				break;
 			}
 			if($auth)
 			{
 				$c = "EHLO ".$server_name."\n";
-				mail_sender::$_auth_types = '';
-				mail_sender::$smtp_log   .= "<- ".$c."\n";
+				CMailSender::$_auth_types = '';
+				CMailSender::$smtp_log   .= "<- ".$c."\n";
 				fputs($f, $c);
 				// определим список расширений SMTP, поддерживаемых сервером
 				while(true)
 				{
 					$s = fgets($f);
-					mail_sender::$smtp_log .= "-> ".$s."\n";
+					CMailSender::$smtp_log .= "-> ".$s."\n";
 					if(substr($s, 4, 4) == 'AUTH')
 					{
-						mail_sender::$_auth_types .= ' '.trim(substr($s, 9)).' ';
+						CMailSender::$_auth_types .= ' '.trim(substr($s, 9)).' ';
 					}
 					if(substr($s, 4, 8) == 'STARTTLS')
 					{
-						mail_sender::$_auth_types .= ' STARTTLS ';
+						CMailSender::$_auth_types .= ' STARTTLS ';
 					}
 					if(substr($s, 0, 4) == '250 ')
 					{
@@ -170,27 +170,27 @@ class mail_sender
 						break 2;
 					}
 				}
-				mail_sender::$_auth_types = str_replace('  ', ' ', trim(mail_sender::$_auth_types));
-				mail_sender::$_auth_types = explode(' ', mail_sender::$_auth_types);
+				CMailSender::$_auth_types = str_replace('  ', ' ', trim(CMailSender::$_auth_types));
+				CMailSender::$_auth_types = explode(' ', CMailSender::$_auth_types);
 			}
 			else
 			{
 				// поздороваемся
 				$c = "HELO ".$server_name."\n";
-				mail_sender::$smtp_log .= "<- ".$c."\n";
+				CMailSender::$smtp_log .= "<- ".$c."\n";
 				fputs($f, $c);
 				$s = fgets($f);
-				mail_sender::$smtp_log .= "-> ".$s."\n";
+				CMailSender::$smtp_log .= "-> ".$s."\n";
 				if(substr($s, 0, 3) != '250')
 				{
 					// нас видеть не рады
-					mail_sender::$last_error = $s;
+					CMailSender::$last_error = $s;
 					break;
 				}
 			}
-			if(count(mail_sender::$_auth_types))
+			if(count(CMailSender::$_auth_types))
 			{
-				if(!mail_sender::auth(&$f, $email_from, $auth_password))
+				if(!CMailSender::auth(&$f, $email_from, $auth_password))
 				{
 					// что-то было не так с авторизацией, но мы попробуем
 					// херануть письмецо на шару, вдруг прокатит
@@ -198,14 +198,14 @@ class mail_sender
 			}
 			// почта от кого
 			$c = "MAIL FROM: <".$email_from.">\n";
-			mail_sender::$smtp_log .= "<- ".htmlspecialchars($c)."\n";
+			CMailSender::$smtp_log .= "<- ".htmlspecialchars($c)."\n";
 			fputs($f, $c);
 			$s = fgets($f);
-			mail_sender::$smtp_log .= "-> ".$s."\n";
+			CMailSender::$smtp_log .= "-> ".$s."\n";
 			if(substr($s, 0, 3) != '250')
 			{
 				// ошибка
-				mail_sender::$last_error = $s;
+				CMailSender::$last_error = $s;
 				break;
 			} 
 			// список реципиентов (почта кому)
@@ -215,10 +215,10 @@ class mail_sender
 				if(strlen($rcpt))
 				{
 					$c = "RCPT TO: <".$rcpt.">\n";
-					mail_sender::$smtp_log .= "<- ".htmlspecialchars($c)."\n";
+					CMailSender::$smtp_log .= "<- ".htmlspecialchars($c)."\n";
 					fputs($f, $c);
 					$s = fgets($f);
-					mail_sender::$smtp_log .= "-> ".$s."\n";
+					CMailSender::$smtp_log .= "-> ".$s."\n";
 					// если тут будет неправильный почтовый адрес - похер,
 					// письмо пойдёт на остальные. Если правильных адресов
 					// не будет вообще, сервер нам об этом ниже сообщит
@@ -226,35 +226,35 @@ class mail_sender
 			}
 			// тело письма
 			$c = "DATA\n";
-			mail_sender::$smtp_log .= "<- ".$c."\n";
+			CMailSender::$smtp_log .= "<- ".$c."\n";
 			fputs($f, $c);
 			$s = fgets($f);
-			mail_sender::$smtp_log .= "-> ".$s."\n";
+			CMailSender::$smtp_log .= "-> ".$s."\n";
 			if(substr($s, 0, 3) != '354')
 			{
 				// сервер не подтверждает готовность принять тело письма
-				mail_sender::$last_error = $s;
+				CMailSender::$last_error = $s;
 				break;
 			}
-			mail_sender::$smtp_log .= "<- ".$mailHeader."\n";
+			CMailSender::$smtp_log .= "<- ".$mailHeader."\n";
 			fputs($f, $mailHeader);
-			mail_sender::$smtp_log .= "<- ".$mailText."\n";
+			CMailSender::$smtp_log .= "<- ".$mailText."\n";
 			fputs($f, $mailText);
 			// конец письма
 			$c = "\n.\n";
-			mail_sender::$smtp_log .= "<- ".$c."\n";
+			CMailSender::$smtp_log .= "<- ".$c."\n";
 			fputs($f, $c);
 			$s = fgets($f);
-			mail_sender::$smtp_log .= "-> ".$s."\n";
+			CMailSender::$smtp_log .= "-> ".$s."\n";
 			if(substr($s, 0, 3) != '250')
 			{
 				// письмо не отправилось почему-то
-				mail_sender::$last_error = $s;
+				CMailSender::$last_error = $s;
 				break;
 			}
 			// чао бамбина
 			$c = "QUIT\n";
-			mail_sender::$smtp_log .= "<- ".$c."\n";
+			CMailSender::$smtp_log .= "<- ".$c."\n";
 			fputs($f, $c);
 			fclose($f);
 			$result = true;
@@ -269,39 +269,39 @@ class mail_sender
 	protected static function auth(&$f, $login, $password)
 	{
 		// авторизация типа LOGIN
-		if(in_array('LOGIN', mail_sender::$_auth_types))
+		if(in_array('LOGIN', CMailSender::$_auth_types))
 		{
 			$c = "AUTH LOGIN\n";
-			mail_sender::$smtp_log .= "<- ".$c."\n";
+			CMailSender::$smtp_log .= "<- ".$c."\n";
 			fputs($f, $c);
 			$s = fgets($f);
-			mail_sender::$smtp_log .= "-> ".$s."\n";
+			CMailSender::$smtp_log .= "-> ".$s."\n";
 			if(substr($s, 0, 3) != '334')
 			{
 				// ошибка авторизации
-				mail_sender::$last_error = $s;
+				CMailSender::$last_error = $s;
 				return false;
 			}
 			$c = base64_encode($login)."\n";
-			mail_sender::$smtp_log .= "<- ".$c."\n";
+			CMailSender::$smtp_log .= "<- ".$c."\n";
 			fputs($f, $c);
 			$s = fgets($f);
-			mail_sender::$smtp_log .= "-> ".$s."\n";
+			CMailSender::$smtp_log .= "-> ".$s."\n";
 			if(substr($s, 0, 3) != '334')
 			{
 				// ошибка авторизации
-				mail_sender::$last_error = $s;
+				CMailSender::$last_error = $s;
 				return false;
 			}
 			$c = base64_encode($password)."\n";
-			mail_sender::$smtp_log .= "<- ".$c."\n";
+			CMailSender::$smtp_log .= "<- ".$c."\n";
 			fputs($f, $c);
 			$s = fgets($f);
-			mail_sender::$smtp_log .= "-> ".$s."\n";
+			CMailSender::$smtp_log .= "-> ".$s."\n";
 			if(substr($s, 0, 3) != '235')
 			{
 				// логин или пароль неправильные
-				mail_sender::$last_error = $s;
+				CMailSender::$last_error = $s;
 				return false;
 			}
 			return false;

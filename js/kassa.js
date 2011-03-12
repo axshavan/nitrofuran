@@ -357,6 +357,79 @@ function startEditEvent(obj, event_params)
 }
 
 /*
+	Заполнить инпуты фильтров в графической статистике кассы датами
+	сегодняшней и отстоящей назад на соответствующий период.
+	@param {String} period
+*/
+function stat_period2inputs(period)
+{
+	var d_to   = new Date();
+	var d_from = new Date();
+	switch(period)
+	{
+		// год
+		case 'year':
+		{
+			d_from.setFullYear(d_to.getFullYear() - 1);
+			break;
+		}
+		// квартал
+		case 'quartal':
+		{
+			d_from.setMonth(d_to.getMonth() - 3, d_to.getDate());
+			break;
+		}
+		// месяц
+		case 'month':
+		{
+			d_from.setMonth(d_to.getMonth() - 1, d_to.getDate());
+			break;
+		}
+		// неделя
+		case 'week':
+		default:
+		{
+			d_from.setDate(d_to.getDate() - 7);
+			break;
+		}
+	}
+	// заполнение фильтра "от"
+	var obj = ge('filter_from');
+	if(!obj)
+	{
+		return;
+	}
+	var d = d_from.getDate();
+	if(d < 10)
+	{
+		d = '0' + d;
+	}
+	var m = d_from.getMonth() + 1;
+	if(m < 10)
+	{
+		m = '0' + m;
+	}
+	// заполнение фильтра "до"
+	obj.value = d_from.getFullYear() + '-' + m + '-' + d;
+	obj = ge('filter_to');
+	if(!obj)
+	{
+		return;
+	}
+	var d = d_to.getDate();
+	if(d < 10)
+	{
+		d = '0' + d;
+	}
+	var m = d_to.getMonth() + 1;
+	if(m < 10)
+	{
+		m = '0' + m;
+	}
+	obj.value = d_to.getFullYear() + '-' + m + '-' + d;
+}
+
+/*
 	Калькулятор
 */
 calc = {

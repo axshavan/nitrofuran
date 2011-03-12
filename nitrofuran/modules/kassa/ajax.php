@@ -16,7 +16,7 @@ switch($_REQUEST['mode'])
 		{
 			return;
 		}
-		$tplengine = new template_engine('kassa');
+		$tplengine = new CTemplateEngine('kassa');
 		$res = $DB->Query("select `comment` from `".KASSA_OPERATION_TABLE."` where `comment` like '".$comment."%' group by `comment` order by count(`comment`) desc limit 15");
 		$_comments = array();
 		while($_row = $DB->Fetch($res))
