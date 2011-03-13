@@ -84,6 +84,10 @@ if(isset($_REQUEST['image']))
 					$_avg_by_week[$iwd[$wd]] += $_sum_by_date[$idate];
 				}
 			}
+			else
+			{
+				$_avg_by_week[$idate] = $_sum_by_date[$idate];
+			}
 			$bDataExists = true;
 		}
 		else
@@ -93,8 +97,12 @@ if(isset($_REQUEST['image']))
 			{
 				for($wd = 0; $wd < 7; $wd++)
 				{
-					$_avg_by_week[$iwd[$wd]] += $_sum_by_date[$idate];
+					$_avg_by_week[$iwd[$wd]] += 0;
 				}
+			}
+			else
+			{
+				$_avg_by_week[$idate] = 0;
 			}
 		}
 	}

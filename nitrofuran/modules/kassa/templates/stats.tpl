@@ -34,7 +34,7 @@
 		</table>
 	</div>
 	<!-- /суммы прихода и расхода по месяцам -->
-	<br>
+	
 	<!-- статистика за последний 31 день -->
 	<div class="container">
 		<strong>За последний 31 день</strong>
@@ -125,9 +125,9 @@
 </div>
 
 <div class="stats-column-3">
+	
+	<!-- сводная статистика по операциям -->
 	<div class="container">
-		
-		<!-- сводная статистика по операциям -->
 		<strong>Сводная статистика по операциям</strong>
 		<p><strong>max</strong> &mdash; максимальное значение, <strong>&sum;</strong>
 		&mdash; сумма операций данного типа, <strong>cnt</strong> &mdash; количество
@@ -178,9 +178,42 @@
 				<? endforeach; ?>
 			<? endforeach; ?>
 		</table>
-		<!-- /сводная статистика по операциям -->
-		
 	</div>
+	<!-- /сводная статистика по операциям -->
+	
+	<!-- статистика по комментариям -->
+	<div class="container">
+		<strong>Топ-10 комментариев по сумме операций</strong>
+		<table class="optable" cellspacing="0">
+			<? foreach($_comments_max_sum as $k => $v): $bOdd = !$bOdd; ?>
+				<tr class="<?= $bOdd ? 'odd' : 'notodd' ?>">
+					<td><?= $k ?></td>
+					<td><?= $v['sum'] ?></td>
+				</tr>
+			<? endforeach; ?>
+		</table>
+		<br>
+		<strong>Топ-10 комментариев по количеству операций</strong>
+		<table class="optable" cellspacing="0">
+			<? foreach($_comments_max_quantity as $k => $v): $bOdd = !$bOdd; ?>
+				<tr class="<?= $bOdd ? 'odd' : 'notodd' ?>">
+					<td><?= $k ?></td>
+					<td><?= $v['quantity'] ?></td>
+				</tr>
+			<? endforeach; ?>
+		</table>
+		<br>
+		<strong>Топ-10 комментариев по средней сумме операций</strong>
+		<table class="optable" cellspacing="0">
+			<? foreach($_comments_max_average as $k => $v): $bOdd = !$bOdd; ?>
+				<tr class="<?= $bOdd ? 'odd' : 'notodd' ?>">
+					<td><?= $k ?></td>
+					<td><?= $v['average'] ?></td>
+				</tr>
+			<? endforeach; ?>
+		</table>
+	</div>
+	<!-- /статистика по комментариям -->
 </div>
 
 </body>

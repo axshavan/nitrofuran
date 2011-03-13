@@ -54,6 +54,7 @@ $_months          = array();
 $_operation_count_m = array();
 $_operation_max_m   = array();
 $_operation_sum_m   = array();
+$_comments          = array();
 $last_month         = time() - 86400 * 31;
 $first_operation    = time();
 
@@ -83,6 +84,8 @@ while($_row = $DB->Fetch($res))
 	{
 		$first_operation = $_row['backtime'];
 	}
+	$_comments[$_row['comment']]['quantity']++;
+	$_comments[$_row['comment']]['sum'] += $_row['amount'];
 }
 krsort($_months);
 foreach($_months as $k => &$_m)
@@ -90,6 +93,24 @@ foreach($_months as $k => &$_m)
 	$_m['name'] = explode('-', $k);
 	$_m['name'] = rudate('M Y', mktime(0, 0, 0, $_m['name'][1] + 1, 0, $_m['name'][0]));
 }
+
+// комментарии
+foreach($_comments as &$c)
+{
+	$c['average'] = round($c['sum'] / $c['quantity'], 2);
+}
+unset($_comments['']);
+
+uasort($_comments, create_function('$a, $b', 'return $a["quantity"] == $b["quantity"] ? 0 : ($a["quantity"] < $b["quantity"] ? 1 : -1);'));
+$_comments_max_quantity = array_slice($_comments, 0, 10, true);
+uasort($_comments, create_function('$a, $b', 'return $a["sum"] == $b["sum"] ? 0 : ($a["sum"] < $b["sum"] ? 1 : -1);'));
+$_comments_max_sum = array_slice($_comments, 0, 10, true);
+uasort($_comments, create_function('$a, $b', 'return $a["average"] == $b["average"] ? 0 : ($a["average"] < $b["average"] ? 1 : -1);'));
+$_comments_max_average = array_slice($_comments, 0, 10, true);
+unset($_comments);
+$tplengine->assign('_comments_max_quantity', $_comments_max_quantity);
+$tplengine->assign('_comments_max_sum',      $_comments_max_sum);
+$tplengine->assign('_comments_max_average',  $_comments_max_average);
 
 // количество месяцев, за которое мы собираем статистику (ну, сколько всего касса работает)
 $first_operation = explode(' ', date('Y n', $first_operation));

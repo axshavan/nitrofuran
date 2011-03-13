@@ -103,6 +103,8 @@ table.optable tr.inc { background-color: #7CFF5B; }
 table.optable tr.inc_odd { background-color: #80D668; }
 table.optable tr.exp { background-color: #FF6B6B; }
 table.optable tr.exp_odd { background-color: #E57070; }
+table.optable tr.odd { background-color: #E8FFF8; }
+table.optable tr.notodd { background-color: #CBEDE2; }
 table.optable tr.daysum { background-color: #FFFAE5; font-weight: bold; }
 table.optable tr.daysum .inc { color: #006600; }
 table.optable tr.daysum .exp { color: #800000; }
@@ -112,6 +114,9 @@ table.optable td.itogo { font-size: 14px; }
 .stats-column-1 { position: absolute; width: 32%; left: 0.5%; top: 30px; }
 .stats-column-2 { position: absolute; width: 32%; left: 33%; top: 30px; }
 .stats-column-3 { position: absolute; width: 32%; left: 65.5%; top: 30px; }
+.stats-column-1 div.container,
+.stats-column-2 div.container,
+.stats-column-3 div.container { margin-bottom: 15px; }
 .stats-column-1 table td,
 .stats-column-2 table td,
 .stats-column-3 table td { font-size: 9px; }
