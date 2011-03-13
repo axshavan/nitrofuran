@@ -52,6 +52,8 @@ a.reset:hover { color: #505050; }
 #main_container .itogo { background-color: #9EB77E; padding: 4px; border: 1px solid #516637; -moz-border-radius: 3px; -webkit-border-radius: 3px; position: absolute; top: 10px; left: 430px; width: 200px; min-height: 215px; }
 #main_container .itogo .inc { color: #006600; font-weight: bold; font-size: 12px; }
 #main_container .itogo .exp { color: #800000; font-weight: bold; font-size: 12px; }
+#main_container .itogo table td { vertical-align: top; }
+#main_container .itogo table td:first-child { padding-top: 3px; }
 #main_container .plans { position: absolute; left: 650px; top: 10px; right: 10px; background-color: #9EB77E; padding: 8px; border: 1px solid #516637; -moz-border-radius: 3px; -webkit-border-radius: 3px; height: 207px; overflow-y: scroll}
 #main_container .plans .optable { width: 100%; }
 #main_container span.command { display: inline-block; margin: 10px 0 5px 0; border-bottom: 1px dashed #303030; color: #303030; cursor: pointer; }

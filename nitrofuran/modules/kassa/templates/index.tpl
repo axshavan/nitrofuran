@@ -333,17 +333,24 @@
 		
 		<!-- итого -->
 		<div class="itogo">
-			<strong>В кассе всего</strong><br>
+			<strong>В кассе всего</strong>
+			<table>
 			<? foreach($_sum_all as $account => $data): ?>
-				<?= $account ?> &mdash;<br>
-				<? foreach($data as $currency => $amount): ?>
-					<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= round($amount, 2).'&nbsp;'.$currency ?></span><br>
-				<? endforeach; ?>
+				<tr>
+					<td><?= $account ?></td>
+					<td>
+						<? foreach($data as $currency => $amount): ?>
+							<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= round($amount, 2).'&nbsp;'.$currency ?></span>
+						<? endforeach; ?>
+					</td>
+				</tr>
 			<? endforeach; ?>
+			</table><br>
 			<strong>С выбранным фильтром</strong><br>
 			<? foreach($_sum_filtered as $currency => $amount): ?>
 				<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= round($amount, 2).'&nbsp;'.$currency ?></span><br>
 			<? endforeach; ?>
+			
 		</div>
 		<!-- /итого -->
 		
