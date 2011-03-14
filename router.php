@@ -21,6 +21,7 @@ require_once(DOCUMENT_ROOT.'/nitrofuran/auth.class.php');
 require_once(DOCUMENT_ROOT.'/nitrofuran/module.class.php');
 require_once(DOCUMENT_ROOT.'/nitrofuran/te.class.php');
 require_once(DOCUMENT_ROOT.'/nitrofuran/tracer.class.php');
+require_once(DOCUMENT_ROOT.'/nitrofuran/user.class.php');
 
 global $DB;
 $DB = new CDatabase();
@@ -109,7 +110,6 @@ $TREE_INFO['current'] = array(
 
 global $AUTH;
 $AUTH = new CAuth();
-//$AUTH->ForceLogin(1); die();
 $AUTH->StartSession();
 
 if($TREE_INFO['current']['module'])

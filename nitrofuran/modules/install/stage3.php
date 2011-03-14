@@ -54,12 +54,12 @@ foreach($_POST as $k => $v)
 	}
 }
 
-$htaccess = explode("\n", file_get_contents($_SERVER['DOCUMENT_ROOT'].'/.htaccess'));
+$htaccess = explode("\n", file_get_contents(DOCUMENT_ROOT.'/.htaccess'));
 foreach($htaccess as &$str)
 {
 	$str = ltrim($str, ' #');
 }
-file_put_contents($_SERVER['DOCUMENT_ROOT'].'/.htaccess', implode("\n", $htaccess));
+file_put_contents(DOCUMENT_ROOT.'/.htaccess', implode("\n", $htaccess));
 
 $DB->Disconnect();
 redirect('/');

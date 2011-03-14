@@ -10,12 +10,12 @@ class CAuth
 	public $user_data = array();
 	
 	/*
-		Использовать только для отладки.
+		Использовать только для внутренних нужд.
 		@param int  $user_id  пользователь
 		@param bool $remember запомнить сессию
 		@param bool $bind2ip  привязать сессию к ip-адресу
 	*/
-	public function ForceLogin($user_id, $remember = true, $bind2ip = true)
+	public function Authorize($user_id, $remember = true, $bind2ip = true)
 	{
 		global $DB;
 		$user_id         = (int)$user_id;
@@ -48,6 +48,43 @@ class CAuth
 		return true;
 	}
 	
+	/*
+		Попытка залогиниться.
+		@param  string $login    логин
+		@param  string $password пароль
+		@param  bool   $remember длинная сессия
+		@param  bool   $bind2ip  привязать к ip
+		@param  string $error    возвращается код ошибки
+		@return bool
+	*/
+	public function Login($login, $password, $remember, $bind2ip, &$error)
+	{
+		global $DB;
+		$login = substr($login, 0, 32);
+		if(preg_match('/[^a-z0-9]/', $login))
+		{
+			$error = 'BAD LOGIN';
+			return false;
+		}
+		$res  = $DB->Query("select `id` from `".USERS_TABLE."` where `login` = '".$login."' and `password` = md5(concat('".md5($password)."', ' qjBDY65$#/'))");
+		$_row = $DB->Fetch($res);
+		if(!$_row['id'])
+		{
+			$error = 'WRONG PASSWORD';
+			return false;
+		}
+		return $this->Authorize($_row['id'], $remember, $bind2ip);
+	}
+	
+	/*
+		Разлогиниться.
+		@return bool
+	*/
+	public function Logout()
+	{
+		$this->GuestSession();
+		return true;
+	}
 	
 	/*
 		Стартануть сессию пользователя.
@@ -139,8 +176,7 @@ class CAuth
 	}
 	
 	/*
-		Начать сессию незарегистрированного пользователя или обнулить
-		текущую сессию.
+		Начать сессию незарегистрированного пользователя или обнулить текущую сессию.
 		@return false
 	*/
 	protected function GuestSession()
@@ -157,7 +193,7 @@ class CAuth
 	protected function KillOldSessions()
 	{
 		global $DB;
-		return $DB->Query("delete from `".SESSIONS_TABLE."` where `last_action` < UNIX_TIMESTAMP() - ".SESSION_LIFETIME);
+		return $DB->Query("delete from `".SESSIONS_TABLE."` where `last_action` < unix_timestamp() - ".SESSION_LIFETIME);
 	}
 	
 	/*
@@ -166,7 +202,7 @@ class CAuth
 	protected function ProlongSession()
 	{
 		global $DB;
-		$DB->Query("update `".SESSIONS_TABLE."` set `last_action` = UNIX_TIMESTAMP() where `id` = '".$this->sess_data['id']."'");
+		$DB->Query("update `".SESSIONS_TABLE."` set `last_action` = unix_timestamp() where `id` = '".$this->sess_data['id']."'");
 		setcookie(SESSION_COOKIE_NAME, $_COOKIE[SESSION_COOKIE_NAME], $this->sess_data['remember'] ? SESSION_LIFETIME + time() : 0, '/');
 		return true;
 	}

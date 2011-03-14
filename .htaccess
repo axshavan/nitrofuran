@@ -1,2 +1,2 @@
 RewriteEngine on
-RewriteRule !(.css|.js|.jpg|.gif|.png|favicon.ico) router.php
+RewriteRule !(.css|.js|.jpg|.gif|.png|favicon.ico|robots.txt) router.php
