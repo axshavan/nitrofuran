@@ -26,9 +26,17 @@ class CAuth
 		{
 			$ip = $_SERVER['X_HTTP_FORWARDED_FOR'];
 		}
+		elseif(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+		{
+			$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		}
 		elseif(isset($_SERVER['X_HTTP_REAL_IP']))
 		{
 			$ip = $_SERVER['X_HTTP_REAL_IP'];
+		}
+		elseif(isset($_SERVER['HTTP_X_REAL_IP']))
+		{
+			$ip = $_SERVER['HTTP_X_REAL_IP'];
 		}
 		$DB->Query("insert into `".SESSIONS_TABLE."` (`md5id`, `user_id`, `last_action`, `ip`, `remember`, `bind2ip`)
 			values ('', '".$user_id."', UNIX_TIMESTAMP(), inet_aton('".$ip."'), '".($remember ? 1 : 0)."', '".($bind2ip ? 1 : 0)."')");
@@ -118,7 +126,9 @@ class CAuth
 			{
 				if(
 					(isset($_SERVER['X_HTTP_REAL_IP']) && $_SERVER['X_HTTP_REAL_IP'] != $this->sess_data['ip'])
+					|| (isset($_SERVER['HTTP_X_REAL_IP']) && $_SERVER['HTTP_X_REAL_IP'] != $this->sess_data['ip'])
 					|| (isset($_SERVER['X_HTTP_FORWARDED_FOR']) && $_SERVER['X_HTTP_FORWARDED_FOR'] != $this->sess_data['ip'])
+					|| (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR'] != $this->sess_data['ip'])
 					|| ($_SERVER['REMOTE_ADDR'] != $this->sess_data['ip'])
 				)
 				{
