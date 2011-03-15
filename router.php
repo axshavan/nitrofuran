@@ -8,6 +8,15 @@
 
 error_reporting(E_ERROR);
 
+if($_SERVER['REMOTE_ADDR'] == '127.0.0.1' && isset($_SERVER['HTTP_X_REAL_IP']))
+{
+	$_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_X_REAL_IP'];
+}
+elseif($_SERVER['REMOTE_ADDR'] == '127.0.0.1' && isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+{
+	$_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
+}
+
 if(!file_exists('nitrofuran/config.php'))
 {
 	header('Content-Type: text/plain; charset=utf8');

@@ -125,14 +125,12 @@ class CAuth
 			if($this->sess_data['bind2ip'])
 			{
 				if(
-					(isset($_SERVER['X_HTTP_REAL_IP']) && $_SERVER['X_HTTP_REAL_IP'] != $this->sess_data['ip'])
-					|| (isset($_SERVER['HTTP_X_REAL_IP']) && $_SERVER['HTTP_X_REAL_IP'] != $this->sess_data['ip'])
-					|| (isset($_SERVER['X_HTTP_FORWARDED_FOR']) && $_SERVER['X_HTTP_FORWARDED_FOR'] != $this->sess_data['ip'])
+					(isset($_SERVER['HTTP_X_REAL_IP']) && $_SERVER['HTTP_X_REAL_IP'] != $this->sess_data['ip'])
 					|| (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR'] != $this->sess_data['ip'])
 					|| ($_SERVER['REMOTE_ADDR'] != $this->sess_data['ip'])
 				)
 				{
-					return $this->CreateGuestSession();
+					return $this->GuestSession();
 				}
 			}
 			// проверка второго хэша
