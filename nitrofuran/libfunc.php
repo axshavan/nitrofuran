@@ -56,7 +56,7 @@ function h($s)
 function new_param($module, $param_name, $display_name = '', $type = 'text', $value = '')
 {
 	global $DB;
-	$DB->Query("insert into `".PARAMS_TABLE."` (`module`, `name`, `display_name`, `type`, `value`) values (
+	return $DB->Query("insert into `".PARAMS_TABLE."` (`module`, `name`, `display_name`, `type`, `value`) values (
 		'".$DB->EscapeString($module)."',
 		'".$DB->EscapeString($param_name)."',
 		'".$DB->EscapeString($display_name)."',

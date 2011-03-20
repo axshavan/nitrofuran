@@ -1,0 +1,4 @@
+ul.ul-root li { list-style: circle; }
+ul.ul-root li .name { font-weight: bold; }
+ul.ul-root li .data { color: grey; }
+ul.ul-root li .data a { color: black; text-decoration: underline; }
