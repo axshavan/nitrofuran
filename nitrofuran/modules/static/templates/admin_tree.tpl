@@ -12,7 +12,7 @@ if(!function_exists('draw_vtree_item'))
 			<div class="data" id="data<?= $item['id'] ?>">
 				Модуль: <?= $_modules_installed[$item['data']['module']] ?>
 				<? if($item['data']['static_page_id']): ?>
-					<a href="?module=static&page=3&pageid=<?= $item['data']['static_page_id'] ?>">Редактировать содержимое</a>
+					<a href="?module=static&page=3&pageid=<?= $item['data']['static_page_id'] ?>"><!--Редактировать содержимое--></a>
 				<? endif; ?>
 				<br>Шаблон/действие: <?= $item['data']['template'] ? $item['data']['template'] : '-' ?> / <?= $item['data']['action'] ? $item['data']['action'] : '-' ?>
 			</div>
