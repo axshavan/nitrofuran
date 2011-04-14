@@ -24,7 +24,7 @@
 				</tr>
 				<tr>
 					<td><label for="bind2ip">Привязать к ip</label></td>
-					<td><input type="checkbox" name="bind2ip" id="bind2ip" value="1"<?= $remember ? ' checked' : ''?>></td>
+					<td><input type="checkbox" name="bind2ip" id="bind2ip" value="1"<?= $bind2ip ? ' checked' : ''?>></td>
 				</tr>
 				<tr>
 					<td><input type="submit" value="Войти"></td>

@@ -1,8 +1,8 @@
+<? header("Content-Type: text/html; charset=utf8"); ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type: text/html; charset=UTF-8">
-    <title><?= $title ?></title>
+	<title><?= $title ?></title>
 	<link rel="stylesheet" type="text/css" href="<?= HTTP_ROOT ?>/css/kassa.css">
 	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/jquery-1.4.3.min.js"></script>
 	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/kassa.js"></script>
@@ -10,7 +10,7 @@
 <body>
 	
 	<!-- календарики -->
-    <div id="calendar_container" class="container">
+	<div id="calendar_container" class="container">
 		<!-- фильтр начала периода -->
 		<div class="year">
 			<a href="<?= $href_filter_from_prevyear ?>">&lt;&lt;</a>

@@ -11,6 +11,15 @@ if(isset($_REQUEST['image']))
 {
 	// генерация картинки
 	require_once(DOCUMENT_ROOT.'/nitrofuran/chart.class.php');
+	$bWeekAverage = (bool)$_REQUEST['weekaverage'];
+	
+	// выборка tipov операций
+	$_optypes_by_id = array();
+	$res = $DB->Query("select `id`, `is_income` from `".KASSA_OPERATION_TYPE_TABLE."`");
+	while($_row = $DB->Fetch($res))
+	{
+		$_optypes_by_id[$_row['id']] = $_row['is_income'];
+	}
 	
 	// выборка операций
 	$filter_from = (int)$_REQUEST['from'];
@@ -19,7 +28,8 @@ if(isset($_REQUEST['image']))
 	{
 		die();
 	}
-	$sql_str = "select `amount`, `backtime` from `".KASSA_OPERATION_TABLE."` where
+	$sql_str = "select `amount`, `backtime`, `type_id`
+		from `".KASSA_OPERATION_TABLE."` where
 		`time` >= '".$filter_from."'
 		and `time` <= '".$filter_to."'";
 	if($_REQUEST['comment'])
@@ -38,31 +48,30 @@ if(isset($_REQUEST['image']))
 	{
 		$sql_str .= " and `type_id` = '".(int)$_REQUEST['optype']."'";
 	}
-	$_op_by_date  = array();
-	$_avg_by_week = array();
-	$res          = $DB->Query($sql_str);
+	$_op_by_date_i = array();
+	$_op_by_date_e = array();
+	$res           = $DB->Query($sql_str);
 	while($_row = $DB->Fetch($res))
 	{
-		$_op_by_date[date('Y-m-d', $_row['backtime'])][] = $_row['amount'];
-		//$_avg_by_week[date('Y-j', $_row['backtime'])][] = $_row['amount'];
-	}
-	/*foreach($_avg_by_week as &$v)
-	{
-		if(sizeof($v))
+		if($_optypes_by_id[$_row['type_id']])
 		{
-			$v = array_sum($v) / sizeof($v);
+			$_op_by_date_i[date('Y-m-d', $_row['backtime'])][] = (float)$_row['amount'];
+			$_op_by_date_e[date('Y-m-d', $_row['backtime'])][] = 0.0;
 		}
 		else
 		{
-			$v = 0;
+			$_op_by_date_e[date('Y-m-d', $_row['backtime'])][] = (float)$_row['amount'];
+			$_op_by_date_i[date('Y-m-d', $_row['backtime'])][] = 0.0;
 		}
-	}*/
-	//print_r($_avg_by_week); die();
+	}
 	
 	// нахождение суммарных значений для каждой даты
-	$_sum_by_date = array();
-	$iwd          = array();
-	$bDataExists  = false;
+	$_sum_by_date_i = array();
+	$_sum_by_date_e = array();
+	$_avg_by_week_i = array();
+	$_avg_by_week_e = array();
+	$iwd            = array();
+	$bDataExists    = false;
 	for($i = $filter_from; $i <= $filter_to; $i += 86400)
 	{
 		$idate = date('Y-m-d', $i);
@@ -73,49 +82,66 @@ if(isset($_REQUEST['image']))
 				$iwd[$wd] = date('Y-m-d', $i + 86400 * $wd);
 			}
 		}
-		$isize = sizeof($_op_by_date[$idate]);
+		$isize = sizeof($_op_by_date_i[$idate]);
 		if($isize)
 		{
-			$_sum_by_date[$idate] = array_sum($_op_by_date[$idate]);
-			if($iwd)
+			$_sum_by_date_i[$idate] = array_sum($_op_by_date_i[$idate]);
+			$_sum_by_date_e[$idate] = array_sum($_op_by_date_e[$idate]);
+			if($bWeekAverage)
 			{
-				for($wd = 0; $wd < 7; $wd++)
+				if($iwd)
 				{
-					$_avg_by_week[$iwd[$wd]] += $_sum_by_date[$idate];
+					for($wd = 0; $wd < 7; $wd++)
+					{
+						$_avg_by_week_i[$iwd[$wd]] += $_sum_by_date_i[$idate];
+						$_avg_by_week_e[$iwd[$wd]] += $_sum_by_date_e[$idate];
+					}
 				}
-			}
-			else
-			{
-				$_avg_by_week[$idate] = $_sum_by_date[$idate];
+				else
+				{
+					$_avg_by_week_i[$idate] = $_sum_by_date_i[$idate];
+					$_avg_by_week_e[$idate] = $_sum_by_date_e[$idate];
+				}
 			}
 			$bDataExists = true;
 		}
 		else
 		{
-			$_sum_by_date[$idate] = 0;
-			if($iwd)
+			$_sum_by_date_i[$idate] = 0;
+			$_sum_by_date_e[$idate] = 0;
+			if($bWeekAverage)
 			{
-				for($wd = 0; $wd < 7; $wd++)
+				if($iwd)
 				{
-					$_avg_by_week[$iwd[$wd]] += 0;
+					for($wd = 0; $wd < 7; $wd++)
+					{
+						$_avg_by_week_i[$iwd[$wd]] += 0;
+						$_avg_by_week_e[$iwd[$wd]] += 0;
+					}
 				}
-			}
-			else
-			{
-				$_avg_by_week[$idate] = 0;
+				else
+				{
+					$_avg_by_week_i[$idate] = 0;
+					$_avg_by_week_e[$idate] = 0;
+				}
 			}
 		}
 	}
-	unset($_op_by_date);
+	unset($_op_by_date_i);
+	unset($_op_by_date_e);
 	
 	// усреднение по неделям
-	foreach($_avg_by_week as &$v)
+	foreach($_avg_by_week_i as &$v)
+	{
+		$v /= 7;
+	}
+	foreach($_avg_by_week_e as &$v)
 	{
 		$v /= 7;
 	}
 	
 	// сама картинка
-	if(sizeof($_sum_by_date) && $bDataExists)
+	if(sizeof($_sum_by_date_i) && $bDataExists)
 	{
 		header("Content-Type: image/png");
 		imagepng(CChart::multiline_graph
@@ -126,15 +152,19 @@ if(isset($_REQUEST['image']))
 				'height' => 500,
 				'colors' => array
 				(
+					'00a000',
+					'004000',
 					'ff0000',
-					'00ff00'
+					'800000'
 				),
-				'xtick' => ceil(sizeof($_sum_by_date) / 20)
+				'xtick' => ceil(sizeof($_sum_by_date_i) / 20)
 			),
 			array
 			(
-				$_sum_by_date,
-				$_avg_by_week
+				$_sum_by_date_i,
+				$bWeekAverage ? $_avg_by_week_i : array(),
+				$_sum_by_date_e,
+				$bWeekAverage ? $_avg_by_week_e : array(),
 			)
 		));
 	}
