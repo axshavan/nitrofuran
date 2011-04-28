@@ -374,4 +374,7 @@ $tplengine->assign('_frequent_types', $_frequent_types);
 
 $tplengine->template('index.tpl');
 
+// pda version
+//$tplengine->template('index_240px.tpl');
+
 ?>

@@ -1,0 +1,5 @@
+body { width: 240px; font-size: 15px; color: black; background-color: #80A872; font-family: sans-serif; margin: 0; padding: 0; }
+input, select { border: 1px solid #106010; height: 30px; }
+.half { display: inline-block; width: 118px; }
+.full { display: block; width: 240px; }
+.optype { display: none; }
