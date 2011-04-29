@@ -4,7 +4,8 @@
 $_params_types = array(
 	'text'      => 'текст',
 	'textarea'  => 'большой текст',
-	'textarray' => 'массив'
+	'textarray' => 'массив',
+	'checkbox'  => 'чекбокс'
 );
 
 ?>
@@ -72,6 +73,12 @@ $_params_types = array(
 						{
 							$_option['value'] = htmlspecialchars($_option['value']);
 							?><textarea id="o_<?= $_option['name'] ?>" name="o[<?= $_option['name'] ?>]" rows="5" cols="25"><?= h($_option['value']) ?></textarea><?
+							break;
+						}
+						// чекбокс
+						case 'checkbox':
+						{
+							?><input type="checkbox" id="o_<?= $_option['name'] ?>" name="o[<?= $_option['name'] ?>]" value="1"<?= $_option['value'] ? ' checked' : ''?>><?
 							break;
 						}
 						// всё остальное

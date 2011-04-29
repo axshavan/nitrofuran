@@ -72,51 +72,62 @@ if(!$page)
 	{
 		foreach($_options as &$_option)
 		{
-			if(isset($_POST['o'][$_option['name']]))
+			// обработка параметров в зависимости от их типов
+			switch($_option['type'])
 			{
-				// обработка параметров в зависимости от их типов
-				switch($_option['type'])
+				// массив
+				case 'textarray':
 				{
-					// массив
-					case 'textarray':
+					$strlen_key   = strlen($_option['name'].'_key_');
+					$strlen_value = strlen($_option['name'].'_value_');
+					$_keys        = array();
+					$_values      = array();
+					foreach($_POST['o'] as $k => $v)
 					{
-						$strlen_key   = strlen($_option['name'].'_key_');
-						$strlen_value = strlen($_option['name'].'_value_');
-						$_keys        = array();
-						$_values      = array();
-						foreach($_POST['o'] as $k => $v)
+						if(strpos($k, $_option['name'].'_key_') === 0)
 						{
-							if(strpos($k, $_option['name'].'_key_') === 0)
-							{
-								$_keys[(int)substr($k, $strlen_key)] = $DB->EscapeString($v);
-							}
-							elseif(strpos($k, $_option['name'].'_value_') === 0 && $v)
-							{
-								$_values[(int)substr($k, $strlen_value)] = $DB->EscapeString($v);
-							}
+							$_keys[(int)substr($k, $strlen_key)] = $DB->EscapeString($v);
 						}
-						$_new_value = array();
-						foreach($_values as $k => $v)
+						elseif(strpos($k, $_option['name'].'_value_') === 0 && $v)
 						{
-							if($_keys[$k])
-							{
-								$_new_value[$_keys[$k]] = $_values[$k];
-							}
-							else
-							{
-								$_new_value[] = $_values[$k];
-							}
+							$_values[(int)substr($k, $strlen_value)] = $DB->EscapeString($v);
 						}
-						$_POST['o'][$_option['name']] = serialize($_new_value);
 					}
-					// остальные
-					case 'textarea':
-					case 'text':
-					default:
+					$_new_value = array();
+					foreach($_values as $k => $v)
 					{
-						set_param($module, $_option['name'], $DB->EscapeString($_POST['o'][$_option['name']]));
-						break;
+						if($_keys[$k])
+						{
+							$_new_value[$_keys[$k]] = $_values[$k];
+						}
+						else
+						{
+							$_new_value[] = $_values[$k];
+						}
 					}
+					set_param($module, $_option['name'], $DB->EscapeString(serialize($_new_value)));
+					break;
+				}
+				// чекбокс
+				case 'checkbox':
+				{
+					if($_POST['o'][$_option['name']])
+					{
+						set_param($module, $_option['name'], '1');
+					}
+					else
+					{
+						set_param($module, $_option['name'], '0');
+					}
+					break;
+				}
+				// остальные
+				case 'textarea':
+				case 'text':
+				default:
+				{
+					set_param($module, $_option['name'], $DB->EscapeString($_POST['o'][$_option['name']]));
+					break;
 				}
 			}
 		}

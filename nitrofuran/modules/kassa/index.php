@@ -372,9 +372,28 @@ while($r = $DB->Fetch($res))
 }
 $tplengine->assign('_frequent_types', $_frequent_types);
 
-$tplengine->template('index.tpl');
-
-// pda version
-//$tplengine->template('index_240px.tpl');
+if(get_param('kassa', 'use_mobile_templates'))
+{
+	// попробуем угадать, не используется ли мобильное устройство
+	if
+	(
+		strpos($_SERVER['HTTP_USER_AGENT'], 'SymbianOS') !== false
+		|| strpos($_SERVER['HTTP_USER_AGENT'], 'SymbOS') !== false
+		|| strpos($_SERVER['HTTP_USER_AGENT'], 'Android') !== false
+		|| strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mini') !== false
+		|| strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mobi') !== false
+	)
+	{
+		$tplengine->template('index_240px.tpl');
+	}
+	else
+	{
+		$tplengine->template('index.tpl');
+	}
+}
+else
+{
+	$tplengine->template('index.tpl');
+}
 
 ?>
