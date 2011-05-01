@@ -4,7 +4,7 @@
 	Обёртка для openssl, помогающая шифровать и дешифровать данные
 	алгоритмом RSA. Для хранения ключей применяет временные файлы.
 	@author Dmitry Nikiforov <axshavan@yandex.ru>
-	@license http://sam.zoy.org WTFPL
+	@license http://sam.zoy.org/wtfpl WTFPL
 	This program is free software. It comes without any warranty, to
 	the extent permitted by applicable law. You can redistribute it
 	and/or modify it under the terms of the Do What The Fuck You Want
