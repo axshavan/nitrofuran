@@ -3,11 +3,12 @@
 /*
 	Более навороченная и чуть менее простая в эксплуатации замена для mail()
 	@author Dmitry Nikiforov <axshavan@yandex.ru>
-	@license http://www.gnu.org/licenses/gpl.html GNU GPL
-	Вы можете использовать этот исходный код, вносить в него изменения,
-	распространять его, делать с ним вообще всё, что хотите, при условии того,
-	что вы будете сохранять ссылку на первоначального автора и сохранять код
-	открытым. И автор этого кода не несёт за него никакой ответственности.
+	@license http://sam.zoy.org WTFPL
+	This program is free software. It comes without any warranty, to
+	the extent permitted by applicable law. You can redistribute it
+	and/or modify it under the terms of the Do What The Fuck You Want
+	To Public License, Version 2, as published by Sam Hocevar. See
+	http://sam.zoy.org/wtfpl/COPYING for more details.
 */
 
 class CMailSender

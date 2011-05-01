@@ -34,6 +34,10 @@ function onGroupSelectChange(val)
 	}
 }
 
+/*
+	Измнение селекта типа операции.
+	@param String val значение селекта
+*/
 function onTypeSelectChange(val)
 {
 	var obj = a('inp_optype');
