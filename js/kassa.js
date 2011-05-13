@@ -189,15 +189,27 @@ function ge(id)
 */
 function onCommentKeyUp(event)
 {
-	if(event && event.keyCode == 27)
+	if(event && event.keyCode == 27) // esc
 	{
 		$('#div_comment_tip').slideUp(300);
+		ge('div_comment_tip_content').innerHTML = '';
 		return;
 	}
 	var obj = ge('inp_comment');
 	if(!obj)
 	{
 		return;
+	}
+	if(event && event.keyCode == 40) // down arrow
+	{
+		var first_comment = $('#div_comment_tip_content>.comment')[0];
+		if(first_comment && first_comment.innerHTML)
+		{
+			obj.value = first_comment.innerHTML;
+			$('#div_comment_tip').slideUp(300);
+			ge('div_comment_tip_content').innerHTML = '';
+			return;
+		}
 	}
 	var val = obj.value;
 	if(!val || val.length < 3)
