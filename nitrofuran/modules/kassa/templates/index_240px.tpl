@@ -12,7 +12,7 @@
 		?><label for="inp_currency" class="half">Валюта</label><?
 		?><select name="currency" id="inp_currency" class="half"><?
 			foreach($_currencies as $_c):
-				?><option value="<?= $_c['id'] ?>"><?= $_c['symbol'].' '.$_c['name'] ?></option><?
+				?><option value="<?= $_c['id'] ?>"<?= $_c['default'] ? ' selected' : '' ?>><?= $_c['symbol'].' '.$_c['name'] ?></option><?
 			endforeach;
 		?></select><?
 		?><label for="inp_amount" class="half">Сумма</label><?
@@ -20,7 +20,7 @@
 		?><label for="inp_account" class="half">Счёт</label><?
 		?><select class="half" name="account" id="inp_account"><?
 		foreach($_accounts as $_a): ?>
-			?><option value="<?= $_a['id'] ?>"><?= $_a['name'] ?></option><?
+			?><option value="<?= $_a['id'] ?>"<?= $_a['default'] ? ' selected' : '' ?>><?= $_a['name'] ?></option><?
 		endforeach; ?>
 		?></select><?
 		?><label for="inp_comment" class="full">Комментарий</label><?
@@ -44,7 +44,7 @@
 				endforeach;
 			?></select><?
 		endforeach;
-		?><input class="full" type="submit" value="Добавить">
+		?><br><br><br><input class="full" type="submit" value="Добавить">
 	</form>
 </body>
 </html>

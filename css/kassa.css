@@ -58,7 +58,7 @@ a.reset:hover { color: #505050; }
 #main_container .plans .optable { width: 100%; }
 #main_container span.command { display: inline-block; margin: 10px 0 5px 0; border-bottom: 1px dashed #303030; color: #303030; cursor: pointer; }
 
-#linx {  position: absolute; top: 610px; left: 5px; width: 142px; }
+#linx { position: absolute; top: 630px; left: 5px; width: 142px; }
 #linx a { color: #202020; text-decoration: underline; }
 #linx a:hover { color: #303030; }
 
@@ -80,7 +80,8 @@ a.reset:hover { color: #505050; }
 
 #transaccount { position: absolute; left: 5px; top: 340px; width: 142px; }
 #transaccount label { font-weight: bold; display: block; margin-top: 5px; }
-#transaccount input { width: 100px; }
+#transaccount input { width: 130px; }
+#transaccount select { width: 130px; }
 
 #calculator { position: absolute; border: 1px solid #C98D4C; background-color: #EAD8C5; -moz-border-radius: 5px; -webkit-border-radius: 5px; padding: 5px; display: none; }
 #calculator span.button { display: inline-block; border: 1px solid #C98D4C; background-color: #FFEEDD; -moz-border-radius: 2px; -webkit-border-radius: 2px; padding: 3px; cursor: pointer; margin: 2px; font-size: 12px; width: 60px; height: 30px; text-align: center; vertical-align: middle; }

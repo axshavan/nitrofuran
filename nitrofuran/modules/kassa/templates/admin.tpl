@@ -15,7 +15,8 @@
 			<td><?= $v['id'] ?></td>
 			<td><input type="text" id="kassa_editcurrency<?= $v['id'] ?>_symbol" name="symbol" size="1" value="<?= $v['symbol'] ?>"></td>
 			<td><input type="text" id="kassa_editcurrency<?= $v['id'] ?>_name" name="name" value="<?= h($v['name']) ?>"></td>
-			<td><input type="button" value="Сохранить" onclick="location='?module=kassa&page=1&editcurrency=<?= $v['id'] ?>&symbol='+ge('kassa_editcurrency<?= $v['id'] ?>_symbol').value+'&name='+ge('kassa_editcurrency<?= $v['id'] ?>_name').value"></td>
+			<td><input type="checkbox" id="kassa_editcurrency<?= $v['id'] ?>_default" name="default" value="1"<?= $v['default'] ? " checked" : "" ?>></td>
+			<td><input type="submit" value="Сохранить"></td>
 			<td><input type="button" value="Удалить" onclick="location='?module=kassa&page=1&delcurrency=<?= $v['id'] ?>'"></td>
 		</tr>
 	</form>
@@ -32,6 +33,10 @@
 		<tr>
 			<td>Символ обозначения</td>
 			<td><input type="text" id="kassa_addcurrency_form_symbol" maxlength="1" name="symbol"></td>
+		</tr>
+		<tr>
+			<td>Предлагать по умолчанию</td>
+			<td><input type="checkbox" id="kassa_addcurrency_form_default" value="1" name="default"></td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
@@ -51,6 +56,7 @@
 		<tr>
 			<td><?= $v['id'] ?></td>
 			<td><input type="text" id="kassa_editaccount<?= $v['id'] ?>" name="name" value="<?= h($v['name']) ?>"></td>
+			<td><input type="checkbox" id="kassa_editaccount<?= $v['id'] ?>_default" name="default" value="1"<?= $v['default'] ? " checked" : "" ?>></td>
 			<td><input type="submit" value="Сохранить"></td>
 			<td><input type="button" value="Удалить" onclick="location='?module=kassa&page=1&delaccount=<?= $v['id'] ?>'"></td>
 		</tr>
@@ -64,6 +70,10 @@
 		<tr>
 			<td>Название</td>
 			<td><input type="text" id="kassa_addaccount_form_name" name="addaccount"></td>
+		</tr>
+		<tr>
+			<td>Предлагать по умолчанию</td>
+			<td><input type="checkbox" id="kassa_addaccount_form_default" value="1" name="default"></td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>

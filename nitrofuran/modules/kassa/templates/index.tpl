@@ -98,12 +98,12 @@
 				<? endforeach; ?>
 				<select name="currency" id="inp_currency">
 					<? foreach($_currencies as $_c): ?>
-						<option value="<?= $_c['id'] ?>"><?= $_c['symbol'].' '.$_c['name'] ?></option>
+						<option value="<?= $_c['id'] ?>"<?= $_c['default'] ? ' selected' : '' ?>><?= $_c['symbol'].' '.$_c['name'] ?></option>
 					<? endforeach; ?>
 				</select> <label for="inp_currency">Валюта</label><br>
 				<select name="account" id="inp_account">
 					<? foreach($_accounts as $_a): ?>
-						<option value="<?= $_a['id'] ?>"><?= $_a['name'] ?></option>
+						<option value="<?= $_a['id'] ?>"<?= $_a['default'] ? ' selected' : '' ?>><?= $_a['name'] ?></option>
 					<? endforeach; ?>
 				</select> <label for="inp_account">Счёт</label><br>
 				<input type="text" name="amount" id="inp_amount"> <label for="inp_amount">Сумма</label> <span class="command" onclick="calc.show(ge('inp_amount'))">Калькулятор</span><br>

@@ -20,7 +20,7 @@ switch($_REQUEST['page'])
 		// добавление валюты
 		if($_REQUEST['addcurrency'])
 		{
-			$sql = "insert into `".KASSA_CURRENCY_TABLE."` set `name` = '".$DB->EscapeString($_REQUEST['addcurrency'])."', `symbol` = '".$DB->EscapeString($_REQUEST['symbol'])."'";
+			$sql = "insert into `".KASSA_CURRENCY_TABLE."` set `name` = '".$DB->EscapeString($_REQUEST['addcurrency'])."', `symbol` = '".$DB->EscapeString($_REQUEST['symbol'])."', `default` = '".($_REQUEST['default'] ? 1 : 0)."'";
 		}
 		
 		// удаление валюты
@@ -41,13 +41,13 @@ switch($_REQUEST['page'])
 		// редактирование валюты
 		elseif($_REQUEST['editcurrency'])
 		{
-			$sql = "update `".KASSA_CURRENCY_TABLE."` set `name` = '".$DB->EscapeString($_REQUEST['name'])."', `symbol` = '".$DB->EscapeString($_REQUEST['symbol'])."' where `id` = '".(int)$_REQUEST['editcurrency']."'";
+			$sql = "update `".KASSA_CURRENCY_TABLE."` set `name` = '".$DB->EscapeString($_REQUEST['name'])."', `symbol` = '".$DB->EscapeString($_REQUEST['symbol'])."', `default` = '".($_REQUEST['default'] ? 1 : 0)."' where `id` = '".(int)$_REQUEST['editcurrency']."'";
 		}
 		
 		// добавление счёта
 		elseif($_REQUEST['addaccount'])
 		{
-			$sql = "insert into `".KASSA_ACCOUNT_TABLE."` set `name` = '".$DB->EscapeString($_REQUEST['addaccount'])."'";
+			$sql = "insert into `".KASSA_ACCOUNT_TABLE."` set `name` = '".$DB->EscapeString($_REQUEST['addaccount'])."', `default` = '".($_REQUEST['default'] ? 1 : 0)."'";
 		}
 		
 		// удаление счёта
@@ -68,7 +68,7 @@ switch($_REQUEST['page'])
 		// изменение счёта
 		elseif($_REQUEST['editaccount'])
 		{
-			$sql = "update `".KASSA_ACCOUNT_TABLE."` set `name` = '".$DB->EscapeString($_REQUEST['name'])."' where `id` = '".(int)$_REQUEST['editaccount']."'";
+			$sql = "update `".KASSA_ACCOUNT_TABLE."` set `name` = '".$DB->EscapeString($_REQUEST['name'])."', `default` = '".($_REQUEST['default'] ? 1 : 0)."' where `id` = '".(int)$_REQUEST['editaccount']."'";
 		}
 		
 		// добавление группы типов
