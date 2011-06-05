@@ -9,14 +9,21 @@
 <body>
 	<form action="/kassa/add/" method="post">
 		<input type="hidden" name="optype" id="inp_optype"><?
+		?><label for="inp_amount" class="half">Сумма</label><?
+		?><input type="text" name="amount" id="inp_amount" class="half"><?
+		for($i = 0; $i < 10; $i++)
+		{
+			?><input type="button" value="<?= $i ?>" class="quarter" onclick="document.getElementById('inp_amount').value+='<?= $i ?>';"><?
+		}
+		?><input type="button" value="," class="quarter" onclick="document.getElementById('inp_amount').value+=',';"><?
+		?><input type="button" value="&larr;" class="quarter" onclick="var o=document.getElementById('inp_amount');if(o){o.value=o.value.substr(0,o.value.length-1)}"><?
+		?><br><br><?
 		?><label for="inp_currency" class="half">Валюта</label><?
 		?><select name="currency" id="inp_currency" class="half"><?
 			foreach($_currencies as $_c):
 				?><option value="<?= $_c['id'] ?>"<?= $_c['default'] ? ' selected' : '' ?>><?= $_c['symbol'].' '.$_c['name'] ?></option><?
 			endforeach;
 		?></select><?
-		?><label for="inp_amount" class="half">Сумма</label><?
-		?><input type="text" name="amount" id="inp_amount" class="half"><?
 		?><label for="inp_account" class="half">Счёт</label><?
 		?><select class="half" name="account" id="inp_account"><?
 		foreach($_accounts as $_a): ?>

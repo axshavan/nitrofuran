@@ -2,4 +2,5 @@ body { width: 240px; font-size: 15px; color: black; background-color: #80A872; f
 input, select { border: 1px solid #106010; height: 30px; }
 .half { display: inline-block; width: 118px; }
 .full { display: block; width: 240px; }
+.quarter { display: inline-block; width: 59px; }
 .optype { display: none; }

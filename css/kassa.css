@@ -1,4 +1,4 @@
-body { font-size: 10px; color: black; background-color: #576B50; font-family: sans-serif; }
+body { font-size: 11px; color: black; background-color: #576B50; font-family: sans-serif; }
 
 .container { background-image: url("/i/kassa/bg.gif"); background-position: bottom; background-repeat: repeat-x; background-color: #628755; padding: 10px; border: 1px solid #2b3b25; -moz-border-radius: 6px; -webkit-border-radius: 6px; }
 .floatr { float: right; }
@@ -48,6 +48,7 @@ a.reset:hover { color: #505050; }
 #main_container .add-form .optypegroup .exp { color: #800000; background-color: #FFF17A; display: inline-block; margin: 2px; padding: 1px; }
 #main_container .add-form .optypegroup .exp:hover { background-color: #FFEE3D; }
 #main_container .add-form .hidden { background-color: #C1C1C1; border: 1px solid #808080; padding: 2px; -moz-border-radius: 3px; -webkit-border-radius: 3px; display: none; }
+#main_container .add-form .frequent { font-size: 10px; }
 #main_container div.optable { background-color: #9EB77E; padding: 4px; border: 1px solid #516637; -moz-border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 10px; }
 #main_container .itogo { background-color: #9EB77E; padding: 4px; border: 1px solid #516637; -moz-border-radius: 3px; -webkit-border-radius: 3px; position: absolute; top: 10px; left: 430px; width: 200px; min-height: 215px; }
 #main_container .itogo .inc { color: #006600; font-weight: bold; font-size: 12px; }
@@ -58,7 +59,7 @@ a.reset:hover { color: #505050; }
 #main_container .plans .optable { width: 100%; }
 #main_container span.command { display: inline-block; margin: 10px 0 5px 0; border-bottom: 1px dashed #303030; color: #303030; cursor: pointer; }
 
-#linx { position: absolute; top: 630px; left: 5px; width: 142px; }
+#linx { position: absolute; top: 650px; left: 5px; width: 142px; }
 #linx a { color: #202020; text-decoration: underline; }
 #linx a:hover { color: #303030; }
 
@@ -78,7 +79,7 @@ a.reset:hover { color: #505050; }
 #accountfilter span:hover { color: #202020; border-bottom: 1px dashed #606060; }
 #accountfilter div { background-color: #DCE884; padding: 2px; border: 1px solid #A4AF4D; -moz-border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 2px; }
 
-#transaccount { position: absolute; left: 5px; top: 340px; width: 142px; }
+#transaccount { position: absolute; left: 5px; top: 350px; width: 142px; }
 #transaccount label { font-weight: bold; display: block; margin-top: 5px; }
 #transaccount input { width: 130px; }
 #transaccount select { width: 130px; }

@@ -81,7 +81,7 @@
 			<form action="<?= HTTP_ROOT ?>/kassa/add/" method="post">
 				<strong>Добавить запись</strong>
 				<? foreach($_frequent_types as $_type): ?>
-					<span class="command" title="<?= $_type['gname'] ?>/<?= $_type['tname'] ?>" onclick="onFrequentTypeClick(<?= $_type['tid'] ?>, <?= $_type['gid'] ?>)"><?= $_type['tname'] ?></span>
+					<span class="command frequent" title="<?= $_type['gname'] ?>/<?= $_type['tname'] ?>" onclick="onFrequentTypeClick(<?= $_type['tid'] ?>, <?= $_type['gid'] ?>)"><?= $_type['tname'] ?></span>
 				<? endforeach; ?>
 				<br>
 				<div class="optypegroups">
