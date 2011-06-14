@@ -4,3 +4,6 @@ input, select { border: 1px solid #106010; height: 30px; }
 .full { display: block; width: 240px; }
 .quarter { display: inline-block; width: 59px; }
 .optype { display: none; }
+#div_comment_tip { display: block; position: absolute; width: 200px; padding: 10px; border: 1px solid black; top: 0; background-color: #f0f0f0; display: none; max-height: 200px; overflow-y: scroll; overflow-x: hidden; }
+#div_comment_tip span { margin-top: 15px; display: inline-block; width: 200px; cursor: pointer; }
+#div_comment_tip span:hover { background-color: #aaa; }

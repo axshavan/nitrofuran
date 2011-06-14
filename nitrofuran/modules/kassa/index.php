@@ -389,7 +389,6 @@ if(get_param('kassa', 'use_mobile_templates'))
 		|| strpos($_SERVER['HTTP_USER_AGENT'], 'Android') !== false
 		|| strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mini') !== false
 		|| strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mobi') !== false
-		|| 1
 	)
 	{
 		$tplengine->template('index_240px.tpl');
