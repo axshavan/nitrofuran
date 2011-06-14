@@ -164,7 +164,9 @@ if(isset($_REQUEST['image']))
 					'ff0000',
 					'800000'
 				),
-				'xtick' => ceil(sizeof($_sum_by_date_i) / 20)
+				'xtick'    => ceil(sizeof($_sum_by_date_i) / 20),
+				'grid'     => true,
+				'labelmax' => true
 			),
 			array
 			(

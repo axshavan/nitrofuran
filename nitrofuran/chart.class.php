@@ -29,10 +29,12 @@ class CChart
 				'f0f0f0',
 				'dd0034',
 				...
-			)                   цвета графиков по порядку
-			$_params['bgcolor'] цвет фона
-			$_params['xtick']   подписанные деления на оси абсцисс
-			$_params['grid']    рисовать или нет сетку
+			)                    цвета графиков по порядку
+			$_params['bgcolor']  цвет фона
+			$_params['xtick']    подписанные деления на оси абсцисс
+			$_params['grid']     рисовать или нет сетку
+			$_params['labelmax'] помечать максимумы графиков
+			$_params['labelmin'] помечать минимумы графиков
 			
 			$_data = array(
 				array(...),
@@ -78,11 +80,15 @@ class CChart
 		$xsize  = $width  - 20;
 		
 		// вычислим максимальное и минимальное значения графиков
-		$maxvalue = false;
-		$minvalue = false;
-		foreach($_data as $_graph)
+		$maxvalue          = false;   // абсолютный максимум всех графиков
+		$minvalue          = false;   // абсолютный минимум всех графиков
+		$_maxvalues        = array(); // максимумы графиков
+		$_minvalues        = array(); // минимумы графиков
+		$_maxvalues_xcoord = array(); // x-координаты отметок максимума
+		$_minvalues_xcoord = array(); // x-координаты отметок минимума
+		foreach($_data as $id => $_graph)
 		{
-			foreach($_graph as $point)
+			foreach($_graph as $xcoord => $point)
 			{
 				if($point > $maxvalue || $maxvalue === false)
 				{
@@ -91,6 +97,16 @@ class CChart
 				if($point < $minvalue || $minvalue === false)
 				{
 					$minvalue = $point;
+				}
+				if($point > $_maxvalues[$id] || !isset($_maxvalues[$id]))
+				{
+					$_maxvalues[$id]        = $point;
+					$_maxvalues_xcoord[$id] = $xcoord;
+				}
+				if($point < $_minvalues[$id] || !isset($_minvalues[$id]))
+				{
+					$_minvalues[$id]        = $point;
+					$_minvalues_xcoord[$id] = $xcoord;
 				}
 			}
 		}
@@ -168,7 +184,7 @@ class CChart
 		
 		// собственно график
 		$g = 0; // количество графиков
-		foreach($_data as $_graph)
+		foreach($_data as $id => $_graph)
 		{
 			$p     = 0; // количество точек
 			$xprev = false;
@@ -185,7 +201,7 @@ class CChart
 			}
 			imagefill($brush, 0, 0, $c);
 			imagesetbrush($result, $brush);
-			foreach($_graph as $point)
+			foreach($_graph as $xcoord => $point)
 			{
 				// координаты текущей точки
 				$x = round($p * $xaspect + 10);
@@ -199,6 +215,21 @@ class CChart
 				$xprev = $x;
 				$yprev = $y;
 				$p++;
+				// если надо - подпишем точки
+				if($_params['labelmax'])
+				{
+					if($xcoord == $_maxvalues_xcoord[$id])
+					{
+						imagestring($result, 4, $x + 5, $bYTicksAboveAxis ? ($y - 15) : ($y + 2), $_maxvalues[$id], $c);
+					}
+				}
+				if($_params['labelmin'])
+				{
+					if($xcoord == $_minvalues_xcoord[$id])
+					{
+						imagestring($result, 4, $x + 5, $bYTicksAboveAxis ? ($y - 15) : ($y + 2), $_minvalues[$id], $c);
+					}
+				}
 			}
 			imagedestroy($brush);
 			$g++;
