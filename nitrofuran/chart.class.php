@@ -90,6 +90,7 @@ class CChart
 		{
 			foreach($_graph as $xcoord => $point)
 			{
+				$point = (float)$point;
 				if($point > $maxvalue || $maxvalue === false)
 				{
 					$maxvalue = $point;
@@ -317,7 +318,7 @@ class CChart
 			$count++;
 		}
 		$other += $_data['Other'];
-		$_data  = array_slice($_data, 0, $_params['slice']);
+		$_data  = array_slice($_data, 0, $_params['slice'], true);
 		if($other)
 		{
 			$_data['Other'] = $other;

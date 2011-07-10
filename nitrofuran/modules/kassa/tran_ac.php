@@ -33,7 +33,7 @@ while($r = $DB->Fetch($res))
 $sum_from = $sum_to = (float)str_replace(',', '.', $_POST['sum']);
 if($OPTYPE_TRANSACTION_COMISSION_ID)
 {
-	$sum_comission = ($_POST['comission'] / 100) * $sum_from;
+	$sum_comission = ((float)str_replace(',', '.', $_POST['comission']) / 100) * $sum_from;
 }
 $DB->Query("insert into `".KASSA_OPERATION_TABLE."` (`currency_id`, `account_id`, `type_id`, `amount`, `time`, `comment`, `backtime`)
 	values ('".(int)$_POST['currency']."', '".(int)$_POST['account_from']."', '".$OPTYPE_TRANSACTION_FROM_ID."', '".$sum_from."', unix_timestamp(), 'На счёт ".$_accounts[$_POST['account_to']]."',    unix_timestamp())");
