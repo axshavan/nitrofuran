@@ -11,42 +11,23 @@ function a(id)
 }
 
 /*
-	Обработка события onkeyup в инпуте с комментарием.
+	Проверка полей перед отправкой формы.
 */
-function onCommentKeyUp(event)
+function onFormSubmit()
 {
-	var obj = a('inp_comment');
-	if(!obj)
+	var obj = a('inp_amount');
+	if(obj && !obj.value.length)
 	{
-		return;
+		alert('Сумма?');
+		return false;
 	}
-	var val = obj.value;
-	if(!val || val.length < 3)
+	obj = a('inp_optype');
+	if(obj && !obj.value)
 	{
-		a('div_comment_tip_content').innerHTML = '';
-		a('div_comment_tip').style.display = 'none';
-		return;
+		alert('Тип операции?');
+		return false;
 	}
-	jQuery.post
-	(
-		'/kassa/ajax/',
-		{
-			mode:    'comment',
-			comment: val
-		},
-		function(data)
-		{
-			a('div_comment_tip_content').innerHTML = data;
-			if(data.length)
-			{
-				$('#div_comment_tip').slideDown(300);
-			}
-			else
-			{
-				$('#div_comment_tip').slideUp(300);
-			}
-		}
-	);
+	return true;
 }
 
 /*

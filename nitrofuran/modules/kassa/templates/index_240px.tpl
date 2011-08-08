@@ -5,10 +5,9 @@
 	<title><?= $title ?></title>
 	<link rel="stylesheet" type="text/css" href="<?= HTTP_ROOT ?>/css/kassa_240px.css">
 	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/kassa_240px.js"></script>
-	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/jquery-1.4.3.min.js"></script>
 </head>
 <body>
-	<form action="/kassa/add/" method="post">
+	<form action="/kassa/add/" method="post" onsubmit="return onFormSubmit();">
 		<input type="hidden" name="optype" id="inp_optype"><?
 		?><label for="inp_amount" class="half">Сумма</label><?
 		?><input type="text" name="amount" id="inp_amount" class="half"><?
@@ -32,14 +31,7 @@
 		endforeach; ?>
 		?></select><?
 		?><label for="inp_comment" class="full">Комментарий</label><?
-		?><input type="text" name="comment" id="inp_comment" class="full" onkeyup="onCommentKeyUp(event)"><?
-		?><div id="div_comment_tip"><?
-			?><div class="close"><?
-				?><span onclick="a('div_comment_tip').style.display='none';">Закрыть [ X ]</span><br><?
-			?></div><?
-			?><div id="div_comment_tip_content"><?
-			?></div><?
-		?></div><?
+		?><input type="text" name="comment" id="inp_comment" class="full"><?
 		?><label class="half" for="inp_opttypegroup">Группа типов</label><?
 		?><label class="half">Тип операции</label><?
 		?><select class="half" id="inp_opttypegroup" onchange="onGroupSelectChange(this.value)"><?
