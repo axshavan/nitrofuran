@@ -65,6 +65,7 @@ class CTemplateEngine
 		{
 			return 'TEMPLATE DOES NOT EXIST';
 		}
+		unset($this->_tpl_vars['this']);
 		extract($this->_tpl_vars);
 		include($tpl_name);
 		return true;

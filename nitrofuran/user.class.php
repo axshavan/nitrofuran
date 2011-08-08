@@ -79,6 +79,53 @@ class CUser
 		global $AUTH;
 		return $AUTH->Logout();
 	}
+	
+	/*
+		Изменить пользователя.
+		@param  int    $id      id пользователя
+		@param  array  $_fields массив со значениями полей
+		@param  string &$error  возвращается код ошибки
+		@return bool
+	*/
+	public static function Update($id, $_fields, &$error)
+	{
+		global $DB;
+		
+		$error = '';
+		$id    = (int)$id;
+		if(!$id)
+		{
+			$error = 'NO_ID';
+			return false;
+		}
+		if(!sizeof($_fields))
+		{
+			return true;
+		}
+		$sql_str = "update `".USERS_TABLE."` set";
+		if(isset($_fields['login']))
+		{
+			$_fields['login'] = trim($_fields['login']);
+			if(strlen($_fields['login']))
+			{
+				$sql_str .= " `login` = '".$DB->EscapeString($_fields['login'])."',";
+			}
+		}
+		if(isset($_fields['password']) && strlen($_fields['password']))
+		{
+			$_fields['password'] = md5(md5($_fields['password']).' qjBDY65$#/');
+			$sql_str .= " `password` = '".$_fields['password']."',";
+		}
+		$sql_str = substr($sql_str, 0, strlen($sql_str) - 1);
+		$sql_str .= " where `id` = '".$id."'";
+		$res = $DB->Query($sql_str);
+		if(!$res)
+		{
+			$error = 'DB_ERROR';
+			return false;
+		}
+		return true;
+	}
 }
 
 ?>
