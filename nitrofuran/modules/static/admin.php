@@ -53,6 +53,18 @@ switch($page)
 	}
 	case 3:
 	{
+		// одна статичная страница
+		$page_id = (int)$_REQUEST['pageid'];
+		if($_POST)
+		{
+			if($page_id)
+			{
+				$DB->Query("update `".STATIC_PAGES_TABLE."` set `content` = '".addslashes($_POST['content'])."'");
+			}
+		}
+		$res = $DB->Query("select * from `".STATIC_PAGES_TABLE."` where `id` = '".$page_id."'");
+		$tplengine->assign('_page', $DB->Fetch($res));
+		$tplengine->assign('inner_template_name', DOCUMENT_ROOT.'/nitrofuran/modules/static/templates/admin_form.tpl');
 		break;
 	}
 }

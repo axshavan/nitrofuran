@@ -39,7 +39,7 @@ if(!function_exists('draw_vtree_item'))
 						</tr>
 						<tr>
 							<td><label for="access<?= $item['id'] ?>">Доступен всем</label></td>
-							<td><input type="checkbox" id="access<?= $item['id'] ?>" name="s" value="true"<?= $item['data']['access'] ? ' checked' : '' ?>"></td>
+							<td><input type="checkbox" id="access<?= $item['id'] ?>" name="s" value="true"<?= $item['data']['access'] ? ' checked="checked"' : '' ?>"></td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>

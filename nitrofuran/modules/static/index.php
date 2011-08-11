@@ -14,6 +14,7 @@ if(!$res)
 {
 	error404();
 }
+header("Content-Type: text/html; charset=UTF-8");
 echo $res['content'];
 
 ?>

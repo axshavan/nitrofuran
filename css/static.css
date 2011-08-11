@@ -2,3 +2,4 @@ ul.ul-root li { list-style: circle; }
 ul.ul-root li .name { font-weight: bold; }
 ul.ul-root li .data { color: grey; }
 ul.ul-root li .data a { color: black; text-decoration: underline; }
+textarea.full { width: 90%; min-height: 400px; padding: 10px; }
