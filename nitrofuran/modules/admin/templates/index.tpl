@@ -22,7 +22,7 @@ $_params_types = array(
 	<!-- левая панель -->
 	<div class="admin_left_panel">
 		<? foreach($_left_menu as $item): ?>
-		<div class="item <?= $item['active'] ? '' : 'in' ?>active">
+		<div class="item <?= $item['active'] ? '' : 'in' ?>active" onclick="document.location='?module=<?= $item['module'] ?>'">
 			<a href="?module=<?= $item['module'] ?>"><?= h($item['name']) ?></a>
 		</div>
 		<? endforeach; ?>

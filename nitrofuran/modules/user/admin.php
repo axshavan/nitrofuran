@@ -19,14 +19,26 @@ switch($_GET['page'])
 	{
 		if($_POST)
 		{
-			if(!CUser::Update(1, array('login' => $_POST['user_1_login'], 'password' => $_POST['user_1_password']), $error))
+			$_fields = array
+			(
+				'login'     => $_POST['login'],
+				'email'     => $_POST['email'],
+				'full_name' => $_POST['full_name']
+			);
+			if(strlen($_POST['newpassword']))
+			{
+				$_fields['password'] = $_POST['newpassword'];
+			}
+			if(!CUser::Update((int)$_POST['id'], $_fields, $error))
 			{
 				$error_text = 'Данные пользователя не обновлены: ';
 				switch($error)
 				{
-					case 'NO_ID':    $error_text .= ' не указан пользователь'; break;
-					case 'DB_ERROR': $error_text .= ' ошибка базы данных'; break;
-					default:         $error_text .= ' неизвестная какая-то ошибка'; break;
+					case 'NO_ID':              $error_text .= ' не указан пользователь'; break;
+					case 'DB_ERROR':           $error_text .= ' ошибка базы данных'; break;
+					case 'LOGIN_EMAIL_EXISTS': $error_text .= ' существует другой пользователь с таким логином или емейлом'; break;
+					case 'EMPTY_LOGIN':        $error_text .= ' пустой логин'; break;
+					default:                   $error_text .= ' неизвестная какая-то ошибка'; break;
 				}
 				$tplengine->assign('error_text', $error_text);
 			}

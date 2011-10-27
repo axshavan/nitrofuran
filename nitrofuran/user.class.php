@@ -102,6 +102,27 @@ class CUser
 		{
 			return true;
 		}
+		// логин должен иметь хотя бы какую-нибудь длину
+		if(isset($_fields['login']) && !strlen($_fields['login']))
+		{
+			$error = 'EMPTY_LOGIN';
+			return false;
+		}
+		// проверка на существование такого логина или такого емейла
+		if(isset($_fields['login']) || isset($_fields['email']))
+		{
+			$sql_str = "select `id` from `".USERS_TABLE."` where 1 = 1 and ("
+				.(isset($_fields['login']) ? "`login` = '".$DB->EscapeString($_fields['login'])."' or " : '')
+				.(isset($_fields['email']) ? "`email` = '".$DB->EscapeString($_fields['email'])."' or " : '')
+				." 1 = 1) and `id` != '".$id."'";
+			$res = $DB->Query($sql_str);
+			$res = $DB->Fetch($res);
+			if(sizeof($res) && $res)
+			{
+				$error = 'LOGIN_EMAIL_EXISTS';
+				return false;
+			}
+		}
 		$sql_str = "update `".USERS_TABLE."` set";
 		if(isset($_fields['login']))
 		{
@@ -109,6 +130,22 @@ class CUser
 			if(strlen($_fields['login']))
 			{
 				$sql_str .= " `login` = '".$DB->EscapeString($_fields['login'])."',";
+			}
+		}
+		if(isset($_fields['email']))
+		{
+			$_fields['email'] = trim($_fields['email']);
+			if(strlen($_fields['email']))
+			{
+				$sql_str .= " `email` = '".$DB->EscapeString($_fields['email'])."',";
+			}
+		}
+		if(isset($_fields['full_name']))
+		{
+			$_fields['full_name'] = trim($_fields['full_name']);
+			if(strlen($_fields['full_name']))
+			{
+				$sql_str .= " `full_name` = '".$DB->EscapeString($_fields['full_name'])."',";
 			}
 		}
 		if(isset($_fields['password']) && strlen($_fields['password']))
