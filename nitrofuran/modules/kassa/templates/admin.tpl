@@ -15,7 +15,7 @@
 			<td><?= $v['id'] ?></td>
 			<td><input type="text" id="kassa_editcurrency<?= $v['id'] ?>_symbol" name="symbol" size="1" value="<?= $v['symbol'] ?>"></td>
 			<td><input type="text" id="kassa_editcurrency<?= $v['id'] ?>_name" name="name" value="<?= h($v['name']) ?>"></td>
-			<td><input type="checkbox" id="kassa_editcurrency<?= $v['id'] ?>_default" name="default" value="1"<?= $v['default'] ? " checked" : "" ?>></td>
+			<td><input type="checkbox" id="kassa_editcurrency<?= $v['id'] ?>_default" name="default" value="1"<?= $v['default'] ? " checked" : "" ?>> <label for="kassa_editcurrency<?= $v['id'] ?>_default">по умолчанию</label></td>
 			<td><input type="submit" value="Сохранить"></td>
 			<td><input type="button" value="Удалить" onclick="location='?module=kassa&page=1&delcurrency=<?= $v['id'] ?>'"></td>
 		</tr>
@@ -56,7 +56,7 @@
 		<tr>
 			<td><?= $v['id'] ?></td>
 			<td><input type="text" id="kassa_editaccount<?= $v['id'] ?>" name="name" value="<?= h($v['name']) ?>"></td>
-			<td><input type="checkbox" id="kassa_editaccount<?= $v['id'] ?>_default" name="default" value="1"<?= $v['default'] ? " checked" : "" ?>></td>
+			<td><input type="checkbox" id="kassa_editaccount<?= $v['id'] ?>_default" name="default" value="1"<?= $v['default'] ? " checked" : "" ?>> <label for="kassa_editaccount<?= $v['id'] ?>_default">по умолчанию</label></td>
 			<td><input type="submit" value="Сохранить"></td>
 			<td><input type="button" value="Удалить" onclick="location='?module=kassa&page=1&delaccount=<?= $v['id'] ?>'"></td>
 		</tr>

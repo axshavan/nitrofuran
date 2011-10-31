@@ -33,7 +33,7 @@ $_params_types = array(
 	<div class="admin_right_panel">
 		<div class="module_menu">
 			<? foreach($_module_menu as $item): ?>
-				<div class="item <?= $item['active'] ? '' : 'in' ?>active">
+				<div class="item <?= $item['active'] ? '' : 'in' ?>active" onclick="document.location='?module=<?= $module ?>&page=<?= $item['page'] ?>'">
 					<?= $item['active'] ? '' : '<a href="?module='.$module.'&page='.$item['page'].'">' ?><?= h($item['name']) ?><?= $item['active'] ? '' : '</a>' ?>
 				</div>
 			<? endforeach; ?>

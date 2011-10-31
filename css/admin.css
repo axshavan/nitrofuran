@@ -23,7 +23,7 @@ fieldset { margin: 5px 0 5px 0; border: 1px solid #45BC51; background-color: #EC
 .admin_right_panel .module_menu .item a { color: black; text-decoration: none; }
 .admin_right_panel .module_menu .item a:hover { text-decoration: underline; }
 .admin_right_panel .module_menu .inactive { background-color: #C1C1C1; }
-.admin_right_panel .module_menu .inactive:hover { background-color: #DBDBDB; }
+.admin_right_panel .module_menu .inactive:hover { background-color: #DBDBDB; cursor: pointer; }
 .admin_right_panel .module_menu .active { background-color: #FC9562; }
 .admin_right_panel a { text-decoration: none; color: #808080; }
 .admin_right_panel a:hover { text-decoration: underline; }

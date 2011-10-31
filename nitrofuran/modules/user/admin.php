@@ -57,6 +57,30 @@ switch($_GET['page'])
 		$tplengine->assign('inner_template_name', DOCUMENT_ROOT.'/nitrofuran/modules/user/templates/userlist.tpl');
 		break;
 	}
+	case 2:
+	{
+		if($_POST)
+		{
+			$error      = '';
+			$error_text = '';
+			if(!CUser::Add($_POST['login'], $_POST['password'], $_POST['email'], $_POST['full_name'], &$error))
+			{
+				$error_text = 'Пользователь не создан: ';
+				switch($error)
+				{
+					case 'BAD LOGIN':   $error_text .= ' плохой логин'; break;
+					case 'USER EXISTS': $error_text .= ' такой пользователь уже есть'; break;
+					case 'DB ERROR':    $error_text .= ' неизвестная ошибка'; break;
+				}
+				$tplengine->assign('error_text', $error_text);
+			}
+			else
+			{
+				$tplengine->assign('success_text', 'Пользователь создан');
+			}
+		}
+		$tplengine->assign('inner_template_name', DOCUMENT_ROOT.'/nitrofuran/modules/user/templates/usernew.tpl');
+	}
 }
 
 ?>

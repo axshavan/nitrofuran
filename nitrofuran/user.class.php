@@ -51,8 +51,9 @@ class CUser
 			$error = 'DB ERROR';
 			return false;
 		}
+		$result = $DB->InsertedId();
 		$DB->TransactionCommit();
-		return $DB->InsertedId();
+		return $result;
 	}
 	
 	/*
