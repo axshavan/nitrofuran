@@ -76,7 +76,7 @@ while($_row = $DB->Fetch($res))
 	$_operation_sum[$_row['type_id']][$_row['currency_id']]  += $_row['amount'];
 	if(!$_optypes[$_row['type_id']]['is_service'])
 	{
-		$_months[date('Y-m', $_row['backtime'])][$_optypes[$_row['type_id']]['is_income'] ? 'income' : 'expenditure'] += $_row['amount'];
+		$_months[date('Y-m', $_row['backtime'])][$_optypes[$_row['type_id']]['is_income'] ? 'income' : 'expenditure'][$_currencies[$_row['currency_id']]['symbol']] += $_row['amount'];
 	}
 	if($_row['time'] > $last_month)
 	{

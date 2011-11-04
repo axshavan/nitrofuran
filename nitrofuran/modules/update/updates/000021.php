@@ -5,7 +5,7 @@
 
 if(!CModule::IsModuleInstalled('user'))
 {
-	// касса не установлена
+	// модуль user почему-то не установлен
 	return true;
 }
 

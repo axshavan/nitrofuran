@@ -23,13 +23,26 @@
 				<th>Расход</th>
 				<th>Итого</th>
 			</tr>
-			<? foreach($_months as $_m): $bOdd = !$bOdd; ?>
-				<tr<?= $bOdd ? ' class="odd"' : '' ?>>
-					<td><?= $_m['name'] ?></td>
-					<td><?= $_m['income'] ?></td>
-					<td><?= $_m['expenditure'] ?></td>
-					<td><?= $_m['income'] - $_m['expenditure'] ?></td>
-				</tr>
+			<? foreach($_months as $_m): $bOdd = !$bOdd; $month_sum = array(); ?>
+					<tr<?= $bOdd ? ' class="odd"' : '' ?>>
+						<td><?= $_m['name'] ?></td>
+						<td>
+							<? foreach($_m['income'] as $currency => $sum): $month_sum[$currency] += $sum; ?>
+								<?= $sum ?>&nbsp;<?= $currency ?><br />
+							<? endforeach; ?>
+						</td>
+						<td>
+							<? foreach($_m['expenditure'] as $currency => $sum): $month_sum[$currency] -= $sum; ?>
+								<?= $sum ?>&nbsp;<?= $currency ?><br />
+							<? endforeach; ?>
+						</td>
+						<td>
+							<? foreach($month_sum as $currency => $sum): ?>
+								<?= $sum ?>&nbsp;<?= $currency ?><br />
+							<? endforeach; ?>
+						</td>
+					</tr>
+				
 			<? endforeach; ?>
 		</table>
 	</div>
