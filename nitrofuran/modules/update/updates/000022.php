@@ -15,7 +15,7 @@ $DB->Query("CREATE TABLE `".KASSA_HOLD_TABLE."` (
   `id` integer UNSIGNED NOT NULL AUTO_INCREMENT,
   `operation_type_id` integer UNSIGNED NOT NULL,
   `sum` float  NOT NULL,
-  `comment` varchar(255) 
+  `comment` varchar(255),
   PRIMARY KEY (`id`)
 )
 ENGINE = MyISAM
