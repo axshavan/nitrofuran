@@ -347,6 +347,21 @@ function showDebtorForm(obj, debtor_id)
 }
 
 /*
+	Показать форму добавления и редактирования холда.
+	@param obj {HTML Element}
+*/
+function showHoldForm(obj, id, optype, sum, comment)
+{
+	$('#hold_form').css('top', $(obj).offset().top + 36);
+	$('#hold_form').css('left', $(obj).offset().left - 242);
+	$('#hold_form').fadeIn(300);
+	ge('hold_form_id').value      = id                ? parseInt(id)    : 0;
+	ge('hold_form_amount').value  = sum               ? parseFloat(sum) : 0;
+	ge('hold_form_optype').value  = optype            ? optype          : "";
+	ge('hold_form_comment').value = comment !== false ? comment         : "";
+}
+
+/*
 	Обработка нажатия на кнопку "редактировать операцию".
 	@param obj {HTML Element} объект, вызвавший событие
 	@param event_params {array} параметры операции

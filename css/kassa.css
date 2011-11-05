@@ -10,6 +10,10 @@ a.reset:hover { color: #505050; }
 #event_edit_form img { position: absolute; top: -30px; }
 #event_edit_form span { text-decoration: underline; cursor: pointer; }
 
+#hold_form { position: absolute; z-index: 2; border: 1px solid #a0a0a0; background-color: #f0f0f0; -moz-border-radius: 6px; -webkit-border-radius: 6px; padding: 6px; display: none; width: 250px; }
+#hold_form img { position: absolute; top: -30px; right: 6px; }
+#hold_form span { text-decoration: underline; cursor: pointer; }
+
 #debtor_form { position: absolute; z-index: 2; border: 1px solid #a0a0a0; background-color: #f0f0f0; -moz-border-radius: 6px; -webkit-border-radius: 6px; padding: 6px; display: none; }
 #debtor_form img { position: absolute; top: -30px; }
 #debtor_form span { text-decoration: underline; cursor: pointer; }
@@ -59,7 +63,7 @@ a.reset:hover { color: #505050; }
 #main_container .plans .optable { width: 100%; }
 #main_container span.command { display: inline-block; margin: 10px 0 5px 0; border-bottom: 1px dashed #303030; color: #303030; cursor: pointer; }
 
-#linx { position: absolute; top: 650px; left: 5px; width: 142px; }
+#linx { position: absolute; top: 628px; left: 5px; width: 142px; }
 #linx a { color: #202020; text-decoration: underline; }
 #linx a:hover { color: #303030; }
 
@@ -100,7 +104,7 @@ a.reset:hover { color: #505050; }
 
 div.stats_graph img.stats_graph_image { margin-top: 20px; border: 1px solid black; }
 
-table.optable { border-top: 1px solid #303030; border-left: 1px solid #303030; empty-cells: show; }
+table.optable { border-top: 1px solid #303030; border-left: 1px solid #303030; empty-cells: show; max-width: 80%; }
 table.optable td { border-bottom: 1px solid #303030; border-right: 1px solid #303030; padding: 2px; vertical-align: top; }
 table.optable th { border-bottom: 1px solid #303030; border-right: 1px solid #303030; padding: 2px; background-color: white; }
 table.optable tr.inc { background-color: #7CFF5B; }
@@ -114,6 +118,8 @@ table.optable tr.daysum .inc { color: #006600; }
 table.optable tr.daysum .exp { color: #800000; }
 table.optable td.dayhead { font-size: 13px; height: 30px; vertical-align: bottom; }
 table.optable td.itogo { font-size: 14px; }
+
+table.holdtable { width: 19%; float: right; }
 
 .stats-column-1 { position: absolute; width: 32%; left: 0.5%; top: 30px; }
 .stats-column-2 { position: absolute; width: 32%; left: 33%; top: 30px; }

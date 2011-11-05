@@ -11,5 +11,6 @@ define('KASSA_DEBTORS_TABLE',              'kassa_debtors');
 define('KASSA_DEBTORS_OPERATION_TABLE',    'kassa_debtors_operation');
 define('KASSA_OPERATION_PROPVALUES_TABLE', 'kassa_operation_property_values');
 define('KASSA_OPERATION_PROPNAMES_TABLE',  'kassa_operation_property');
+define('KASSA_HOLD_TABLE',                 'kassa_hold');
 
 ?>

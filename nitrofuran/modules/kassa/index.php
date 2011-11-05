@@ -214,6 +214,15 @@ while($_row = $DB->Fetch($res))
 ksort($_plans);
 $tplengine->assign('_plans', $_plans);
 
+// отложенные суммы
+$_holds = array();
+$res = $DB->Query("select * from `".KASSA_HOLD_TABLE."`");
+while($_row = $DB->Fetch($res))
+{
+	$_holds[] = $_row;
+}
+$tplengine->assign('holds', $_holds);
+
 $tplengine->assign('filter_from_year',  $filter_from_year);
 $tplengine->assign('filter_from_month', $filter_from_month);
 $tplengine->assign('filter_from_day',   $filter_from_day);

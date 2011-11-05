@@ -209,12 +209,33 @@
 				<? endif; ?>
 			</div>
 			<!-- /долги -->
-		
 		</div>
 		<!-- /всякое -->
 		
-		<!-- таблица с операциями -->
 		<div class="optable">
+			<!-- таблица с холдами -->
+			<table class="optable holdtable" cellspacing="0">
+				<tr>
+					<th>Отложено</th>
+					<th>Комментарий</th>
+					<th><img src="/i/kassa/add.gif" class="button" onclick="showHoldForm(this, false, false, false, false)"></th>
+				</tr>
+				<? foreach($holds as $h): $bOdd = !$bOdd; ?>
+					<tr class="<?= $bOdd ? 'odd' : 'notodd' ?>">
+						<td><?= (float)$h['sum'] ?></td>
+						<td><?= $h['comment'] ? htmlspecialchars($h['comment']) : $_optypes_by_id[$h['operation_type_id']]['name'] ?></td>
+						<td>
+							<img src="/i/kassa/edit.gif"
+								class="button"
+								onclick="showHoldForm(this, '<?= $h['id'] ?>', '<?= $h['operation_type_id'] ?>', '<?= $h['sum'] ?>', '<?= $h['comment'] ?>')">
+							<!--<img src="/i/kassa/del.gif">-->
+						</td>
+					</tr>
+				<? endforeach; ?>
+			</table>
+			<!-- /таблица с холдами -->
+			
+			<!-- таблица с операциями -->
 			<table class="optable" cellspacing="0">
 				<tr>
 					<th>Приход</th>
@@ -328,8 +349,8 @@
 				}
 				?></td></tr>
 			</table>
+			<!-- /таблица с операциями -->
 		</div>
-		<!-- /таблица с операциями -->
 		
 		<!-- итого -->
 		<div class="itogo">
@@ -357,7 +378,7 @@
 		<!-- планирование -->
 		<div class="plans">
 			<strong>Напоминания о предстоящих расходах и приходах</strong><br>
-			<a href="/kassa/plans/" class="reset">перейти в планирование &raquo;</a>
+			<a href="/admin?module=kassa&page=2" class="reset">планирование &raquo;</a> <a href="/kassa/plans/" class="reset">прогноз &raquo;</a>
 			<table class="optable" cellspacing="0">
 			<? foreach($_plans as $date => $_dateplans): ?>
 				<tr>
@@ -498,7 +519,6 @@
 				<td onclick="calc.button('.')">,</td>
 				<td onclick="calc.button('+')">+</td>
 				<td onclick="calc.button('-')">-</td>
-				
 			</tr>
 		</table>
 		<span class="button" onclick="calc.calculate();">= <small>(enter)</small></span>
@@ -529,5 +549,34 @@
 		</form>
 	</div>
 	<!-- /форма операции по долгам -->
+	
+	<!-- форма добавления и редактирования холда -->
+	<div id="hold_form">
+		<img src="<?= HTTP_ROOT ?>/i/kassa/event_edit_form_arrow.gif">
+		<span onclick="$('#hold_form').fadeOut(300);">отмена</span>
+		<form action="<?= HTTP_ROOT ?>/kassa/hold/" method="post">
+			<input type="hidden" name="id" id="hold_form_id">
+			<label for="hold_form_optype">Тип операции</label><br>
+			<select name="optype" id="hold_form_optype">
+				<option value=""></option>
+				<?
+				foreach($_optypes as $_group)
+				{
+					foreach($_group as $_optype)
+					{
+						echo '<option value="'.$_optype['id'].'">'.$_optype['name'].'</option>';
+					}
+				}
+				?>
+			</select><br>
+			<label for="hold_form_amount">Отложенная сумма</label><br>
+			<input type="text" name="amount" id="hold_form_amount"><br>
+			<label for="hold_form_comment">Комментарий</label><br>
+			<input type="text" name="comment" id="hold_form_comment" maxlength="255"><br>
+			<input type="submit" value="Ок">
+		</form>
+	</div>
+	<!-- /форма добавления и редактирования холда -->
+	
 </body>
 </html>
