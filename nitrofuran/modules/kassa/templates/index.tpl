@@ -228,7 +228,7 @@
 							<img src="/i/kassa/edit.gif"
 								class="button"
 								onclick="showHoldForm(this, '<?= $h['id'] ?>', '<?= $h['operation_type_id'] ?>', '<?= $h['sum'] ?>', '<?= $h['comment'] ?>')">
-							<!--<img src="/i/kassa/del.gif">-->
+							<a onclick="if(!confirm('Правда удалить?')) return false;" href="/kassa/hold/?del=<?= $h['id'] ?>"><img src="/i/kassa/del.gif"></a>
 						</td>
 					</tr>
 				<? endforeach; ?>

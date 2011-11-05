@@ -14,7 +14,13 @@
 require_once('config.php');
 global $DB;
 
-//trace($_POST);
+if($_GET['del'])
+{
+	// удаление записи
+	$DB->Query("delete from `".KASSA_HOLD_TABLE."` where `id` = '".(int)$_GET['del']."'");
+	redirect('..');
+	die();
+}
 
 if(!$_POST['id'])
 {
