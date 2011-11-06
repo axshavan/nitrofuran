@@ -104,7 +104,7 @@ a.reset:hover { color: #505050; }
 
 div.stats_graph img.stats_graph_image { margin-top: 20px; border: 1px solid black; }
 
-table.optable { border-top: 1px solid #303030; border-left: 1px solid #303030; empty-cells: show; max-width: 80%; }
+table.optable { border-top: 1px solid #303030; border-left: 1px solid #303030; empty-cells: show; max-width: 75%; }
 table.optable td { border-bottom: 1px solid #303030; border-right: 1px solid #303030; padding: 2px; vertical-align: top; }
 table.optable th { border-bottom: 1px solid #303030; border-right: 1px solid #303030; padding: 2px; background-color: white; }
 table.optable tr.inc { background-color: #7CFF5B; }
@@ -119,7 +119,7 @@ table.optable tr.daysum .exp { color: #800000; }
 table.optable td.dayhead { font-size: 13px; height: 30px; vertical-align: bottom; }
 table.optable td.itogo { font-size: 14px; }
 
-table.holdtable { width: 19%; float: right; }
+table.holdtable { width: 24%; float: right; }
 
 .stats-column-1 { position: absolute; width: 32%; left: 0.5%; top: 30px; }
 .stats-column-2 { position: absolute; width: 32%; left: 33%; top: 30px; }

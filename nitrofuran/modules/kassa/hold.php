@@ -25,8 +25,12 @@ if($_GET['del'])
 if(!$_POST['id'])
 {
 	// добавление записи
-	$DB->Query("insert into `".KASSA_HOLD_TABLE."` (`operation_type_id`, `sum`, `comment`) values
-		('".(int)$_POST['optype']."', '".(float)$_POST['amount']."', '".$DB->EscapeString($_POST['comment'])."')");
+	$DB->Query("insert into `".KASSA_HOLD_TABLE."` (`operation_type_id`, `sum`, `comment`, `currency_id`, `account_id`) values (
+		'".(int)$_POST['optype']."',
+		'".(float)$_POST['amount']."',
+		'".$DB->EscapeString($_POST['comment'])."',
+		'".(int)$_POST['currency']."',
+		'".(int)$_POST['account']."')");
 }
 else
 {
@@ -34,7 +38,9 @@ else
 	$DB->Query("update `".KASSA_HOLD_TABLE."` set
 		`operation_type_id` = '".(int)$_POST['optype']."',
 		`sum` = '".(float)$_POST['amount']."',
-		`comment` = '".$DB->EscapeString($_POST['comment'])."'
+		`comment` = '".$DB->EscapeString($_POST['comment'])."',
+		`currency_id` = '".(int)$_POST['currency']."',
+		`account_id` = '".(int)$_POST['account']."'
 		where `id` = '".(int)$_POST['id']."'");
 }
 

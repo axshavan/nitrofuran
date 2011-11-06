@@ -30,3 +30,5 @@ if(!$_row['id'])
 $DB->Query("insert into `".TREE_TABLE."` (`pid`, `name`, `module`, `action`, `template`, `access`) values
 	('".$_row['id']."', 'hold', 'kassa', 'hold', '', '".$_row['access']."')");
 return true;
+
+?>

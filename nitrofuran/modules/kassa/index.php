@@ -152,7 +152,7 @@ $_accounts = array();
 $res = $DB->Query("select * from `".KASSA_ACCOUNT_TABLE."`");
 while($_row = $DB->Fetch($res))
 {
-	$_accounts[] = $_row;
+	$_accounts[$_row['id']] = $_row;
 }
 $tplengine->assign('_accounts', $_accounts);
 

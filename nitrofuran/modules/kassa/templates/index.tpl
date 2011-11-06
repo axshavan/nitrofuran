@@ -217,20 +217,24 @@
 			<table class="optable holdtable" cellspacing="0">
 				<tr>
 					<th>Отложено</th>
-					<th>Комментарий</th>
-					<th><img src="/i/kassa/add.gif" class="button" onclick="showHoldForm(this, false, false, false, false)"></th>
+					<th>Счёт&nbsp;/ Тип операции</th>
+					<th><img src="/i/kassa/add.gif" class="button" onclick="showHoldForm(this, false)"></th>
 				</tr>
 				<? foreach($holds as $h): $bOdd = !$bOdd; ?>
 					<tr class="<?= $bOdd ? 'odd' : 'notodd' ?>">
-						<td><?= (float)$h['sum'] ?></td>
-						<td><?= $h['comment'] ? htmlspecialchars($h['comment']) : $_optypes_by_id[$h['operation_type_id']]['name'] ?></td>
+						<td title="<?= htmlspecialchars($h['comment']) ?>"><span id="hold<?= $h['id'] ?>_sum"><?= (float)$h['sum'] ?></sum>&nbsp;<?= $_currencies[$h['currency_id']]['symbol'] ?></td>
+						<td title="<?= htmlspecialchars($h['comment']) ?>"><?= $_accounts[$h['account_id']]['name'] ?>&nbsp;/ <?= $_optypes_by_id[$h['operation_type_id']]['name'] ?></td>
 						<td>
 							<img src="/i/kassa/edit.gif"
 								class="button"
-								onclick="showHoldForm(this, '<?= $h['id'] ?>', '<?= $h['operation_type_id'] ?>', '<?= $h['sum'] ?>', '<?= $h['comment'] ?>')">
+								onclick="showHoldForm(this, '<?= $h['id'] ?>')">
 							<a onclick="if(!confirm('Правда удалить?')) return false;" href="/kassa/hold/?del=<?= $h['id'] ?>"><img src="/i/kassa/del.gif"></a>
 						</td>
 					</tr>
+					<input type="hidden" id="hold<?= $h['id'] ?>_cur" value="<?= $h['currency_id'] ?>">
+					<input type="hidden" id="hold<?= $h['id'] ?>_acc" value="<?= $h['account_id'] ?>">
+					<input type="hidden" id="hold<?= $h['id'] ?>_optype" value="<?= $h['operation_type_id'] ?>">
+					<input type="hidden" id="hold<?= $h['id'] ?>_comment" value="<?= htmlspecialchars($h['comment']) ?>">
 				<? endforeach; ?>
 			</table>
 			<!-- /таблица с холдами -->
@@ -571,6 +575,18 @@
 			</select><br>
 			<label for="hold_form_amount">Отложенная сумма</label><br>
 			<input type="text" name="amount" id="hold_form_amount"><br>
+			<label for="hold_form_currency">Валюта</label>
+			<select name="currency" id="hold_form_currency">
+				<? foreach($_currencies as $_c): ?>
+					<option value="<?= $_c['id'] ?>"<?= $_c['default'] ? ' selected' : '' ?>><?= $_c['symbol'].' '.$_c['name'] ?></option>
+				<? endforeach; ?>
+			</select><br>
+			<label for="hold_form_account">Счёт</label>
+			<select name="account" id="hold_form_account">
+				<? foreach($_accounts as $_a): ?>
+					<option value="<?= $_a['id'] ?>"<?= $_a['default'] ? ' selected' : '' ?>><?= $_a['name'] ?></option>
+				<? endforeach; ?>
+			</select><br>
 			<label for="hold_form_comment">Комментарий</label><br>
 			<input type="text" name="comment" id="hold_form_comment" maxlength="255"><br>
 			<input type="submit" value="Ок">
