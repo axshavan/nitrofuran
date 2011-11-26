@@ -382,7 +382,7 @@
 		<!-- планирование -->
 		<div class="plans">
 			<strong>Напоминания о предстоящих расходах и приходах</strong><br>
-			<a href="/admin?module=kassa&page=2" class="reset">планирование &raquo;</a> <a href="/kassa/plans/" class="reset">прогноз &raquo;</a>
+			<a href="/admin?module=kassa&page=2" class="reset">редактировать напоминания &raquo;</a> <a href="/kassa/plans/" class="reset">планирование &raquo;</a>
 			<table class="optable" cellspacing="0">
 			<? foreach($_plans as $date => $_dateplans): ?>
 				<tr>
