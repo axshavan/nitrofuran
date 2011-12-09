@@ -1,0 +1,20 @@
+body
+{
+	margin: 0; padding: 0; background-color: #e8e8f0; font-family: sans-serif; font-size: 12px;
+	background-image: url("/i/drunkeeper/bg.gif"); background-position: top; background-repeat: repeat-x;
+}
+h1 { padding: 0; margin: 20px 0 10px 30px; color: #08263D; font-size: 35px; font-style: italic; }
+p { margin: 0 0 5px 0; }
+div.item
+{
+	background-color: white; margin: 5px 5px 0 5px; padding: 10px 15px 15px 15px; height: 40px;
+	background-image: url("/i/drunkeeper/itembg.gif"); background-repeat: repeat-x;
+	border: 1px solid #808090; border-radius: 6px; -webkit-border-radius: 6px;
+	-moz-border-radius: 6px; overflow: hidden;
+}
+div.item span.date { color: #7C8B96; display: block; float: right; }
+div.item span.volume { color: #08263D; font-size: 40px; display: block; float: left; margin-right: 20px; }
+div.item span span.measure { color: #7C8B96; font-size: 16px; }
+div.item div.drink { position: absolute; left: 30%; }
+div.item div.drink span.name { font-size: 20px; }
+div.item div.drink span.type { color: #7C8B96; }
