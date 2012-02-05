@@ -24,3 +24,11 @@ div.container_l .item { height: 40px; }
 div.container_r { width: 27%; position: absolute; right: 5px; }
 
 table.stat th { text-align: left; }
+
+div.container_form .drink2
+{
+	border: 1px solid #D1D1D1; background-color: #F1EFFF; position: static;
+	border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
+	padding: 5px; display: none;
+}
+div.container_form textarea { width: 300px; }
