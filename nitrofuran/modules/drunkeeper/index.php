@@ -30,16 +30,30 @@ while($_r = $DB->Fetch($res))
 	$_drink_types[$_r['type_id']]['drinks'][$_r['id']] = $_r;
 }
 
-$_acts = array();
-$res   = $DB->Query("select * from `".DRUNKEEPER_ACTS_TABLE."` order by `date_drinked` desc, `id` desc limit 50");
+$_acts  = array();
+$_stats = array();
+$res    = $DB->Query("select * from `".DRUNKEEPER_ACTS_TABLE."` order by `date_drinked` desc, `id` desc");
+$limit  = 0;
 while($_r = $DB->Fetch($res))
 {
-	$_acts[$_r['id']] = $_r;
+	if($limit < 50)
+	{
+		$_acts[$_r['id']] = $_r;
+	}
+	$_stats['allvolume']  += $_r['volume'];
+	$_stats['40volume']   += $_r['volume'] / (40 / $_drinks[$_r['drink_id']]['strength']);
+	$_stats['100volume']  += $_r['volume'] / (95.6 / $_drinks[$_r['drink_id']]['strength']);
+	$_stats['volume_dtype'][$_drinks[$_r['drink_id']]['type_id']] += $_r['volume'];
+	$_stats['volume_d'][$_r['drink_id']] += $_r['volume'];
+	$limit++;
 }
+arsort($_stats['volume_dtype']);
+arsort($_stats['volume_d']);
 
 $tplengine->assign('_drinks',      $_drinks);
 $tplengine->assign('_drink_types', $_drink_types);
 $tplengine->assign('_acts',        $_acts);
+$tplengine->assign('_stats',       $_stats);
 
 $tplengine->template('index.tpl');
 

@@ -7,7 +7,7 @@ h1 { padding: 0; margin: 20px 0 10px 30px; color: #08263D; font-size: 35px; font
 p { margin: 0 0 5px 0; }
 div.item
 {
-	background-color: white; margin: 5px 5px 0 5px; padding: 10px 15px 15px 15px; height: 40px;
+	background-color: #f0eff0; margin: 5px 5px 0 5px; padding: 10px 15px 15px 15px;
 	background-image: url("/i/drunkeeper/itembg.gif"); background-repeat: repeat-x;
 	border: 1px solid #808090; border-radius: 6px; -webkit-border-radius: 6px;
 	-moz-border-radius: 6px; overflow: hidden;
@@ -18,3 +18,9 @@ div.item span span.measure { color: #7C8B96; font-size: 16px; }
 div.item div.drink { position: absolute; left: 30%; }
 div.item div.drink span.name { font-size: 20px; }
 div.item div.drink span.type { color: #7C8B96; }
+
+div.container_l { width: 72%; position: absolute; left: 5px; }
+div.container_l .item { height: 40px; }
+div.container_r { width: 27%; position: absolute; right: 5px; }
+
+table.stat th { text-align: left; }
