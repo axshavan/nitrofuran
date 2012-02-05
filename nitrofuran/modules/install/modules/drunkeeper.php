@@ -12,7 +12,7 @@
 */
 
 global $DB;
-require_once($_SERVER['DOCUMENT_ROOT'].'/nitrofuran/modules/drunkeeper/config.php');
+require_once(DOCUMENT_ROOT.'/nitrofuran/modules/drunkeeper/config.php');
 $DB->TransactionStart();
 
 // создание таблиц

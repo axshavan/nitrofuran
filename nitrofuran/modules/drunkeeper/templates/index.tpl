@@ -6,22 +6,6 @@
 	<link rel="stylesheet" type="text/css" href="/css/drunkeeper.css" />
 </head>
 <body>
-	<!--<table border="1">
-		<tr>
-			<th>Дата</th>
-			<th>Что выпито</th>
-			<th>Сколько</th>
-			<th>Комменатрии</th>
-		</tr>
-		<? foreach($_acts as $act): ?>
-			<tr>
-				
-				<td> /  (<?= (int)$_drinks[$act['drink_id']]['strength'] ?>%)</td>
-				
-				<td></td>
-			</tr>
-		<? endforeach; ?>
-	</table>-->
 	<h1>Drunkeeper</h1>
 	<div class="container">
 		<? foreach($_acts as $act): ?>

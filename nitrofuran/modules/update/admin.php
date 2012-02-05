@@ -63,18 +63,20 @@ if(!strlen($_SERVER['DOCUMENT_ROOT']))
 {
 	// файл запущен из консоли
 	$bConsoleRun = true;
-	$nf_dir = explode('/', $_SERVER['PHP_SELF']);
-	unset($nf_dir[sizeof($nf_dir) - 1]);
-	unset($nf_dir[sizeof($nf_dir) - 1]);
-	unset($nf_dir[sizeof($nf_dir) - 1]);
+	$nf_dir = explode('/', __FILE__);
+	for($i = 0; $i < 4; $i++)
+	{
+		unset($nf_dir[sizeof($nf_dir) - 1]);
+	}
 	$nf_dir = implode('/', $nf_dir);
-	require_once($nf_dir.'/config.php');
-	require_once($nf_dir.'/libfunc.php');
-	require_once($nf_dir.'/db.class.php');
-	require_once($nf_dir.'/auth.class.php');
-	require_once($nf_dir.'/module.class.php');
-	require_once($nf_dir.'/te.class.php');
-	require_once($nf_dir.'/user.class.php');
+	$_SERVER['DOCUMENT_ROOT'] = $nf_dir;
+	require_once($nf_dir.'/nitrofuran/config.php');
+	require_once($nf_dir.'/nitrofuran/libfunc.php');
+	require_once($nf_dir.'/nitrofuran/db.class.php');
+	require_once($nf_dir.'/nitrofuran/auth.class.php');
+	require_once($nf_dir.'/nitrofuran/module.class.php');
+	require_once($nf_dir.'/nitrofuran/te.class.php');
+	require_once($nf_dir.'/nitrofuran/user.class.php');
 	$tplengine = new CTemplateEngine();
 	$DB = new CDatabase();
 	$DB->Connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
@@ -88,10 +90,6 @@ else
 if(isset($_GET['proceed']) || $bConsoleRun)
 {
 	$dirname = DOCUMENT_ROOT.'/nitrofuran/modules/update/updates/';
-	if($bConsoleRun)
-	{
-		$dirname = $nf_dir.'/..'.$dirname;
-	}
 	// посмотреть, какие апдейты есть
 	$dir = opendir($dirname);
 	if(!$dir)

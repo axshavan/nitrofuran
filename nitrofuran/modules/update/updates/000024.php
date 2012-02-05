@@ -11,5 +11,4 @@ if(!isset($r['drunkeeper']))
 	require(DOCUMENT_ROOT.'/nitrofuran/modules/install/modules/drunkeeper.php');
 }
 
-
 ?>
