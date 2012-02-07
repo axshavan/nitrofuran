@@ -38,6 +38,10 @@
 					<td><?= round($_stats['100volume'], 2) ?></td>
 				</tr>
 				<tr>
+					<th>Средний градус, %:</th>
+					<td><?= round($_stats['median'], 2) ?></td>
+				</tr>
+				<tr>
 					<th colspan="2">Выпито по категориям бухла, мл:</th>
 				</tr>
 				<tr>
