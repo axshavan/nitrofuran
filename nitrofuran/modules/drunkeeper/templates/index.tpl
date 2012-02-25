@@ -44,32 +44,22 @@
 				<tr>
 					<th colspan="2">Выпито по видам бухла, мл:</th>
 				</tr>
-				<tr>
-					<td colspan="2">
-						<table>
-							<? foreach($_stats['volume_dtype'] as $id => $volume): ?>
-								<tr>
-									<td><?= $_drink_types[$id]['name'] ?>:</td>
-									<td><?= round($volume, 2) ?></td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<table class="inner">
-											<? foreach($_drinks as $drink): ?>
-												<? if($drink['type_id'] == $id): ?>
-													<tr>
-														<td><?= $drink['name'] ?></td>
-														<td><?= round($_stats['volume_d'][$drink['id']], 2) ?></td>
-													</tr>
-												<? endif; ?>
-											<? endforeach; ?>
-										</table>
-									</td>
-								</tr>
-							<? endforeach; ?>
-						</table>
-					</td>
-				</tr>
+				<? foreach($_stats['volume_dtype'] as $id => $volume): ?>
+					<tr>
+						<td><strong><?= $_drink_types[$id]['name'] ?>:</strong></td>
+						<td><?= round($volume, 2) ?></td>
+					</tr>
+					<? foreach($_drinks as $drink): ?>
+						<? if($drink['type_id'] == $id): ?>
+							<tr class="inner">
+								<td><?= $drink['name'] ?></td>
+								<td><?= round($_stats['volume_d'][$drink['id']], 2) ?></td>
+							</tr>
+						<? endif; ?>
+					<? endforeach; ?>
+					</tr>
+				<? endforeach; ?>
+						
 				<?/*
 				<tr>
 					<th colspan="2">Выпито по видам бухла, мл:</th>
