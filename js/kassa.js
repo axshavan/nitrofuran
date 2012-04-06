@@ -273,6 +273,26 @@ function onTransAccountSubmit()
 }
 
 /*
+	Обработка подтверждения формы обмена валюты.
+*/
+function onTransCurrencySubmit()
+{
+	if(!ge('trancurrency_сfrom_sum').value)
+	{
+		alert('Укажите сумму');
+		ge('trancurrency_сfrom_sum').focus();
+		return false;
+	}
+	if(!ge('trancurrency_сto_sum').value)
+	{
+		alert('Укажите сумму');
+		ge('trancurrency_сto_sum').focus();
+		return false;
+	}
+	return true;
+}
+
+/*
 	Обработка нажатия на "тип операции".
 	@param obj {HTML Element} объект, вызвавший событие
 	@param type_id {integer} идентификатор типа

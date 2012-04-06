@@ -496,6 +496,43 @@
 	</div>
 	<!-- /ссылки -->
 	
+	<!-- форма обмена валюты -->
+	<div id="currency_exchange" class="container">
+		Обмен валюты
+		<form action="<?= HTTP_ROOT ?>/kassa/tran_cur/" method="post" onsubmit="return onTransCurrencySubmit();">
+		<label for="trancurrency_сfrom">Из валюты</label>
+		<select name="currency_from" id="trancurrency_cfrom">
+			<? foreach($_currencies as $_c): ?>
+				<option value="<?= $_c['id'] ?>"><?= $_c['symbol'].' '.$_c['name'] ?></option>
+			<? endforeach; ?>
+		</select>
+		<label for="trancurrency_afrom">Со счёта</label>
+		<select name="account_from" id="trancurrency_afrom">
+			<? foreach($_accounts as $_a): ?>
+				<option value="<?= $_a['id'] ?>"><?= $_a['name'] ?></option>
+			<? endforeach; ?>
+		</select>
+		<label for="trancurrency_сfrom_sum">Сумма</label>
+		<input type="text" name="sum_from" id="trancurrency_сfrom_sum" />
+		<label for="trancurrency_сto">В валюту</label>
+		<select name="currency_to" id="trancurrency_cto">
+			<? foreach($_currencies as $_c): ?>
+				<option value="<?= $_c['id'] ?>"><?= $_c['symbol'].' '.$_c['name'] ?></option>
+			<? endforeach; ?>
+		</select>
+		<label for="trancurrency_ato">На счёт</label>
+		<select name="account_to" id="trancurrency_ato">
+			<? foreach($_accounts as $_a): ?>
+				<option value="<?= $_a['id'] ?>"><?= $_a['name'] ?></option>
+			<? endforeach; ?>
+		</select>
+		<label for="trancurrency_сto_sum">Итоговая сумма</label>
+		<input type="text" name="sum_to" id="trancurrency_сto_sum" />
+		<input type="submit" value="Перенести" />
+		</form>
+	</div>
+	<!-- /форма обмена валюты -->
+	
 	<!-- калькулятор -->
 	<div id="calculator">
 		<input type="text" id="inp_calc" onkeypress="calc.inp_keypress(event)"><br>

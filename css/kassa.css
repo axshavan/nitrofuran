@@ -67,6 +67,11 @@ a.reset:hover { color: #505050; }
 #linx a { color: #202020; text-decoration: underline; }
 #linx a:hover { color: #303030; }
 
+#currency_exchange { position: absolute; top: 730px; left: 5px; width: 142px;}
+#currency_exchange label { font-weight: bold; display: block; margin-top: 5px; }
+#currency_exchange input { width: 130px; }
+#currency_exchange select { width: 130px; }
+
 #optypefilter a { color: #404040; }
 #optypefilter span { cursor: pointer; }
 #optypefilter span.selectedf, #optypefilter span.selectedf_g { font-weight: bold; }

@@ -28,17 +28,17 @@
 						<td><?= $_m['name'] ?></td>
 						<td>
 							<? foreach($_m['income'] as $currency => $sum): $month_sum[$currency] += $sum; ?>
-								<?= $sum ?>&nbsp;<?= $currency ?><br />
+								<?= round($sum, 2) ?>&nbsp;<?= $currency ?><br />
 							<? endforeach; ?>
 						</td>
 						<td>
 							<? foreach($_m['expenditure'] as $currency => $sum): $month_sum[$currency] -= $sum; ?>
-								<?= $sum ?>&nbsp;<?= $currency ?><br />
+								<?= round($sum, 2) ?>&nbsp;<?= $currency ?><br />
 							<? endforeach; ?>
 						</td>
 						<td>
 							<? foreach($month_sum as $currency => $sum): ?>
-								<?= $sum ?>&nbsp;<?= $currency ?><br />
+								<?= round($sum, 2) ?>&nbsp;<?= $currency ?><br />
 							<? endforeach; ?>
 						</td>
 					</tr>
