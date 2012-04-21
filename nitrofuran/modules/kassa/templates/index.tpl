@@ -373,9 +373,8 @@
 			</table><br>
 			<strong>С выбранным фильтром</strong><br>
 			<? foreach($_sum_filtered as $currency => $amount): ?>
-				<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= round($amount, 2).'&nbsp;'.$currency ?></span><br>
+				<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= round($amount, 2).'&nbsp;'.$currency ?></span>
 			<? endforeach; ?>
-			
 		</div>
 		<!-- /итого -->
 		
