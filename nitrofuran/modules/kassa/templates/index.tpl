@@ -390,7 +390,7 @@
 				<? foreach($_dateplans as $_plan): $bOdd = !$bOdd; ?>
 					<tr class="<?= $_optypes_by_id[$_plan['operation_type_id']]['is_income'] ? 'inc' : 'exp' ?><?= $bOdd ? '_odd' : '' ?>">
 						<td><?= $_plan['name'] ?></td>
-						<td><?= $_plan['amount'] ?></td>
+						<td><?= $_plan['amount'].'&nbsp;'.$_currencies[$_plan['currency_id']]['symbol'] ?></td>
 						<td><?= $_optypes_by_id[$_plan['operation_type_id']]['name'] ?></td>
 					</tr>
 				<? endforeach; ?>
