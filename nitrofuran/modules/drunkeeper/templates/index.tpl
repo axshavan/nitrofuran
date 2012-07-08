@@ -49,34 +49,16 @@
 						<td><strong><?= $_drink_types[$id]['name'] ?>:</strong></td>
 						<td><?= round($volume, 2) ?></td>
 					</tr>
-					<? foreach($_drinks as $drink): ?>
-						<? if($drink['type_id'] == $id): ?>
-							<tr class="inner">
-								<td><?= $drink['name'] ?></td>
-								<td><?= round($_stats['volume_d'][$drink['id']], 2) ?></td>
-							</tr>
-						<? endif; ?>
-					<? endforeach; ?>
+						<? foreach($_stats['volume_d'] as $drink_id => $v): ?>
+							<? if($_drinks[$drink_id]['type_id'] == $id): ?>
+								<tr class="inner">
+									<td><?= $_drinks[$drink_id]['name'] ?></td>
+									<td><?= round($v, 2) ?></td>
+								</tr>
+							<? endif; ?>
+						<? endforeach; ?>
 					</tr>
 				<? endforeach; ?>
-						
-				<?/*
-				<tr>
-					<th colspan="2">Выпито по видам бухла, мл:</th>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<table>
-							<? foreach($_stats['volume_d'] as $id => $volume): ?>
-								<tr>
-									<td><?= $_drinks[$id]['name'] ?>:</td>
-									<td><?= round($volume, 2) ?></td>
-								</tr>
-							<? endforeach; ?>
-						</table>
-					</td>
-				</tr>
-				*/?>
 			</table>
 		</div>
 	</div>

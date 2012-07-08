@@ -36,7 +36,7 @@ $res    = $DB->Query("select * from `".DRUNKEEPER_ACTS_TABLE."` order by `date_d
 $count  = 0;
 while($_r = $DB->Fetch($res))
 {
-	if($count < 50)
+	if($count < 75)
 	{
 		$_acts[$_r['id']] = $_r;
 	}
