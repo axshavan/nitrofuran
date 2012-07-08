@@ -360,15 +360,17 @@
 		<div class="itogo">
 			<strong>В кассе всего</strong>
 			<table>
-			<? foreach($_sum_all as $account => $data): ?>
-				<tr>
-					<td><?= $account ?></td>
-					<td>
-						<? foreach($data as $currency => $amount): ?>
-							<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= round($amount, 2).'&nbsp;'.$currency ?></span>
-						<? endforeach; ?>
-					</td>
-				</tr>
+			<? foreach($_sum_all as $account_id => $data): ?>
+				<? if($_accounts[$account_id]['show']): ?>
+					<tr>
+						<td><?= $_accounts[$account_id]['name'] ?></td>
+						<td>
+							<? foreach($data as $currency => $amount): ?>
+								<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= round($amount, 2).'&nbsp;'.$currency ?></span>
+							<? endforeach; ?>
+						</td>
+					</tr>
+				<? endif; ?>
 			<? endforeach; ?>
 			</table><br>
 			<strong>С выбранным фильтром</strong><br>

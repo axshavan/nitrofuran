@@ -54,7 +54,7 @@ switch($_REQUEST['page'])
 		// добавление счёта
 		elseif($_REQUEST['addaccount'])
 		{
-			$sql = "insert into `".KASSA_ACCOUNT_TABLE."` set `name` = '".$DB->EscapeString($_REQUEST['addaccount'])."', `default` = '".($_REQUEST['default'] ? 1 : 0)."'";
+			$sql = "insert into `".KASSA_ACCOUNT_TABLE."` set `name` = '".$DB->EscapeString($_REQUEST['addaccount'])."', `default` = '".($_REQUEST['default'] ? 1 : 0)."', `show` = '".($_REQUEST['show'] ? 1 : 0)."'";
 		}
 		
 		// удаление счёта
@@ -75,7 +75,7 @@ switch($_REQUEST['page'])
 		// изменение счёта
 		elseif($_REQUEST['editaccount'])
 		{
-			$sql = "update `".KASSA_ACCOUNT_TABLE."` set `name` = '".$DB->EscapeString($_REQUEST['name'])."', `default` = '".($_REQUEST['default'] ? 1 : 0)."' where `id` = '".(int)$_REQUEST['editaccount']."'";
+			$sql = "update `".KASSA_ACCOUNT_TABLE."` set `name` = '".$DB->EscapeString($_REQUEST['name'])."', `default` = '".($_REQUEST['default'] ? 1 : 0)."', `show` = '".($_REQUEST['show'] ? 1 : 0)."' where `id` = '".(int)$_REQUEST['editaccount']."'";
 		}
 		
 		// добавление группы типов

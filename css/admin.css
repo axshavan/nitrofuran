@@ -2,15 +2,15 @@
 body { margin:0; padding: 0; font-size: 12px; color: black; background-color: #EDEDED; font-family: sans-serif; }
 span.command { border-bottom: 1px dashed #686868; color: #686868; cursor: pointer; }
 span.command:hover { color: #919191; border-bottom: 1px dashed #919191; }
-div.hidden_form { background-color: #FFF9D1; border: 1px solid #EFE28B; padding: 5px; -moz-border-radius: 6px; -webkit-border-radius: 6px; margin: 3px 0 10px 0; display: none; }
-div.error { border: 1px solid #E20000; color: #8C0000; background-color: #FFEA91; padding: 10px; -moz-border-radius: 6px; -webkit-border-radius: 6px; margin: 3px 0 10px 0; }
-div.success { border: 1px solid #17AF07; color: #00540C; background-color: #BEFF9E; padding: 10px; -moz-border-radius: 6px; -webkit-border-radius: 6px; margin: 3px 0 10px 0; }
-fieldset { margin: 5px 0 5px 0; border: 1px solid #45BC51; background-color: #ECFFE8; -moz-border-radius: 6px; -webkit-border-radius: 6px; }
+div.hidden_form { background-color: #FFF9D1; border: 1px solid #EFE28B; padding: 5px; -moz-border-radius: 6px; border-radius: 6px; -webkit-border-radius: 6px; margin: 3px 0 10px 0; display: none; }
+div.error { border: 1px solid #E20000; color: #8C0000; background-color: #FFEA91; padding: 10px; -moz-border-radius: 6px; border-radius: 6px; -webkit-border-radius: 6px; margin: 3px 0 10px 0; }
+div.success { border: 1px solid #17AF07; color: #00540C; background-color: #BEFF9E; padding: 10px; -moz-border-radius: 6px; border-radius: 6px; -webkit-border-radius: 6px; margin: 3px 0 10px 0; }
+fieldset { margin: 5px 0 5px 0; border: 1px solid #45BC51; background-color: #ECFFE8; -moz-border-radius: 6px; border-radius: 6px; -webkit-border-radius: 6px; }
 .invisible { display: none; }
 
 /* Левая панель */
 .admin_left_panel { position: absolute; left: 0; top: 0; width: 200px; padding: 20px 0 20px 10px; z-index: 2; }
-.admin_left_panel .item { height: 14px; padding: 8px 20px 8px 20px; font-size: 12px; margin-bottom: 2px; border: 1px solid black; -moz-border-radius: 5px 0 0 5px; -webkit-border-radius: 5px 0 0 5px; border-right: none; }
+.admin_left_panel .item { height: 14px; padding: 8px 20px 8px 20px; font-size: 12px; margin-bottom: 2px; border: 1px solid black; border-radius: 5px 0 0 5px; -moz-border-radius: 5px 0 0 5px; -webkit-border-radius: 5px 0 0 5px; border-right: none; }
 .admin_left_panel .item a { color: black; text-decoration: none; }
 .admin_left_panel .item a:hover { text-decoration: underline; }
 .admin_left_panel .inactive { background-color: #C1C1C1; width: 154px; }
@@ -19,7 +19,7 @@ fieldset { margin: 5px 0 5px 0; border: 1px solid #45BC51; background-color: #EC
 
 /* Правая панель */
 .admin_right_panel { position: absolute; left: 205px; top: 0; background-color: white; right: 0; padding: 10px; border-left: 1px solid black; z-index: 1; padding: 10px; min-height: 100%; }
-.admin_right_panel .module_menu .item { display: inline-block; padding: 5px; margin: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
+.admin_right_panel .module_menu .item { display: inline-block; padding: 5px; margin: 3px; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; }
 .admin_right_panel .module_menu .item a { color: black; text-decoration: none; }
 .admin_right_panel .module_menu .item a:hover { text-decoration: underline; }
 .admin_right_panel .module_menu .inactive { background-color: #C1C1C1; }

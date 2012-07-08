@@ -167,8 +167,8 @@ while($_row = $DB->Fetch($res))
 			$_row['repeat'] = strtotime($_row['repeat']);
 			if
 			(
-				$_row['repeat']    > mktime(0,  0,  0,  date('n'),         1, date('Y'))
-				&& $_row['repeat'] < mktime(23, 59, 59, date('n'), date('t'), date('Y'))
+				$_row['repeat']    >= mktime(0,  0,  0,  date('n'), date('d'), date('Y'))
+				&& $_row['repeat'] <  mktime(23, 59, 59, date('n'), date('t'), date('Y'))
 			)
 			{
 				$_row['repeat'] = date('Y-m-d', $_row['repeat']);
