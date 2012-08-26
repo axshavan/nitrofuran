@@ -18,7 +18,7 @@
 	<table class="optable" cellspacing="0">
 		<? foreach($_sumbycur as $id => $sum): $bOdd = !$bOdd; ?>
 			<tr class="<?= ($sum < 0 ? 'exp' : 'inc' ).($bOdd ? '_odd' : '') ?>">
-				<td><?= $sum ?>&nbsp;<?= $_currencies[$id]['symbol'] ?></td>
+				<td><?= round($sum, 2) ?>&nbsp;<?= $_currencies[$id]['symbol'] ?></td>
 			</tr>
 		<? endforeach; ?>
 	</table>
@@ -119,9 +119,9 @@
 		</tr>
 		<? foreach($_result_sum as $currency_id => $sum): $bOdd = !$bOdd; ?>
 			<tr class="<?= ($sum < 0 ? 'exp' : 'inc').($bOdd ? '_odd' : '') ?>">
-				<td><?= (float)$_sumbycur[$currency_id] ?>&nbsp;<?= $_currencies[$currency_id]['symbol'] ?></td>
-				<td><?= (float)$sum ?>&nbsp;<?= $_currencies[$currency_id]['symbol'] ?></td>
-				<td class="itogo"><?= (float)($_sumbycur[$currency_id] + $sum) ?>&nbsp;<?= $_currencies[$currency_id]['symbol'] ?></td>
+				<td><?= round($_sumbycur[$currency_id], 2) ?>&nbsp;<?= $_currencies[$currency_id]['symbol'] ?></td>
+				<td><?= round($sum, 2) ?>&nbsp;<?= $_currencies[$currency_id]['symbol'] ?></td>
+				<td class="itogo"><?= round($_sumbycur[$currency_id] + $sum, 2) ?>&nbsp;<?= $_currencies[$currency_id]['symbol'] ?></td>
 			</tr>
 		<? endforeach; ?>
 	</table>
