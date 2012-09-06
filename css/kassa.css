@@ -1,7 +1,8 @@
-body { font-size: 11px; color: black; background-color: #576B50; font-family: sans-serif; }
+body { font-size: 11px; color: black; background-color: #576B50; font-family: sans-serif; padding: 0; margin: 0; }
 
 .container { background-image: url("/i/kassa/bg.gif"); background-position: bottom; background-repeat: repeat-x; background-color: #628755; padding: 10px; border: 1px solid #2b3b25; -moz-border-radius: 6px; border-radius: 6px; -webkit-border-radius: 6px; }
 .floatr { float: right; }
+.clear { clear: both; }
 img.button { cursor: pointer; }
 a.reset { color: #303030; display: block; margin-bottom: 2px; text-decoration: underline; }
 a.reset:hover { color: #505050; }
@@ -18,7 +19,9 @@ a.reset:hover { color: #505050; }
 #debtor_form img { position: absolute; top: -30px; }
 #debtor_form span { text-decoration: underline; cursor: pointer; }
 
-#calendar_container { position: absolute; left: 5px; top: 5px; width: 142px; }
+#leftcolumn { float: left; margin: 5px 0 0 5px; }
+
+#calendar_container { margin-bottom: 5px; width: 142px; }
 #calendar_container a { color: black; text-decoration: none; }
 #calendar_container a:hover { text-decoration: underline; }
 #calendar_container a.reset { color: #303030; display: block; margin-bottom: 2px; text-decoration: underline; }
@@ -40,7 +43,7 @@ a.reset:hover { color: #505050; }
 #debtors span.credit2 { background-color: #FF6B6B; }
 
 #main_container { position: absolute; left: 175px; right: 5px; top: 5px; }
-#main_container .add-form { background-color: #9EB77E; padding: 4px; border: 1px solid #516637; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; width: 400px; min-height: 200px; }
+#main_container .add-form { background-color: #9EB77E; padding: 4px; border: 1px solid #516637; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; width: 400px; min-height: 200px; float: left; }
 #main_container .add-form span { cursor: pointer; }
 #main_container .add-form span.selected, #main_container .add-form span.selected_g { font-weight: bold; }
 #main_container .add-form span:hover { color: #202020; border-bottom: 1px dashed #606060; }
@@ -54,21 +57,21 @@ a.reset:hover { color: #505050; }
 #main_container .add-form .hidden { background-color: #C1C1C1; border: 1px solid #808080; padding: 2px; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; display: none; }
 #main_container .add-form .frequent { font-size: 10px; }
 #main_container div.optable { background-color: #9EB77E; padding: 4px; border: 1px solid #516637; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 10px; }
-#main_container .itogo { background-color: #9EB77E; padding: 4px; border: 1px solid #516637; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; position: absolute; top: 10px; left: 430px; width: 200px; height: 215px; overflow-y: scroll; font-size: 10px; }
+#main_container .itogo { background-color: #9EB77E; padding: 4px; border: 1px solid #516637; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; float: right; width: 200px; height: 215px; overflow-y: scroll; font-size: 10px; margin-right: 5px; }
 #main_container .itogo .inc { color: #006600; font-weight: bold; }
 #main_container .itogo .exp { color: #800000; font-weight: bold; }
 #main_container .itogo span { display: block; }
 #main_container .itogo table td { vertical-align: top; }
 #main_container .itogo table td:first-child { padding-top: 3px; }
-#main_container .plans { position: absolute; left: 650px; top: 10px; right: 10px; background-color: #9EB77E; padding: 8px; border: 1px solid #516637; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; height: 207px; overflow-y: scroll}
+#main_container .plans { float: right; background-color: #9EB77E; padding: 8px; border: 1px solid #516637; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; height: 207px; overflow-y: scroll}
 #main_container .plans .optable { width: 100%; }
 #main_container span.command { display: inline-block; margin: 10px 0 5px 0; border-bottom: 1px dashed #303030; color: #303030; cursor: pointer; }
 
-#linx { position: absolute; top: 628px; left: 5px; width: 142px; }
+#linx { margin-bottom: 5px; width: 142px; }
 #linx a { color: #202020; text-decoration: underline; }
 #linx a:hover { color: #303030; }
 
-#currency_exchange { position: absolute; top: 730px; left: 5px; width: 142px;}
+#currency_exchange { margin-bottom: 5px; width: 142px;}
 #currency_exchange label { font-weight: bold; display: block; margin-top: 5px; }
 #currency_exchange input { width: 130px; }
 #currency_exchange select { width: 130px; }
@@ -89,7 +92,7 @@ a.reset:hover { color: #505050; }
 #accountfilter span:hover { color: #202020; border-bottom: 1px dashed #606060; }
 #accountfilter div { background-color: #DCE884; padding: 2px; border: 1px solid #A4AF4D; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 2px; }
 
-#transaccount { position: absolute; left: 5px; top: 350px; width: 142px; }
+#transaccount { margin-bottom: 5px; width: 142px; }
 #transaccount label { font-weight: bold; display: block; margin-top: 5px; }
 #transaccount input { width: 130px; }
 #transaccount select { width: 130px; }
