@@ -26,9 +26,9 @@
 		?></select><?
 		?><label for="inp_account" class="half">Счёт</label><?
 		?><select class="half" name="account" id="inp_account"><?
-		foreach($_accounts as $_a): ?>
+		foreach($_accounts as $_a): if($_a['show']): ?>
 			?><option value="<?= $_a['id'] ?>"<?= $_a['default'] ? ' selected' : '' ?>><?= $_a['name'] ?></option><?
-		endforeach; ?>
+		endif; endforeach; ?>
 		?></select><?
 		?><label for="inp_comment" class="full">Комментарий</label><?
 		?><input type="text" name="comment" id="inp_comment" class="full"><?

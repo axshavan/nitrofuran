@@ -9,69 +9,161 @@
 </head>
 <body>
 	
-	<!-- календарики -->
-	<div id="calendar_container" class="container">
-		<!-- фильтр начала периода -->
-		<div class="year">
-			<a href="<?= $href_filter_from_prevyear ?>">&lt;&lt;</a>
-			<?= $filter_from_year ?>
-			<a href="<?= $href_filter_from_nextyear ?>">&gt;&gt;</a>
-		</div>
-		<div class="month">
-			<a href="<?= $href_filter_from_prevmonth ?>">&lt;</a>
-			<?= $filter_from_month ?>
-			<a href="<?= $href_filter_from_nextmonth ?>">&gt;</a>
-		</div>
-		<!-- календарик -->
-		<div class="calendar">
-			<div class="week-head">
-				<span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span class="end">Сб</span><span class="end">Вс</span>
-			</div>
-			<? foreach($_filter_from_calendar as $_week): ?>
-				<div class="week">
-					<? foreach($_week as $_day): ?><span class="<?= $_day['class'] ?>">
-							<?= $_day['href'] ? '<a href="'.$_day['href'].'">' : '' ?>
-							<?= $_day['text'] ?>
-							<?= $_day['href'] ? '</a>' : '' ?>
-						</span><? endforeach; ?>
-				</div>
-			<? endforeach; ?>
-		</div>
-		<!-- /календарик -->
-		<a class="reset" href="<?= string_request_replace('from', 0) ?>">сбросить</a>
-		<!-- /фильтр начала периода -->
+	<!-- левая колонка -->
+	<div id="leftcolumn">
 		
-		<!-- фильтр конца периода -->
-		<div class="year">
-			<a href="<?= $href_filter_to_prevyear ?>">&lt;&lt;</a>
-			<?= $filter_to_year ?>
-			<a href="<?= $href_filter_to_nextyear ?>">&gt;&gt;</a>
-		</div>
-		<div class="month">
-			<a href="<?= $href_filter_to_prevmonth ?>">&lt;</a>
-			<?= $filter_to_month ?>
-			<a href="<?= $href_filter_to_nextmonth ?>">&gt;</a>
-		</div>
-		<!-- календарик -->
-		<div class="calendar">
-			<div class="week-head">
-				<span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span class="end">Сб</span><span class="end">Вс</span>
+		<!-- календарики -->
+		<div id="calendar_container" class="container">
+			<!-- фильтр начала периода -->
+			<div class="year">
+				<a href="<?= $href_filter_from_prevyear ?>">&lt;&lt;</a>
+				<?= $filter_from_year ?>
+				<a href="<?= $href_filter_from_nextyear ?>">&gt;&gt;</a>
 			</div>
-			<? foreach($_filter_to_calendar as $_week): ?>
-				<div class="week">
-					<? foreach($_week as $_day): ?><span class="<?= $_day['class'] ?>">
-							<?= $_day['href'] ? '<a href="'.$_day['href'].'">' : '' ?>
-							<?= $_day['text'] ?>
-							<?= $_day['href'] ? '</a>' : '' ?>
-						</span><? endforeach; ?>
+			<div class="month">
+				<a href="<?= $href_filter_from_prevmonth ?>">&lt;</a>
+				<?= $filter_from_month ?>
+				<a href="<?= $href_filter_from_nextmonth ?>">&gt;</a>
+			</div>
+			<!-- календарик -->
+			<div class="calendar">
+				<div class="week-head">
+					<span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span class="end">Сб</span><span class="end">Вс</span>
 				</div>
-			<? endforeach; ?>
+				<? foreach($_filter_from_calendar as $_week): ?>
+					<div class="week">
+						<? foreach($_week as $_day): ?><span class="<?= $_day['class'] ?>">
+								<?= $_day['href'] ? '<a href="'.$_day['href'].'">' : '' ?>
+								<?= $_day['text'] ?>
+								<?= $_day['href'] ? '</a>' : '' ?>
+							</span><? endforeach; ?>
+					</div>
+				<? endforeach; ?>
+			</div>
+			<!-- /календарик -->
+			<a class="reset" href="<?= string_request_replace('from', 0) ?>">сбросить</a>
+			<!-- /фильтр начала периода -->
+			
+			<!-- фильтр конца периода -->
+			<div class="year">
+				<a href="<?= $href_filter_to_prevyear ?>">&lt;&lt;</a>
+				<?= $filter_to_year ?>
+				<a href="<?= $href_filter_to_nextyear ?>">&gt;&gt;</a>
+			</div>
+			<div class="month">
+				<a href="<?= $href_filter_to_prevmonth ?>">&lt;</a>
+				<?= $filter_to_month ?>
+				<a href="<?= $href_filter_to_nextmonth ?>">&gt;</a>
+			</div>
+			<!-- календарик -->
+			<div class="calendar">
+				<div class="week-head">
+					<span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span class="end">Сб</span><span class="end">Вс</span>
+				</div>
+				<? foreach($_filter_to_calendar as $_week): ?>
+					<div class="week">
+						<? foreach($_week as $_day): ?><span class="<?= $_day['class'] ?>">
+								<?= $_day['href'] ? '<a href="'.$_day['href'].'">' : '' ?>
+								<?= $_day['text'] ?>
+								<?= $_day['href'] ? '</a>' : '' ?>
+							</span><? endforeach; ?>
+					</div>
+				<? endforeach; ?>
+			</div>
+			<!-- /календарик -->
+			<a class="reset" href="<?= string_request_replace('to', 0) ?>">сбросить</a>
+			<!-- /фильтр конца периода -->
 		</div>
-		<!-- /календарик -->
-		<a class="reset" href="<?= string_request_replace('to', 0) ?>">сбросить</a>
-		<!-- /фильтр конца периода -->
+		<!-- /календарики -->
+		
+		<!-- форма переноса со счёта на счёт -->
+		<div id="transaccount" class="container">
+			<form action="<?= HTTP_ROOT ?>/kassa/tran_ac/" method="post" onsubmit="return onTransAccountSubmit();">
+				<label for="transaccount_from">Со счёта:</label>
+				<select name="account_from" id="transaccount_from">
+					<? foreach($_accounts as $_a): ?>
+						<? if($_a['show']): ?>
+							<option value="<?= $_a['id'] ?>"><?= $_a['name'] ?></option>
+						<? endif; ?>
+					<? endforeach; ?>
+				</select>
+				<label for="transaccount_from">На счёт:</label>
+				<select name="account_to" id="transaccount_to">
+					<? foreach($_accounts as $_a): ?>
+						<? if($_a['show']): ?>
+							<option value="<?= $_a['id'] ?>"><?= $_a['name'] ?></option>
+						<? endif; ?>
+					<? endforeach; ?>
+				</select>
+				<label for="transaccount_sum">Сумма:</label>
+				<input type="text" name="sum" id="transaccount_sum">
+				<label for="transaccount_currency">Валюта:</label>
+				<select name="currency" id="transaccount_currency">
+					<? foreach($_currencies as $_c): ?>
+						<option value="<?= $_c['id'] ?>"><?= $_c['symbol'].' '.$_c['name'] ?></option>
+					<? endforeach; ?>
+				</select>
+				<label for="transaccount_comission">Комиссия, %:</label>
+				<input type="text" name="comission" id="transaccount_comission">
+				<br>
+				<input type="submit" value="Перенести">
+			</form>
+		</div>
+		<!-- /форма переноса со счёта на счёт -->
+		
+		<!-- ссылки -->
+		<div id="linx" class="container">
+			<strong>Ссылки</strong><br>
+			<a href="/admin?module=kassa&page=1">настройки кассы</a><br>
+			<a href="/kassa/stats/">статистика</a><br>
+			<a href="/kassa/stats_graph/">графики</a><br>
+			<a href="/kassa/plans/">планирование</a>
+		</div>
+		<!-- /ссылки -->
+		
+		<!-- форма обмена валюты -->
+		<div id="currency_exchange" class="container">
+			Обмен валюты
+			<form action="<?= HTTP_ROOT ?>/kassa/tran_cur/" method="post" onsubmit="return onTransCurrencySubmit();">
+			<label for="trancurrency_сfrom">Из валюты</label>
+			<select name="currency_from" id="trancurrency_cfrom">
+				<? foreach($_currencies as $_c): ?>
+					<option value="<?= $_c['id'] ?>"><?= $_c['symbol'].' '.$_c['name'] ?></option>
+				<? endforeach; ?>
+			</select>
+			<label for="trancurrency_afrom">Со счёта</label>
+			<select name="account_from" id="trancurrency_afrom">
+				<? foreach($_accounts as $_a): ?>
+					<? if($_a['show']): ?>
+						<option value="<?= $_a['id'] ?>"><?= $_a['name'] ?></option>
+					<? endif; ?>
+				<? endforeach; ?>
+			</select>
+			<label for="trancurrency_сfrom_sum">Сумма</label>
+			<input type="text" name="sum_from" id="trancurrency_сfrom_sum" />
+			<label for="trancurrency_сto">В валюту</label>
+			<select name="currency_to" id="trancurrency_cto">
+				<? foreach($_currencies as $_c): ?>
+					<option value="<?= $_c['id'] ?>"><?= $_c['symbol'].' '.$_c['name'] ?></option>
+				<? endforeach; ?>
+			</select>
+			<label for="trancurrency_ato">На счёт</label>
+			<select name="account_to" id="trancurrency_ato">
+				<? foreach($_accounts as $_a): ?>
+					<? if($_a['show']): ?>
+						<option value="<?= $_a['id'] ?>"><?= $_a['name'] ?></option>
+					<? endif; ?>
+				<? endforeach; ?>
+			</select>
+			<label for="trancurrency_сto_sum">Итоговая сумма</label>
+			<input type="text" name="sum_to" id="trancurrency_сto_sum" />
+			<input type="submit" value="Перенести" />
+			</form>
+		</div>
+		<!-- /форма обмена валюты -->
+		
 	</div>
-	<!-- /календарики -->
+	<!-- /левая колонка -->
 	
 	<!-- основная часть -->
 	<div class="container" id="main_container">
@@ -142,10 +234,57 @@
 		</div>
 		<!-- /форма добавления -->
 		
-		<!-- всякое -->
-		<span class="command" onclick="$('#some').slideToggle(300);">Всякое [+/-]</span>
-		<div id="some"<?= sizeof($_debtor_operations) ? 'style="display: block;"' : '' ?>>
+		<!-- планирование -->
+		<div class="plans">
+			<strong>Напоминания о предстоящих расходах и приходах</strong><br>
+			<a href="/admin?module=kassa&page=2" class="reset">редактировать напоминания &raquo;</a> <a href="/kassa/plans/" class="reset">планирование &raquo;</a>
+			<table class="optable" cellspacing="0">
+			<? foreach($_plans as $date => $_dateplans): ?>
+				<tr>
+					<th colspan="3"><?= $date ?></th>
+				</tr>
+				<? foreach($_dateplans as $_plan): $bOdd = !$bOdd; ?>
+					<tr class="<?= $_optypes_by_id[$_plan['operation_type_id']]['is_income'] ? 'inc' : 'exp' ?><?= $bOdd ? '_odd' : '' ?>">
+						<td><?= $_plan['name'] ?></td>
+						<td><?= $_plan['amount'].'&nbsp;'.$_currencies[$_plan['currency_id']]['symbol'] ?></td>
+						<td><?= $_optypes_by_id[$_plan['operation_type_id']]['name'] ?></td>
+					</tr>
+				<? endforeach; ?>
+			<? endforeach; ?>
+			</table>
+		</div>
+		<!-- /планирование -->
 		
+		<!-- итого -->
+		<div class="itogo">
+			<strong>В кассе всего</strong>
+			<table>
+			<? foreach($_sum_all as $account_id => $data): ?>
+				<? if($_accounts[$account_id]['show']): ?>
+					<tr>
+						<td><?= $_accounts[$account_id]['name'] ?></td>
+						<td>
+							<? foreach($data as $currency => $amount): ?>
+								<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= round($amount, 2).'&nbsp;'.$currency ?></span>
+							<? endforeach; ?>
+						</td>
+					</tr>
+				<? endif; ?>
+			<? endforeach; ?>
+			</table><br>
+			<strong>С выбранным фильтром</strong><br>
+			<? foreach($_sum_filtered as $currency => $amount): ?>
+				<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= round($amount, 2).'&nbsp;'.$currency ?></span>
+			<? endforeach; ?>
+		</div>
+		<!-- /итого -->
+		
+		<!-- всякое -->
+		<div class="clear">
+			<span class="command" onclick="$('#some').slideToggle(300);">Всякое [+/-]</span>
+		</div>
+		<div id="some"<?= sizeof($_debtor_operations) ? 'style="display: block;"' : '' ?>>
+			
 			<!-- фильтр по типам операций -->
 			<div class="optable" id="optypefilter">
 				<strong>Фильтр по типам операций</strong> (<a href="<?= string_request_replace('type', 0) ?>">сбросить фильтр</a>)<br>
@@ -356,50 +495,6 @@
 			<!-- /таблица с операциями -->
 		</div>
 		
-		<!-- итого -->
-		<div class="itogo">
-			<strong>В кассе всего</strong>
-			<table>
-			<? foreach($_sum_all as $account_id => $data): ?>
-				<? if($_accounts[$account_id]['show']): ?>
-					<tr>
-						<td><?= $_accounts[$account_id]['name'] ?></td>
-						<td>
-							<? foreach($data as $currency => $amount): ?>
-								<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= round($amount, 2).'&nbsp;'.$currency ?></span>
-							<? endforeach; ?>
-						</td>
-					</tr>
-				<? endif; ?>
-			<? endforeach; ?>
-			</table><br>
-			<strong>С выбранным фильтром</strong><br>
-			<? foreach($_sum_filtered as $currency => $amount): ?>
-				<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= round($amount, 2).'&nbsp;'.$currency ?></span>
-			<? endforeach; ?>
-		</div>
-		<!-- /итого -->
-		
-		<!-- планирование -->
-		<div class="plans">
-			<strong>Напоминания о предстоящих расходах и приходах</strong><br>
-			<a href="/admin?module=kassa&page=2" class="reset">редактировать напоминания &raquo;</a> <a href="/kassa/plans/" class="reset">планирование &raquo;</a>
-			<table class="optable" cellspacing="0">
-			<? foreach($_plans as $date => $_dateplans): ?>
-				<tr>
-					<th colspan="3"><?= $date ?></th>
-				</tr>
-				<? foreach($_dateplans as $_plan): $bOdd = !$bOdd; ?>
-					<tr class="<?= $_optypes_by_id[$_plan['operation_type_id']]['is_income'] ? 'inc' : 'exp' ?><?= $bOdd ? '_odd' : '' ?>">
-						<td><?= $_plan['name'] ?></td>
-						<td><?= $_plan['amount'].'&nbsp;'.$_currencies[$_plan['currency_id']]['symbol'] ?></td>
-						<td><?= $_optypes_by_id[$_plan['operation_type_id']]['name'] ?></td>
-					</tr>
-				<? endforeach; ?>
-			<? endforeach; ?>
-			</table>
-		</div>
-		<!-- /планирование -->
 	</div>
 	<!-- /основная часть -->
 	
@@ -455,84 +550,6 @@
 		</form>
 	</div>
 	<!-- /форма редактирования события -->
-	
-	<!-- форма переноса со счёта на счёт -->
-	<div id="transaccount" class="container">
-		<form action="<?= HTTP_ROOT ?>/kassa/tran_ac/" method="post" onsubmit="return onTransAccountSubmit();">
-			<label for="transaccount_from">Со счёта:</label>
-			<select name="account_from" id="transaccount_from">
-				<? foreach($_accounts as $_a): ?>
-					<option value="<?= $_a['id'] ?>"><?= $_a['name'] ?></option>
-				<? endforeach; ?>
-			</select>
-			<label for="transaccount_from">На счёт:</label>
-			<select name="account_to" id="transaccount_to">
-				<? foreach($_accounts as $_a): ?>
-					<option value="<?= $_a['id'] ?>"><?= $_a['name'] ?></option>
-				<? endforeach; ?>
-			</select>
-			<label for="transaccount_sum">Сумма:</label>
-			<input type="text" name="sum" id="transaccount_sum">
-			<label for="transaccount_currency">Валюта:</label>
-			<select name="currency" id="transaccount_currency">
-				<? foreach($_currencies as $_c): ?>
-					<option value="<?= $_c['id'] ?>"><?= $_c['symbol'].' '.$_c['name'] ?></option>
-				<? endforeach; ?>
-			</select>
-			<label for="transaccount_comission">Комиссия, %:</label>
-			<input type="text" name="comission" id="transaccount_comission">
-			<br>
-			<input type="submit" value="Перенести">
-		</form>
-	</div>
-	<!-- /форма переноса со счёта на счёт -->
-	
-	<!-- ссылки -->
-	<div id="linx" class="container">
-		<strong>Ссылки</strong><br>
-		<a href="/admin?module=kassa&page=1">настройки кассы</a><br>
-		<a href="/kassa/stats/">статистика</a><br>
-		<a href="/kassa/stats_graph/">графики</a><br>
-		<a href="/kassa/plans/">планирование</a>
-	</div>
-	<!-- /ссылки -->
-	
-	<!-- форма обмена валюты -->
-	<div id="currency_exchange" class="container">
-		Обмен валюты
-		<form action="<?= HTTP_ROOT ?>/kassa/tran_cur/" method="post" onsubmit="return onTransCurrencySubmit();">
-		<label for="trancurrency_сfrom">Из валюты</label>
-		<select name="currency_from" id="trancurrency_cfrom">
-			<? foreach($_currencies as $_c): ?>
-				<option value="<?= $_c['id'] ?>"><?= $_c['symbol'].' '.$_c['name'] ?></option>
-			<? endforeach; ?>
-		</select>
-		<label for="trancurrency_afrom">Со счёта</label>
-		<select name="account_from" id="trancurrency_afrom">
-			<? foreach($_accounts as $_a): ?>
-				<option value="<?= $_a['id'] ?>"><?= $_a['name'] ?></option>
-			<? endforeach; ?>
-		</select>
-		<label for="trancurrency_сfrom_sum">Сумма</label>
-		<input type="text" name="sum_from" id="trancurrency_сfrom_sum" />
-		<label for="trancurrency_сto">В валюту</label>
-		<select name="currency_to" id="trancurrency_cto">
-			<? foreach($_currencies as $_c): ?>
-				<option value="<?= $_c['id'] ?>"><?= $_c['symbol'].' '.$_c['name'] ?></option>
-			<? endforeach; ?>
-		</select>
-		<label for="trancurrency_ato">На счёт</label>
-		<select name="account_to" id="trancurrency_ato">
-			<? foreach($_accounts as $_a): ?>
-				<option value="<?= $_a['id'] ?>"><?= $_a['name'] ?></option>
-			<? endforeach; ?>
-		</select>
-		<label for="trancurrency_сto_sum">Итоговая сумма</label>
-		<input type="text" name="sum_to" id="trancurrency_сto_sum" />
-		<input type="submit" value="Перенести" />
-		</form>
-	</div>
-	<!-- /форма обмена валюты -->
 	
 	<!-- калькулятор -->
 	<div id="calculator">
