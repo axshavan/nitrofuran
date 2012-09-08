@@ -7,7 +7,7 @@
 	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/kassa.js"></script>
 	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/jquery-1.4.3.min.js"></script>
 </head>
-<body>
+<body class="p5">
 
 <a class="reset" href="/kassa/">&laquo; вернуться в кассу</a>
 	

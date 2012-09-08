@@ -3,6 +3,7 @@ body { font-size: 11px; color: black; background-color: #576B50; font-family: sa
 .container { background-image: url("/i/kassa/bg.gif"); background-position: bottom; background-repeat: repeat-x; background-color: #628755; padding: 10px; border: 1px solid #2b3b25; -moz-border-radius: 6px; border-radius: 6px; -webkit-border-radius: 6px; }
 .floatr { float: right; }
 .clear { clear: both; }
+.p5 { padding: 5px; }
 img.button { cursor: pointer; }
 a.reset { color: #303030; display: block; margin-bottom: 2px; text-decoration: underline; }
 a.reset:hover { color: #505050; }

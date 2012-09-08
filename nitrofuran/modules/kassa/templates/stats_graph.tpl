@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="<?= HTTP_ROOT ?>/css/kassa.css">
 	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/kassa.js"></script>
 </head>
-<body>
+<body class="p5">
 	
 <a class="reset" href="/kassa/">&laquo; вернуться в кассу</a>
 	

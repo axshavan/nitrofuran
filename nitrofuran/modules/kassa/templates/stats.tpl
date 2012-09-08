@@ -7,7 +7,7 @@
 	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/kassa.js"></script>
 	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/jquery-1.4.3.min.js"></script>
 </head>
-<body>
+<body class="p5">
 
 <a class="reset" href="/kassa/">&laquo; вернуться в кассу</a>
 
@@ -196,35 +196,47 @@
 	
 	<!-- статистика по комментариям -->
 	<div class="container">
-		<strong>Топ-10 комментариев по сумме операций</strong>
-		<table class="optable" cellspacing="0">
-			<? foreach($_comments_max_sum as $k => $v): $bOdd = !$bOdd; ?>
-				<tr class="<?= $bOdd ? 'odd' : 'notodd' ?>">
-					<td><?= $k ?></td>
-					<td><?= $v['sum'] ?></td>
-				</tr>
-			<? endforeach; ?>
-		</table>
-		<br>
-		<strong>Топ-10 комментариев по количеству операций</strong>
-		<table class="optable" cellspacing="0">
-			<? foreach($_comments_max_quantity as $k => $v): $bOdd = !$bOdd; ?>
-				<tr class="<?= $bOdd ? 'odd' : 'notodd' ?>">
-					<td><?= $k ?></td>
-					<td><?= $v['quantity'] ?></td>
-				</tr>
-			<? endforeach; ?>
-		</table>
-		<br>
-		<strong>Топ-10 комментариев по средней сумме операций</strong>
-		<table class="optable" cellspacing="0">
-			<? foreach($_comments_max_average as $k => $v): $bOdd = !$bOdd; ?>
-				<tr class="<?= $bOdd ? 'odd' : 'notodd' ?>">
-					<td><?= $k ?></td>
-					<td><?= $v['average'] ?></td>
-				</tr>
-			<? endforeach; ?>
-		</table>
+		<strong>Топ-10 комментариев по сумме операций в разных валютах</strong><br />
+		<? foreach($_comments_max_sum as $c => &$v): ?>
+			<?= $_currencies[$c]['name'].' '.$_currencies[$c]['symbol'] ?>
+			<table class="optable" cellspacing="0">
+				<? foreach($v as $k2 => &$v2): $bOdd = !$bOdd; ?>
+					<tr class="<?= $bOdd ? 'odd' : 'notodd' ?>">
+						<td><?= $k2 ?></td>
+						<td><?= $v2['sum'].'&nbsp;'.$_currencies[$c]['symbol'] ?></td>
+					</tr>
+				<? endforeach; ?>
+			</table>
+			<br />
+		<? endforeach; ?>
+		<br />
+		<strong>Топ-10 комментариев по количеству операций в разных валютах</strong><br />
+		<? foreach($_comments_max_quantity as $c => &$v): ?>
+			<?= $_currencies[$c]['name'].' '.$_currencies[$c]['symbol'] ?>
+			<table class="optable" cellspacing="0">
+				<? foreach($v as $k2 => &$v2): $bOdd = !$bOdd; ?>
+					<tr class="<?= $bOdd ? 'odd' : 'notodd' ?>">
+						<td><?= $k2 ?></td>
+						<td><?= $v2['quantity'] ?></td>
+					</tr>
+				<? endforeach; ?>
+			</table>
+			<br />
+		<? endforeach; ?>
+		<br />
+		<strong>Топ-10 комментариев по средней сумме операций в разных валютах</strong><br />
+		<? foreach($_comments_max_average as $c => &$v): ?>
+			<?= $_currencies[$c]['name'].' '.$_currencies[$c]['symbol'] ?>
+			<table class="optable" cellspacing="0">
+				<? foreach($v as $k2 => &$v2): $bOdd = !$bOdd; ?>
+					<tr class="<?= $bOdd ? 'odd' : 'notodd' ?>">
+						<td><?= $k2 ?></td>
+						<td><?= $v2['average'].'&nbsp;'.$_currencies[$c]['symbol'] ?></td>
+					</tr>
+				<? endforeach; ?>
+			</table>
+			<br />
+		<? endforeach; ?>
 	</div>
 	<!-- /статистика по комментариям -->
 </div>

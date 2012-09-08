@@ -91,8 +91,8 @@ while($_row = $DB->Fetch($res))
 	{
 		$first_operation = $_row['backtime'];
 	}
-	$_comments[$_row['comment']]['quantity']++;
-	$_comments[$_row['comment']]['sum'] += $_row['amount'];
+	$_comments[$_row['currency_id']][$_row['comment']]['quantity']++;
+	$_comments[$_row['currency_id']][$_row['comment']]['sum'] += $_row['amount'];
 }
 krsort($_months);
 foreach($_months as $k => &$_m)
@@ -102,18 +102,27 @@ foreach($_months as $k => &$_m)
 }
 
 // комментарии
-foreach($_comments as &$c)
+foreach($_comments as &$_cur)
 {
-	$c['average'] = round($c['sum'] / $c['quantity'], 2);
+	unset($_cur['']);
+	foreach($_cur as &$c)
+	{
+		$c['average'] = round($c['sum'] / $c['quantity'], 2);
+	}
 }
-unset($_comments['']);
 
-uasort($_comments, create_function('$a, $b', 'return $a["quantity"] == $b["quantity"] ? 0 : ($a["quantity"] < $b["quantity"] ? 1 : -1);'));
-$_comments_max_quantity = array_slice($_comments, 0, 10, true);
-uasort($_comments, create_function('$a, $b', 'return $a["sum"] == $b["sum"] ? 0 : ($a["sum"] < $b["sum"] ? 1 : -1);'));
-$_comments_max_sum = array_slice($_comments, 0, 10, true);
-uasort($_comments, create_function('$a, $b', 'return $a["average"] == $b["average"] ? 0 : ($a["average"] < $b["average"] ? 1 : -1);'));
-$_comments_max_average = array_slice($_comments, 0, 10, true);
+$_comments_max_quantity = array();
+$_comments_max_sum      = array();
+$_comments_max_average  = array();
+foreach($_comments as $cur_id => &$_cur)
+{
+	uasort($_cur, create_function('$a, $b', 'return $a["quantity"] == $b["quantity"] ? 0 : ($a["quantity"] < $b["quantity"] ? 1 : -1);'));
+	$_comments_max_quantity[$cur_id] = array_slice($_cur, 0, 10, true);
+	uasort($_cur, create_function('$a, $b', 'return $a["sum"] == $b["sum"] ? 0 : ($a["sum"] < $b["sum"] ? 1 : -1);'));
+	$_comments_max_sum[$cur_id] = array_slice($_cur, 0, 10, true);
+	uasort($_cur, create_function('$a, $b', 'return $a["average"] == $b["average"] ? 0 : ($a["average"] < $b["average"] ? 1 : -1);'));
+	$_comments_max_average[$cur_id] = array_slice($_cur, 0, 10, true);
+}
 unset($_comments);
 $tplengine->assign('_comments_max_quantity', $_comments_max_quantity);
 $tplengine->assign('_comments_max_sum',      $_comments_max_sum);
