@@ -19,6 +19,6 @@ if($id)
 {
 	$DB->Query("delete from `".KASSA_OPERATION_TABLE."` where `id` = '".$id."'");
 }
-redirect('..');
+redirect($_SERVER['HTTP_REFERER']);
 
 ?>

@@ -1,0 +1,17 @@
+.optable_v2 { display: table; }
+.optable_v2 .title { font-weight: bold; }
+.optable_v2 .ind { color: green; font-weight: bold; }
+.optable_v2 .dec { color: maroon; font-weight: bold; }
+.optable_v2 .day_head { background-color: white; text-align: left; padding: 10px 0 0 10px; font-size: 16px; height: 30px; border: 1px solid black; }
+.optable_v2 .day_body { background-color: #C6D6B1; margin: 0 10px 20px 10px; border: 1px solid black; border-top: none; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; padding: 5px 10px 10px 10px; }
+.optable_v2 .account_head { background-color: white; text-align: left; padding: 6px 0 0 10px; font-size: 13px; height: 20px; border: 1px solid grey; }
+.optable_v2 .account_body { margin: 0 8px 10px 8px; border: 1px solid grey; border-top: none; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; padding: 2px 5px 5px 5px; }
+.optable_v2 .optable { margin-bottom: 10px; }
+.optable_v2 .optable .td1 { width: 80px; font-weight: bold; }
+.optable_v2 .optable .inc .td1,
+.optable_v2 .optable .inc_odd .td1 { color: green; }
+.optable_v2 .optable .exp .td1,
+.optable_v2 .optable .exp_odd .td1 { color: #700303; }
+.optable_v2 .optable .td2 { width: 250px; }
+.optable_v2 .optable .td3 { width: 250px; }
+.optable_v2 .optable .td4 { width: 30px; }

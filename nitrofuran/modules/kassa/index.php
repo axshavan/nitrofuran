@@ -387,6 +387,21 @@ while($r = $DB->Fetch($res))
 }
 $tplengine->assign('_frequent_types', $_frequent_types);
 
+// шаблон таблицы с операциями
+$tplengine->assign('optable_template', $TREE_INFO['current']['template'] ? $TREE_INFO['current']['template'] : 'optable.tpl');
+if($TREE_INFO['current']['name'] == 'kassa')
+{
+	$tplengine->assign('current_path',      '/kassa/');
+	$tplengine->assign('kassa_switch_href', '/kassa/v2/');
+	$tplengine->assign('kassa_switch_name', 'v2 &rarr;');
+}
+else
+{
+	$tplengine->assign('current_path', '/kassa/'.$TREE_INFO['current']['name'].'/');
+	$tplengine->assign('kassa_switch_href', '/kassa/');
+	$tplengine->assign('kassa_switch_name', 'v1 &larr;');
+}
+
 if(get_param('kassa', 'use_mobile_templates'))
 {
 	// попробуем угадать, не используется ли мобильное устройство

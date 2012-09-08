@@ -26,6 +26,6 @@ if($_POST['id'] && $_POST['account'] && $_POST['optype'] && $_POST['currency'])
 		`backtime`    = '".mktime(0, 0, 0, $_POST['backmonth'], $_POST['backday'], $_POST['backyear'])."'
 		where `id` = '".(int)$_POST['id']."'");
 }
-redirect('..');
+redirect($_SERVER['HTTP_REFERER']);
 
 ?>
