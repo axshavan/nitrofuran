@@ -64,6 +64,7 @@ a.reset:hover { color: #505050; }
 #main_container .itogo span { display: block; }
 #main_container .itogo table td { vertical-align: top; }
 #main_container .itogo table td:first-child { padding-top: 3px; }
+#main_container .itogo table td.default { font-weight: bold; }
 #main_container .plans { float: right; background-color: #9EB77E; padding: 8px; border: 1px solid #516637; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; height: 207px; overflow-y: scroll}
 #main_container .plans .optable { width: 100%; }
 #main_container span.command { display: inline-block; margin: 10px 0 5px 0; border-bottom: 1px dashed #303030; color: #303030; cursor: pointer; }

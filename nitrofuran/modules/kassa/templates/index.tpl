@@ -266,7 +266,7 @@
 			<? foreach($_sum_all as $account_id => $data): ?>
 				<? if($_accounts[$account_id]['show']): ?>
 					<tr>
-						<td><?= $_accounts[$account_id]['name'] ?></td>
+						<td <?= $_accounts[$account_id]['default'] ? 'class="default"' : '' ?>><?= $_accounts[$account_id]['name'] ?></td>
 						<td>
 							<? foreach($data as $currency => $amount): ?>
 								<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= round($amount, 2).'&nbsp;'.$currency ?></span>
