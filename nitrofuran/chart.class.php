@@ -29,12 +29,13 @@ class CChart
 				'f0f0f0',
 				'dd0034',
 				...
-			)                    цвета графиков по порядку
-			$_params['bgcolor']  цвет фона
-			$_params['xtick']    подписанные деления на оси абсцисс
-			$_params['grid']     рисовать или нет сетку
-			$_params['labelmax'] помечать максимумы графиков
-			$_params['labelmin'] помечать минимумы графиков
+			)                     цвета графиков по порядку
+			$_params['bgcolor']   цвет фона
+			$_params['xtick']     подписанные деления на оси абсцисс
+			$_params['grid']      рисовать или нет сетку
+			$_params['gridcolor'] цвет сетки, если она есть
+			$_params['labelmax']  помечать максимумы графиков
+			$_params['labelmin']  помечать минимумы графиков
 			
 			$_data = array(
 				array(...),
@@ -117,8 +118,13 @@ class CChart
 		$xaspect = $xsize / count($_data[0]);
 		
 		// нарисуем чёрточки на осях, сами оси и сетку, если надо
+		if(!$_params['gridcolor'])
+		{
+			$_params['gridcolor'] = 'a0a0a0';
+		}
+		list($gcr, $gcg, $gcb) = CChart::web2color($_params['gridcolor']);
 		$c     = 0;
-		$c1    = imagecolorallocate($result, 160, 160, 160);
+		$c1    = imagecolorallocate($result, $gcr, $gcg, $gcb);
 		$y0    = false; // координата y оси абсцисс на картинке
 		$range = $maxvalue - $minvalue;
 		for($i = 0; $i < 10; $i++)

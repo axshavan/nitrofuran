@@ -8,6 +8,9 @@
 <body>
 	<h1>Drunkeeper</h1>
 	<div class="container_l">
+		<div class="item plot">
+			<img src="/drunkeeper/plot" />
+		</div>
 		<? foreach($_acts as $act): ?>
 			<div class="item">
 				<span class="date"><?= date('d.m.Y', $act['date_drinked']) ?></span>

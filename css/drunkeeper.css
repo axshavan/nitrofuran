@@ -9,6 +9,7 @@ div.item
 {
 	background-color: #f0eff0; margin: 5px 5px 0 5px; padding: 10px 15px 15px 15px;
 	background-image: url("/i/drunkeeper/itembg.gif"); background-repeat: repeat-x;
+	background-position: top;
 	border: 1px solid #808090; border-radius: 6px; -webkit-border-radius: 6px;
 	-moz-border-radius: 6px; overflow: hidden;
 }
@@ -18,6 +19,9 @@ div.item span span.measure { color: #7C8B96; font-size: 16px; }
 div.item div.drink { position: absolute; left: 30%; }
 div.item div.drink span.name { font-size: 20px; }
 div.item div.drink span.type { color: #7C8B96; }
+
+div.plot { height: 230px !important; }
+div.plot img { border: 1px solid #808090; }
 
 div.container_l { width: 72%; position: absolute; left: 5px; }
 div.container_l .item { height: 40px; }
