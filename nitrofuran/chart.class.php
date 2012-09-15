@@ -190,57 +190,10 @@ class CChart
 		}
 		
 		// собственно график
-		$g = 0; // количество графиков
-		foreach($_data as $id => $_graph)
-		{
-			$p     = 0; // количество точек
-			$xprev = false;
-			$yprev = false;
-			$brush = imagecreatetruecolor(3, 3);
-			if($_params['colors'][$g])
-			{
-				$c = CChart::web2color($_params['colors'][$g]);
-				$c = imagecolorallocate($brush, $c[0], $c[1], $c[2]);
-			}
-			else
-			{
-				$c = 0;
-			}
-			imagefill($brush, 0, 0, $c);
-			imagesetbrush($result, $brush);
-			foreach($_graph as $xcoord => $point)
-			{
-				// координаты текущей точки
-				$x = round($p * $xaspect + 10);
-				$y = round($ysize - ($point - $minvalue) * $yaspect + 20);
-				if($xprev !== false && $yprev !== false)
-				{
-					// если есть координаты предыдущей точки, то рисуем линию
-					imageline($result, $xprev, $yprev, $x, $y, IMG_COLOR_BRUSHED);
-				}
-				// и запоминаем текущие координаты
-				$xprev = $x;
-				$yprev = $y;
-				$p++;
-				// если надо - подпишем точки
-				if($_params['labelmax'])
-				{
-					if($xcoord == $_maxvalues_xcoord[$id])
-					{
-						imagestring($result, 4, $x + 5, $bYTicksAboveAxis ? ($y - 15) : ($y + 2), $_maxvalues[$id], $c);
-					}
-				}
-				if($_params['labelmin'])
-				{
-					if($xcoord == $_minvalues_xcoord[$id])
-					{
-						imagestring($result, 4, $x + 5, $bYTicksAboveAxis ? ($y - 15) : ($y + 2), $_minvalues[$id], $c);
-					}
-				}
-			}
-			imagedestroy($brush);
-			$g++;
-		}
+		$_params['xaspect'] = $xaspect;
+		$_params['yaspect'] = $yaspect;
+		$_params['ysize']   = $ysize;
+		$result = CChart::draw_linear_spline($result, $_data, $_params);
 		
 		// антиалиасинг
 		$result1 = imagecreatetruecolor($_params['width'], $_params['height']);
@@ -378,6 +331,66 @@ class CChart
 		imagecopyresampled($result1, $result, 0, 0, 0, 0, $_params['width'], $_params['height'], $width, $height);
 		imagedestroy($result);
 		return $result1;
+	}
+	
+	protected static function draw_linear_spline($result, $_data, $_params)
+	{
+		$xaspect = $_params['xaspect'];
+		$yaspect = $_params['yaspect'];
+		$ysize   = $_params['ysize'];
+		
+		$g = 0; // количество графиков
+		foreach($_data as $id => $_graph)
+		{
+			$p     = 0; // количество точек
+			$xprev = false;
+			$yprev = false;
+			$brush = imagecreatetruecolor(3, 3);
+			if($_params['colors'][$g])
+			{
+				$c = CChart::web2color($_params['colors'][$g]);
+				$c = imagecolorallocate($brush, $c[0], $c[1], $c[2]);
+			}
+			else
+			{
+				$c = 0;
+			}
+			imagefill($brush, 0, 0, $c);
+			imagesetbrush($result, $brush);
+			foreach($_graph as $xcoord => $point)
+			{
+				// координаты текущей точки
+				$x = round($p * $xaspect + 10);
+				$y = round($ysize - ($point - $minvalue) * $yaspect + 20);
+				if($xprev !== false && $yprev !== false)
+				{
+					// если есть координаты предыдущей точки, то рисуем линию
+					imageline($result, $xprev, $yprev, $x, $y, IMG_COLOR_BRUSHED);
+				}
+				// и запоминаем текущие координаты
+				$xprev = $x;
+				$yprev = $y;
+				$p++;
+				// если надо - подпишем точки
+				if($_params['labelmax'])
+				{
+					if($xcoord == $_maxvalues_xcoord[$id])
+					{
+						imagestring($result, 4, $x + 5, $bYTicksAboveAxis ? ($y - 15) : ($y + 2), $_maxvalues[$id], $c);
+					}
+				}
+				if($_params['labelmin'])
+				{
+					if($xcoord == $_minvalues_xcoord[$id])
+					{
+						imagestring($result, 4, $x + 5, $bYTicksAboveAxis ? ($y - 15) : ($y + 2), $_minvalues[$id], $c);
+					}
+				}
+			}
+			imagedestroy($brush);
+			$g++;
+		}
+		return $result;
 	}
 	
 	/*
