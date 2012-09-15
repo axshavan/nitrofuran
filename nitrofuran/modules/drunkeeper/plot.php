@@ -84,7 +84,8 @@ if($bGenerateImg)
 				'xtick'    => 1,
 				'labelmax' => true,
 				'labelmin' => true,
-				'grid'     => true
+				'grid'     => true,
+				'spline'   => 1
 			),
 			$_data
 		),

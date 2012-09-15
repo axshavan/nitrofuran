@@ -11,6 +11,8 @@
 	http://sam.zoy.org/wtfpl/COPYING for more details.
 */
 
+define('pi', 3.1428);
+
 class CChart
 {
 	/*
@@ -36,6 +38,8 @@ class CChart
 			$_params['gridcolor'] цвет сетки, если она есть
 			$_params['labelmax']  помечать максимумы графиков
 			$_params['labelmin']  помечать минимумы графиков
+			$_params['spline']    null, 0, false - рисовать линейный сплайн (ломаную линию)
+			                      1 - рисовать простой тригонометрический сплайн (из отрезков синусоиды)
 			
 			$_data = array(
 				array(...),
@@ -193,7 +197,20 @@ class CChart
 		$_params['xaspect'] = $xaspect;
 		$_params['yaspect'] = $yaspect;
 		$_params['ysize']   = $ysize;
-		$result = CChart::draw_linear_spline($result, $_data, $_params);
+		switch((int)$_params['spline'])
+		{
+			case 1:
+			{
+				$result = CChart::draw_sin_spline($result, $_data, $_params);
+				break;
+			}
+			case 0:
+			default:
+			{
+				$result = CChart::draw_linear_spline($result, $_data, $_params);
+				break;
+			}
+		}
 		
 		// антиалиасинг
 		$result1 = imagecreatetruecolor($_params['width'], $_params['height']);
@@ -333,6 +350,13 @@ class CChart
 		return $result1;
 	}
 	
+	/**
+	 * Рисование графика, состоящего из ломаных линий (линейного сплайна)
+	 * @param  ImageResoure  $result   картинка, в которой рисовать
+	 * @param  array         $_data    данные для отображения
+	 * @param  array         $_params  массив с параметрами, дополненный данными рассчёта
+	 * @return ImageResource результат рисования графика в $result
+	 */
 	protected static function draw_linear_spline($result, $_data, $_params)
 	{
 		$xaspect = $_params['xaspect'];
@@ -392,6 +416,95 @@ class CChart
 		}
 		return $result;
 	}
+	
+	/**
+	 * Рисование графика, состоящего из кусков синусоид
+	 * @param  ImageResoure  $result   картинка, в которой рисовать
+	 * @param  array         $_data    данные для отображения
+	 * @param  array         $_params  массив с параметрами, дополненный данными рассчёта
+	 * @return ImageResource результат рисования графика в $result
+	 */
+	protected static function draw_sin_spline($result, $_data, $_params)
+	{
+		$xaspect = $_params['xaspect'];
+		$yaspect = $_params['yaspect'];
+		$ysize   = $_params['ysize'];
+		
+		$g = 0; // количество графиков
+		foreach($_data as $id => $_graph)
+		{
+			$p     = 0; // количество точек
+			$xprev = false;
+			$yprev = false;
+			$brush = imagecreatetruecolor(3, 3);
+			if($_params['colors'][$g])
+			{
+				$c = CChart::web2color($_params['colors'][$g]);
+				$c = imagecolorallocate($brush, $c[0], $c[1], $c[2]);
+			}
+			else
+			{
+				$c = 0;
+			}
+			imagefill($brush, 0, 0, $c);
+			imagesetbrush($result, $brush);
+			
+			$sizeofdata    = sizeof($_graph);
+			$_graph_values = array_values($_graph);
+			$_graph_keys   = array_values($_graph);
+			unset($_graph);
+			for($i = 0; $i < $sizeofdata; $i++)
+			{
+				$point  = $_graph_values[$i];
+				$xcoord = $_graph_keys[$i];
+				
+				// координаты текущей точки
+				$x = round($p * $xaspect + 10);
+				$y = round($ysize - ($point - $minvalue) * $yaspect + 20);
+				$jx_prev = $xprev;
+				$jy_prev = $yprev;
+				// если есть координаты предыдущей точки, то рисуем сплайн (отрезок функции)
+				if($xprev !== false && $yprev !== false)
+				{
+					// для сплайна, являющемся куском синусоиды от 0 до pi/2, определяем ширину и высоту
+					$spline_h = $y - $yprev;
+					$spline_w = $x - $xprev;
+					for($jx = $xprev; $jx <= $x; $jx++)
+					{
+						$jy = round($yprev + sin(($jx - $xprev) / $spline_w * pi - pi / 2) * $spline_h / 2 + $spline_h / 2);
+						imageline($result, $jx_prev, $jy_prev, $jx, $jy, IMG_COLOR_BRUSHED);
+						$jx_prev = $jx;
+						$jy_prev = $jy;
+					}
+				}
+				
+				// и запоминаем текущие координаты
+				$xprev = $x;
+				$yprev = $y;
+				$p++;
+				
+				// если надо - подпишем точки
+				if($_params['labelmax'])
+				{
+					if($xcoord == $_maxvalues_xcoord[$id])
+					{
+						imagestring($result, 4, $x + 5, $bYTicksAboveAxis ? ($y - 15) : ($y + 2), $_maxvalues[$id], $c);
+					}
+				}
+				if($_params['labelmin'])
+				{
+					if($xcoord == $_minvalues_xcoord[$id])
+					{
+						imagestring($result, 4, $x + 5, $bYTicksAboveAxis ? ($y - 15) : ($y + 2), $_minvalues[$id], $c);
+					}
+				}
+			}
+			imagedestroy($brush);
+			$g++;
+		}
+		return $result;
+	}
+	
 	
 	/*
 		Переделывает цвет в веб-представлении (типа 'f0ee00') в rgb (массив
