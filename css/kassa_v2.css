@@ -14,4 +14,4 @@
 .optable_v2 .optable .exp_odd .td1 { color: #700303; }
 .optable_v2 .optable .td2 { width: 250px; }
 .optable_v2 .optable .td3 { width: 250px; }
-.optable_v2 .optable .td4 { width: 30px; }
+.optable_v2 .optable .td4 { width: 30px; white-space: nowrap; }

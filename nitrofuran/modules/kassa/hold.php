@@ -18,32 +18,67 @@ if($_GET['del'])
 {
 	// удаление записи
 	$DB->Query("delete from `".KASSA_HOLD_TABLE."` where `id` = '".(int)$_GET['del']."'");
-	redirect('..');
+	redirect($_SERVER['HTTP_REFERER']);
+	die();
+}
+if($_GET['done'])
+{
+	// перенос записи из холда в операции
+	$row = $DB->QueryFetched("select * from `".KASSA_HOLD_TABLE."` where `id` = '".(int)$_GET['done']."'");
+	if($row[0])
+	{
+		$row = $row[0];
+		$DB->Query("insert into `".KASSA_OPERATION_TABLE."`
+			(
+				`currency_id`,
+				`account_id`,
+				`type_id`,
+				`amount`,
+				`time`,
+				`comment`,
+				`backtime`
+			)
+			values
+			(
+				'".(int)$row['currency_id']."',
+				'".(int)$row['account_id']."',
+				'".(int)$row['operation_type_id']."',
+				'".(float)$row['sum']."',
+				unix_timestamp(),
+				'".$row['comment']."',
+				unix_timestamp()
+			)
+		");
+		$DB->Query("delete from `".KASSA_HOLD_TABLE."` where `id` = '".$row['id']."'");
+	}
+	redirect($_SERVER['HTTP_REFERER']);
 	die();
 }
 
-if(!$_POST['id'])
+if($_POST)
 {
-	// добавление записи
-	$DB->Query("insert into `".KASSA_HOLD_TABLE."` (`operation_type_id`, `sum`, `comment`, `currency_id`, `account_id`) values (
-		'".(int)$_POST['optype']."',
-		'".(float)$_POST['amount']."',
-		'".$DB->EscapeString($_POST['comment'])."',
-		'".(int)$_POST['currency']."',
-		'".(int)$_POST['account']."')");
+	if(!$_POST['id'])
+	{
+		// добавление записи
+		$DB->Query("insert into `".KASSA_HOLD_TABLE."` (`operation_type_id`, `sum`, `comment`, `currency_id`, `account_id`) values (
+			'".(int)$_POST['optype']."',
+			'".(float)$_POST['amount']."',
+			'".$DB->EscapeString($_POST['comment'])."',
+			'".(int)$_POST['currency']."',
+			'".(int)$_POST['account']."')");
+	}
+	else
+	{
+		// редактирование записи
+		$DB->Query("update `".KASSA_HOLD_TABLE."` set
+			`operation_type_id` = '".(int)$_POST['optype']."',
+			`sum` = '".(float)$_POST['amount']."',
+			`comment` = '".$DB->EscapeString($_POST['comment'])."',
+			`currency_id` = '".(int)$_POST['currency']."',
+			`account_id` = '".(int)$_POST['account']."'
+			where `id` = '".(int)$_POST['id']."'");
+	}
 }
-else
-{
-	// редактирование записи
-	$DB->Query("update `".KASSA_HOLD_TABLE."` set
-		`operation_type_id` = '".(int)$_POST['optype']."',
-		`sum` = '".(float)$_POST['amount']."',
-		`comment` = '".$DB->EscapeString($_POST['comment'])."',
-		`currency_id` = '".(int)$_POST['currency']."',
-		`account_id` = '".(int)$_POST['account']."'
-		where `id` = '".(int)$_POST['id']."'");
-}
-
-redirect('..');
+redirect($_SERVER['HTTP_REFERER']);
 
 ?>

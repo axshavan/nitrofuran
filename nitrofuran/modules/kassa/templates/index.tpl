@@ -369,11 +369,17 @@
 					<tr class="<?= $bOdd ? 'odd' : 'notodd' ?>">
 						<td title="<?= htmlspecialchars($h['comment']) ?>"><span id="hold<?= $h['id'] ?>_sum"><?= (float)$h['sum'] ?></sum>&nbsp;<?= $_currencies[$h['currency_id']]['symbol'] ?></td>
 						<td title="<?= htmlspecialchars($h['comment']) ?>"><?= $_accounts[$h['account_id']]['name'] ?>&nbsp;/ <?= $_optypes_by_id[$h['operation_type_id']]['name'] ?></td>
-						<td>
+						<td class="nowrap">
 							<img src="/i/kassa/edit.gif"
 								class="button"
-								onclick="showHoldForm(this, '<?= $h['id'] ?>')">
-							<a onclick="if(!confirm('Правда удалить?')) return false;" href="/kassa/hold/?del=<?= $h['id'] ?>"><img src="/i/kassa/del.gif"></a>
+								onclick="showHoldForm(this, '<?= $h['id'] ?>')"
+								title="Редактировать">
+							<a onclick="return confirm('Правда удалить?');"
+								href="/kassa/hold/?del=<?= $h['id'] ?>"
+								title="Удалить"><img src="/i/kassa/del.gif"></a>
+							<a onclick="return confirm('Правда перенести запись из отложенных в свершившиеся?');"
+								href="/kassa/hold/?done=<?= $h['id'] ?>"
+								title="Свершилось"><img src="/i/kassa/done.gif"></a>
 						</td>
 					</tr>
 					<input type="hidden" id="hold<?= $h['id'] ?>_cur" value="<?= $h['currency_id'] ?>">

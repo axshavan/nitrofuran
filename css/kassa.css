@@ -129,6 +129,7 @@ table.optable tr.daysum .inc { color: #006600; }
 table.optable tr.daysum .exp { color: #800000; }
 table.optable td.dayhead { font-size: 13px; height: 30px; vertical-align: bottom; }
 table.optable td.itogo { font-size: 14px; }
+table.optable td.nowrap { white-space: nowrap; }
 
 table.holdtable { width: 24%; float: right; }
 
