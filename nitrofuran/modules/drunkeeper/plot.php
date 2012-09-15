@@ -83,7 +83,7 @@ if($bGenerateImg)
 				'bgcolor'  => 'ffffff',
 				'xtick'    => 1,
 				'labelmax' => true,
-				'labelmin' => true,
+				'labelmin' => false,
 				'grid'     => true,
 				'spline'   => 1
 			),

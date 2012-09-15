@@ -194,9 +194,14 @@ class CChart
 		}
 		
 		// собственно график
-		$_params['xaspect'] = $xaspect;
-		$_params['yaspect'] = $yaspect;
-		$_params['ysize']   = $ysize;
+		$_params['xaspect']          = $xaspect;
+		$_params['yaspect']          = $yaspect;
+		$_params['ysize']            = $ysize;
+		$_params['bYTicksAboveAxis'] = $bYTicksAboveAxis;
+		$_params['_maxvalues']       = $_maxvalues;
+		$_params['_minvalues']       = $_minvalues;
+		$_params['_maxvaluesx']      = $_maxvalues_xcoord;
+		$_params['_minvaluesx']      = $_minvalues_xcoord;
 		switch((int)$_params['spline'])
 		{
 			case 1:
@@ -359,9 +364,14 @@ class CChart
 	 */
 	protected static function draw_linear_spline($result, $_data, $_params)
 	{
-		$xaspect = $_params['xaspect'];
-		$yaspect = $_params['yaspect'];
-		$ysize   = $_params['ysize'];
+		$xaspect          = $_params['xaspect'];
+		$yaspect          = $_params['yaspect'];
+		$ysize            = $_params['ysize'];
+		$bYTicksAboveAxis = $_params['bYTicksAboveAxis'];
+		$_maxvalues       = $_params['_maxvalues'];
+		$_minvalues       = $_params['_minvalues'];
+		$_maxvalues_xcoord = $_params['_maxvaluesx'];
+		$_minvalues_xcoord = $_params['_minvaluesx'];
 		
 		$g = 0; // количество графиков
 		foreach($_data as $id => $_graph)
@@ -400,7 +410,7 @@ class CChart
 				{
 					if($xcoord == $_maxvalues_xcoord[$id])
 					{
-						imagestring($result, 4, $x + 5, $bYTicksAboveAxis ? ($y - 15) : ($y + 2), $_maxvalues[$id], $c);
+						imagestring($result, 4, $x + 5, $y - 15, $_maxvalues[$id], $c);
 					}
 				}
 				if($_params['labelmin'])
@@ -426,9 +436,14 @@ class CChart
 	 */
 	protected static function draw_sin_spline($result, $_data, $_params)
 	{
-		$xaspect = $_params['xaspect'];
-		$yaspect = $_params['yaspect'];
-		$ysize   = $_params['ysize'];
+		$xaspect           = $_params['xaspect'];
+		$yaspect           = $_params['yaspect'];
+		$ysize             = $_params['ysize'];
+		$bYTicksAboveAxis  = $_params['bYTicksAboveAxis'];
+		$_maxvalues        = $_params['_maxvalues'];
+		$_minvalues        = $_params['_minvalues'];
+		$_maxvalues_xcoord = $_params['_maxvaluesx'];
+		$_minvalues_xcoord = $_params['_minvaluesx'];
 		
 		$g = 0; // количество графиков
 		foreach($_data as $id => $_graph)
@@ -451,7 +466,7 @@ class CChart
 			
 			$sizeofdata    = sizeof($_graph);
 			$_graph_values = array_values($_graph);
-			$_graph_keys   = array_values($_graph);
+			$_graph_keys   = array_keys($_graph);
 			unset($_graph);
 			for($i = 0; $i < $sizeofdata; $i++)
 			{
@@ -488,7 +503,7 @@ class CChart
 				{
 					if($xcoord == $_maxvalues_xcoord[$id])
 					{
-						imagestring($result, 4, $x + 5, $bYTicksAboveAxis ? ($y - 15) : ($y + 2), $_maxvalues[$id], $c);
+						imagestring($result, 4, $x + 5, $y - 15, $_maxvalues[$id], $c);
 					}
 				}
 				if($_params['labelmin'])
