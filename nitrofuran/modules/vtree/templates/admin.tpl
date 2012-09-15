@@ -11,8 +11,8 @@ if(!function_exists('draw_vtree_item'))
 		<li class="<?= $bLast ? 'last' : '' ?>">
 			<img src="/i/vtree/folder.gif">&nbsp;<span class="name" onclick="$('#data<?= $item['id'] ?>').slideToggle();"><?= $item['id'] > 1 ? $item['data']['name'] : '/' ?></span>
 			<div class="data" id="data<?= $item['id'] ?>">
-				<form action="/admin/?module=vtree&page=1" method="post">
-					<input type="hidden" name="saveid" value="<?= $item['id'] ?>">
+				<form action="/admin/?module=vtree&page=1" method="post" id="form_<?= $item['id'] ?>">
+					<input type="hidden" name="" value="<?= $item['id'] ?>" id="id_<?= $item['id'] ?>">
 					<table class="admin_table" cellspacing="0">
 						<tr>
 							<td><label for="name<?= $item['id'] ?>">Название</label></td>
@@ -43,7 +43,10 @@ if(!function_exists('draw_vtree_item'))
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
-							<td><input type="submit" value="Сохранить"></td>
+							<td>
+								<input type="button" value="Сохранить" onclick="ge('id_<?= $item['id'] ?>').name='saveid'; ge('form_<?= $item['id'] ?>').submit();" />
+								<input type="button" value="Добавить подпапку" onclick="ge('id_<?= $item['id'] ?>').name='add'; ge('form_<?= $item['id'] ?>').submit();" />
+							</td>
 						</tr>
 					</table>
 				</form>

@@ -40,14 +40,36 @@ switch($page)
 	}
 	case 2:
 	{
+		// добавление статичной страницы
+		if($_POST['add2tree_id'])
+		{
+			$DB->Query("insert into `".STATIC_PAGES_TABLE."`
+				(`tree_id`, `content`) values
+				('".(int)$_POST['add2tree_id']."', '')");
+			redirect('/admin/?module=static&page=2');
+		}
+		
 		// выборка статичных страниц
 		$res    = $DB->Query("select * from `".STATIC_PAGES_TABLE."` order by `id` desc");
 		$_pages = array();
 		while($_row = $DB->Fetch($res))
 		{
-			$_pages[$_row['id']] = $_row;
+			$_pages[$_row['tree_id']] = $_row;
 		}
-		$tplengine->assign('_pages', $_pages);
+		
+		// выборка папок, к которым привязаны статические страницы
+		$res      = $DB->QueryFetched("select * from `".TREE_TABLE."` where `module` = 'static'");
+		$_folders = array();
+		foreach($res as $v)
+		{
+			if(!array_key_exists($v['id'], $_pages))
+			{
+				$_folders[] = $v;
+			}
+		}
+		
+		$tplengine->assign('_pages',   $_pages);
+		$tplengine->assign('_folders', $_folders);
 		$tplengine->assign('inner_template_name', DOCUMENT_ROOT.'/nitrofuran/modules/static/templates/admin_table.tpl');
 		break;
 	}

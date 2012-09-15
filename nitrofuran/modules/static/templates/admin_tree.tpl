@@ -14,7 +14,7 @@ if(!function_exists('draw_vtree_item'))
 				<? if($item['data']['static_page_id']): ?>
 					<a href="?module=static&page=3&pageid=<?= $item['data']['static_page_id'] ?>"><!--Редактировать содержимое--></a>
 				<? endif; ?>
-				<br>Шаблон/действие: <?= $item['data']['template'] ? $item['data']['template'] : '-' ?> / <?= $item['data']['action'] ? $item['data']['action'] : '-' ?>
+				<br>Действие/шаблон: <?= $item['data']['action'] ? $item['data']['action'] : '-' ?>  / <?= $item['data']['template'] ? $item['data']['template'] : '-' ?>
 			</div>
 			<? if(sizeof($item['children'])): ?>
 				<ul class="ul-tree">
