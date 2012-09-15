@@ -81,7 +81,7 @@ switch($page)
 		{
 			if($page_id)
 			{
-				$DB->Query("update `".STATIC_PAGES_TABLE."` set `content` = '".addslashes($_POST['content'])."'");
+				$DB->Query("update `".STATIC_PAGES_TABLE."` set `content` = '".addslashes($_POST['content'])."' where `id` = '".$page_id."'");
 			}
 		}
 		$res = $DB->Query("select * from `".STATIC_PAGES_TABLE."` where `id` = '".$page_id."'");

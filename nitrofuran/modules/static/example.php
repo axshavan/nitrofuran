@@ -1,7 +1,8 @@
 <?php
 
 /*
-	Модуль статических страниц.
+	Пример того, как можно организовать работу статичных страниц,
+	привнеся в неё немного динамики.
 	@author Dmitry Nikiforov <axshavan@yandex.ru>
 	@license http://sam.zoy.org/wtfpl WTFPL
 	This program is free software. It comes without any warranty, to
@@ -14,14 +15,16 @@
 require_once(DOCUMENT_ROOT.'/nitrofuran/modules/static/config.php');
 global $TREE_INFO;
 global $DB;
+$tplengine = new CTemplateEngine('static');
+$tplengine->assign('title', $TREE_INFO['current']['name']);
+
 $tree_id = (int)$TREE_INFO['current']['id'];
-$res = $DB->Query("select `content` from `".STATIC_PAGES_TABLE."` where `tree_id` = '".$tree_id."'");
-$res = $DB->Fetch($res);
-if(!$res)
+$res     = $DB->QueryFetched("select `content` from `".STATIC_PAGES_TABLE."` where `tree_id` = '".$tree_id."'");
+if(!$res[0])
 {
 	error404();
 }
-header("Content-Type: text/html; charset=UTF-8");
-echo $res['content'];
+$tplengine->assign('content', $res[0]['content']);
+$tplengine->template($TREE_INFO['current']['template']);
 
 ?>
