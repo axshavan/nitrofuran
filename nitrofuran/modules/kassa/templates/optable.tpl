@@ -84,11 +84,11 @@
 						this,
 						{
 							id:       '<?= $_op['id'] ?>',
-							amount:   '<?= $_op['amount']?>',
-							optype:   '<?= $_op['optype_id']?>',
-							comment:  '<?= $_op['comment']?>',
-							currency: '<?= $_op['currency_id']?>',
-							account:  '<?= $_op['account_id']?>',
+							amount:   '<?= $_op['amount'] ?>',
+							optype:   '<?= $_op['optype_id'] ?>',
+							comment:  '<?= htmlspecialchars($_op['comment']) ?>',
+							currency: '<?= $_op['currency_id'] ?>',
+							account:  '<?= $_op['account_id'] ?>',
 							backtime: '<?= $_op['backtime'] ?>'
 						})">
 			</td>

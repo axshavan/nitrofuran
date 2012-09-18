@@ -103,11 +103,11 @@
 															this,
 															{
 																id:       '<?= $o['id'] ?>',
-																amount:   '<?= $o['amount']?>',
-																optype:   '<?= $o['optype_id']?>',
-																comment:  '<?= $o['comment']?>',
-																currency: '<?= $o['currency_id']?>',
-																account:  '<?= $o['account_id']?>',
+																amount:   '<?= $o['amount'] ?>',
+																optype:   '<?= $o['optype_id'] ?>',
+																comment:  '<?= htmlspecialchars($o['comment']) ?>',
+																currency: '<?= $o['currency_id'] ?>',
+																account:  '<?= $o['account_id'] ?>',
 																backtime: '<?= $o['backtime'] ?>'
 															})
 														" />

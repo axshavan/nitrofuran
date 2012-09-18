@@ -19,7 +19,7 @@ if(!file_exists($img_filename))
 }
 else
 {
-	if(filemtime($img_filename) < time() - 86400)
+	if(filemtime($img_filename) < time() - 7200)
 	{
 		$bGenerateImg = true;
 	}
@@ -44,11 +44,8 @@ if($bGenerateImg)
 		order by `date_drinked` desc, `id` desc");
 	while($_r = $DB->Fetch($res))
 	{
-		$_acts[date('Yz', $_r['date_drinked'])] = array
-		(
-			'vol'    => $_r['volume'],
-			'vol100' => round($_r['volume'] * $_drinks[$_r['drink_id']]['strength'] / 100, 2)
-		);
+		$_acts[date('Yz', $_r['date_drinked'])]['vol']    += $_r['volume'];
+		$_acts[date('Yz', $_r['date_drinked'])]['vol100'] += round($_r['volume'] * $_drinks[$_r['drink_id']]['strength'] / 100, 2);
 	}
 	
 	$_data = array('vol' => array(), 'vol100' => array());

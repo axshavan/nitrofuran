@@ -45,7 +45,7 @@ a.reset:hover { color: #505050; }
 
 #main_container { position: absolute; left: 175px; right: 5px; top: 5px; }
 #main_container .add-form { background-color: #9EB77E; padding: 4px; border: 1px solid #516637; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; width: 400px; min-height: 200px; float: left; }
-#main_container .add-form span { cursor: pointer; }
+#main_container .add-form span { cursor: pointer; margin-right: 5px; }
 #main_container .add-form span.selected, #main_container .add-form span.selected_g { font-weight: bold; }
 #main_container .add-form span:hover { color: #202020; border-bottom: 1px dashed #606060; }
 #main_container .add-form .optypegroups { background-color: #DCE884; padding: 2px; border: 1px solid #A4AF4D; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 2px; }
@@ -79,7 +79,7 @@ a.reset:hover { color: #505050; }
 #currency_exchange select { width: 130px; }
 
 #optypefilter a { color: #404040; }
-#optypefilter span { cursor: pointer; }
+#optypefilter span { cursor: pointer; margin-right: 5px; }
 #optypefilter span.selectedf, #optypefilter span.selectedf_g { font-weight: bold; }
 #optypefilter span:hover { color: #202020; border-bottom: 1px dashed #606060; }
 #optypefilter .hidden { display: none; }
@@ -89,7 +89,7 @@ a.reset:hover { color: #505050; }
 #optypefilter .optypegroupf .exp { color: #800000; }
 
 #accountfilter a { color: #404040; }
-#accountfilter span { cursor: pointer; }
+#accountfilter span { cursor: pointer; margin-right: 5px; }
 #accountfilter span.selectedf1 { font-weight: bold; }
 #accountfilter span:hover { color: #202020; border-bottom: 1px dashed #606060; }
 #accountfilter div { background-color: #DCE884; padding: 2px; border: 1px solid #A4AF4D; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 2px; }
