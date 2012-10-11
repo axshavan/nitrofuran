@@ -28,6 +28,6 @@ if($_POST['amount'] && $_POST['account'] && $_POST['optype'] && $_POST['currency
 	$DB->Query("insert into `".KASSA_OPERATION_TABLE."` (`currency_id`, `account_id`, `type_id`, `amount`, `time`, `comment`, `backtime`)
 		values ('".(int)$_POST['currency']."', '".(int)$_POST['account']."', '".(int)$_POST['optype']."', '".(float)$_POST['amount']."', unix_timestamp(), '".$DB->EscapeString($_POST['comment'])."', '".$backtime."')");
 }
-redirect('..');
+redirect($_SERVER['HTTP_REFERER']);
 
 ?>

@@ -14,11 +14,32 @@
 require_once('config.php');
 global $DB;
 
+// класс шаблона
+$tplengine = new CTemplateEngine('kassa');
+$tplengine->assign('title', get_param('kassa', 'title'));
+
+// шаблон таблицы с операциями
+$tplengine->assign('optable_template', $TREE_INFO['current']['template'] ? $TREE_INFO['current']['template'] : 'optable.tpl');
+if($TREE_INFO['current']['name'] == 'kassa')
+{
+	$tplengine->assign('current_path',      '/kassa/');
+	$tplengine->assign('kassa_switch_href', '/kassa/v2/');
+	$tplengine->assign('kassa_switch_name', 'v2 &rarr;');
+	$filter_from_default = date('Ymd', time() - 86400 * 30);
+}
+else
+{
+	$tplengine->assign('current_path', '/kassa/'.$TREE_INFO['current']['name'].'/');
+	$tplengine->assign('kassa_switch_href', '/kassa/');
+	$tplengine->assign('kassa_switch_name', 'v1 &larr;');
+	$filter_from_default = date('Ymd', time() - 86400 * 60);
+}
+
 // фильр даты ОТ
 $filter_from = preg_replace('`\D`', '', $_REQUEST['from']);
 if(!$filter_from)
 {
-	$filter_from = date('Ymd', time() - 86400 * 30);
+	$filter_from = $filter_from_default;
 }
 $filter_from_year  = substr($filter_from, 0, 4);
 $filter_from_month = substr($filter_from, 4, 2);
@@ -33,9 +54,6 @@ if(!$filter_to)
 $filter_to_year  = substr($filter_to, 0, 4);
 $filter_to_month = substr($filter_to, 4, 2);
 $filter_to_day   = substr($filter_to, 6, 2);
-
-$tplengine = new CTemplateEngine('kassa');
-$tplengine->assign('title', get_param('kassa', 'title'));
 
 // фильтр по типу
 if(isset($_REQUEST['type']))
@@ -386,21 +404,6 @@ while($r = $DB->Fetch($res))
 	$_frequent_types[] = $r;
 }
 $tplengine->assign('_frequent_types', $_frequent_types);
-
-// шаблон таблицы с операциями
-$tplengine->assign('optable_template', $TREE_INFO['current']['template'] ? $TREE_INFO['current']['template'] : 'optable.tpl');
-if($TREE_INFO['current']['name'] == 'kassa')
-{
-	$tplengine->assign('current_path',      '/kassa/');
-	$tplengine->assign('kassa_switch_href', '/kassa/v2/');
-	$tplengine->assign('kassa_switch_name', 'v2 &rarr;');
-}
-else
-{
-	$tplengine->assign('current_path', '/kassa/'.$TREE_INFO['current']['name'].'/');
-	$tplengine->assign('kassa_switch_href', '/kassa/');
-	$tplengine->assign('kassa_switch_name', 'v1 &larr;');
-}
 
 if(get_param('kassa', 'use_mobile_templates'))
 {
