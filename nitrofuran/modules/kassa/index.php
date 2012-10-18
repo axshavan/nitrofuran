@@ -25,21 +25,19 @@ if($TREE_INFO['current']['name'] == 'kassa')
 	$tplengine->assign('current_path',      '/kassa/');
 	$tplengine->assign('kassa_switch_href', '/kassa/v2/');
 	$tplengine->assign('kassa_switch_name', 'v2 &rarr;');
-	$filter_from_default = date('Ymd', time() - 86400 * 30);
 }
 else
 {
 	$tplengine->assign('current_path', '/kassa/'.$TREE_INFO['current']['name'].'/');
 	$tplengine->assign('kassa_switch_href', '/kassa/');
 	$tplengine->assign('kassa_switch_name', 'v1 &larr;');
-	$filter_from_default = date('Ymd', time() - 86400 * 60);
 }
 
 // фильр даты ОТ
 $filter_from = preg_replace('`\D`', '', $_REQUEST['from']);
 if(!$filter_from)
 {
-	$filter_from = $filter_from_default;
+	$filter_from = $filter_from_default = date('Ymd', time() - 86400 * 30);
 }
 $filter_from_year  = substr($filter_from, 0, 4);
 $filter_from_month = substr($filter_from, 4, 2);

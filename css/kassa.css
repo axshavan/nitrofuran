@@ -131,7 +131,7 @@ table.optable td.dayhead { font-size: 13px; height: 30px; vertical-align: bottom
 table.optable td.itogo { font-size: 14px; }
 table.optable td.nowrap { white-space: nowrap; }
 
-table.holdtable { width: 24%; float: right; }
+table.holdtable { width: 24%; float: right; margin-left: 2px; }
 
 .stats-column-1 { position: absolute; width: 32%; left: 0.5%; top: 30px; }
 .stats-column-2 { position: absolute; width: 32%; left: 33%; top: 30px; }
