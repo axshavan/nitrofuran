@@ -13,6 +13,7 @@
 	{
 		?>
 		<div class="day_head">
+			<span class="command" onclick="$('#<?= $current_date_t ?>_daybody').slideToggle();">[+/-]</span>
 			<?
 				echo '<span class="title">'.rudate('d M Y', $current_date_t).'</span>';
 				foreach($_day['currencies'] as $cur_id => &$amount)
@@ -34,9 +35,10 @@
 				}
 			?>
 		</div>
-		<div class="day_body">
+		<div class="day_body<?= $current_date_t < time() - 86400 * 7 ? ' hidden' : '' ?>" id="<?= $current_date_t ?>_daybody">
 			<? foreach($_day['accounts'] as $acc_id => &$_accdata): ?>
 				<div class="account_head">
+					<span class="command" onclick="$('#<?= $current_date_t.'_'.$acc_id ?>_accbody').slideToggle();">[+/-]</span>
 					<?
 						echo '<span class="title">'.h($_accounts[$acc_id]['name']).'</span>';
 						foreach($_accdata['currencies'] as $cur_id => &$amount)
@@ -58,7 +60,7 @@
 						}
 					?>
 				</div>
-				<div class="account_body">
+				<div class="account_body<?= $current_date_t < time() - 86400 * 2 ? ' hidden' : '' ?>" id="<?= $current_date_t.'_'.$acc_id ?>_accbody">
 					<? foreach($_accdata['operations'] as $cur_id => $_curdata): ?>
 						<div class="currency_head">
 							<span class="title"><?= $_currencies[$cur_id]['symbol'] ?></span>
@@ -117,7 +119,10 @@
 		</div>
 		<?
 	}
-	
+	?>
+	<span class="command" onclick="$('[id$=\'body\']').slideDown();">Развернуть всё</span>&nbsp;
+	<span class="command" onclick="$('[id$=\'body\']').slideUp();">Свернуть всё</span>
+	<?
 	$current_date     = '';
 	$current_account  = 0;
 	$current_currency = 0;
