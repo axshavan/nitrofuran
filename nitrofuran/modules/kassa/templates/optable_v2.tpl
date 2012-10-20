@@ -7,8 +7,9 @@
 	 * @param array &$_day          данные за день
 	 * @param int   $current_date_t таймстамп отрисовываемого дня
 	 * @param array $_currencies    список валют
+	 * @param array $_accounts      аккаунты
 	 */
-	function optablev2_draw_day(&$_day, $current_date_t, $_currencies)
+	function optablev2_draw_day(&$_day, $current_date_t, $_currencies, $_accounts)
 	{
 		?>
 		<div class="day_head">
@@ -16,7 +17,7 @@
 				echo '<span class="title">'.rudate('d M Y', $current_date_t).'</span>';
 				foreach($_day['currencies'] as $cur_id => &$amount)
 				{
-					if($amount )
+					if($amount)
 					{
 						if($amount > 0)
 						{
@@ -132,7 +133,7 @@
 		{
 			if($_day)
 			{
-				optablev2_draw_day($_day, $current_date_t, $_currencies);
+				optablev2_draw_day($_day, $current_date_t, $_currencies, $_accounts);
 			}
 			$current_date     = $_op['v2date'];
 			$current_account  = $_op['account'];
@@ -148,7 +149,7 @@
 			// если это последняя операция, и она всего одна за свой день
 			if($op_counter == $sizeofoperations - 1)
 			{
-				optablev2_draw_day($_day, $current_date_t, $_currencies);
+				optablev2_draw_day($_day, $current_date_t, $_currencies, $_accounts);
 			}
 		}
 		$op_counter++;
