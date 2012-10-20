@@ -44,10 +44,16 @@
 		
 		<!-- статистика -->
 		<? foreach($_opbytype as $optype_id => $_opbycur): ?>
-			<? foreach($_opbycur as $currency_id => $_op): ?>
-				<? if($_op['average_c']): $bOdd = !$bOdd; ?>
+			<?
+			
+			$rowspan = sizeof($_opbycur);
+			foreach($_opbycur as $currency_id => $_op)
+			{
+				if($_op['average_c']): $bOdd = !$bOdd; ?>
 					<tr class="<?= ($_op['left_m'] < 0 ? 'exp' : 'inc').($bOdd ? '_odd' : '') ?>">
-						<td><?= $_optypes[$optype_id]['name'] ?></td>
+						<? if($rowspan) :?>
+							<td rowspan="<?= $rowspan ?>"><?= $_optypes[$optype_id]['name'] ?></td>
+						<? endif; ?>
 						<td><?= $_currencies[$currency_id]['symbol'] ?></td>
 						<td><?= $_op['sum'] ?></td>
 						<td><?= $_op['count'] ?></td>
@@ -62,8 +68,7 @@
 							<? endif; ?>
 							<?= $_op['left_m'] ?>
 							<? if($_op['do_not_count']): ?>
-								( не считаем
-								<?
+								(не считаем<?
 								switch($_op['do_not_count'])
 								{
 									case 'ancient':  echo ', давно не было операций'; break;
@@ -71,8 +76,7 @@
 									case 'disabled':
 									default: break;
 								}
-								?>
-								)
+								?>)
 							<? else: ?>
 								</strong>
 							<? endif; ?>
@@ -86,7 +90,10 @@
 						</td>
 					</tr>
 				<? endif; ?>
-			<? endforeach; ?>
+			<?
+			$rowspan = 0;
+			}
+			?>
 		<? endforeach; ?>
 		
 		<!-- планы -->

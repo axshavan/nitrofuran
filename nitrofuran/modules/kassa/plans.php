@@ -115,6 +115,10 @@ foreach($_opbytype as $optype_id => &$_op)
 		{
 			$_op[$c]['do_not_count'] = 'disabled';
 		}
+		if(!$_op[$c]['average_c'])
+		{
+			unset($_op[$c]);
+		}
 	}
 }
 
