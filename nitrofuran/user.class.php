@@ -68,7 +68,7 @@ class CUser
 	public static function Login($login, $password, $remember, $bind2ip, &$error)
 	{
 		global $AUTH;
-		return $AUTH->Login($login, $password, $remember, $bind2ip, &$error);
+		return $AUTH->Login($login, $password, $remember, $bind2ip, $error);
 	}
 	
 	/*

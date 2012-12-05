@@ -3,7 +3,7 @@
 $tplengine = new CTemplateEngine('auth');
 if($_POST)
 {
-	if(!CUser::Login($_POST['login'], $_POST['password'], $_POST['remember'], $_POST['bind2ip'], &$error))
+	if(!CUser::Login($_POST['login'], $_POST['password'], $_POST['remember'], $_POST['bind2ip'], $error))
 	{
 		$tplengine->assign('login',    h($_POST['login']));
 		$tplengine->assign('password', h($_POST['password']));

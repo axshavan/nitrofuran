@@ -63,7 +63,7 @@ switch($_GET['page'])
 		{
 			$error      = '';
 			$error_text = '';
-			if(!CUser::Add($_POST['login'], $_POST['password'], $_POST['email'], $_POST['full_name'], &$error))
+			if(!CUser::Add($_POST['login'], $_POST['password'], $_POST['email'], $_POST['full_name'], $error))
 			{
 				$error_text = 'Пользователь не создан: ';
 				switch($error)

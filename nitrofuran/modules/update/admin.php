@@ -128,7 +128,7 @@ if(isset($_GET['proceed']) || $bConsoleRun)
 		// выполнить скрипты
 		foreach($_upd_scripts as $v => $file)
 		{
-			if(!run_script($dirname.$file, &$error_text))
+			if(!run_script($dirname.$file, $error_text))
 			{
 				$error_text = 'Script '.$file.(strlen($error_text) ? ':<br>'.$error_text : '');
 				if($bConsoleRun)

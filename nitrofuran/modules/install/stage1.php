@@ -28,7 +28,7 @@ if($_POST['create_user'] || $_POST['create_database'])
 	}
 	if($_POST['create_user'])
 	{
-		mysql_query("create user '".$_POST['mysql_user']."'@'%' identified by '".$_POST['mysql_password']."'", $cid);
+		mysql_query("create user '".$_POST['mysql_user']."'@'".$_POST['mysql_host']."' identified by '".$_POST['mysql_password']."'", $cid);
 		if(mysql_errno($cid))
 		{
 			go_back_to_stage0($cid);
@@ -41,7 +41,7 @@ if($_POST['create_user'] || $_POST['create_database'])
 		{
 			go_back_to_stage0($cid);
 		}
-		mysql_query("grant all privileges on ".$_POST['mysql_database'].".* to '".$_POST['mysql_user']."'@'%'");
+		mysql_query("grant all privileges on ".$_POST['mysql_database'].".* to '".$_POST['mysql_user']."'@'".$_POST['mysql_host']."'");
 		if(mysql_errno($cid))
 		{
 			go_back_to_stage0($cid);

@@ -191,7 +191,7 @@ class CMailSender
 			}
 			if(count(CMailSender::$_auth_types))
 			{
-				if(!CMailSender::auth(&$f, $email_from, $auth_password))
+				if(!CMailSender::auth($f, $email_from, $auth_password))
 				{
 					// что-то было не так с авторизацией, но мы попробуем
 					// херануть письмецо на шару, вдруг прокатит

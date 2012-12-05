@@ -8,7 +8,7 @@ global $DB;
 if(isset($_POST['admin_password']))
 {
 	global $AUTH;
-	CUser::Add('admin', $_POST['admin_password'], $_POST['admin_email'], '', &$error);
+	CUser::Add('admin', $_POST['admin_password'], $_POST['admin_email'], '', $error);
 	$AUTH->Authorize(1);
 	return true;
 }
