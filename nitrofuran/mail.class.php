@@ -49,14 +49,15 @@ class CMailSender
 				),
 				...
 			)
+		@param  array $headers дополнительные заголовки письма
 		@param  string $bcc кому скрытая копия
 		@return bool   success
 	*/
-	public static function SendComplicated($email_from, $email_to, $subject, $_bodies = array(), $bcc = '')
+	public static function SendComplicated($email_from, $email_to, $subject, $_bodies = array(), $_headers = array(), $bcc = '')
 	{
 		$smtp_server   = ini_get('SMTP');
 		$smtp_port     = ini_get('smtp_port');
-		$server_name   = '';
+		$server_name   = $_SERVER['SERVER_NAME'];
 		$auth          = false;
 		$auth_password = '';
 		
@@ -87,6 +88,18 @@ class CMailSender
 		$mailHeader .=
 			"To: ".$email_to."\n".
 			"Subject: ".CMailSender::mail_subject_RFC1522($subject)."\n";
+		// добавление дополнительных заголовков
+		if (sizeof($_headers))
+		{
+			foreach ($_headers as $key => $val)
+			{
+				if (strpos($key, 'X-Portal') === 0)
+				{
+					$val = CMailSender::mail_subject_RFC1522($val); 
+				}
+				$mailHeader .= trim($key, ' :').': '.$val."\r\n";
+			}
+		}
 		$mailRcpt = explode(',', $email_to);
 		if(strlen($bcc))
 		{
@@ -119,6 +132,10 @@ class CMailSender
 			{
 				$mailText .= "\n".$part['CONTENT'];
 			}
+		}
+		if(strlen($mime_boundary))
+		{
+			$mailText .= "\n".'--'.$mime_boundary."\n";
 		}
 		do
 		{
@@ -316,34 +333,17 @@ class CMailSender
 	*/
 	protected static function mail_subject_RFC1522($str)
 	{
-		$result = '=?WINDOWS-1251?B?'.base64_encode($str).'?=';
-		// необходимо учесть требованиe RFC-1522 о длине закодированной строки, которая
-		// не должна превышать 75 символов
-		$parts = 1;
-		$first_part_ln = strlen($result);
-		while($first_part_ln > 75)
-		{
-			$result = '';
-			$parts++;
-			$first_part_ln = strlen(base64_encode(substr(
-				$str, 0, IntVal(floor(strlen($str) / $mailSubjParts))
-			)));
-			$symbols_shift = 0;
-			for($i = 0; $i < $parts; $i++)
-			{
-				// мозгодробительная ловля символов в случае, если получается нецелое их число
-				// по-моему, тут до сих пор что-то иногда работает не так
-				$sub_ln    = floor(strlen($str) / $parts);
-				$sub_start = floor(strlen($str) / $parts) * $i + $symbols_shift;
-				if((strlen($mailTemplate['SUBJECT']) / $mailSubjParts) - $sub_ln >= 0.5 && !($i % 2))
-				{
-					$symbols_shift++;
-					$sub_ln++;
-				}
-				$result .= '=?WINDOWS-1251?B?'.base64_encode(substr($str, $sub_start, $sub_ln)).'?='."\n ";
-			}
-		}
-		return $result;
+		return iconv_mime_encode
+		(
+			'', $str, array
+			(
+				'scheme'           => 'B',
+				'output-charset'   => 'WINDOWS-1251',
+				'input-charset'    => 'UTF-8',
+				'line-length'      => 76,
+				'line-break-chars' => "\n"
+			)
+		);
 	}
 }
 
