@@ -100,7 +100,7 @@
 				<label for="transaccount_currency">Валюта:</label>
 				<select name="currency" id="transaccount_currency">
 					<? foreach($_currencies as $_c): ?>
-						<option value="<?= $_c['id'] ?>"><?= $_c['symbol'].' '.$_c['name'] ?></option>
+						<option value="<?= $_c['id'] ?>"<?= $_c['default'] ? ' selected' : '' ?>><?= $_c['symbol'].' '.$_c['name'] ?></option>
 					<? endforeach; ?>
 				</select>
 				<label for="transaccount_comission">Комиссия, %:</label>
