@@ -160,7 +160,7 @@ while($_row = $DB->Fetch($res))
 		{
 			if($_row['repeat'] >= date('j'))
 			{
-				$_row['repeat'] = date('Y-m-').$_row['repeat'];
+				$_row['repeat'] = date('Y-m-').(strlen($_row['repeat']) == 1 ? '0'.$_row['repeat'] : $_row['repeat']);
 				$_plans[] = $_row;
 			}
 			break;
