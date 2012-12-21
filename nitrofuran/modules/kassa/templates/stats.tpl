@@ -106,7 +106,40 @@
 		</table>
 	</div>
 	<!-- /статистика за последний 31 день -->
-	
+
+	<!-- статистика по дням недели -->
+	<?
+	$_weekdaynames = array
+	(
+		1 => 'Понедельник',
+		2 => 'Вторник',
+		3 => 'Среда',
+		4 => 'Четверг',
+		5 => 'Пятница',
+		6 => 'Суббота',
+		7 => 'Воскресенье'
+	);
+	?>
+    <div class="container">
+		<strong>Статистика по дням недели</strong>
+		<table class="stat_table" cellspacing="0">
+			<? for($daynum = 1; $daynum <= 7; $daynum++): $bOdd = !$bOdd; ?>
+				<tr class="<?= $bOdd ? 'odd' : '' ?>">
+					<td rowspan="<?= sizeof($_weekdays[$daynum]['opnum_c']) + 1 ?>"><?= $_weekdaynames[$daynum] ?></td>
+					<td><strong>Всего операций:</strong></td>
+					<td><?= $_weekdays[$daynum]['opnum'] ?></td>
+				</tr>
+				<? foreach($_weekdays[$daynum]['opnum_c'] as $currency_id => $v): $bOdd = !$bOdd; ?>
+					<tr class="<?= $bOdd ? 'odd' : '' ?>">
+						<td><?= $_currencies[$currency_id]['name'].' ('.$_currencies[$currency_id]['symbol'].')' ?></td>
+						<td><?= $v ?></td>
+					</tr>
+				<? endforeach; ?>
+			<? endfor; ?>
+		</table>
+	</div>
+	<!-- /статистика по дням недели -->
+
 </div>
 
 <div class="stats-column-2">

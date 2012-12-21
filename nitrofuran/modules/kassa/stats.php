@@ -57,6 +57,7 @@ $_operation_max   = array();
 $_operation_count = array();
 $_operation_sum   = array();
 $_months          = array();
+$_weekdays        = array();
 // всякая статистика за последний месяц
 $_operation_count_m = array();
 $_operation_max_m   = array();
@@ -93,7 +94,10 @@ while($_row = $DB->Fetch($res))
 	}
 	$_comments[$_row['currency_id']][$_row['comment']]['quantity']++;
 	$_comments[$_row['currency_id']][$_row['comment']]['sum'] += $_row['amount'];
+	$_weekdays[date('N', $_row['backtime'])]['opnum']++;
+	$_weekdays[date('N', $_row['backtime'])]['opnum_c'][$_row['currency_id']]++;
 }
+//traced($_weekdays);
 krsort($_months);
 foreach($_months as $k => &$_m)
 {
@@ -141,6 +145,7 @@ $tplengine->assign('_operation_count_m', $_operation_count_m);
 $tplengine->assign('_operation_sum_m',   $_operation_sum_m);
 $tplengine->assign('_months',            $_months);
 $tplengine->assign('kassa_action_time',  $kassa_action_time);
+$tplengine->assign('_weekdays',          $_weekdays);
 
 $tplengine->template('stats.tpl');
 
