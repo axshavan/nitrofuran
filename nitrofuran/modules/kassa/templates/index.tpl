@@ -269,7 +269,9 @@
 						<td <?= $_accounts[$account_id]['default'] ? 'class="default"' : '' ?>><?= $_accounts[$account_id]['name'] ?></td>
 						<td>
 							<? foreach($data as $currency => $amount): ?>
-								<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= round($amount, 2).'&nbsp;'.$currency ?></span>
+								<? if(round($amount, 2)): ?>
+									<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= round($amount, 2).'&nbsp;'.$currency ?></span>
+								<? endif; ?>
 							<? endforeach; ?>
 						</td>
 					</tr>

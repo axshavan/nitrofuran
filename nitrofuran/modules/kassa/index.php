@@ -33,7 +33,7 @@ else
 	$tplengine->assign('kassa_switch_name', 'v1 &larr;');
 }
 
-// фильр даты ОТ
+// фильтр даты ОТ
 $filter_from = preg_replace('`\D`', '', $_REQUEST['from']);
 if(!$filter_from)
 {
@@ -213,6 +213,7 @@ while($_row = $DB->Fetch($res))
 					$_plans[date('Y-m-d', $mtime)][] = $_row;
 				}
 			}
+			break;
 		}
 		case 'none':
 		default:

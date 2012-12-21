@@ -162,35 +162,49 @@ if(isset($_GET['proceed']) || $bConsoleRun)
 		die();
 	}
 }
-$dir = opendir(DOCUMENT_ROOT.'/nitrofuran/modules/update/updates/');
-if(!$dir)
+
+switch($_REQUEST['page'])
 {
-	$tplengine->assign('error_text', 'Невозможно открыть папку со скриптами апдейтов');
-}
-else
-{
-	$available_version = 0;
-	while($file = readdir($dir))
+	case 2:
 	{
-		if($file != '.' && $file != '..')
+		// ...
+		break;
+	}
+	case 1:
+	default:
+	{
+		$dir = opendir(DOCUMENT_ROOT.'/nitrofuran/modules/update/updates/');
+		if(!$dir)
 		{
-			$file    = explode('.', $file);
-			$file[0] = (int)ltrim($file[0], '0');
-			if($file[0] > $available_version)
-			{
-				$available_version = $file[0];
-			}
+			$tplengine->assign('error_text', 'Невозможно открыть папку со скриптами апдейтов');
 		}
+		else
+		{
+			$available_version = 0;
+			while($file = readdir($dir))
+			{
+				if($file != '.' && $file != '..')
+				{
+					$file    = explode('.', $file);
+					$file[0] = (int)ltrim($file[0], '0');
+					if($file[0] > $available_version)
+					{
+						$available_version = $file[0];
+					}
+				}
+			}
+			if(!$available_version)
+			{
+				$tplengine->assign('error_text', 'Скрипты апдейтов не найдены');
+			}
+			closedir($dir);
+		}
+		$tplengine->assign('version',             get_param('update', 'version'));
+		$tplengine->assign('last_update',         get_param('update', 'last_update'));
+		$tplengine->assign('available_version',   $available_version);
+		break;
 	}
-	if(!$available_version)
-	{
-		$tplengine->assign('error_text', 'Скрипты апдейтов не найдены');
-	}
-	closedir($dir);
 }
-$tplengine->assign('version',             get_param('update', 'version'));
-$tplengine->assign('last_update',         get_param('update', 'last_update'));
-$tplengine->assign('available_version',   $available_version);
 $tplengine->assign('inner_template_name', DOCUMENT_ROOT.'/nitrofuran/modules/update/templates/admin.tpl');
 
 ?>
