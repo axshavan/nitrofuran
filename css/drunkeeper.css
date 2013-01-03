@@ -1,17 +1,26 @@
 body
 {
-	margin: 0; padding: 0; background-color: #e8e8f0; font-family: sans-serif; font-size: 12px;
-	background-image: url("/i/drunkeeper/bg.gif"); background-position: top; background-repeat: repeat-x;
+	margin: 0;
+    padding: 0;
+    background-color: #e8e8f0;
+    font-family: sans-serif;
+    font-size: 12px;
+	background-image: url("/i/drunkeeper/bg.gif");
+    background-position: top;
+    background-repeat: repeat-x;
 }
 h1 { padding: 0; margin: 20px 0 10px 30px; color: #08263D; font-size: 35px; font-style: italic; }
 p { margin: 0 0 5px 0; }
 div.item
 {
-	background-color: #f0eff0; margin: 5px 5px 0 5px; padding: 10px 15px 15px 15px;
-	background-image: url("/i/drunkeeper/itembg.gif"); background-repeat: repeat-x;
+	background-color: #f0eff0; margin: 5px 5px 0 5px;
+    padding: 10px 15px 15px 15px;
+	background-image: url("/i/drunkeeper/itembg.gif");
+    background-repeat: repeat-x;
 	background-position: top;
-	border: 1px solid #808090; border-radius: 6px; -webkit-border-radius: 6px;
-	-moz-border-radius: 6px; overflow: hidden;
+	border: 1px solid #808090;
+    border-radius: 6px;
+	overflow: hidden;
 }
 div.item span.date { color: #7C8B96; display: block; float: right; }
 div.item span.volume { color: #08263D; font-size: 40px; display: block; float: left; margin-right: 20px; }
@@ -34,8 +43,54 @@ table.stat tr.inner td:first-child { padding-left: 25px; }
 
 div.container_form .drink2
 {
-	border: 1px solid #D1D1D1; background-color: #F1EFFF; position: static;
-	border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
-	padding: 5px; display: none;
+	border: 1px solid #D1D1D1;
+    background-color: #F1EFFF; position: static;
+	border-radius: 5px;
+	padding: 5px;
+    display: none;
 }
 div.container_form textarea { width: 300px; }
+
+div.item table.admin
+{
+    border-top: 1px solid #404040;
+    border-left: 1px solid #404040;
+    margin-top: 10px;
+}
+div.item table.admin th
+{
+    border-bottom: 1px solid #404040;
+    border-right: 1px solid #404040;
+    padding: 3px;
+    background-color: white;
+    color: #08263D;
+    font-style: italic;
+}
+div.item table.admin tr.odd
+{
+    background-color: #e0e0e0;
+}
+div.item table.admin td
+{
+    border-bottom: 1px solid #404040;
+    border-right: 1px solid #404040;
+    padding: 3px;
+}
+div.item a
+{
+    color: #08263D;
+    text-decoration: none;
+    display: block;
+    height: 20px;
+    border: 2px outset #a0a0d0;
+    border-radius: 4px;
+    background-color: #d0d0f0;
+    padding: 5px 10px 0 10px;
+    max-width: 100px;
+    text-align: center;
+}
+div.item a:hover
+{
+    background-color: #d8d8f8;
+    color: #18364D;
+}

@@ -54,7 +54,7 @@ if(!function_exists('draw_vtree_item'))
 			<? if(sizeof($item['children'])): ?>
 				<ul class="ul-tree">
 					<? foreach($item['children'] as &$subitem): ?>
-						<? draw_vtree_item(&$subitem, !($a = prev($item['children'])), $_modules_installed); ?>
+						<? draw_vtree_item($subitem, !($a = prev($item['children'])), $_modules_installed); ?>
 					<? endforeach; ?>
 				</ul>
 			<? endif; ?>
@@ -70,6 +70,6 @@ if(!function_exists('draw_vtree_item'))
 
 <ul class="ul-root">
 	<? foreach($_vtree as &$item): ?>
-		<? draw_vtree_item(&$item, false, $_modules_installed); ?>
+		<? draw_vtree_item($item, false, $_modules_installed); ?>
 	<? endforeach; ?>
 </ul>

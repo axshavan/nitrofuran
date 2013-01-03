@@ -65,7 +65,7 @@ class CDatabase
 	*/
 	public function EscapeString($str)
 	{
-		return str_replace("'", '"', str_replace('`', '"', $str));
+		return addslashes($str);
 	}
 	
 	/*

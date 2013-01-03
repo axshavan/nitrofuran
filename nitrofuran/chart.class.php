@@ -525,12 +525,12 @@ class CChart
 	}
 	
 	
-	/*
-		Переделывает цвет в веб-представлении (типа 'f0ee00') в rgb (массив
-		из трёх чисел).
-		@param  string $str строка цвета
-		@return array
-	*/
+	/**
+	 * Переделывает цвет в веб-представлении (типа 'f0ee00') в rgb (массив
+	 * из трёх чисел).
+	 * @param  string $str строка цвета
+	 * @return array
+	 */
 	protected static function web2color($str)
 	{
 		if($str[0] == '#')
