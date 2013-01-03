@@ -11,7 +11,16 @@ switch($_REQUEST['page'])
 	{
 		if(isset($_REQUEST['download']))
 		{
-			// ...
+			echo '<pre>'.$page_content.'</pre>';
+			?>
+			Пожалуйста, убедитесь в том, что архив распакован, сделана резервная копия,
+			после чего можно<br /><input type="button" value="Обновить исходники" onclick="document.location='/admin/?module=update&page=2&overwrite'">
+			или <input type="button" value="Очистить временную папку" onclick="document.location='/admin/?module=update&page=2&cleartmp'">
+			<?
+		}
+		elseif(isset($_REQUEST['cleartmp']) || isset($_REQUEST['overwrite']))
+		{
+			echo '<pre>'.$page_content.'</pre>';
 		}
 		else
 		{

@@ -167,7 +167,11 @@ switch($_REQUEST['page'])
 {
 	case 2:
 	{
-		// ...
+		ob_start();
+		$cmd = DOCUMENT_ROOT.'nitrofuran/modules/update/download.sh '.DOCUMENT_ROOT.'tmp';
+		echo $cmd."\n";
+		echo `$cmd`;
+		$tplengine->assign('page_content', ob_get_clean());
 		break;
 	}
 	case 1:

@@ -17,6 +17,7 @@ global $DB;
 // класс шаблона
 $tplengine = new CTemplateEngine('kassa');
 $tplengine->assign('title', get_param('kassa', 'title'));
+$tplengine->assign('use_blue_template', get_param('kassa', 'use_blue_template'));
 
 // шаблон таблицы с операциями
 $tplengine->assign('optable_template', $TREE_INFO['current']['template'] ? $TREE_INFO['current']['template'] : 'optable.tpl');

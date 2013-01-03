@@ -97,7 +97,6 @@ while($_row = $DB->Fetch($res))
 	$_weekdays[date('N', $_row['backtime'])]['opnum']++;
 	$_weekdays[date('N', $_row['backtime'])]['opnum_c'][$_row['currency_id']]++;
 }
-//traced($_weekdays);
 krsort($_months);
 foreach($_months as $k => &$_m)
 {
