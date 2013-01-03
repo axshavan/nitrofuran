@@ -116,7 +116,11 @@ class CChart
 				}
 			}
 		}
-		
+		if($maxvalue == $minvalue)
+		{
+			$maxvalue += 1;
+		}
+
 		// вычислим коэффициэнты сжатия по осям
 		$yaspect = $ysize / ($maxvalue - $minvalue);
 		$xaspect = $xsize / count($_data[0]);
@@ -131,7 +135,8 @@ class CChart
 		$c1    = imagecolorallocate($result, $gcr, $gcg, $gcb);
 		$y0    = false; // координата y оси абсцисс на картинке
 		$range = $maxvalue - $minvalue;
-		for($i = 0; $i < 10; $i++)
+		$ytick = 1;
+		for($i = -1; $i < 10; $i++)
 		{
 			if($range > pow(10, $i))
 			{
@@ -172,7 +177,6 @@ class CChart
 		}
 		$bYTicksAboveAxis = ($y0 > $height - 15);    // подписи над осью абсцисс или под ней
 		imageline($result, 0, $y0, $width, $y0, $c); // ось абсцисс
-		$xtick = round($xaspect);                    // расстояние между чёрточками на оси x
 		$keys  = array_keys($_data[0]);              // абсциссы
 		for($i = 0; $i < count($keys); $i++)
 		{
@@ -202,6 +206,7 @@ class CChart
 		$_params['_minvalues']       = $_minvalues;
 		$_params['_maxvaluesx']      = $_maxvalues_xcoord;
 		$_params['_minvaluesx']      = $_minvalues_xcoord;
+		$_params['minvalue']         = $minvalue;
 		switch((int)$_params['spline'])
 		{
 			case 1:
@@ -329,9 +334,6 @@ class CChart
 			$filly = ($radius - 5) * cos($radsumm - $rad / 2) + $radius + 2;
 			$color = imagecolorallocate($result, rand(0, 255), rand(0, 255), rand(0, 255));
 			imagefill($result, $fillx, $filly, $color);
-			
-			// подпись
-			$titley = ($bTitlesLeft ? 0 : 2 * $radius) + 10 + $heightsumm;
 			imagerectangle($result, $titlex, $heightsumm, $titlex + 20, $heightsumm + 20, 0);
 			imagefill($result, $titlex + 2, $heightsumm + 2, $color);
 			imagestring($result, 5, $titlex + 25, $heightsumm, $k.' ('.round(100 * ($v / $summ), 2).'%)', 0);
@@ -357,21 +359,22 @@ class CChart
 	
 	/**
 	 * Рисование графика, состоящего из ломаных линий (линейного сплайна)
-	 * @param  ImageResoure  $result   картинка, в которой рисовать
-	 * @param  array         $_data    данные для отображения
-	 * @param  array         $_params  массив с параметрами, дополненный данными рассчёта
-	 * @return ImageResource результат рисования графика в $result
+	 * @param  resource $result   картинка, в которой рисовать
+	 * @param  array    $_data    данные для отображения
+	 * @param  array    $_params  массив с параметрами, дополненный данными рассчёта
+	 * @return resource результат рисования графика в $result
 	 */
 	protected static function draw_linear_spline($result, $_data, $_params)
 	{
-		$xaspect          = $_params['xaspect'];
-		$yaspect          = $_params['yaspect'];
-		$ysize            = $_params['ysize'];
-		$bYTicksAboveAxis = $_params['bYTicksAboveAxis'];
-		$_maxvalues       = $_params['_maxvalues'];
-		$_minvalues       = $_params['_minvalues'];
+		$xaspect           = $_params['xaspect'];
+		$yaspect           = $_params['yaspect'];
+		$ysize             = $_params['ysize'];
+		$bYTicksAboveAxis  = $_params['bYTicksAboveAxis'];
+		$_maxvalues        = $_params['_maxvalues'];
+		$_minvalues        = $_params['_minvalues'];
 		$_maxvalues_xcoord = $_params['_maxvaluesx'];
 		$_minvalues_xcoord = $_params['_minvaluesx'];
+		$minvalue          = $_params['minvalue'];
 		
 		$g = 0; // количество графиков
 		foreach($_data as $id => $_graph)
@@ -429,10 +432,10 @@ class CChart
 	
 	/**
 	 * Рисование графика, состоящего из кусков синусоид
-	 * @param  ImageResoure  $result   картинка, в которой рисовать
-	 * @param  array         $_data    данные для отображения
-	 * @param  array         $_params  массив с параметрами, дополненный данными рассчёта
-	 * @return ImageResource результат рисования графика в $result
+	 * @param  resource $result   картинка, в которой рисовать
+	 * @param  array    $_data    данные для отображения
+	 * @param  array    $_params  массив с параметрами, дополненный данными рассчёта
+	 * @return resource результат рисования графика в $result
 	 */
 	protected static function draw_sin_spline($result, $_data, $_params)
 	{
@@ -444,6 +447,7 @@ class CChart
 		$_minvalues        = $_params['_minvalues'];
 		$_maxvalues_xcoord = $_params['_maxvaluesx'];
 		$_minvalues_xcoord = $_params['_minvaluesx'];
+		$minvalue          = $_params['minvalue'];
 		
 		$g = 0; // количество графиков
 		foreach($_data as $id => $_graph)

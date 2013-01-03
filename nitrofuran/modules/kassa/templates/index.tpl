@@ -123,7 +123,6 @@
 		
 		<!-- форма обмена валюты -->
 		<div id="currency_exchange" class="container">
-			Обмен валюты
 			<form action="<?= HTTP_ROOT ?>/kassa/tran_cur/" method="post" onsubmit="return onTransCurrencySubmit();">
 			<label for="trancurrency_сfrom">Из валюты</label>
 			<select name="currency_from" id="trancurrency_cfrom">
