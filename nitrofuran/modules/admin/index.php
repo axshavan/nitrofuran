@@ -112,7 +112,7 @@ if(!$page)
 							$_new_value[] = $_values[$k];
 						}
 					}
-					set_param($module, $_option['name'], $DB->EscapeString(serialize($_new_value)));
+					set_param($module, $_option['name'], serialize($_new_value));
 					break;
 				}
 				// чекбокс
@@ -133,7 +133,7 @@ if(!$page)
 				case 'text':
 				default:
 				{
-					set_param($module, $_option['name'], $DB->EscapeString($_POST['o'][$_option['name']]));
+					set_param($module, $_option['name'], $_POST['o'][$_option['name']]);
 					break;
 				}
 			}

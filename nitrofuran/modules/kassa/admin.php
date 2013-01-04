@@ -265,6 +265,7 @@ switch($_REQUEST['page'])
 		$tplengine->assign('_kassa_properties', $_kassa_properties);
 		
 		// значения свойств операций
+		$_kassa_propvalues = array();
 		$res = $DB->Query("select * from `".KASSA_OPERATION_PROPVALUES_TABLE."`");
 		while($_row = $DB->Fetch($res))
 		{

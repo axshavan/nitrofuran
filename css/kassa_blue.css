@@ -58,7 +58,7 @@ a.reset:hover { color: #505050; }
 #main_container .add-form .frequent { font-size: 10px; }
 #main_container div.optable { background-color: #909eaa; padding: 4px; border: 1px solid #2d3d72; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 10px; }
 #main_container .itogo { background-color: #909eaa; padding: 4px; border: 1px solid #2d3d72; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; float: right; width: 200px; height: 215px; overflow-y: scroll; font-size: 10px; margin-right: 5px; }
-#main_container .itogo .inc { color: #003300; font-weight: bold; }
+#main_container .itogo .inc { color: #005500; font-weight: bold; }
 #main_container .itogo .exp { color: #000080; font-weight: bold; }
 #main_container .itogo span { display: block; }
 #main_container .itogo table td { vertical-align: top; }
@@ -119,13 +119,15 @@ div.stats_graph img.stats_graph_image { margin-top: 20px; border: 1px solid blac
 table.optable { border-top: 1px solid #303030; border-left: 1px solid #303030; empty-cells: show; max-width: 75%; }
 table.optable td { border-bottom: 1px solid #303030; border-right: 1px solid #303030; padding: 2px; vertical-align: top; }
 table.optable th { border-bottom: 1px solid #303030; border-right: 1px solid #303030; padding: 2px; background-color: white; }
-table.optable tr.inc { background-color: #7CFF5B; }
-table.optable tr.inc_odd { background-color: #80D668; }
-table.optable tr.exp { background-color: #FF6B6B; }
-table.optable tr.exp_odd { background-color: #E57070; }
-table.optable tr.odd { background-color: #E8FFF8; }
-table.optable tr.notodd { background-color: #CBEDE2; }
-table.optable tr.daysum { background-color: #FFFAE5; font-weight: bold; }
+table.optable tr.inc { background-color: #8dd790; color: #006000; }
+table.optable tr.inc_odd { background-color: #7bc37f; color: #006000; }
+table.optable tr.exp { background-color: #C3C3C3; color: maroon; }
+table.optable tr.exp td:nth-child(2) { background-color: #c8a0a0; }
+table.optable tr.exp_odd { background-color: #D2D2D2; color: maroon; }
+table.optable tr.exp_odd td:nth-child(2) { background-color: #d5b9b9; }
+table.optable tr.odd { background-color: #f3efc0; }
+table.optable tr.notodd { background-color: #e0dcae; }
+table.optable tr.daysum { background-color: #ededff; font-weight: bold; }
 table.optable tr.daysum .inc { color: #006600; }
 table.optable tr.daysum .exp { color: #800000; }
 table.optable td.dayhead { font-size: 13px; height: 30px; vertical-align: bottom; }

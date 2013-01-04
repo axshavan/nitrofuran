@@ -124,7 +124,7 @@
 		<!-- форма обмена валюты -->
 		<div id="currency_exchange" class="container">
 			<form action="<?= HTTP_ROOT ?>/kassa/tran_cur/" method="post" onsubmit="return onTransCurrencySubmit();">
-			<label for="trancurrency_сfrom">Из валюты</label>
+			<label for="trancurrency_cfrom">Из валюты</label>
 			<select name="currency_from" id="trancurrency_cfrom">
 				<? foreach($_currencies as $_c): ?>
 					<option value="<?= $_c['id'] ?>"><?= $_c['symbol'].' '.$_c['name'] ?></option>
@@ -140,7 +140,7 @@
 			</select>
 			<label for="trancurrency_сfrom_sum">Сумма</label>
 			<input type="text" name="sum_from" id="trancurrency_сfrom_sum" />
-			<label for="trancurrency_сto">В валюту</label>
+			<label for="trancurrency_cto">В валюту</label>
 			<select name="currency_to" id="trancurrency_cto">
 				<? foreach($_currencies as $_c): ?>
 					<option value="<?= $_c['id'] ?>"><?= $_c['symbol'].' '.$_c['name'] ?></option>
@@ -279,7 +279,7 @@
 			</table><br>
 			<strong>С выбранным фильтром</strong><br>
 			<? foreach($_sum_filtered as $currency => $amount): ?>
-				<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= round($amount, 2).'&nbsp;'.$currency ?></span>
+				<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= ($amount > 0 ? '+' : '').round($amount, 2).'&nbsp;'.$currency ?></span>
 			<? endforeach; ?>
 		</div>
 		<!-- /итого -->
@@ -349,7 +349,7 @@
 							<tr class="<?= $_op['amount'] > 0 ? 'inc' : 'exp' ?><?= $bOdd ? '_odd' : '' ?>">
 								<td><?= $_op['date'] ? date('Y-m-d H:i', $_op['date']) : '' ?></td>
 								<td><?= $_op['amount'] ?>&nbsp;<?= $_currencies[$_op['currency_id']]['symbol'] ?></td>
-							</td>
+							</tr>
 						<? endforeach; ?>
 					</table>
 				<? endif; ?>
@@ -368,25 +368,25 @@
 				</tr>
 				<? foreach($holds as $h): $bOdd = !$bOdd; ?>
 					<tr class="<?= $bOdd ? 'odd' : 'notodd' ?>">
-						<td title="<?= htmlspecialchars($h['comment']) ?>"><span id="hold<?= $h['id'] ?>_sum"><?= (float)$h['sum'] ?></sum>&nbsp;<?= $_currencies[$h['currency_id']]['symbol'] ?></td>
-						<td title="<?= htmlspecialchars($h['comment']) ?>"><?= $_accounts[$h['account_id']]['name'] ?>&nbsp;/ <?= $_optypes_by_id[$h['operation_type_id']]['name'] ?></td>
+						<td title="<?= h($h['comment']) ?>"><span id="hold<?= $h['id'] ?>_sum"><?= (float)$h['sum'] ?></sum>&nbsp;<?= $_currencies[$h['currency_id']]['symbol'] ?></span></td>
+						<td title="<?= h($h['comment']) ?>"><?= $_accounts[$h['account_id']]['name'] ?>&nbsp;/ <?= $_optypes_by_id[$h['operation_type_id']]['name'] ?></td>
 						<td class="nowrap">
 							<img src="/i/kassa/edit.gif"
 								class="button"
 								onclick="showHoldForm(this, '<?= $h['id'] ?>')"
-								title="Редактировать">
+								title="Редактировать" />
 							<a onclick="return confirm('Правда удалить?');"
 								href="/kassa/hold/?del=<?= $h['id'] ?>"
-								title="Удалить"><img src="/i/kassa/del.gif"></a>
+								title="Удалить"><img src="/i/kassa/del.gif" /></a>
 							<a onclick="return confirm('Правда перенести запись из отложенных в свершившиеся?');"
 								href="/kassa/hold/?done=<?= $h['id'] ?>"
-								title="Свершилось"><img src="/i/kassa/done.gif"></a>
+								title="Свершилось"><img src="/i/kassa/done.gif" /></a>
 						</td>
 					</tr>
 					<input type="hidden" id="hold<?= $h['id'] ?>_cur" value="<?= $h['currency_id'] ?>">
 					<input type="hidden" id="hold<?= $h['id'] ?>_acc" value="<?= $h['account_id'] ?>">
 					<input type="hidden" id="hold<?= $h['id'] ?>_optype" value="<?= $h['operation_type_id'] ?>">
-					<input type="hidden" id="hold<?= $h['id'] ?>_comment" value="<?= htmlspecialchars($h['comment']) ?>">
+					<input type="hidden" id="hold<?= $h['id'] ?>_comment" value="<?= h($h['comment']) ?>">
 				<? endforeach; ?>
 			</table>
 			<!-- /таблица с холдами -->

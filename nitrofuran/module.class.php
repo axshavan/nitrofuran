@@ -33,23 +33,13 @@ class CModule
 	{
 		global $TREE_INFO;
 		global $AUTH;
-		global $DB;
+		global $DB; // используется в вызываемых файлах
 		$error = '';
-		if(!$TREE_INFO['current']['access'])
+		if(!CModule::CheckAccessRight($TREE_INFO, $AUTH->user_data))
 		{
-			$bForbidden = true;
-			// надо проверить права доступа
-			if($AUTH->user_data['id'] == 1)
-			{
-				// админу везде можно
-				$bForbidden = false;
-			}
-			if($bForbidden)
-			{
-				// нет прав доступа
-				$error = 'ACCESS FORBIDDEN';
-				return false;
-			}
+			// нет прав доступа
+			$error = 'ACCESS FORBIDDEN';
+			return false;
 		}
 		$file = strlen($TREE_INFO['current']['action']) ? $TREE_INFO['current']['action'] : 'index';
 		if($file == 'admin')
@@ -68,6 +58,27 @@ class CModule
 			$error = 'NO MODULE FILE';
 			return false;
 		}
+	}
+
+	/**
+	 * Проверить доступ текущего пользователя к папке
+	 * @param  $TREE_INFO данные о дереве папок и текущей ветке
+	 * @param  $user_data даные о пользователе
+	 * @return bool
+	 */
+	public static function CheckAccessRight($TREE_INFO, $user_data)
+	{
+		if(!$TREE_INFO['current']['access'])
+		{
+			// надо проверить права доступа
+			if($user_data['id'] == 1)
+			{
+				// админу везде можно
+				return true;
+			}
+			return false;
+		}
+		return true;
 	}
 }
 
