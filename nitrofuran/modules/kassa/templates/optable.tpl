@@ -1,4 +1,4 @@
-<table class="optable" cellspacing="0">
+<table class="optable main" cellspacing="0">
 	<tr>
 		<th>Приход</th>
 		<th>Расход</th>

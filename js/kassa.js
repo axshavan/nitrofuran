@@ -1,9 +1,9 @@
-/*
-	Смена типа расписание в админке в форме редактирования события
-	в планировании.
-	@param repeattype {string}  тип расписания
-	@param id         {integer} номер записи
-*/
+/**
+ * Смена типа расписание в админке в форме редактирования события
+ * в планировании.
+ * @param repeattype {string}  тип расписания
+ * @param id         {integer} номер записи
+ */
 function adminPlanRepeatTypeChange(repeattype, id)
 {
 	ge('plan_' + id + '_repeat').value                = '';
@@ -17,11 +17,11 @@ function adminPlanRepeatTypeChange(repeattype, id)
 	}
 }
 
-/*
-	Смена типа расписание в админке в форме добавления нового события
-	в планировании.
-	@param repeattype {string} тип расписания
-*/
+/**
+ * Смена типа расписание в админке в форме добавления нового события
+ * в планировании.
+ * @param repeattype {string} тип расписания
+ */
 function adminPlanRepeatTypeChange2(repeattype)
 {
 	ge('kassa_addplan_form_repeat').value  = '';
@@ -35,12 +35,12 @@ function adminPlanRepeatTypeChange2(repeattype)
 	}
 }
 
-/*
-	Добавить или убрать день недели из инпута с расписанием в планировании.
-	@param id   {int}  номер записи
-	@param day  {int}  номер дня недели (1-Пн, 7-Вс)
-	@param bAdd {bool} добавить или убрать
-*/
+/**
+ * Добавить или убрать день недели из инпута с расписанием в планировании.
+ * @param id   {int}  номер записи
+ * @param day  {int}  номер дня недели (1-Пн, 7-Вс)
+ * @param bAdd {bool} добавить или убрать
+ */
 function adminPlanRepeatTypeC1(id, day, bAdd)
 {
 	var inp = ge('plan_' + id + '_repeat');
@@ -55,12 +55,12 @@ function adminPlanRepeatTypeC1(id, day, bAdd)
 	}
 }
 
-/*
-	Добавить или убрать день месяца из инпута с расписанием в планировании.
-	@param id   {int}  номер записи
-	@param day  {int}  номер дня месяца (1-31)
-	@param bAdd {bool} добавить или убрать
-*/
+/**
+ * Добавить или убрать день месяца из инпута с расписанием в планировании.
+ * @param id   {int}  номер записи
+ * @param day  {int}  номер дня месяца (1-31)
+ * @param bAdd {bool} добавить или убрать
+ */
 function adminPlanRepeatTypeC2(id, day, bAdd)
 {
 	var inp = ge('plan_' + id + '_repeat');
@@ -84,11 +84,11 @@ function adminPlanRepeatTypeC2(id, day, bAdd)
 	}
 }
 
-/*
-	Добавить или убрать день недели из инпута с расписанием в планировании.
-	@param day  {int}  номер дня недели (1-Пн, 7-Вс)
-	@param bAdd {bool} добавить или убрать
-*/
+/**
+ * Добавить или убрать день недели из инпута с расписанием в планировании.
+ * @param day  {int}  номер дня недели (1-Пн, 7-Вс)
+ * @param bAdd {bool} добавить или убрать
+ */
 function adminPlanRepeatTypeD1(day, bAdd)
 {
 	var inp = ge('kassa_addplan_form_repeat');
@@ -103,11 +103,11 @@ function adminPlanRepeatTypeD1(day, bAdd)
 	}
 }
 
-/*
-	Добавить или убрать день месяца из инпута с расписанием в планировании.
-	@param day  {int}  номер дня месяца (1-31)
-	@param bAdd {bool} добавить или убрать
-*/
+/**
+ * Добавить или убрать день месяца из инпута с расписанием в планировании.
+ * @param day  {int}  номер дня месяца (1-31)
+ * @param bAdd {bool} добавить или убрать
+ */
 function adminPlanRepeatTypeD2(day, bAdd)
 {
 	var inp = ge('kassa_addplan_form_repeat');
@@ -131,9 +131,9 @@ function adminPlanRepeatTypeD2(day, bAdd)
 	}
 }
 
-/*
-	Проверка данных перед окончательной отправкой формы.
-*/
+/**
+ * Проверка данных перед окончательной отправкой формы.
+ */
 function checkAddForm()
 {
 	var obj = ge('inp_optype');
@@ -175,18 +175,18 @@ function checkAddForm()
 	return true;
 }
 
-/*
-	Сокращённая форма document.getElementById().
-	@param id {string} идентификатор объекта
-*/
+/**
+ * Сокращённая форма document.getElementById().
+ * @param id {string} идентификатор объекта
+ */
 function ge(id)
 {
 	return document.getElementById(id);
 }
 
-/*
-	Обработка события onkeyup в инпуте с комментарием.
-*/
+/**
+ * Обработка события onkeyup в инпуте с комментарием.
+ */
 function onCommentKeyUp(event)
 {
 	if(event && event.keyCode == 27) // esc
@@ -240,11 +240,11 @@ function onCommentKeyUp(event)
 	);
 }
 
-/*
-	Обработка нажатия на часто используемый тип операций.
-	@param type_id {int} идентификатор типа
-	@param group_id {int} идентификатор группы типа
-*/
+/**
+ * Обработка нажатия на часто используемый тип операций.
+ * @param type_id {int} идентификатор типа
+ * @param group_id {int} идентификатор группы типа
+ */
 function onFrequentTypeClick(type_id, group_id)
 {
 	if(type_id && group_id)
@@ -254,9 +254,9 @@ function onFrequentTypeClick(type_id, group_id)
 	}
 }
 
-/*
-	Обработка подтверждения формы переноса денег со счёта на счёт.
-*/
+/**
+ * Обработка подтверждения формы переноса денег со счёта на счёт.
+ */
 function onTransAccountSubmit()
 {
 	if(ge('transaccount_from').value == ge('transaccount_to').value)
@@ -272,9 +272,9 @@ function onTransAccountSubmit()
 	return true;
 }
 
-/*
-	Обработка подтверждения формы обмена валюты.
-*/
+/**
+ * Обработка подтверждения формы обмена валюты.
+ */
 function onTransCurrencySubmit()
 {
 	if(!ge('trancurrency_сfrom_sum').value)
@@ -292,11 +292,11 @@ function onTransCurrencySubmit()
 	return true;
 }
 
-/*
-	Обработка нажатия на "тип операции".
-	@param obj {HTML Element} объект, вызвавший событие
-	@param type_id {integer} идентификатор типа
-*/
+/**
+ * Обработка нажатия на "тип операции".
+ * @param obj {HTML Element} объект, вызвавший событие
+ * @param type_id {integer} идентификатор типа
+ */
 function onTypeClick(obj, type_id)
 {
 	ge('inp_optype').value = type_id;
@@ -305,11 +305,11 @@ function onTypeClick(obj, type_id)
 	ge('inp_amount').focus();
 }
 
-/*
-	Обработка нажатия на "группу типов операций".
-	@param obj {HTML Element} объект, вызвавший событие
-	@param group_id {integer} идентификатор группы типов
-*/
+/**
+ * Обработка нажатия на "группу типов операций".
+ * @param obj {HTML Element} объект, вызвавший событие
+ * @param group_id {integer} идентификатор группы типов
+ */
 function onTypeGroupClick(obj, group_id)
 {
 	if(obj.className != 'selected_g')
@@ -322,11 +322,11 @@ function onTypeGroupClick(obj, group_id)
 	$('.selected').removeClass('selected');
 }
 
-/*
-	Обработка нажатия на "группу типов операций" в фильтре по типам.
-	@param obj {HTML Element} объект, вызвавший событие
-	@param group_id {integer} идентификатор группы типов
-*/
+/**
+ * Обработка нажатия на "группу типов операций" в фильтре по типам.
+ * @param obj {HTML Element} объект, вызвавший событие
+ * @param group_id {integer} идентификатор группы типов
+ */
 function onTypeGroupClick2(obj, group_id)
 {
 	if(obj.className != 'selectedf_g')
@@ -339,10 +339,10 @@ function onTypeGroupClick2(obj, group_id)
 	$('.selectedf').removeClass('selectedf');
 }
 
-/*
-	Установить значение комментария в форме добавления.
-	@param {string} val
-*/
+/**
+ * Установить значение комментария в форме добавления.
+ * @param {string} val
+ */
 function setComment(val)
 {
 	var obj = ge('inp_comment');
@@ -353,11 +353,11 @@ function setComment(val)
 	$('#div_comment_tip').slideUp(300);
 }
 
-/*
-	Показать форму добавления/списания/увеличения долга.
-	@param obj {HTML Element} элемент, возле которого показывать форму
-	@param debtor_id {integer} номер должника, к которому привяжется операция
-*/
+/**
+ * Показать форму добавления/списания/увеличения долга.
+ * @param obj {HTML Element} элемент, возле которого показывать форму
+ * @param debtor_id {integer} номер должника, к которому привяжется операция
+**/
 function showDebtorForm(obj, debtor_id)
 {
 	$('#debtor_form').css('top',  $(obj).offset().top + 36);
@@ -366,10 +366,11 @@ function showDebtorForm(obj, debtor_id)
 	$('#debtor_form').fadeIn(300);
 }
 
-/*
-	Показать форму добавления и редактирования холда.
-	@param obj {HTML Element}
-*/
+/**
+ * Показать форму добавления и редактирования холда.
+ * @param obj {HTML Element}
+ * @param {string} id
+ */
 function showHoldForm(obj, id)
 {
 	$('#hold_form').css('top', $(obj).offset().top + 36);
@@ -383,11 +384,11 @@ function showHoldForm(obj, id)
 	ge('hold_form_currency').value = id ? ge('hold' + id + '_cur').value                 : 0;
 }
 
-/*
-	Обработка нажатия на кнопку "редактировать операцию".
-	@param obj {HTML Element} объект, вызвавший событие
-	@param event_params {array} параметры операции
-*/
+/**
+ * Обработка нажатия на кнопку "редактировать операцию".
+ * @param obj {HTML Element} объект, вызвавший событие
+ * @param event_params {array} параметры операции
+ */
 function startEditEvent(obj, event_params)
 {
 	var backtime = new Date(event_params['backtime'] * 1000);
@@ -405,11 +406,11 @@ function startEditEvent(obj, event_params)
 	$('#event_edit_form').fadeIn(300);
 }
 
-/*
-	Заполнить инпуты фильтров в графической статистике кассы датами
-	сегодняшней и отстоящей назад на соответствующий период.
-	@param {String} period
-*/
+/**
+ * Заполнить инпуты фильтров в графической статистике кассы датами
+ * сегодняшней и отстоящей назад на соответствующий период.
+ * @param {String} period
+ */
 function stat_period2inputs(period)
 {
 	var d_to   = new Date();
@@ -478,26 +479,26 @@ function stat_period2inputs(period)
 	obj.value = d_to.getFullYear() + '-' + m + '-' + d;
 }
 
-/*
-	Калькулятор
-*/
+/**
+ * Калькулятор
+ */
 calc = {
 	// объект, к которому привязан калькулятор
 	bindobj: null,
 	
-	/*
-		Добавить к значению в поле калькулятора строку.
-		@param value {string} строка, которую добавить
-	*/
+	/**
+	 * Добавить к значению в поле калькулятора строку.
+	 * @param value {string} строка, которую добавить
+	 */
 	button: function(value)
 	{
 		ge('inp_calc').value += value;
 		ge('inp_calc').focus();
 	},
 	
-	/*
-		Вычисление значения.
-	*/
+	/**
+	 * Вычисление значения.
+	 */
 	calculate: function()
 	{
 		var process_str = ge('inp_calc').value + '=';
@@ -551,15 +552,19 @@ calc = {
 		ge('inp_calc').focus();
 	},
 	
-	/*
-		Очистить содержимое калькулятора.
-	*/
+	/**
+	 * Очистить содержимое калькулятора.
+	 */
 	clear: function()
 	{
 		ge('inp_calc').value = '';
 		ge('inp_calc').focus();
 	},
-	
+
+	/**
+	 * Нажатие на кнопку на клавиатуре, когда фокус в поле ввода
+	 * @param {event} event событие нажатия
+	 */
 	inp_keypress: function(event)
 	{
 		if(event.keyCode == 13)
@@ -576,10 +581,10 @@ calc = {
 		}
 	},
 	
-	/*
-		Показать калькулятор.
-		@param obj {HTML Input Element} объект, к которому привяжется калькулятор
-	*/
+	/**
+	 * Показать калькулятор.
+	 * @param {HTML Input Element} obj объект, к которому привяжется калькулятор
+	 */
 	show: function(obj)
 	{
 		if(obj)
@@ -594,6 +599,7 @@ calc = {
 	}
 };
 
+// добавление indexOf в Array
 Array.prototype.indexOf = function(val)
 {
 	for(var i = this.length - 1; i >=0 ; i--)

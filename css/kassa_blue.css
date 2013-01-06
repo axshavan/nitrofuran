@@ -5,8 +5,8 @@ body { font-size: 11px; color: black; background-color: #353947; font-family: sa
 .clear { clear: both; }
 .p5 { padding: 5px; }
 img.button { cursor: pointer; }
-a.reset { color: #303030; display: block; margin-bottom: 2px; text-decoration: underline; }
-a.reset:hover { color: #505050; }
+a.reset { color: #a0a0ff; display: block; margin-bottom: 2px; text-decoration: underline; }
+a.reset:hover { color: white; }
 
 #event_edit_form { position: absolute; z-index: 2; border: 1px solid #a0a0a0; background-color: #f0f0f0; -moz-border-radius: 6px; border-radius: 6px; -webkit-border-radius: 6px; padding: 6px; display: none; }
 #event_edit_form img { position: absolute; top: -30px; }
@@ -38,10 +38,12 @@ a.reset:hover { color: #505050; }
 #calendar_container .calendar span.today { background-color: #54D319; }
 #calendar_container .calendar span.active a { color: white; }
 
-#debtors a { color: #303030; }
+#debtors a { color: #202020; }
 #debtors span { display: inline-block; padding: 3px; margin: 2px; border: 1px solid #505050; font-size: 9px; }
 #debtors span.credit1 { background-color: #7CFF5B; }
 #debtors span.credit2 { background-color: #FF6B6B; }
+#debtors .optable tr.exp td:nth-child(3) { background-color: #c8a0a0; }
+#debtors .optable tr.exp_odd td:nth-child(3) { background-color: #d5b9b9; }
 
 #main_container { position: absolute; left: 175px; right: 5px; top: 5px; }
 #main_container .add-form { background-color: #909eaa; padding: 4px; border: 1px solid #2d3d72; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; width: 400px; min-height: 200px; float: left; }
@@ -55,17 +57,21 @@ a.reset:hover { color: #505050; }
 #main_container .add-form .optypegroup .exp { color: #800000; background-color: #FFF17A; display: inline-block; margin: 2px; padding: 1px; }
 #main_container .add-form .optypegroup .exp:hover { background-color: #FFEE3D; }
 #main_container .add-form .hidden { background-color: #C1C1C1; border: 1px solid #808080; padding: 2px; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; display: none; }
-#main_container .add-form .frequent { font-size: 10px; }
+#main_container .add-form .frequent { font-size: 10px; margin-top: 0; }
 #main_container div.optable { background-color: #909eaa; padding: 4px; border: 1px solid #2d3d72; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 10px; }
 #main_container .itogo { background-color: #909eaa; padding: 4px; border: 1px solid #2d3d72; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; float: right; width: 200px; height: 215px; overflow-y: scroll; font-size: 10px; margin-right: 5px; }
 #main_container .itogo .inc { color: #005500; font-weight: bold; }
-#main_container .itogo .exp { color: #000080; font-weight: bold; }
+#main_container .itogo .exp { color: #800000; font-weight: bold; }
 #main_container .itogo span { display: block; }
 #main_container .itogo table td { vertical-align: top; }
 #main_container .itogo table td:first-child { padding-top: 3px; }
 #main_container .itogo table td.default { font-weight: bold; }
 #main_container .plans { float: right; background-color: #909eaa; padding: 8px; border: 1px solid #2d3d72; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; height: 207px; overflow-y: scroll; }
 #main_container .plans .optable { width: 100%; }
+#main_container .plans .optable tr.exp td:nth-child(2) { background-color: #c8a0a0; }
+#main_container .plans .optable tr.exp_odd td:nth-child(2) { background-color: #d5b9b9; }
+#main_container .plans a { color: #404040; }
+#main_container .plans a:hover { color: #606060; }
 #main_container span.command { display: inline-block; margin: 10px 0 5px 0; border-bottom: 1px dashed #202060; color: #202060; cursor: pointer; }
 #main_container span.command:hover { color: #404090; border-bottom: 1px dashed #404090; }
 
@@ -122,9 +128,7 @@ table.optable th { border-bottom: 1px solid #303030; border-right: 1px solid #30
 table.optable tr.inc { background-color: #8dd790; color: #006000; }
 table.optable tr.inc_odd { background-color: #7bc37f; color: #006000; }
 table.optable tr.exp { background-color: #C3C3C3; color: maroon; }
-table.optable tr.exp td:nth-child(2) { background-color: #c8a0a0; }
 table.optable tr.exp_odd { background-color: #D2D2D2; color: maroon; }
-table.optable tr.exp_odd td:nth-child(2) { background-color: #d5b9b9; }
 table.optable tr.odd { background-color: #f3efc0; }
 table.optable tr.notodd { background-color: #e0dcae; }
 table.optable tr.daysum { background-color: #ededff; font-weight: bold; }
@@ -133,6 +137,8 @@ table.optable tr.daysum .exp { color: #800000; }
 table.optable td.dayhead { font-size: 13px; height: 30px; vertical-align: bottom; }
 table.optable td.itogo { font-size: 14px; }
 table.optable td.nowrap { white-space: nowrap; }
+table.optable.main tr.exp td:nth-child(2) { background-color: #c8a0a0; }
+table.optable.main tr.exp_odd td:nth-child(2) { background-color: #d5b9b9; }
 
 table.holdtable { width: 24%; float: right; margin-left: 2px; }
 
