@@ -24,11 +24,10 @@ a.reset:hover { color: white; }
 
 #calendar_container { margin-bottom: 5px; width: 142px; }
 
-#calendar_container .year, #calendar_container .month { background-color: #f3db58; padding: 3px; border: 1px solid #404040; text-align: center; margin-bottom: 1px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
+#calendar_container .year, #calendar_container .month { background-color: #f3db58; padding: 2px; border: 1px solid #404040; text-align: center; margin-bottom: 1px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
 #calendar_container .year a, #calendar_container .month a { color: black; text-decoration: none; }
 #calendar_container .year a:hover, #calendar_container .month a:hover { text-decoration: underline; }
 #calendar_container .month { font-size: 10px; }
-
 #calendar_container .calendar a { color: black; text-decoration: none; }
 #calendar_container .calendar a:hover { text-decoration: underline; }
 #calendar_container .calendar { background-color: #f8f8f8; width: 140px; border: 1px solid #404040; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; text-align: center; }
@@ -54,12 +53,12 @@ a.reset:hover { color: white; }
 #main_container .add-form span.selected, #main_container .add-form span.selected_g { font-weight: bold; }
 #main_container .add-form .hidden { background-color: #C1C1C1; border: 1px solid #808080; padding: 2px; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; display: none; }
 #main_container .add-form .frequent { font-size: 10px; margin-top: 0; }
-#main_container .optypegroups { background-color: #f3db58; padding: 2px; border: 1px solid #404040; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 2px; }
+#main_container .optypegroups { background-color: #f3db58; padding: 4px 3px 3px 3px; border: 1px solid #404040; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 2px; }
 #main_container .optypegroup { background-color: #f1e393; padding: 2px; border: 1px solid #505050; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 2px; display: none; }
-#main_container .optypegroup span { border-bottom: none; }
-#main_container .optypegroup .inc { color: #006600; background-color: #D7FF6B; display: inline-block; margin: 2px; padding: 1px; }
+#main_container .optypegroup span { border-bottom: none; display: inline-block; }
+#main_container .optypegroup .inc { color: #006600; background-color: #D7FF6B; margin: 2px; padding: 1px; }
 #main_container .optypegroup .inc:hover { background-color: #C1FF16; }
-#main_container .optypegroup .exp { color: #800000; background-color: #FFF17A; display: inline-block; margin: 2px; padding: 1px; }
+#main_container .optypegroup .exp { color: #800000; background-color: #FFF17A; margin: 2px; padding: 1px; }
 #main_container .optypegroup .exp:hover { background-color: #FFEE3D; }
 #main_container div.optable { background-color: #909eaa; padding: 4px; border: 1px solid #2d3d72; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 10px; }
 #main_container .itogo { background-color: #909eaa; padding: 4px; border: 1px solid #2d3d72; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; float: right; width: 200px; height: 215px; overflow-y: scroll; font-size: 10px; margin-right: 5px; }
@@ -163,3 +162,8 @@ table.stat_table td { padding: 2px; border-right: 1px solid #414e53; border-bott
 table.stat_table tr.odd { background-color: #abccd9; }
 
 div.stats_graph span.command { border-bottom: 1px dashed black; cursor: pointer; }
+
+/* kassa optable v2 */
+div.optable_v2 div.day_body { background-color: #eeeeff; }
+div.optable_v2 table.optable tr.exp td:first-child { background-color: #c8a0a0; }
+div.optable_v2 table.optable tr.exp_odd td:first-child { background-color: #d5b9b9; }
