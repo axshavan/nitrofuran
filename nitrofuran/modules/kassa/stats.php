@@ -16,6 +16,7 @@ global $DB;
 
 $tplengine = new CTemplateEngine('kassa');
 $tplengine->assign('title', get_param('kassa', 'stats_title'));
+$tplengine->assign('use_blue_template', get_param('kassa', 'use_blue_template'));
 
 // валюты
 $_currencies = array();

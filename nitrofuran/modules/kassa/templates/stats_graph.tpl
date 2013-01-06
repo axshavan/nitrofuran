@@ -3,7 +3,7 @@
 <html>
 <head>
     <title><?= $title ?></title>
-	<link rel="stylesheet" type="text/css" href="<?= HTTP_ROOT ?>/css/kassa.css">
+    <link rel="stylesheet" type="text/css" href="<?= HTTP_ROOT ?>/css/kassa<?= $use_blue_template ? '_blue' : '' ?>.css">
 	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/kassa.js"></script>
 </head>
 <body class="p5">
@@ -19,7 +19,7 @@
 				<td><label for="inp_optype">Тип операции</label></td>
 				<td><label for="inp_account">Счёт</label></td>
 				<td><label for="inp_currency">Валюта</label></td>
-			</td>
+			</tr>
 			<tr>
 				<td><input type="text" id="inp_comment" name="comment" value="<?= h($_REQUEST['comment']) ?>"></td>
 				<td>

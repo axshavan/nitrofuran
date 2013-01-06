@@ -23,20 +23,23 @@ a.reset:hover { color: white; }
 #leftcolumn { float: left; margin: 5px 0 0 5px; }
 
 #calendar_container { margin-bottom: 5px; width: 142px; }
-#calendar_container a { color: black; text-decoration: none; }
-#calendar_container a:hover { text-decoration: underline; }
-#calendar_container a.reset { color: #303030; display: block; margin-bottom: 2px; text-decoration: underline; }
-#calendar_container a.reset:hover { color: #505050; }
-#calendar_container .year, #calendar_container .month { background-color: #909eaa; padding: 2px; border: 1px solid #2d3d72; text-align: center; margin-bottom: 1px; -moz-border-radius: 2px; -webkit-border-radius: 2px; }
+
+#calendar_container .year, #calendar_container .month { background-color: #f3db58; padding: 3px; border: 1px solid #404040; text-align: center; margin-bottom: 1px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
+#calendar_container .year a, #calendar_container .month a { color: black; text-decoration: none; }
+#calendar_container .year a:hover, #calendar_container .month a:hover { text-decoration: underline; }
 #calendar_container .month { font-size: 10px; }
-#calendar_container .calendar { background-color: #699658; width: 140px; border: 1px solid #2C4422; -moz-border-radius: 2px; border-radius: 2px; -webkit-border-radius: 2px; text-align: center; }
+
+#calendar_container .calendar a { color: black; text-decoration: none; }
+#calendar_container .calendar a:hover { text-decoration: underline; }
+#calendar_container .calendar { background-color: #f8f8f8; width: 140px; border: 1px solid #404040; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; text-align: center; }
 #calendar_container .calendar .week { height: 15px; }
-#calendar_container .calendar .week-head { font-weight: bold; background-color: #7EA86D; }
+#calendar_container .calendar .week-head { font-weight: bold; background-color: #303030; color: white; }
 #calendar_container .calendar span { display: inline-block; width: 20px; height: 13px; text-align: center; padding-top: 2px; }
-#calendar_container .calendar span.grey, #calendar_container .calendar span.grey a { color: #383838; }
-#calendar_container .calendar span.end { background-color: #62B541; }
-#calendar_container .calendar span.today { background-color: #54D319; }
-#calendar_container .calendar span.active a { color: white; }
+#calendar_container .calendar span.grey, #calendar_container .calendar span.grey a { color: #a0a0a0; text-decoration: none; }
+#calendar_container .calendar span.end { background-color: #e0e0e0; }
+#calendar_container .calendar .week-head span.end { background-color: #303030; }
+#calendar_container .calendar span.today, #calendar_container .calendar span.today a { background-color: #34438e; color: white; }
+#calendar_container .calendar span.active a { color: #ffa0a0; }
 
 #debtors a { color: #202020; }
 #debtors span { display: inline-block; padding: 3px; margin: 2px; border: 1px solid #505050; font-size: 9px; }
@@ -49,15 +52,15 @@ a.reset:hover { color: white; }
 #main_container .add-form { background-color: #909eaa; padding: 4px; border: 1px solid #2d3d72; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; width: 400px; min-height: 200px; float: left; }
 #main_container .add-form span { cursor: pointer; margin-right: 5px; }
 #main_container .add-form span.selected, #main_container .add-form span.selected_g { font-weight: bold; }
-#main_container .add-form .optypegroups { background-color: #DCE884; padding: 2px; border: 1px solid #A4AF4D; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 2px; }
-#main_container .add-form .optypegroup { background-color: #EDFF6B; padding: 2px; border: 1px solid #B3C41B; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 2px; display: none; }
-#main_container .add-form .optypegroup span { border-bottom: none; }
-#main_container .add-form .optypegroup .inc { color: #006600; background-color: #D7FF6B; display: inline-block; margin: 2px; padding: 1px; }
-#main_container .add-form .optypegroup .inc:hover { background-color: #C1FF16; }
-#main_container .add-form .optypegroup .exp { color: #800000; background-color: #FFF17A; display: inline-block; margin: 2px; padding: 1px; }
-#main_container .add-form .optypegroup .exp:hover { background-color: #FFEE3D; }
 #main_container .add-form .hidden { background-color: #C1C1C1; border: 1px solid #808080; padding: 2px; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; display: none; }
 #main_container .add-form .frequent { font-size: 10px; margin-top: 0; }
+#main_container .optypegroups { background-color: #f3db58; padding: 2px; border: 1px solid #404040; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 2px; }
+#main_container .optypegroup { background-color: #f1e393; padding: 2px; border: 1px solid #505050; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 2px; display: none; }
+#main_container .optypegroup span { border-bottom: none; }
+#main_container .optypegroup .inc { color: #006600; background-color: #D7FF6B; display: inline-block; margin: 2px; padding: 1px; }
+#main_container .optypegroup .inc:hover { background-color: #C1FF16; }
+#main_container .optypegroup .exp { color: #800000; background-color: #FFF17A; display: inline-block; margin: 2px; padding: 1px; }
+#main_container .optypegroup .exp:hover { background-color: #FFEE3D; }
 #main_container div.optable { background-color: #909eaa; padding: 4px; border: 1px solid #2d3d72; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 10px; }
 #main_container .itogo { background-color: #909eaa; padding: 4px; border: 1px solid #2d3d72; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; float: right; width: 200px; height: 215px; overflow-y: scroll; font-size: 10px; margin-right: 5px; }
 #main_container .itogo .inc { color: #005500; font-weight: bold; }
@@ -88,18 +91,18 @@ a.reset:hover { color: white; }
 #optypefilter a { color: #404040; }
 #optypefilter span { cursor: pointer; margin-right: 5px; }
 #optypefilter span.selectedf, #optypefilter span.selectedf_g { font-weight: bold; }
-#optypefilter span:hover { color: #202020; border-bottom: 1px dashed #606060; }
 #optypefilter .hidden { display: none; }
-#optypefilter .optypegroups { background-color: #DCE884; padding: 2px; border: 1px solid #A4AF4D; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 2px; }
-#optypefilter .optypegroupf { background-color: #EDFF6B; padding: 2px; border: 1px solid #B3C41B; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 2px; }
-#optypefilter .optypegroupf .inc { color: #006600; }
-#optypefilter .optypegroupf .exp { color: #800000; }
+#optypefilter .optypegroupf { background-color: #f1e393; padding: 2px; border: 1px solid #505050; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 2px; }
+#optypefilter .optypegroupf span { border-bottom: none; }
+#optypefilter .optypegroupf .inc { color: #006600; background-color: #D7FF6B; display: inline-block; margin: 2px; padding: 1px; }
+#optypefilter .optypegroupf .inc:hover { background-color: #C1FF16; }
+#optypefilter .optypegroupf .exp { color: #800000; background-color: #FFF17A; display: inline-block; margin: 2px; padding: 1px; }
+#optypefilter .optypegroupf .exp:hover { background-color: #FFEE3D; }
 
 #accountfilter a { color: #404040; }
 #accountfilter span { cursor: pointer; margin-right: 5px; }
 #accountfilter span.selectedf1 { font-weight: bold; }
-#accountfilter span:hover { color: #202020; border-bottom: 1px dashed #606060; }
-#accountfilter div { background-color: #DCE884; padding: 2px; border: 1px solid #A4AF4D; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 2px; }
+#accountfilter div { background-color: #f3db58; padding: 2px; border: 1px solid #404040; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; margin-bottom: 2px; }
 
 #transaccount { margin-bottom: 5px; width: 142px; }
 #transaccount label { font-weight: bold; display: block; margin-top: 5px; color: white; }
@@ -151,10 +154,12 @@ table.holdtable { width: 24%; float: right; margin-left: 2px; }
 .stats-column-1 table td,
 .stats-column-2 table td,
 .stats-column-3 table td { font-size: 9px; }
+.stats-column-2 .optable tr.exp td:nth-child(2) { background-color: #c8a0a0; }
+.stats-column-2 .optable tr.exp_odd td:nth-child(2) { background-color: #d5b9b9; }
 
-table.stat_table { background-color: #BABABA; width: 100%; border-left: 1px solid #303030; border-top: 1px solid #303030; empty-cells: show; }
-table.stat_table th { padding: 2px; text-align: left; border-right: 1px solid #303030; border-bottom: 1px solid #303030; background-color: white; }
-table.stat_table td { padding: 2px; border-right: 1px solid #303030; border-bottom: 1px solid #303030; font-size: 11px; }
-table.stat_table tr.odd { background-color: #DBDBDB; }
+table.stat_table { background-color: #bee3f1; width: 100%; border-left: 1px solid #414e53; border-top: 1px solid #414e53; empty-cells: show; }
+table.stat_table th { padding: 2px; text-align: left; border-right: 1px solid #414e53; border-bottom: 1px solid #414e53; background-color: white; }
+table.stat_table td { padding: 2px; border-right: 1px solid #414e53; border-bottom: 1px solid #414e53; font-size: 11px; }
+table.stat_table tr.odd { background-color: #abccd9; }
 
 div.stats_graph span.command { border-bottom: 1px dashed black; cursor: pointer; }

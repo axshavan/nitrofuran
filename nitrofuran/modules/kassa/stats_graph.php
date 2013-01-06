@@ -266,7 +266,8 @@ else
 			.($weekaverage ? '&weekaverage=1' : '');
 		$tplengine->assign('image_src', $image_src);
 	}
-	
+
+	$tplengine->assign('use_blue_template', get_param('kassa', 'use_blue_template'));
 	$tplengine->template('stats_graph.tpl');
 }
 

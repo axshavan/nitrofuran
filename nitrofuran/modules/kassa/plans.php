@@ -188,14 +188,15 @@ foreach($_plans as &$_plan)
 }
 
 $tplengine = new CTemplateEngine('kassa');
-$tplengine->assign('title',       get_param('kassa', 'plans_title'));
-$tplengine->assign('_plans',      $_plans);
-$tplengine->assign('_optypes',    $_optypes);
-$tplengine->assign('_opbytype',   $_opbytype);
-$tplengine->assign('_currencies', $_currencies);
-$tplengine->assign('_sumbyacc',   $_sumbyacc);
-$tplengine->assign('_sumbycur',   $_sumbycur);
-$tplengine->assign('_result_sum', $_result_sum_by_cur);
+$tplengine->assign('title',             get_param('kassa', 'plans_title'));
+$tplengine->assign('use_blue_template', get_param('kassa', 'use_blue_template'));
+$tplengine->assign('_plans',            $_plans);
+$tplengine->assign('_optypes',          $_optypes);
+$tplengine->assign('_opbytype',         $_opbytype);
+$tplengine->assign('_currencies',       $_currencies);
+$tplengine->assign('_sumbyacc',         $_sumbyacc);
+$tplengine->assign('_sumbycur',         $_sumbycur);
+$tplengine->assign('_result_sum',       $_result_sum_by_cur);
 
 $tplengine->template('plans.tpl');
 

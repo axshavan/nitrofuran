@@ -3,7 +3,7 @@
 <html>
 <head>
     <title><?= $title ?></title>
-	<link rel="stylesheet" type="text/css" href="<?= HTTP_ROOT ?>/css/kassa.css">
+    <link rel="stylesheet" type="text/css" href="<?= HTTP_ROOT ?>/css/kassa<?= $use_blue_template ? '_blue' : '' ?>.css">
 	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/kassa.js"></script>
 	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/jquery-1.4.3.min.js"></script>
 </head>
