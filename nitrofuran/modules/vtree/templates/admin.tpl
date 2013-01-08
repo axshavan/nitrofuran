@@ -67,7 +67,6 @@ if(!function_exists('draw_vtree_item'))
 <? if($error_text): ?>
 	<div class="error"><?= $error_text ?></div>
 <? endif; ?>
-
 <ul class="ul-root">
 	<? foreach($_vtree as &$item): ?>
 		<? draw_vtree_item($item, false, $_modules_installed); ?>

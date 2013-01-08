@@ -74,7 +74,6 @@ if($sql)
 	}
 }
 
-
 $res    = $DB->Query("select * from `".TREE_TABLE."` order by `pid` asc, `id` asc");
 $_vtree = array();
 while($r = $DB->Fetch($res))

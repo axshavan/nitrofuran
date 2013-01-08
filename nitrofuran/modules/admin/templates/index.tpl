@@ -116,7 +116,7 @@ $_params_types = array(
 		</table>
 		</form>
 		<? else: ?>
-		<? $this->IncludeTemplate($inner_template_name); ?>
+			<? $this->IncludeTemplate($inner_template_name); ?>
 		<? endif; ?>
 	</div>
 	<!-- /правая панель -->

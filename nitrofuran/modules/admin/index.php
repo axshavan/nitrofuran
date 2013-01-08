@@ -20,17 +20,6 @@ if(!$module)
 }
 $tplengine->assign('module', $module);
 
-$_modules_installed = unserialize(get_param('admin', 'modules_installed'));
-foreach($_modules_installed as $k => $v)
-{
-	$_left_menu[] = array(
-		'name'   => $v,
-		'module' => $k,
-		'active' => $module == $k
-	);
-}
-$tplengine->assign("_modules_installed", $_modules_installed);
-$tplengine->assign("_left_menu",         $_left_menu);
 $_module_menu_param = unserialize(get_param($module, 'admin_menu'));
 $_module_menu = array(
 	array(
@@ -165,6 +154,7 @@ foreach($_modules_installed as $k => $v)
 		'active' => $module == $k
 	);
 }
+$_modules_installed['admin'] = 'admin';
 $tplengine->assign("_modules_installed", $_modules_installed);
 $tplengine->assign("_left_menu",         $_left_menu);
 $_module_menu_param = unserialize(get_param($module, 'admin_menu'));

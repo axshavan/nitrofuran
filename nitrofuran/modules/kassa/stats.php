@@ -67,7 +67,7 @@ $_comments          = array();
 $last_month         = time() - 86400 * 31;
 $first_operation    = time();
 
-$res = $DB->Query("select * from `kassa_operation`");
+$res = $DB->Query("select * from `".KASSA_OPERATION_TABLE."`");
 while($_row = $DB->Fetch($res))
 {
 	if($_row['amount'] > $_operation_max[$_row['type_id']][$_row['currency_id']]['amount'])
@@ -97,6 +97,7 @@ while($_row = $DB->Fetch($res))
 	$_comments[$_row['currency_id']][$_row['comment']]['sum'] += $_row['amount'];
 	$_weekdays[date('N', $_row['backtime'])]['opnum']++;
 	$_weekdays[date('N', $_row['backtime'])]['opnum_c'][$_row['currency_id']]++;
+	$_weekdays[date('N', $_row['backtime'])]['opsum_c'][$_row['currency_id']] += $_row['amount'] * ($_optypes[$_row['type_id']]['is_income'] ? 1 : -1);
 }
 krsort($_months);
 foreach($_months as $k => &$_m)
