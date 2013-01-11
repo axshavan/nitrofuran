@@ -24,17 +24,17 @@
 				?><tr class="daysum"><td class="inc"><?
 				foreach($daysum_inc as $k => $v)
 				{
-					echo $v.'&nbsp;'.$k.'<br>';
+					echo round($v, 2).'&nbsp;'.$k.'<br>';
 				}
 				?></td><td class="exp"><?
 				foreach($daysum_exp as $k => $v)
 				{
-					echo $v.'&nbsp;'.$k.'<br>';
+					echo round($v, 2).'&nbsp;'.$k.'<br>';
 				}
 				?></td><td colspan="6">Итого: <?
 				foreach($daysum as $k => $v)
 				{
-					echo $v.'&nbsp;'.$k.'<br>';
+					echo round($v, 2).'&nbsp;'.$k.'<br>';
 				}
 				?></td></tr><?
 			}
@@ -97,17 +97,17 @@
 	<tr class="daysum"><td class="inc"><?
 	foreach($daysum_inc as $k => $v)
 	{
-		echo $v.'&nbsp;'.$k.'<br>';
+		echo round($v, 2).'&nbsp;'.$k.'<br>';
 	}
 	?></td><td class="exp"><?
 	foreach($daysum_exp as $k => $v)
 	{
-		echo $v.'&nbsp;'.$k.'<br>';
+		echo round($v, 2).'&nbsp;'.$k.'<br>';
 	}
 	?></td><td colspan="6">Итого: <?
 	foreach($daysum as $k => $v)
 	{
-		echo $v.'&nbsp;'.$k.'<br>';
+		echo round($v, 2).'&nbsp;'.$k.'<br>';
 	}
 	?></td></tr>
 </table>
