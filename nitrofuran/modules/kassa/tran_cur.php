@@ -11,17 +11,18 @@
 	http://sam.zoy.org/wtfpl/COPYING for more details.
 */
 
+header('Content-Type: text/html; charset=utf-8');
 require_once('config.php');
+require_once(dirname(__FILE__).'/kassa.php');
 global $DB;
+$kassa = new CKassa();
 
-$res = $DB->Query("select `name`, `value` from `".PARAMS_TABLE."` where `module` = 'kassa' and `name` in ('OPTYPE_CUREXCH_PLUS', 'OPTYPE_CUREXCH_MINUS')");
-while($r = $DB->Fetch($res))
-{
-	${$r['name']} = $r['value'];
-}
+$OPTYPE_CUREXCH_PLUS  = get_param('kassa', 'OPTYPE_CUREXCH_PLUS');
+$OPTYPE_CUREXCH_MINUS = get_param('kassa', 'OPTYPE_CUREXCH_MINUS');
+
 if(!$OPTYPE_CUREXCH_PLUS && !$OPTYPE_CUREXCH_MINUS)
 {
-	echo 'Ошибка. Не определены необходимые номера типов операций.';
+	echo 'Ошибка: не определены необходимые номера типов операций';
 	die();
 }
 $res       = $DB->Query("select `id`, `name` from `".KASSA_ACCOUNT_TABLE."` where `id` in (".(int)$_POST['account_from'].", ".(int)$_POST['account_to'].")");
@@ -36,9 +37,7 @@ while($r = $DB->Fetch($res))
 {
 	$_currencies[$r['id']] = $r['name'];
 }
-$sum_from = (float)str_replace(',', '.', $_POST['sum_from']);
-$sum_to   = (float)str_replace(',', '.', $_POST['sum_to']);
-$DB->Query("insert into `".KASSA_OPERATION_TABLE."`
+/*$DB->Query("insert into `".KASSA_OPERATION_TABLE."`
 	(`currency_id`, `account_id`, `type_id`, `amount`, `time`, `comment`, `backtime`)
 	values
 	(
@@ -48,8 +47,23 @@ $DB->Query("insert into `".KASSA_OPERATION_TABLE."`
 		'".$sum_from."',
 		unix_timestamp(), 'В валюту ".$_currencies[$_POST['currency_to']]." на счёт ".$_accounts[$_POST['account_to']]."',
 		unix_timestamp()
-	)");
-$DB->Query("insert into `".KASSA_OPERATION_TABLE."`
+	)");*/
+if(!$kassa->Add
+(
+	array(
+		'amount'   => $_POST['sum_from'],
+		'optype'   => $OPTYPE_CUREXCH_MINUS,
+		'currency' => $_POST['currency_from'],
+		'account'  => $_POST['account_from'],
+		'comment'  => 'В валюту '.$_currencies[$_POST['currency_to']].' на счёт '.$_accounts[$_POST['account_to']]
+	),
+	$error_code,
+	$error_message
+))
+{
+	die('Ошибка: '.$error_message);
+}
+/*$DB->Query("insert into `".KASSA_OPERATION_TABLE."`
 	(`currency_id`, `account_id`, `type_id`, `amount`, `time`, `comment`, `backtime`)
 	values
 	(
@@ -59,7 +73,22 @@ $DB->Query("insert into `".KASSA_OPERATION_TABLE."`
 		'".$sum_to."',
 		unix_timestamp(), 'Из валюты ".$_currencies[$_POST['currency_from']]." со счёта ".$_accounts[$_POST['account_from']]."',
 		unix_timestamp()
-	)");
-redirect('..');
+	)");*/
+if(!$kassa->Add
+(
+	array(
+		'amount'   => $_POST['sum_to'],
+		'optype'   => $OPTYPE_CUREXCH_PLUS,
+		'currency' => $_POST['currency_to'],
+		'account'  => $_POST['account_to'],
+		'comment'  => 'Из валюты '.$_currencies[$_POST['currency_from']].' со счёта '.$_accounts[$_POST['account_from']]
+	),
+	$error_code,
+	$error_message
+))
+{
+	die('Ошибка: '.$error_message);
+}
+redirect($_SERVER['HTTP_REFERER']);
 
 ?>

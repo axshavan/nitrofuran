@@ -11,6 +11,7 @@
 	http://sam.zoy.org/wtfpl/COPYING for more details.
 */
 
+header('Content-Type: text/html; charset=utf-8');
 require_once('config.php');
 require_once(dirname(__FILE__).'/kassa.php');
 global $DB;

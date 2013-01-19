@@ -11,6 +11,7 @@
 	http://sam.zoy.org/wtfpl/COPYING for more details.
 */
 
+header('Content-Type: text/html; charset=utf-8');
 if($_POST['amount'] && $_POST['account'] && $_POST['optype'] && $_POST['currency'])
 {
 	require_once('config.php');
