@@ -19,7 +19,7 @@ $template_name = 'edit_list.tpl';
 
 // список типов напитков
 $_drink_types = array();
-$res          = $DB->Query("select * from `".DRUNKEEPER_DRINKTYPES_TABLE."`");
+$res          = $DB->Query("select * from `".DRUNKEEPER_DRINKTYPES_TABLE."` order by `name` asc");
 while($_r = $DB->Fetch($res))
 {
 	$_drink_types[$_r['id']] = $_r;
@@ -27,7 +27,7 @@ while($_r = $DB->Fetch($res))
 
 // список напитков
 $_drinks = array();
-$res     = $DB->Query("select * from `".DRUNKEEPER_DRINKS_TABLE."`");
+$res     = $DB->Query("select * from `".DRUNKEEPER_DRINKS_TABLE."` order by `name` asc");
 while($_r = $DB->Fetch($res))
 {
 	$_drinks[$_r['id']] = $_r;

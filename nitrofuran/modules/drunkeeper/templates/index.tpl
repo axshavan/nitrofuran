@@ -22,7 +22,6 @@
 					<p><?= h($act['comment']) ?></p>
 				</div>
 			</div>
-			
 		<? endforeach; ?>
 	</div>
 	<div class="container_r">
@@ -64,6 +63,42 @@
 				<? endforeach; ?>
 			</table>
 		</div>
+        <div class="item">
+	        <table class="stat">
+		        <tr>
+			        <th colspan="2">За последние полгода</th>
+		        </tr>
+		        <? foreach($_last3m as $n => $data): ?>
+		            <tr>
+			            <th colspan="2"><?= substr($n, 0, 4).'.'.substr($n, 4) ?></th>
+		            </tr>
+		            <tr>
+						<td colspan="2"><strong>Суммарно, мл</strong></td>
+		            </tr>
+			        <tr class="inner">
+				        <td>Всего выпито:</td>
+				        <td><?= round($data['allvolume'], 2) ?></td>
+			        </tr>
+	                <tr class="inner">
+	                    <td>Выпито в пересчёте на 40&deg;:</td>
+	                    <td><?= round($data['40volume'], 2) ?></td>
+	                </tr>
+		            <tr class="inner">
+		                <td>Выпито в пересчёте на спирт:</td>
+		                <td><?= round($data['100volume'], 2) ?></td>
+		            </tr>
+	                <tr>
+	                    <td colspan="2"><strong>По типам напитков, мл</strong></td>
+	                </tr>
+		            <? foreach($data['volume_dtype'] as $k => $volume): ?>
+			            <tr class="inner">
+				            <td><?= $_drink_types[$k]['name'] ?></td>
+				            <td><?= round($volume, 2) ?></td>
+			            </tr>
+			        <? endforeach; ?>
+				<? endforeach; ?>
+	        </table>
+	    </div>
 	</div>
 </body>
 </html>

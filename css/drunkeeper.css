@@ -37,8 +37,8 @@ div.container_l .item { height: 40px; }
 div.container_r { width: 27%; position: absolute; right: 5px; }
 
 table.stat th { text-align: left; }
-table.stat td strong { display: block; margin: 5px 0 0 15px; }
-table.stat tr.inner td { font-size: 10px; }
+table.stat td strong { display: block; margin-left: 15px; }
+table.stat tr.inner td { font-size: 9px; }
 table.stat tr.inner td:first-child { padding-left: 25px; }
 
 div.container_form .drink2
@@ -75,22 +75,4 @@ div.item table.admin td
     border-bottom: 1px solid #404040;
     border-right: 1px solid #404040;
     padding: 3px;
-}
-div.item a
-{
-    color: #08263D;
-    text-decoration: none;
-    display: block;
-    height: 20px;
-    border: 2px outset #a0a0d0;
-    border-radius: 4px;
-    background-color: #d0d0f0;
-    padding: 5px 10px 0 10px;
-    max-width: 100px;
-    text-align: center;
-}
-div.item a:hover
-{
-    background-color: #d8d8f8;
-    color: #18364D;
 }

@@ -30,10 +30,12 @@ while($_r = $DB->Fetch($res))
 	$_drink_types[$_r['type_id']]['drinks'][$_r['id']] = $_r;
 }
 
-$_acts  = array();
-$_stats = array();
-$res    = $DB->Query("select * from `".DRUNKEEPER_ACTS_TABLE."` order by `date_drinked` desc, `id` desc");
-$count  = 0;
+$_acts   = array();
+$_stats  = array();
+$res     = $DB->Query("select * from `".DRUNKEEPER_ACTS_TABLE."` order by `date_drinked` desc, `id` desc");
+$count   = 0;
+$_last3m = array();
+$n_cur   = (int)date('Ym', time() - 86400 * 180); // сейчас минут полгода
 while($_r = $DB->Fetch($res))
 {
 	if($count < 75)
@@ -46,6 +48,14 @@ while($_r = $DB->Fetch($res))
 	$_stats['median']     += $_r['volume'] * $_drinks[$_r['drink_id']]['strength'];
 	$_stats['volume_dtype'][$_drinks[$_r['drink_id']]['type_id']] += $_r['volume'];
 	$_stats['volume_d'][$_r['drink_id']] += $_r['volume'];
+	$n = (int)date('Ym', $_r['date_drinked']);
+	if($n > $n_cur)
+	{
+		$_last3m[$n]['allvolume'] += $_r['volume'];
+		$_last3m[$n]['40volume']      += $_r['volume'] / (40 / $_drinks[$_r['drink_id']]['strength']);
+		$_last3m[$n]['100volume']     += $_r['volume'] / (95.6 / $_drinks[$_r['drink_id']]['strength']);
+		$_last3m[$n]['volume_dtype'][$_drinks[$_r['drink_id']]['type_id']] += $_r['volume'];
+	}
 	$count++;
 }
 $_stats['median'] = $_stats['median'] / $_stats['allvolume'];
@@ -56,6 +66,7 @@ $tplengine->assign('_drinks',      $_drinks);
 $tplengine->assign('_drink_types', $_drink_types);
 $tplengine->assign('_acts',        $_acts);
 $tplengine->assign('_stats',       $_stats);
+$tplengine->assign('_last3m',      $_last3m);
 
 $tplengine->template('index.tpl');
 
