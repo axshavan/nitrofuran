@@ -36,6 +36,7 @@ class CKassa
 		$error_message = '';
 
 		// проверка суммы
+		$_fields['amount'] = str_replace(',', '.', $_fields['amount']);
 		$_fields['amount'] = round((float)$_fields['amount'], 2);
 		if(!$_fields['amount'])
 		{
@@ -144,6 +145,9 @@ class CKassa
 			}
 		}
 
+		// если добавление задним числом
+		$_fields['backtime'] = strtotime(date('Y-m-d H:i:s', $_fields['backtime'] ? $_fields['backtime'] : time()));
+
 		global $DB;
 		$query_string = "insert into `".KASSA_OPERATION_TABLE."` (`currency_id`, `account_id`, `type_id`,
 			`amount`, `time`, `comment`, `backtime`) values
@@ -154,7 +158,7 @@ class CKassa
 				'".$_fields['amount']."',
 				unix_timestamp(),
 				'".$DB->EscapeString($_fields['comment'])."',
-				unix_timestamp()
+				'".$_fields['backtime']."'
 			)";
 		return $DB->Query($query_string);
 	}
