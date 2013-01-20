@@ -89,8 +89,8 @@ foreach($_opbytype as $optype_id => &$_op)
 {
 	foreach($_currencies as $c => $v)
 	{
-		$m1 = date('Y', $_op[$c]['first_time']) * 12 + date('m', $_op[$c]['first_time']);
-		$m2 = date('Y', $_op[$c]['last_time']) * 12  + date('m', $_op[$c]['last_time']);
+		$m1 = (int)date('Y', $_op[$c]['first_time']) * 12 + (int)date('m', $_op[$c]['first_time']);
+		$m2 = (int)date('Y', $_op[$c]['last_time']) * 12  + (int)date('m', $_op[$c]['last_time']);
 		$_op[$c]['months']    = $m2 - $m1 + 1;
 		$_op[$c]['average_c'] = round($_op[$c]['sum'] / $_op[$c]['count'], 2);
 		$_op[$c]['average_m'] = $_op[$c]['sum'] / $_op[$c]['months'];

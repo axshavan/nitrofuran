@@ -13,15 +13,10 @@
 
 class CKassa
 {
-	protected $authorized;
-
 	/**
 	 * Это конструктор, спасибо
 	 */
-	public function __construct()
-	{
-		$this->authorized = false;
-	}
+	public function __construct() { }
 
 	/**
 	 * Добавить операцию в кассу

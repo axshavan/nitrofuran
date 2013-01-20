@@ -37,17 +37,8 @@ while($r = $DB->Fetch($res))
 {
 	$_currencies[$r['id']] = $r['name'];
 }
-/*$DB->Query("insert into `".KASSA_OPERATION_TABLE."`
-	(`currency_id`, `account_id`, `type_id`, `amount`, `time`, `comment`, `backtime`)
-	values
-	(
-		'".(int)$_POST['currency_from']."',
-		'".(int)$_POST['account_from']."',
-		'".$OPTYPE_CUREXCH_MINUS."',
-		'".$sum_from."',
-		unix_timestamp(), 'В валюту ".$_currencies[$_POST['currency_to']]." на счёт ".$_accounts[$_POST['account_to']]."',
-		unix_timestamp()
-	)");*/
+
+// снятие с одного счёта в одной валюте
 if(!$kassa->Add
 (
 	array(
@@ -63,17 +54,8 @@ if(!$kassa->Add
 {
 	die('Ошибка: '.$error_message);
 }
-/*$DB->Query("insert into `".KASSA_OPERATION_TABLE."`
-	(`currency_id`, `account_id`, `type_id`, `amount`, `time`, `comment`, `backtime`)
-	values
-	(
-		'".(int)$_POST['currency_to']."',
-		'".(int)$_POST['account_to']."',
-		'".$OPTYPE_CUREXCH_PLUS."',
-		'".$sum_to."',
-		unix_timestamp(), 'Из валюты ".$_currencies[$_POST['currency_from']]." со счёта ".$_accounts[$_POST['account_from']]."',
-		unix_timestamp()
-	)");*/
+
+// добавление на другой счёт в другой валюте
 if(!$kassa->Add
 (
 	array(
@@ -89,6 +71,7 @@ if(!$kassa->Add
 {
 	die('Ошибка: '.$error_message);
 }
+
 redirect($_SERVER['HTTP_REFERER']);
 
 ?>
