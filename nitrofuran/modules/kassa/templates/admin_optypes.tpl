@@ -7,7 +7,7 @@
 		<th>Приход</th>
 		<th>Сервисная операция</th>
 		<? foreach($_kassa_properties as $_prop): ?>
-			<th><?= $_prop['name'] ?> <img src="/i/admin/del.gif" onclick="if(confirm('Правда удалить свойство?')){document.location='/admin/?module=kassa&page=4&delproperty=<?= $_prop['id'] ?>';}"></th>
+			<th><?= $_prop['name'] ?> <img src="/i/admin/del.gif" onclick="if(confirm('Правда удалить свойство?')){document.location='/admin/?module=kassa&page=4&delproperty=<?= $_prop['id'] ?>';}"/></th>
 		<? endforeach;?>
 	</tr>
 	<? foreach($_kassa_optype_byid as $_optype): ?>

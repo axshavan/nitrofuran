@@ -35,7 +35,6 @@
 			<th>Кол-во раз</th>
 			<th>Первый раз</th>
 			<th>Последний раз</th>
-			<th>Месяцев считается</th>
 			<th>В среднем</th>
 			<th>В среднем в месяц</th>
 			<th>В этом месяце ещё</th>
@@ -60,7 +59,6 @@
 						<td><?= $_op['count'] ?></td>
 						<td><?= date('Y-m-d', $_op['first_time']) ?></td>
 						<td><?= date('Y-m-d', $_op['last_time']) ?></td>
-						<td><?= $_op['months'] ?></td>
 						<td><?= $_op['average_c'] ?></td>
 						<td><?= $_op['average_m'] ?></td>
 						<td>
@@ -108,7 +106,7 @@
 				<td><?= $_plan['amount'] ?></td>
 				<td colspan="2">&nbsp;</td>
 				<td><?= $_plan['repeat'] ?></td>
-				<td colspan="3">&nbsp;</td>
+				<td colspan="2">&nbsp;</td>
 				<td><strong><?= $_plan['amount'] ?></strong></td>
 				<td colspan="2">&nbsp;</td>
 			</tr>

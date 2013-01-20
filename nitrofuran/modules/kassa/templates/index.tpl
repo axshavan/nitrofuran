@@ -185,7 +185,9 @@
 				<? foreach($_optypes as $k => $_group): ?>
 					<div class="optypegroup" id="optypegroup<?= $k?>">
 						<? foreach($_group as $_optype): ?>
-							<span id="span_type_<?= $_optype['id'] ?>" class="<?= $_optype['is_income'] ? 'inc' : 'exp' ?>" onclick="onTypeClick(this, '<?= $_optype['id'] ?>')"><?= $_optype['name'] ?></span>
+							<? if(!in_array($_optype['id'], $_hide_in_form)): ?>
+								<span id="span_type_<?= $_optype['id'] ?>" class="<?= $_optype['is_income'] ? 'inc' : 'exp' ?>" onclick="onTypeClick(this, '<?= $_optype['id'] ?>')"><?= $_optype['name'] ?></span>
+							<? endif; ?>
 						<? endforeach; ?>
 					</div>
 				<? endforeach; ?>
@@ -305,7 +307,9 @@
 				<? foreach($_optypes as $k => $_group): ?>
 					<div class="optypegroupf<?= $show_group == $k ? '' : ' hidden' ?>" id="optypegroupf<?= $k?>">
 						<? foreach($_group as $_optype): ?>
-							<span class="<?= $_optype['is_income'] ? 'inc' : 'exp' ?><?= $_optype['id'] == $filter_type ? ' selectedf' : '' ?>" onclick="document.location='<?= string_request_replace('type', $_optype['id'] ) ?>'"><?= $_optype['name'] ?></span>
+							<? if(!in_array($_optype['id'], $_hide_in_form)): ?>
+								<span class="<?= $_optype['is_income'] ? 'inc' : 'exp' ?><?= $_optype['id'] == $filter_type ? ' selectedf' : '' ?>" onclick="document.location='<?= string_request_replace('type', $_optype['id'] ) ?>'"><?= $_optype['name'] ?></span>
+							<? endif; ?>
 						<? endforeach; ?>
 					</div>
 				<? endforeach; ?>

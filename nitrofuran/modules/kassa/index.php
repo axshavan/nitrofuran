@@ -389,12 +389,25 @@ if(isset($_REQUEST['debtor']))
 	$tplengine->assign('_debtor_operations', $_debtor_operations);
 }
 
+// не отображаемые в форме добавления типы операций
+$_hide_in_form = array();
+$res = $DB->Query("select pv.* from `".KASSA_OPERATION_PROPVALUES_TABLE."` pv, `".KASSA_OPERATION_PROPNAMES_TABLE."` pn where pn.`code` = 'hideinform' and pn.`id` = pv.`option_id`");
+while($_row = $DB->Fetch($res))
+{
+	if($_row['value'])
+	{
+		$_hide_in_form[] = $_row['operation_type_id'];
+	}
+}
+$tplengine->assign('_hide_in_form', $_hide_in_form);
+
 // наиболее частые типы операций
 $res = $DB->Query("select t.`id` as tid, t.`name` as tname,
 	g.`id` as gid, g.`name` as gname from
 	`".KASSA_OPERATION_TABLE."` o
 	join `".KASSA_OPERATION_TYPE_TABLE."` t on (t.`id` = o.`type_id`)
 	join `".KASSA_OPERATION_TYPE_GROUP_TABLE."` g on (g.`id` = t.`group_id`)
+	where t.`id` not in ('".implode("', '", $_hide_in_form)."')
 	group by t.`id`
 	order by count(o.`id`) desc
 	limit 5");
