@@ -5,7 +5,7 @@
 
 if(!CModule::IsModuleInstalled('kassa'))
 {
-	// дранкипер не установлен
+	// касса не установлена
 	return true;
 }
 

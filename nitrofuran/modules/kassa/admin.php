@@ -312,10 +312,14 @@ switch($_REQUEST['page'])
 		}
 		
 		// добавление нового свойства
-		if($_REQUEST['newpropname'] && $_REQUEST['newproptype'])
+		if($_REQUEST['newpropname'] && $_REQUEST['newproptype'] && $_REQUEST['newpropcode'])
 		{
-			$DB->Query("insert into `".KASSA_OPERATION_PROPNAMES_TABLE."` (`name`, `type`)
-				values ('".$DB->EscapeString($_REQUEST['newpropname'])."', '".($_REQUEST['newproptype'] == 'text' ? 'text' : 'checkbox')."')");
+			$DB->Query("insert into `".KASSA_OPERATION_PROPNAMES_TABLE."` (`name`, `type`, `code`)
+				values
+				(
+					'".$DB->EscapeString($_REQUEST['newpropname'])."',
+					'".($_REQUEST['newproptype'] == 'text' ? 'text' : 'checkbox')."',
+					'".$DB->EscapeString($_REQUEST['newpropcode'])."')");
 			redirect('/admin/?module=kassa&page=4');
 			die();
 		}

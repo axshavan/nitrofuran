@@ -40,6 +40,7 @@
 			<th>В среднем в месяц</th>
 			<th>В этом месяце ещё</th>
 			<th>Считаем?</th>
+			<th>Скрыть?</th>
 		</tr>
 		
 		<!-- статистика -->
@@ -81,13 +82,16 @@
 								</strong>
 							<? endif; ?>
 						</td>
-						<td>
-							<? if($_op['do_not_count'] == 'disabled'): ?>
-								<img src="/i/kassa/add.gif" class="button" onclick="document.location='?switch=<?= $optype_id ?>'">
-							<? else:  ?>
-								<img src="/i/kassa/minus.gif" class="button" onclick="document.location='?switch=<?= $optype_id ?>'">
-							<? endif; ?>
-						</td>
+						<? if($rowspan): ?>
+							<td rowspan="<?= $rowspan ?>">
+								<? if($_op['do_not_count'] == 'disabled'): ?>
+									<img src="/i/kassa/add.gif" class="button" onclick="document.location='?switch=<?= $optype_id ?>'">
+								<? else:  ?>
+									<img src="/i/kassa/minus.gif" class="button" onclick="document.location='?switch=<?= $optype_id ?>'">
+								<? endif; ?>
+							</td>
+							<td rowspan="<?= $rowspan ?>"><img src="/i/kassa/del.gif" class="button" onclick="if(confirm('Что, правда скрыть?')) document.location='?hide=<?= $optype_id ?>'" /></td>
+						<? endif; ?>
 					</tr>
 				<? endif; ?>
 			<?
@@ -102,14 +106,11 @@
 				<td><?= $_plan['name'] == $_optypes[$_plan['operation_type_id']]['name'] ? $_plan['name'] : $_plan['name'].' / '.$_optypes[$_plan['operation_type_id']]['name'] ?></td>
 				<td><?= $_currencies[$_plan['currency_id']]['symbol'] ?></td>
 				<td><?= $_plan['amount'] ?></td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
+				<td colspan="2">&nbsp;</td>
 				<td><?= $_plan['repeat'] ?></td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
+				<td colspan="3">&nbsp;</td>
 				<td><strong><?= $_plan['amount'] ?></strong></td>
-				<td>&nbsp;</td>
+				<td colspan="2">&nbsp;</td>
 			</tr>
 		<? endforeach; ?>
 	</table>

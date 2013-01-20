@@ -50,6 +50,10 @@
 				<td>Название</td>
 				<td><input type="text" name="newpropname"></td>
 			</tr>
+            <tr>
+                <td>Код</td>
+                <td><input type="text" name="newpropcode"></td>
+            </tr>
 			<tr>
 				<td>Тип операции</td>
 				<td>

@@ -30,6 +30,22 @@ if($_REQUEST['switch'])
 		redirect('.');
 	}
 }
+elseif($_REQUEST['hide'])
+{
+	$hide_id = (int)$_REQUEST['hide'];
+	if($hide_id)
+	{
+		$res = $DB->Query("select `id` from `".KASSA_OPERATION_PROPNAMES_TABLE."` where `code` = 'hideinplans'");
+		$option_id = $DB->Fetch($res);
+		$option_id = $option_id['id'];
+		$DB->Query("update `".KASSA_OPERATION_PROPVALUES_TABLE."` set `value` = '1' where `operation_type_id` = '".$hide_id."' and `option_id` = '".$option_id."'");
+		if(!$DB->AffectedRows())
+		{
+			$DB->Query("insert into `".KASSA_OPERATION_PROPVALUES_TABLE."` (`operation_type_id`, `option_id`, `value`) values ('".$hide_id."', '".$option_id."', '1')");
+		}
+		redirect('.');
+	}
+}
 
 $_opbytype   = array();
 $_sumbyacc   = array();
@@ -54,8 +70,20 @@ while($_row = $DB->Fetch($res))
 	$_optypes[$_row['id']] = $_row;
 }
 
+// свойство "скрывать в планировании" операций
+$_hide_in_plans = array();
+$res = $DB->Query("select pv.* from `".KASSA_OPERATION_PROPVALUES_TABLE."` pv, `".KASSA_OPERATION_PROPNAMES_TABLE."` pn where pn.`code` = 'hideinplans' and pn.`id` = pv.`option_id`");
+while($_row = $DB->Fetch($res))
+{
+	if($_row['value'])
+	{
+		$_hide_in_plans[] = $_row['operation_type_id'];
+	}
+}
+
 // операции
-$op_res = $DB->Query("select `currency_id`, `account_id`, `type_id`, `amount`, `time`, `backtime` from `".KASSA_OPERATION_TABLE."`");
+$op_res = $DB->Query("select `currency_id`, `account_id`, `type_id`, `amount`, `time`, `backtime` from `".KASSA_OPERATION_TABLE."`
+	where `type_id` not in ('".implode("', '", $_hide_in_plans)."')");
 while($_op = $DB->Fetch($op_res))
 {
 	$amount = $_op['amount'] * ($_optypes[$_op['type_id']]['is_income'] ? 1 : -1);
