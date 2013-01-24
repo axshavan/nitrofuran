@@ -82,17 +82,19 @@ while($_row = $DB->Fetch($res))
 }
 
 // операции
-$op_res = $DB->Query("select `currency_id`, `account_id`, `type_id`, `amount`, `time`, `backtime` from `".KASSA_OPERATION_TABLE."`
-	where `type_id` not in ('".implode("', '", $_hide_in_plans)."')");
+$op_res = $DB->Query("select `currency_id`, `account_id`, `type_id`, `amount`, `time`, `backtime` from `".KASSA_OPERATION_TABLE."`");
 while($_op = $DB->Fetch($op_res))
 {
 	$amount = $_op['amount'] * ($_optypes[$_op['type_id']]['is_income'] ? 1 : -1);
-	$_opbytype[$_op['type_id']][$_op['currency_id']]['sum'] += $amount;
-	$_opbytype[$_op['type_id']][$_op['currency_id']]['count']++;
-	$_opbytype[$_op['type_id']][$_op['currency_id']]['last_time'] = $_op['backtime'];
-	if(!$_opbytype[$_op['type_id']][$_op['currency_id']]['first_time'])
+	if(!in_array($_op['type_id'], $_hide_in_plans))
 	{
-		$_opbytype[$_op['type_id']][$_op['currency_id']]['first_time'] = $_op['backtime'];
+		$_opbytype[$_op['type_id']][$_op['currency_id']]['sum'] += $amount;
+		$_opbytype[$_op['type_id']][$_op['currency_id']]['count']++;
+		$_opbytype[$_op['type_id']][$_op['currency_id']]['last_time'] = $_op['backtime'];
+		if(!$_opbytype[$_op['type_id']][$_op['currency_id']]['first_time'])
+		{
+			$_opbytype[$_op['type_id']][$_op['currency_id']]['first_time'] = $_op['backtime'];
+		}
 	}
 	$_sumbyacc[$_op['account_id']][$_op['currency_id']] += $amount;
 	$_sumbycur[$_op['currency_id']]                     += $amount;
