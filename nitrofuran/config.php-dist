@@ -4,8 +4,14 @@
  * Конфигурационный файл.
  */
 
-define('HTTP_ROOT',     ''); // размещение корня сайта с точки зрения сервера
-define('DOCUMENT_ROOT', $_SERVER['DOCUMENT_ROOT'].HTTP_ROOT); // физическое размещение корня сайта
+if(!defined('HTTP_ROOT'))
+{
+	define('HTTP_ROOT',     ''); // размещение корня сайта с точки зрения сервера
+}
+if(!defined('DOCUMENT_ROOT'))
+{
+	define('DOCUMENT_ROOT', $_SERVER['DOCUMENT_ROOT'].HTTP_ROOT); // физическое размещение корня сайта
+}
 
 // параметры соединения с базой данных
 define('MYSQL_HOST',     'localhost');

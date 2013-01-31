@@ -133,7 +133,7 @@
 				<? foreach($_weekdays[$daynum]['opnum_c'] as $currency_id => $v): $bOdd = !$bOdd; ?>
 					<tr class="<?= $bOdd ? 'odd' : '' ?>">
 						<td><?= $_currencies[$currency_id]['name'].' ('.$_currencies[$currency_id]['symbol'].')' ?></td>
-                        <td><?= $_weekdays[$daynum]['opsum_c'][$currency_id].' '.$_currencies[$currency_id]['symbol'] ?></td>
+                        <td><?= round($_weekdays[$daynum]['opsum_c'][$currency_id], 2).' '.$_currencies[$currency_id]['symbol'] ?></td>
 						<td><?= $v ?></td>
 						<td><?= round($_weekdays[$daynum]['opsum_c'][$currency_id] / $v, 2).' '.$_currencies[$currency_id]['symbol'] ?></td>
 					</tr>
