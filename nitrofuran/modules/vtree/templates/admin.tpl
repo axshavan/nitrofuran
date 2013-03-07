@@ -46,6 +46,7 @@ if(!function_exists('draw_vtree_item'))
 							<td>
 								<input type="button" value="Сохранить" onclick="ge('id_<?= $item['id'] ?>').name='saveid'; ge('form_<?= $item['id'] ?>').submit();" />
 								<input type="button" value="Добавить подпапку" onclick="ge('id_<?= $item['id'] ?>').name='add'; ge('form_<?= $item['id'] ?>').submit();" />
+                                <input type="button" value="Удалить" onclick="if(confirm('Что, правда удалить?')) { document.location='/admin/?module=vtree&page=1&delid=<?= $item['id'] ?>' }" />
 							</td>
 						</tr>
 					</table>
