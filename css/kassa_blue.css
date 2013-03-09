@@ -155,6 +155,9 @@ table.holdtable { width: 24%; float: right; margin-left: 2px; }
 .stats-column-3 table td { font-size: 9px; }
 .stats-column-2 .optable tr.exp td:nth-child(2) { background-color: #c8a0a0; }
 .stats-column-2 .optable tr.exp_odd td:nth-child(2) { background-color: #d5b9b9; }
+.stats-column-1 table.optable,
+.stats-column-2 table.optable,
+.stats-column-3 table.optable { width: 100%; max-width: 100%; }
 
 table.stat_table { background-color: #bee3f1; width: 100%; border-left: 1px solid #414e53; border-top: 1px solid #414e53; empty-cells: show; }
 table.stat_table th { padding: 2px; text-align: left; border-right: 1px solid #414e53; border-bottom: 1px solid #414e53; background-color: white; }
