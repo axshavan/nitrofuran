@@ -13,10 +13,37 @@
  * http://sam.zoy.org/wtfpl/COPYING for more details.
  */
 
-$content = $res[0]['content'];
+
+// переваривание res[meta]
+$res['~meta']       = array();
+$_allowed_languages = '';
+foreach($res['meta'] as $_meta)
+{
+	if($_meta['key'] == 'allowed_languages')
+	{
+		$_allowed_languages = $_meta['value'];
+	}
+	$res['~meta'][$_meta['key']] = $_meta['value'];
+}
+$_allowed_languages = explode(',', $_allowed_languages);
+
+// определение текущего языка
+$language = '';
+foreach($_allowed_languages as $l)
+{
+	if(strlen($l) && strpos($_SERVER['HTTP_ACCEPT_LANGUAGE'], $l) !== false)
+	{
+		$language = $l;
+		break;
+	}
+}
+
 if($TREE_INFO['current']['template'] && file_exists(dirname(__FILE__).'/templates/'.$TREE_INFO['current']['template']))
 {
-	require_once(dirname(__FILE__).'/templates/'.$TREE_INFO['current']['template']);
+	$tplengine = new CTemplateEngine('static');
+	$tplengine->assign('_page', $res);
+	$tplengine->assign('language', $language);
+	$tplengine->template(dirname(__FILE__).'/templates/'.$TREE_INFO['current']['template']);
 }
 else
 {

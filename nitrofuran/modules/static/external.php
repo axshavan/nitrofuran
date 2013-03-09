@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * Подключение внешнего скрипта и внешних шаблонов для случая, когда
  * nitrofuran используется как фреймворк.
  *
@@ -15,15 +14,21 @@
  */
 
 require_once(DOCUMENT_ROOT.'/nitrofuran/modules/static/config.php');
+require_once(DOCUMENT_ROOT.'/nitrofuran/modules/static/static.php');
 global $TREE_INFO;
-global $DB;
 
 $tree_id = (int)$TREE_INFO['current']['id'];
-$res     = $DB->QueryFetched("select `content` from `".STATIC_PAGES_TABLE."` where `tree_id` = '".$tree_id."'");
-if(!$res[0])
+if(!$tree_id)
 {
 	error404();
 }
+$staticpage = new staticpage();
+$res        = $staticpage->page($tree_id, true);
+if(!$res['page']['id'])
+{
+	error404();
+}
+
 if(file_exists($_SERVER['DOCUMENT_ROOT'].'/nitrofuran/modules/static/static_router.php'))
 {
 	require_once($_SERVER['DOCUMENT_ROOT'].'/nitrofuran/modules/static/static_router.php');

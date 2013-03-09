@@ -20,17 +20,18 @@ class staticpage
 
 	/**
 	 * Получить данные об одной статичной странице
-	 * @param  int $id идентификатор выбираемой страницы
+	 * @param  int  $id         идентификатор выбираемой страницы
+	 * @param  bool $bUseTreeId инспользовать идентификатор как tree_id
 	 * @return array
 	 */
-	public function page($id)
+	public function page($id, $bUseTreeId = false)
 	{
 		global $DB;
 		$result = array('page' => '', 'meta' => array());
 		$id     = (int)$id;
-		$res    = $DB->Query("select * from `".STATIC_PAGES_TABLE."` where `id` = '".$id."'");
+		$res    = $DB->Query("select * from `".STATIC_PAGES_TABLE."` where `".($bUseTreeId ? 'tree_id' : 'id')."` = '".$id."'");
 		$result['page'] = $DB->Fetch($res);
-		$res    = $DB->Query("select `id`, `meta_key`, `content` from `".STATIC_META_TABLE."` where `page_id` = '".$id."'");
+		$res    = $DB->Query("select `id`, `meta_key`, `content` from `".STATIC_META_TABLE."` where `page_id` = '".$result['page']['id']."'");
 		while($ar = $DB->Fetch($res))
 		{
 			$result['meta'][$ar['id']] = array('key' => $ar['meta_key'], 'value' => $ar['content']);
