@@ -12,6 +12,7 @@
 */
 
 require_once('config.php');
+require_once(DOCUMENT_ROOT.'/nitrofuran/modules/static/static.php');
 require_once(DOCUMENT_ROOT.'/nitrofuran/graph.class.php');
 
 switch($page)
@@ -33,7 +34,7 @@ switch($page)
 		$graph->CreateFromArray($_vtree);
 		$_vtree = $graph->GetAsArray(true);
 		$_vtree = $_vtree['children'];
-		
+
 		$tplengine->assign('_vtree', $_vtree);
 		$tplengine->assign('inner_template_name', DOCUMENT_ROOT.'/nitrofuran/modules/static/templates/admin_tree.tpl');
 		break;
@@ -77,15 +78,24 @@ switch($page)
 	{
 		// одна статичная страница
 		$page_id = (int)$_REQUEST['pageid'];
+		$staticpage = new staticpage();
+
 		if($_POST)
 		{
-			if($page_id)
+			$_meta = array(array('key' => $_POST['meta_new_key'], 'value' => $_POST['meta_new_val']));
+			foreach($_POST['meta_key'] as $meta_id => $v)
 			{
-				$DB->Query("update `".STATIC_PAGES_TABLE."` set `content` = '".addslashes($_POST['content'])."' where `id` = '".$page_id."'");
+				$_meta[$meta_id]['key'] = $v;
 			}
+			foreach($_POST['meta_val'] as $meta_id => $v)
+			{
+				$_meta[$meta_id]['value'] = $v;
+			}
+			$staticpage->save_page_content($page_id, $_POST['content']);
+			$staticpage->save_page_meta($page_id,    $_meta);
 		}
-		$res = $DB->Query("select * from `".STATIC_PAGES_TABLE."` where `id` = '".$page_id."'");
-		$tplengine->assign('_page', $DB->Fetch($res));
+
+		$tplengine->assign('_page', $staticpage->page($page_id));
 		$tplengine->assign('inner_template_name', DOCUMENT_ROOT.'/nitrofuran/modules/static/templates/admin_form.tpl');
 		break;
 	}

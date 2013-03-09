@@ -13,6 +13,14 @@ $DB->Query("CREATE TABLE `".STATIC_PAGES_TABLE."` (
 	PRIMARY KEY  USING BTREE(`id`, `tree_id`)
   )
   ENGINE = InnoDB");
+$DB->Query("CREATE TABLE `".STATIC_META_TABLE."` (
+	`id` integer NOT NULL AUTO_INCREMENT,
+	`page_id` integer,
+	`meta_key` varchar(255),
+	`content` text  NOT NULL,
+	PRIMARY KEY (`id`)
+  )
+  ENGINE = InnoDB");
 
 // добавление static в параметр modules_installed админки
 $r = get_param('admin', 'modules_installed');
