@@ -24,7 +24,7 @@ class CRUD
 	public function create($table, $_fields)
 	{
 		global $DB;
-		$query1 = "insert into `".$table."` (";
+		$query1 = "insert into `".$DB->EscapeString($table)."` (";
 		$query2 = "";
 		foreach($_fields as $k => $v)
 		{
@@ -42,9 +42,14 @@ class CRUD
 	 * @param  array  $_params массив с прочими параметрами (limit, offset)
 	 * @return array
 	 */
-	public function read($table, $_filter, $_sort, $_params)
+	public function read($table, $_filter = array(), $_sort = array(), $_params = array())
 	{
-		// ...
+		global $DB;
+		$query = "select * from `".$DB->EscapeString($table)."` "
+			.$this->strWhere($_filter)." "
+			.$this->strOrder($_sort)." "
+			.$this->strParams($_params);
+		return $DB->QueryFetched($query);
 	}
 
 	/**
@@ -79,7 +84,31 @@ class CRUD
 	 */
 	protected function strWhere($_filter)
 	{
-		// ...
+		if(!is_array($_filter) || !sizeof($_filter))
+		{
+			return "";
+		}
+		global $DB;
+		$query = "where 1=1";
+		foreach($_filter as $k => $v)
+		{
+			$operand = '=';
+			if(is_array($v))
+			{
+				$operand = 'in';
+				foreach($v as &$vv)
+				{
+					$vv = $DB->EscapeString($vv);
+				}
+				$v = "('".implode("','", $v)."')";
+			}
+			else
+			{
+				$v = "'".$DB->EscapeString($v)."'";
+			}
+			$query .= " and `".$DB->EscapeString($k)."` ".$operand." ".$v;
+		}
+		return $query;
 	}
 
 	/**
@@ -89,7 +118,17 @@ class CRUD
 	 */
 	protected function strOrder($_sort)
 	{
-		// ...
+		if(!is_array($_sort) || !sizeof($_sort))
+		{
+			return "";
+		}
+		global $DB;
+		$query = array();
+		foreach($_sort as $k => $v)
+		{
+			$query[] = "`".$DB->EscapeString($k)."` ".(strtoupper($v) == 'DESC' ? 'desc' : 'asc');
+		}
+		return "order by ".implode(",", $query);
 	}
 
 	/**
@@ -99,7 +138,11 @@ class CRUD
 	 */
 	protected function strParams($_params)
 	{
-		// ...
+		if(!isset($_params['limit']))
+		{
+			return "";
+		}
+		return "limit ".(int)$_params['limit'].((int)$_params['offset'] ? " offset ".(int)$_params['offset'] : "");
 	}
 }
 
