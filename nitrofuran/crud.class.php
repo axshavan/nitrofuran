@@ -23,7 +23,15 @@ class CRUD
 	 */
 	public function create($table, $_fields)
 	{
-		// ...
+		global $DB;
+		$query1 = "insert into `".$table."` (";
+		$query2 = "";
+		foreach($_fields as $k => $v)
+		{
+			$query1 .= "`".$DB->EscapeString($k)."`,";
+			$query2 .= "'".$DB->EscapeString($v)."',";
+		}
+		return $DB->Query(substr($query1, 0, strlen($query1) - 1).") values (".substr($query2, 0, strlen($query2) - 1).")");
 	}
 
 	/**
