@@ -21,6 +21,7 @@ if(isset($_POST['ajax']))
 }
 
 $tplengine = new CTemplateEngine('reader');
+$tplengine->assign('curpath', $_SERVER['REQUEST_URI']);
 $tplengine->template('index.tpl');
 
 ?>

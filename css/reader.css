@@ -1,0 +1,85 @@
+body
+{
+    font-family: sans-serif;
+}
+.header
+{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 39px;
+    padding: 10px 0 0 10px;
+    border-bottom: 1px solid #909090;
+    background-image: url("/i/reader/bg-top.gif");
+    background-repeat: repeat-x;
+}
+.left
+{
+    position: absolute;
+    left: 0;
+    top: 50px;
+    bottom: 0;
+    width: 299px;
+    background-color: #e7e7e7;
+    border-right: 1px solid #909090;
+    background-image: url("/i/reader/bg-top.gif");
+    background-repeat: repeat-x;
+    background-position: bottom;
+}
+    .left #subscr
+    {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 50px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        padding: 15px;
+    }
+    .left .addGroup
+    {
+        position: absolute;
+        bottom: 10px;
+        left: 15px;
+    }
+#right
+{
+    position: absolute;
+    left: 300px;
+    top: 50px;
+    bottom: 0;
+    right: 0;
+    background-color: #d4d4d4;
+}
+
+/* формы */
+.addform
+{
+    position: absolute;
+    z-index: 2;
+    border: 1px solid #c0c0c0;
+    padding: 15px;
+    background-color: white;
+    border-radius: 10px;
+    color: #808080;
+    font-size: 12px;
+    max-width: 400px;
+    left: 30px;
+    display: none;
+}
+    .addform input
+    {
+        display: block;
+        margin-top: 10px;
+    }
+#addgform
+{
+    bottom: 10px;
+}
+#addsform
+{
+    top: 20px;
+}
+/* /формы */

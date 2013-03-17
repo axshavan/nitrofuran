@@ -12,4 +12,14 @@
  * http://sam.zoy.org/wtfpl/COPYING for more details.
  */
 
+switch($_POST['ajax'])
+{
+	// загрузка списка подписок
+	case 'loadSubscriptions':
+	{
+		// ...
+		break;
+	}
+}
+
 ?>

@@ -14,4 +14,30 @@
 
 require_once(DOCUMENT_ROOT.'/nitrofuran/crud.class.php');
 
+class CReader
+{
+	protected $crud; // CRUD модель
+
+	// конструктор
+	public function __conctruct()
+	{
+		$this->crud = new CRUD();
+	}
+
+	public function addGroup() {}
+	public function addSubscription() {}
+	public function deleteGroup() {}
+	public function deleteSubscription() {}
+	public function getItem() {}
+	public function getItems() {}
+	public function getSubscriptions() {}
+	public function readItem() {}
+	public function refreshAll() {}
+	public function refreshSubscription() {}
+	public function unreadItem() {}
+	public function updateGroup() {}
+	public function updateSubscription() {}
+	public function updateItem() {}
+}
+
 ?>
