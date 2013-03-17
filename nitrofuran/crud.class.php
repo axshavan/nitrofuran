@@ -61,7 +61,19 @@ class CRUD
 	 */
 	public function update($table, $_filter, $_values)
 	{
-		// ...
+		if(!is_array($_values) || !sizeof($_values))
+		{
+			return 0;
+		}
+		global $DB;
+		$query = array();
+		foreach($_values as $k => $v)
+		{
+			$query[] = "`".$DB->EscapeString($k)."` = '".$DB->EscapeString($v)."'";
+		}
+		$query = "update `".$DB->EscapeString($table)."` set ".implode(",", $query)." ".$this->strWhere($_filter);
+		$DB->Query($query);
+		return $DB->AffectedRows();
 	}
 
 	/**
@@ -70,9 +82,12 @@ class CRUD
 	 * @param  array  $_filter массив с параметрами фильтрации (field_name => string/array value[, ...])
 	 * @return int    количество удалённых записей
 	 */
-	public function delete($table, $_filter)
+	public function delete($table, $_filter = array())
 	{
-		// ...
+		global $DB;
+		$query = "delete from `".$DB->EscapeString($table)."` ".$this->strWhere($_filter);
+		$DB->Query($query);
+		return $DB->AffectedRows();
 	}
 
 	// дальше идут служебные функции

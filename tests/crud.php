@@ -248,8 +248,100 @@ do
 	}
 
 	// 4) обновление записей
+	// 4.1) обновление с простой выборкой
+	$_records[0]['field_1'] = 'jagajaga';
+	$_records[0]['field_2'] = '123jopa';
+	if($subject->update($table_name, array('field_0' => $_records[0]['field_0']), array('field_1' => 'jagajaga', 'field_2' => '123jopa')) != 1)
+	{
+		// может быть ложное срабатывание в случае, если вдруг случится удачная атака на md5 :)
+		echo 'test 4.1 failed in line '.__LINE__."\n";
+		break;
+	}
+	$subject_res = $subject->read($table_name, array('field_0' => $_records[0]['field_0']));
+	if($subject_res[0] != $_records[0])
+	{
+		echo 'test 4.1 failed in line '.__LINE__."\n";
+		break;
+	}
+	// 4.2) обновление со сложной выборкой
+	$_records[1]['field_1'] = 'jagajaga7';
+	$_records[1]['field_2'] = '123jopa7';
+	$_records[2]['field_1'] = 'jagajaga7';
+	$_records[2]['field_2'] = '123jopa7';
+	if($subject->update
+	(
+		$table_name,
+		array('field_0' => array($_records[1]['field_0'], $_records[2]['field_0'])),
+		array('field_1' => 'jagajaga7', 'field_2' => '123jopa7')
+	) != 2)
+	{
+		// может быть ложное срабатывание в случае, если вдруг случится удачная атака на md5 :)
+		echo 'test 4.2 failed in line '.__LINE__."\n";
+		break;
+	}
+	$subject_res = $subject->read($table_name, array('field_0' => array($_records[1]['field_0'], $_records[2]['field_0'])));
+	if($subject_res[0]['field_1'] != 'jagajaga7' || $subject_res[0]['field_2'] != '123jopa7')
+	{
+		echo 'test 4.2 failed in line '.__LINE__."\n";
+		break;
+	}
+	if($subject_res[1]['field_1'] != 'jagajaga7' || $subject_res[1]['field_2'] != '123jopa7')
+	{
+		echo 'test 4.2 failed in line '.__LINE__."\n";
+		break;
+	}
+	$res = $DB->QueryFetched("select * from `".$table_name."` where `field_0` not in ('".$_records[0]['field_0']."', '".$_records[1]['field_0']."', '".$_records[2]['field_0']."') order by `field_3` desc limit 1");
+	if($res[0]['field_1'] == 'jagajaga7' || $res[0]['field_1'] == 'jagajaga')
+	{
+		echo 'test 4.2 failed in line '.__LINE__."\n";
+		break;
+	}
+	if($res[0]['field_2'] == '123jopa7' || $res[0]['field_2'] == '123jopa')
+	{
+		echo 'test 4.2 failed in line '.__LINE__."\n";
+		break;
+	}
 
 	// 5) удаление записей
+	// 5.1) удаление с простым условием
+	$deleted1 = $subject->delete($table_name, array('field_3' => $_records[0]['field_3']));
+	if(!$deleted1)
+	{
+		echo 'test 5.1 failed in line '.__LINE__."\n";
+		break;
+	}
+	$subject_res = $subject->read($table_name);
+	if(sizeof($subject_res) + $deleted1 != sizeof($_records))
+	{
+		echo 'test 5.1 failed in line '.__LINE__."\n";
+		break;
+	}
+	// 5.2) удаление со сложным условием
+	$deleted2 = $subject->delete($table_name, array('field_4' => array($_records[1]['field_4'], $_records[2]['field_4'])));
+	if(!$deleted2)
+	{
+		echo 'test 5.2 failed in line '.__LINE__."\n";
+		break;
+	}
+	$subject_res = $subject->read($table_name);
+	if(sizeof($subject_res) + $deleted1 + $deleted2 != sizeof($_records))
+	{
+		echo 'test 5.2 failed in line '.__LINE__."\n";
+		break;
+	}
+	// 5.3) удаление всего
+	$deleted3 = $subject->delete($table_name);
+	if(!$deleted3 || $deleted3 != sizeof($_records) - $deleted1 - $deleted2)
+	{
+		echo 'test 5.3 failed in line '.__LINE__."\n";
+		break;
+	}
+	$subject_res = $subject->read($table_name);
+	if(sizeof($subject_res))
+	{
+		echo 'test 5.3 failed in line '.__LINE__."\n";
+		break;
+	}
 
 	echo 'All tests passed';
 }
