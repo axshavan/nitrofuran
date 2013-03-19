@@ -12,16 +12,19 @@
  * http://sam.zoy.org/wtfpl/COPYING for more details.
  */
 
+require_once(dirname(__FILE__).'/config.php');
 require_once(dirname(__FILE__).'/reader.php');
+$reader    = new CReader();
+$tplengine = new CTemplateEngine('reader');
+$tplengine->assign('curpath', $_SERVER['REQUEST_URI']);
 
+// подключение аяксового роутера
 if(isset($_POST['ajax']))
 {
 	require(dirname(__FILE__).'/ajax.php');
 	return;
 }
 
-$tplengine = new CTemplateEngine('reader');
-$tplengine->assign('curpath', $_SERVER['REQUEST_URI']);
 $tplengine->template('index.tpl');
 
 ?>

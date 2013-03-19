@@ -1,3 +1,5 @@
+var bAjaxInProgress = false;
+
 $(document).ready
 (
 	function()
@@ -12,6 +14,46 @@ $(document).ready
  */
 function addGFormSubmit()
 {
+	var groupname = $('#addgform input').val();
+	if(!groupname || !groupname.length)
+	{
+		return false;
+	}
+	if(bAjaxInProgress)
+	{
+		return;
+	}
+	bAjaxInProgress = true;
+	curtainOn();
+	jQuery.post
+	(
+		curpath,
+		{
+			ajax: 'addGroup',
+			group: groupname,
+			parent_id: 0
+		},
+		function(data)
+		{
+			if(data == 'ok')
+			{
+				$('#addgform').fadeOut();
+				loadSubscriptions();
+			}
+			else
+			{
+				curtainOff();
+				alert(data);
+			}
+		}
+	);
+}
+
+/**
+ * Засабмиттить форму добавления подписки
+ */
+function addSFormSubmit()
+{
 	// ...
 }
 
@@ -20,7 +62,8 @@ function addGFormSubmit()
  */
 function curtainOff()
 {
-	// ...
+	bAjaxInProgress = false;
+	$('#curtain').fadeOut();
 }
 
 /**
@@ -28,7 +71,7 @@ function curtainOff()
  */
 function curtainOn()
 {
-	// ...
+	$('#curtain').fadeIn();
 }
 
 /**

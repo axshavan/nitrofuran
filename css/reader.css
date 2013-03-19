@@ -38,6 +38,20 @@ body
         overflow-y: scroll;
         padding: 15px;
     }
+        .left #subscr ul
+        {
+            margin: 0;
+            padding: 0 0 0 10px;
+            list-style-type: none;
+        }
+        .left #subscr ul.folders
+        {
+            list-style-image: url("/i/reader/rss_folder.gif");
+        }
+        .left #subscr ul.feeds
+        {
+            list-style-image: url("/i/reader/rss_feed.gif");
+        }
     .left .addGroup
     {
         position: absolute;
@@ -52,6 +66,18 @@ body
     bottom: 0;
     right: 0;
     background-color: #d4d4d4;
+}
+#curtain
+{
+    position: fixed;
+    background-color: black;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    opacity: 0.4;
+    z-index: 10;
+    display: none;
 }
 
 /* формы */

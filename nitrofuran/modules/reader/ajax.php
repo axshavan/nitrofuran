@@ -14,12 +14,33 @@
 
 switch($_POST['ajax'])
 {
+	// добавление группы
+	case 'addGroup':
+	{
+		if($reader->addGroup($_POST['group'], $_POST['parent_id'], $error))
+		{
+			echo 'ok';
+		}
+		else
+		{
+			echo 'Не удалось добавить группу: ';
+			switch($error)
+			{
+				case 'EMPTY_NAME': echo 'пустое название группы'; break;
+				case 'DB_ERROR':   echo 'ошибка базы данных'; break;
+				default:           echo 'непонятно почему'; break;
+			}
+		}
+		break;
+	}
 	// загрузка списка подписок
 	case 'loadSubscriptions':
 	{
-		// ...
+		$tplengine->assign('tree', $reader->getSubscriptions());
+		$tplengine->template('index_left.tpl');
 		break;
 	}
 }
+die();
 
 ?>

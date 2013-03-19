@@ -19,18 +19,72 @@ class CReader
 	protected $crud; // CRUD модель
 
 	// конструктор
-	public function __conctruct()
+	public function __construct()
 	{
 		$this->crud = new CRUD();
 	}
 
-	public function addGroup() {}
+	/**
+	 * Добавление группы подписок
+	 * @param  string $group_name      имя новой группы
+	 * @param  int    $parent_group_id id группы-родителя
+	 * @param  string &$error          тут возвращается код ошибки
+	 * @return bool
+	 */
+	public function addGroup($group_name, $parent_group_id, &$error)
+	{
+		$error = '';
+		if(!$group_name || !sizeof($group_name))
+		{
+			$error = 'EMPTY_NAME';
+			return false;
+		}
+		if(!$this->crud->create(READER_SUBSCRIPTION_GROUP_TABLE, array('name' => $group_name, 'group_id' => (int)$parent_group_id)))
+		{
+			$error = 'DB_ERROR';
+			return false;
+		}
+		return true;
+	}
+
 	public function addSubscription() {}
 	public function deleteGroup() {}
 	public function deleteSubscription() {}
 	public function getItem() {}
 	public function getItems() {}
-	public function getSubscriptions() {}
+
+	/**
+	 * Получить список папок и подписок
+	 * @return array
+	 */
+	public function getSubscriptions()
+	{
+		require_once(DOCUMENT_ROOT.'/nitrofuran/graph.class.php');
+		global $AUTH;
+
+		// надо собрать массив с ключами, соответствующими id групп
+		$res_g = array();
+		$tmp   = $this->crud->read(READER_SUBSCRIPTION_GROUP_TABLE);
+		foreach($tmp as $v)
+		{
+			$res_g[$v['id']] = $v;
+		}
+		unset($tmp);
+
+		// выборка подписок и раскладывание их по папкам
+		$res_s = $this->crud->read(READER_SUBSCRIPTION_TABLE, array('user_id' => $AUTH->sess_data['user_id']));
+		foreach($res_s as $v)
+		{
+			$res_g[$v['group_id']]['subscriptions'][$v['id']] = $v;
+		}
+		unset($res_s);
+
+		// а теперь завернём всё в граф
+		$graph = new CGraph();
+		$graph->CreateFromArray($res_g, 'group_id');
+		return $graph->GetAsArray(true);
+	}
+
 	public function readItem() {}
 	public function refreshAll() {}
 	public function refreshSubscription() {}
