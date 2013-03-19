@@ -38,6 +38,7 @@ function addGFormSubmit()
 			if(data == 'ok')
 			{
 				$('#addgform').fadeOut();
+				$('#addgform input').val('')
 				loadSubscriptions();
 			}
 			else
@@ -54,7 +55,40 @@ function addGFormSubmit()
  */
 function addSFormSubmit()
 {
-	// ...
+	var subscrhref = $('#addsform input').val();
+	if(!subscrhref || !subscrhref.length)
+	{
+		return false;
+	}
+	if(bAjaxInProgress)
+	{
+		return;
+	}
+	bAjaxInProgress = true;
+	curtainOn();
+	jQuery.post
+	(
+		curpath,
+		{
+			ajax: 'addSubscription',
+			href: subscrhref,
+			group_id: 0
+		},
+		function(data)
+		{
+			if(data == 'ok')
+			{
+				$('#addsform').fadeOut();
+				$('#addsform input').val('')
+				loadSubscriptions();
+			}
+			else
+			{
+				curtainOff();
+				alert(data);
+			}
+		}
+	);
 }
 
 /**

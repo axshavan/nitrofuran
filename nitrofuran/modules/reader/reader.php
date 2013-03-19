@@ -47,7 +47,43 @@ class CReader
 		return true;
 	}
 
-	public function addSubscription() {}
+	/**
+	 * Добавить подписку
+	 * @param  string $href     собственно ссылка на фид
+	 * @param  int    $group_id id группы, куда добавляется подписка
+	 * @param  string &$error   тут возвращается ошибка
+	 * @return bool
+	 */
+	public function addSubscription($href, $group_id, &$error)
+	{
+		$error = '';
+		if(!$href || !sizeof($href))
+		{
+			$error = 'EMPTY_HREF';
+			return false;
+		}
+		global $AUTH;
+		if
+		(
+			!$this->crud->create
+			(
+				READER_SUBSCRIPTION_TABLE,
+				array
+				(
+					'name' => $href,
+					'href' => $href,
+					'group_id' => (int)$group_id,
+					'user_id'  => $AUTH->sess_data['user_id']
+				)
+			)
+		)
+		{
+			$error = 'DB_ERROR';
+			return false;
+		}
+		return true;
+	}
+
 	public function deleteGroup() {}
 	public function deleteSubscription() {}
 	public function getItem() {}
@@ -82,7 +118,15 @@ class CReader
 		// а теперь завернём всё в граф
 		$graph = new CGraph();
 		$graph->CreateFromArray($res_g, 'group_id');
-		return $graph->GetAsArray(true);
+		$result = $graph->GetAsArray(true);
+
+		// вынос подписок без группы в корень
+		foreach($result['children'][0]['data']['subscriptions'] as $v)
+		{
+			$result['data']['subscriptions'][] = $v;
+		}
+		unset($result['children'][0]);
+		return $result;
 	}
 
 	public function readItem() {}

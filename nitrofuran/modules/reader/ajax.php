@@ -33,6 +33,27 @@ switch($_POST['ajax'])
 		}
 		break;
 	}
+
+	// добавление подписки
+	case 'addSubscription':
+	{
+		if($reader->addSubscription($_POST['href'], $_POST['group_id'], $error))
+		{
+			echo 'ok';
+		}
+		else
+		{
+			echo 'Не удалось добавить подписку: ';
+			switch($error)
+			{
+				case 'EMPTY_NAME': echo 'пустая ссылка'; break;
+				case 'DB_ERROR':   echo 'ошибка базы данных'; break;
+				default:           echo 'непонятно почему'; break;
+			}
+		}
+		break;
+	}
+
 	// загрузка списка подписок
 	case 'loadSubscriptions':
 	{
