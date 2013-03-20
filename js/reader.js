@@ -79,7 +79,7 @@ function addSFormSubmit()
 			if(data == 'ok')
 			{
 				$('#addsform').fadeOut();
-				$('#addsform input').val('')
+				$('#addsform input').val('');
 				loadSubscriptions();
 			}
 			else
@@ -123,7 +123,40 @@ function loadSubscriptions()
 		function(data)
 		{
 			curtainOff();
-			$('#subscr').html(data);
+			data = jQuery.parseJSON(data);
+			$('#subscr').html(data['subscr']);
+			$('#editsform_group').html(data['editsform_group']);
+		}
+	);
+}
+
+/**
+ * Сохранить подписку из формы редактирования подписки
+ */
+function saveSubscription()
+{
+	curtainOn();
+	jQuery.post
+	(
+		curpath,
+		{
+			ajax:     'saveSubscription',
+			id:       $('#editsform_id').val(),
+			group_id: $('#editsform_group').val(),
+			name:     $('#editsform_name').val()
+		},
+		function(data)
+		{
+			if(data == 'ok')
+			{
+				$('#editsform').fadeOut();
+				loadSubscriptions();
+			}
+			else
+			{
+				curtainOff();
+				alert(data);
+			}
 		}
 	);
 }
@@ -146,8 +179,12 @@ function showSubscribtion(obj, id)
 		},
 		function(data)
 		{
-			alert(data);
-		},
-		true
+			data = jQuery.parseJSON(data);
+			$('#editsform').fadeIn();
+			$('#editsform_href').text(data['href']);
+			$('#editsform_id').val(data['id']);
+			$('#editsform_group').val(data['group_id']);
+			$('#editsform_name').val(data['name']);
+		}
 	);
 }

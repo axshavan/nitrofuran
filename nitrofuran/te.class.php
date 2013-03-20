@@ -50,12 +50,13 @@ class CTemplateEngine
 		unset($this->_tpl_vars[$var_name]);
 	}
 	
-	/*
-		Отобразить шаблон.
-		@param  string $tpl_name имя шаблона
-		@return string код ошибки
+	/**
+	 * Отобразить шаблон.
+	 * @param  string $tpl_name имя шаблона
+	 * @param  bool   $return   вернуть текст шаблона (или вывалить в вывод)
+	 * @return string
 	*/
-	public function template($tpl_name)
+	public function template($tpl_name, $return = false)
 	{
 		if($tpl_name[0] != '/')
 		{
@@ -67,7 +68,15 @@ class CTemplateEngine
 		}
 		unset($this->_tpl_vars['this']);
 		extract($this->_tpl_vars);
+		if($return)
+		{
+			ob_start();
+		}
 		include($tpl_name);
+		if($return)
+		{
+			return ob_get_clean();
+		}
 		return true;
 	}
 	

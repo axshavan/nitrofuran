@@ -57,15 +57,35 @@ switch($_POST['ajax'])
 	// получить данные об одной подписке
 	case 'getSubsription':
 	{
-		// ...
+		echo json_encode($reader->getSubscription($_POST['id']));
 		break;
 	}
 
 	// загрузка списка подписок
 	case 'loadSubscriptions':
 	{
-		$tplengine->assign('tree', $reader->getSubscriptions());
-		$tplengine->template('index_left.tpl');
+		$subscriptions = $reader->getSubscriptions();
+		$tplengine->assign('tree', $subscriptions);
+		$data = array
+		(
+			'subscr'          => $tplengine->template('index_left.tpl', true),
+			'editsform_group' => $tplengine->template('group_plain.tpl', true)
+		);
+		echo json_encode($data);
+		break;
+	}
+
+	// сохранение одной подписки
+	case 'saveSubscription':
+	{
+		if(!$reader->updateSubscription($_POST['id'], $_POST['name'], $_POST['group_id']))
+		{
+			echo 'Не удалось обновить подписку';
+		}
+		else
+		{
+			echo 'ok';
+		}
 		break;
 	}
 }

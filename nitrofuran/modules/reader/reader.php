@@ -90,6 +90,17 @@ class CReader
 	public function getItems() {}
 
 	/**
+	 * Получить данные об одной подписки
+	 * @param  int $id идентификатор подписки
+	 * @return array
+	 */
+	public function getSubscription($id)
+	{
+		$result = $this->crud->read(READER_SUBSCRIPTION_TABLE, array('id' => (int)$id));
+		return $result[0];
+	}
+
+	/**
 	 * Получить список папок и подписок
 	 * @return array
 	 */
@@ -134,7 +145,28 @@ class CReader
 	public function refreshSubscription() {}
 	public function unreadItem() {}
 	public function updateGroup() {}
-	public function updateSubscription() {}
+
+	/**
+	 * Обновить подписку
+	 * @param  int    $id       идентификатор обновляемой подписки
+	 * @param  string $name     новое название для подписки
+	 * @param  int    $group_id новая группа для подписки
+	 * @return bool
+	 */
+	public function updateSubscription($id, $name, $group_id)
+	{
+		return $this->crud->update
+		(
+			READER_SUBSCRIPTION_TABLE,
+			array('id' => (int)$id),
+			array
+			(
+				'name'     => $name,
+				'group_id' => (int)$group_id
+			)
+		);
+	}
+
 	public function updateItem() {}
 }
 

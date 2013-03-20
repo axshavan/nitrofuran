@@ -14,10 +14,11 @@
 	<div class="header">
 		<input type="button" value="Добавить подписку" onclick="$('#addsform').fadeIn(); $('#addsform input').focus();">
 		<div id="editsform">
+			<span id="editsform_href"></span>
+			<input type="hidden" id="editsform_id" />
 			<input type="text" id="editsform_name" />
-
-			<input type="button" value="Сохранить" />
-            <span id="editsform_href"></span>
+			<select id="editsform_group"></select>
+			<input type="button" value="Сохранить" onclick="saveSubscription()" />
 		</div>
 	</div>
 	<div class="left">
