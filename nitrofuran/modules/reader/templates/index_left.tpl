@@ -9,14 +9,14 @@ function draw_subscriptions_recursively(&$tree)
 	echo '<ul class="folders">';
 	foreach($tree['children'] as &$item)
 	{
-		echo '<li class="'.($item['data']['name'] ? '' : 'noimg').'">'.$item['data']['name'].'<div>';
+		echo '<li>'.$item['data']['name'].'<div>';
 		draw_subscriptions_recursively($item);
 		echo '</div></li>';
 	}
 	echo '</ul><ul class="feeds">';
 	foreach($tree['data']['subscriptions'] as &$subscription)
 	{
-		echo '<li>'.$subscription['name'].'</li>';
+		echo '<li onclick="showSubscribtion(this, '.$subscription['id'].')">'.$subscription['name'].'</li>';
 	}
 	echo '</ul>';
 }

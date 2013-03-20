@@ -127,3 +127,27 @@ function loadSubscriptions()
 		}
 	);
 }
+
+/**
+ * Показать подписку
+ * @param obj ListItem
+ * @param id  идентификатор подписки
+ */
+function showSubscribtion(obj, id)
+{
+	$('.folders li, .feeds li').removeClass('active');
+	$(obj).addClass('active');
+	jQuery.post
+	(
+		curpath,
+		{
+			ajax: 'getSubsription',
+			id: id
+		},
+		function(data)
+		{
+			alert(data);
+		},
+		true
+	);
+}

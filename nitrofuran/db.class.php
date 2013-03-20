@@ -119,7 +119,7 @@ class CDatabase
 	*/
 	public function Query($str)
 	{
-		return mysql_query($str);
+		return mysql_query($str, $this->cid);
 	}
 	
 	/*

@@ -54,6 +54,13 @@ switch($_POST['ajax'])
 		break;
 	}
 
+	// получить данные об одной подписке
+	case 'getSubsription':
+	{
+		// ...
+		break;
+	}
+
 	// загрузка списка подписок
 	case 'loadSubscriptions':
 	{
