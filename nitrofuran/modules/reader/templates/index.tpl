@@ -13,13 +13,28 @@
 <body>
 	<div class="header">
 		<input type="button" value="Добавить подписку" onclick="$('#addsform').fadeIn(); $('#addsform input').focus();">
-		<div id="editsform">
+
+		<!-- формы редактирования -->
+        <!-- форма редактирования группы -->
+        <div id="editgform" class="editform">
+            <span id="editgform_href"></span>
+            <input type="hidden" id="editgform_id" />
+            <input type="text" id="editgform_name" />
+            <select id="editgform_group"></select>
+            <input type="button" value="Сохранить" onclick="saveSubscriptionGroup()" />
+        </div>
+        <!-- /форма редактирования группы -->
+
+		<!-- форма редактирования подписки -->
+		<div id="editsform" class="editform">
 			<span id="editsform_href"></span>
 			<input type="hidden" id="editsform_id" />
 			<input type="text" id="editsform_name" />
 			<select id="editsform_group"></select>
 			<input type="button" value="Сохранить" onclick="saveSubscription()" />
 		</div>
+        <!-- /форма редактирования подписки -->
+        <!-- /формы редактирования -->
 	</div>
 	<div class="left">
 		<div id="subscr"></div>
@@ -28,7 +43,7 @@
     <div id="right"></div>
     <div class="footer"></div>
 
-	<!-- формы -->
+	<!-- формы добавления -->
 	<!-- форма добавления группы -->
 	<div id="addgform" class="addform">
 		Введите название папки для подписок и нажмите Enter (или Esc, если вы передумали)
@@ -42,7 +57,7 @@
         <input type="text" onkeypress="if(event.keyCode == 10 || event.keyCode == 13) addSFormSubmit(); else if(event.keyCode == 27) $('#addsform').fadeOut();">
     </div>
     <!-- /форма добавления подписки -->
-    <!-- /формы -->
+    <!-- /формы добавления -->
 
 	<!-- чёрная аяксовая занавеска -->
 	<div id="curtain"></div>

@@ -21,7 +21,7 @@ function addGFormSubmit()
 	}
 	if(bAjaxInProgress)
 	{
-		return;
+		return false;
 	}
 	bAjaxInProgress = true;
 	curtainOn();
@@ -62,7 +62,7 @@ function addSFormSubmit()
 	}
 	if(bAjaxInProgress)
 	{
-		return;
+		return false;
 	}
 	bAjaxInProgress = true;
 	curtainOn();
@@ -126,6 +126,7 @@ function loadSubscriptions()
 			data = jQuery.parseJSON(data);
 			$('#subscr').html(data['subscr']);
 			$('#editsform_group').html(data['editsform_group']);
+			$('#editgform_group').html(data['editsform_group']);
 		}
 	);
 }
@@ -135,6 +136,11 @@ function loadSubscriptions()
  */
 function saveSubscription()
 {
+	if(bAjaxInProgress)
+	{
+		return;
+	}
+	bAjaxInProgress = true;
 	curtainOn();
 	jQuery.post
 	(
@@ -162,13 +168,55 @@ function saveSubscription()
 }
 
 /**
+ * Сохранить группу подписок
+ */
+function saveSubscriptionGroup()
+{
+	if(bAjaxInProgress)
+	{
+		return;
+	}
+	bAjaxInProgress = true;
+	curtainOn();
+	jQuery.post
+	(
+		curpath,
+		{
+			ajax:     'saveSubscriptionGroup',
+			id:       $('#editgform_id').val(),
+			group_id: $('#editgform_group').val(),
+			name:     $('#editgform_name').val()
+		},
+		function(data)
+		{
+			if(data == 'ok')
+			{
+				$('#editgform').fadeOut();
+				loadSubscriptions();
+			}
+			else
+			{
+				curtainOff();
+				alert(data);
+			}
+		}
+	);
+}
+
+/**
  * Показать подписку
  * @param obj ListItem
  * @param id  идентификатор подписки
  */
 function showSubscribtion(obj, id)
 {
-	$('.folders li, .feeds li').removeClass('active');
+	if(bAjaxInProgress)
+	{
+		return;
+	}
+	curtainOn();
+	bAjaxInProgress = true;
+	$('.left *').removeClass('active');
 	$(obj).addClass('active');
 	jQuery.post
 	(
@@ -180,11 +228,48 @@ function showSubscribtion(obj, id)
 		function(data)
 		{
 			data = jQuery.parseJSON(data);
+			$('.header .editform').hide();
 			$('#editsform').fadeIn();
 			$('#editsform_href').text(data['href']);
 			$('#editsform_id').val(data['id']);
 			$('#editsform_group').val(data['group_id']);
 			$('#editsform_name').val(data['name']);
+			curtainOff();
+		}
+	);
+}
+
+/**
+ * Показать группу подписок
+ * @param obj ListItem
+ * @param id  идентификатор группы подписок
+ */
+function showSubscriptionGroup(obj, id)
+{
+	if(bAjaxInProgress)
+	{
+		return;
+	}
+	bAjaxInProgress = true;
+	curtainOn();
+	$('.left *').removeClass('active');
+	$(obj).addClass('active');
+	jQuery.post
+	(
+		curpath,
+		{
+			ajax: 'getSubsriptionGroup',
+			id: id
+		},
+		function(data)
+		{
+			$('.header .editform').hide();
+			$('#editgform').fadeIn();
+			data = jQuery.parseJSON(data);
+			$('#editgform_id').val(data['id']);
+			$('#editgform_group').val(data['group_id']);
+			$('#editgform_name').val(data['name']);
+			curtainOff();
 		}
 	);
 }

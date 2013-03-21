@@ -61,6 +61,13 @@ switch($_POST['ajax'])
 		break;
 	}
 
+	// получить данные об одной группе подписок
+	case 'getSubsriptionGroup':
+	{
+		echo json_encode($reader->getSubscriptionGroup($_POST['id']));
+		break;
+	}
+
 	// загрузка списка подписок
 	case 'loadSubscriptions':
 	{
@@ -81,6 +88,20 @@ switch($_POST['ajax'])
 		if(!$reader->updateSubscription($_POST['id'], $_POST['name'], $_POST['group_id']))
 		{
 			echo 'Не удалось обновить подписку';
+		}
+		else
+		{
+			echo 'ok';
+		}
+		break;
+	}
+
+	// сохранение группы подписок
+	case 'saveSubscriptionGroup':
+	{
+		if(!$reader->updateGroup($_POST['id'], $_POST['name'], $_POST['group_id']))
+		{
+			echo 'Не удалось обновить папку';
 		}
 		else
 		{

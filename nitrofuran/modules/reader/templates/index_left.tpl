@@ -9,7 +9,7 @@ function draw_subscriptions_recursively(&$tree)
 	echo '<ul class="folders">';
 	foreach($tree['children'] as &$item)
 	{
-		echo '<li>'.$item['data']['name'].'<div>';
+		echo '<li><span onclick="showSubscriptionGroup(this, '.$item['data']['id'].')">'.$item['data']['name'].'</span><div>';
 		draw_subscriptions_recursively($item);
 		echo '</div></li>';
 	}
