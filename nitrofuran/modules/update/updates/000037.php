@@ -15,7 +15,7 @@ if(isset($_POST['install_reader']) && $_POST['install_reader'])
 {
 	require(DOCUMENT_ROOT.'/nitrofuran/modules/install/modules/reader.php');
 }
-else
+elseif(!$_POST)
 {
 	header("Content-Type: text/html; charset=utf-8");
 	?>
@@ -25,8 +25,12 @@ else
 	    <input type="button" value="Да" onclick="document.getElementById('install_reader').value=1;document.getElementById('submit_form').submit();">
 	    <input type="button" value="Нет" onclick="document.getElementById('install_reader').value=0;document.getElementById('submit_form').submit();">
 	</form>
-<?
-die();
+	<?
+	die();
+}
+else
+{
+	return true;
 }
 
 ?>
