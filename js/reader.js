@@ -234,6 +234,7 @@ function showSubscribtion(obj, id)
 			$('#editsform_id').val(data['id']);
 			$('#editsform_group').val(data['group_id']);
 			$('#editsform_name').val(data['name']);
+			$('#right').html(data['items']);
 			curtainOff();
 		}
 	);

@@ -1,6 +1,7 @@
 body
 {
     font-family: sans-serif;
+    font-size: 12px;
 }
 .header
 {
@@ -87,7 +88,33 @@ body
     bottom: 0;
     right: 0;
     background-color: #d4d4d4;
+    overflow-y: scroll;
 }
+    #right .item
+    {
+        margin: 4px 4px 0 4px;
+        border: 2px solid #a0a0a0;
+        padding: 6px;
+        border-radius: 6px;
+        background-color: #f0f0f0;
+
+    }
+    #right .item.active
+    {
+        border-color: #202060;;
+    }
+    #right .item h2
+    {
+        margin: 0 0 6px 0;
+        font-size: 14px;
+    }
+        #right .item h2 a
+        {
+            padding: 0;
+            margin: 0;
+            color: #202060;
+            text-decoration: none;
+        }
 #curtain
 {
     position: fixed;

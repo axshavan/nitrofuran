@@ -57,7 +57,10 @@ switch($_POST['ajax'])
 	// получить данные об одной подписке
 	case 'getSubsription':
 	{
-		echo json_encode($reader->getSubscription($_POST['id']));
+		$result = $reader->getSubscription($_POST['id']);
+		$tplengine->assign('items', $result['items']);
+		$result['items'] = $tplengine->template('items.tpl', true);
+		echo json_encode($result);
 		break;
 	}
 

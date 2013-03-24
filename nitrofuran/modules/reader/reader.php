@@ -87,7 +87,27 @@ class CReader
 	public function deleteGroup() {}
 	public function deleteSubscription() {}
 	public function getItem() {}
-	public function getItems() {}
+
+	/**
+	 * Получить список элементов подписки
+	 * @param  array $subscription данные о подписке
+	 * @return array
+	 */
+	public function getItems($subscription)
+	{
+		$curl = curl_init($subscription['href']);
+		ob_start();
+		curl_exec($curl);
+		//$raw = ob_get_clean(); return $raw;
+		$xml = simplexml_load_string(ob_get_clean());
+
+		// может быть, это что-то похожее на RSS 2.0
+		if((string)$xml->attributes()->version == '2.0' && $xml->channel)
+		{
+			$data = $this->parseRSS20($xml);
+		}
+		return $data;
+	}
 
 	/**
 	 * Получить данные об одной подписки
@@ -97,7 +117,9 @@ class CReader
 	public function getSubscription($id)
 	{
 		$result = $this->crud->read(READER_SUBSCRIPTION_TABLE, array('id' => (int)$id));
-		return $result[0];
+		$result = $result[0];
+		$result['items'] = $this->getItems($result);
+		return $result;
 	}
 
 	/**
@@ -199,6 +221,45 @@ class CReader
 	}
 
 	public function updateItem() {}
+
+	// PROTECTED AREA
+
+	/**
+	 * Достать элементы из  RSS 2.0
+	 * @param  SimpleXMLElement $xml
+	 * @return array
+	 */
+	protected function parseRSS20(&$xml)
+	{
+		$_result = array
+		(
+			'meta' => array
+			(
+				'title'         => (string)$xml->channel->title,
+				'link'          => (string)$xml->channel->link,
+				'description'   => (string)$xml->channel->description,
+				'lastBuildDate' => (string)$xml->channel->lastBuildDate,
+				'image'         => array
+				(
+					'url'   => (string)$xml->channel->image->url,
+					'link'  => (string)$xml->channel->image->link,
+					'title' => (string)$xml->channel->image->title
+				)
+			),
+			'items' => array()
+		);
+		foreach($xml->channel->item as $item)
+		{
+			$_result['items'][] = array
+			(
+				'title'       => (string)$item->title,
+                'href'        => (string)$item->link,
+                'description' => (string)$item->description,
+                'date'        => (string)$item->pubDateUT
+			);
+		}
+		return $_result;
+	}
 }
 
 ?>
