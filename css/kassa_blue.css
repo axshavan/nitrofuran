@@ -68,6 +68,7 @@ a.reset:hover { color: white; }
 #main_container .itogo table td { vertical-align: top; }
 #main_container .itogo table td:first-child { padding-top: 3px; }
 #main_container .itogo table td.default { font-weight: bold; }
+#main_container .plans .optable { min-width: 100%; }
 #main_container .plans { float: right; background-color: #909eaa; padding: 8px; border: 1px solid #2d3d72; -moz-border-radius: 3px; border-radius: 3px; -webkit-border-radius: 3px; height: 207px; overflow-y: scroll; }
 #main_container .plans .optable { width: 100%; }
 #main_container .plans .optable tr.exp td:nth-child(2) { background-color: #c8a0a0; }
@@ -125,6 +126,7 @@ a.reset:hover { color: white; }
 div.stats_graph img.stats_graph_image { margin-top: 20px; border: 1px solid black; }
 
 table.optable { border-top: 1px solid #303030; border-left: 1px solid #303030; empty-cells: show; max-width: 75%; }
+table.optable.planstable { min-width: 100%; }
 table.optable td { border-bottom: 1px solid #303030; border-right: 1px solid #303030; padding: 2px; vertical-align: top; }
 table.optable th { border-bottom: 1px solid #303030; border-right: 1px solid #303030; padding: 2px; background-color: white; }
 table.optable tr.inc { background-color: #8dd790; color: #006000; }

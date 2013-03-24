@@ -27,7 +27,7 @@
 	
 	<!-- операции за месяц -->
 	<strong>Операции за месяц</strong><br>
-	<table class="optable" cellspacing="0">
+	<table class="optable planstable" cellspacing="0">
 		<tr>
 			<th>Тип операции</th>
 			<th>Валюта</th>
