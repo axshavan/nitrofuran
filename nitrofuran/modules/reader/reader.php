@@ -48,6 +48,39 @@ class CReader
 	}
 
 	/**
+	 * Добавить непрочитанный элемент подписки.
+	 * @param array $item
+	 * @param int   $subscription_id идентификатор подписки
+	 */
+	public function addItem($item, $subscription_id)
+	{
+		$res = $this->crud->read
+		(
+			READER_SUBSCRIPTION_ITEM_TABLE,
+			array
+			(
+				'subscription_id' => $subscription_id,
+				'href'            => $item['href'],
+			)
+		);
+		if(!$res[0]['id'])
+		{
+			$this->crud->create
+			(
+				READER_SUBSCRIPTION_ITEM_TABLE,
+				array
+				(
+					'name'            => $item['title'],
+					'href'            => $item['href'],
+					'subscription_id' => $subscription_id,
+					'read_flag'       => 0,
+					'date'            => (int)$item['date'] ? (int)$item['date'] : time(),
+				)
+			);
+		}
+	}
+
+	/**
 	 * Добавить подписку
 	 * @param  string $href     собственно ссылка на фид
 	 * @param  int    $group_id id группы, куда добавляется подписка
@@ -98,14 +131,77 @@ class CReader
 		$curl = curl_init($subscription['href']);
 		ob_start();
 		curl_exec($curl);
-		//$raw = ob_get_clean(); return $raw;
 		$xml = simplexml_load_string(ob_get_clean());
 
-		// может быть, это что-то похожее на RSS 2.0
-		if((string)$xml->attributes()->version == '2.0' && $xml->channel)
+		if($xml)
 		{
-			$data = $this->parseRSS20($xml);
+			// может быть, это что-то похожее на RSS 2.0
+			if((string)$xml->attributes()->version == '2.0' && $xml->channel)
+			{
+				$data = $this->parseRSS20($xml);
+			}
 		}
+
+		$mostEarlierDate = time();
+		foreach($data['items'] as &$item)
+		{
+			if(!$item['date'])
+			{
+				$item['date'] = time();
+			}
+			elseif($item['date'] < $mostEarlierDate)
+			{
+				$mostEarlierDate = $item['date'];
+			}
+			$this->addItem($item, $subscription['id']);
+		}
+		$res = $this->crud->read
+		(
+			READER_SUBSCRIPTION_ITEM_TABLE,
+			array
+			(
+				'subscription_id' => $subscription['id'],
+				'read_flag'       => 0,
+				'<date'           => $mostEarlierDate
+			)
+		);
+		foreach($res as $res_row)
+		{
+			if($res_row['date'] < $mostEarlierDate)
+			{
+				$mostEarlierDate = $res_row['date'];
+			}
+			foreach($data['items'] as &$item)
+			{
+				if($item['href'] == $res_row['href'])
+				{
+					continue 2;
+				}
+			}
+			$res_row['title'] = $res_row['name'];
+			$data['items'][]  = $res_row;
+		}
+		$res = $this->crud->read
+		(
+			READER_SUBSCRIPTION_ITEM_TABLE,
+			array
+			(
+				'subscription_id' => $subscription['id'],
+				'read_flag'       => 1,
+				'>=date'           => $mostEarlierDate
+			)
+		);
+		foreach($res as $res_row)
+		{
+			foreach($data['items'] as $k => &$item)
+			{
+				if($item['href'] == $res_row['href'])
+				{
+					unset($data['items'][$k]);
+				}
+			}
+		}
+		usort($data['items'], create_function('$a, $b', 'return $a["date"] < $b["date"] ? 1 : ($a["date"] > $b["date"] ? -1 : 0);'));
 		return $data;
 	}
 

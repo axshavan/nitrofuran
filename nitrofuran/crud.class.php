@@ -111,6 +111,11 @@ class CRUD
 			if(is_array($v))
 			{
 				$operand = 'in';
+				if($k[0] == '!')
+				{
+					$k = substr($k, 1);
+					$operand = 'not in';
+				}
 				foreach($v as &$vv)
 				{
 					$vv = $DB->EscapeString($vv);
@@ -119,6 +124,21 @@ class CRUD
 			}
 			else
 			{
+				if($k[0] == '!')
+				{
+					$k = substr($k, 1);
+					$operand = '!=';
+				}
+				elseif($k[0] == '<' || $k[0] == '>')
+				{
+					$operand = $k[0];
+					$k = substr($k, 1);
+					if($k[0] == '=')
+					{
+						$k        = substr($k, 1);
+						$operand .= '=';
+					}
+				}
 				$v = "'".$DB->EscapeString($v)."'";
 			}
 			$query .= " and `".$DB->EscapeString($k)."` ".$operand." ".$v;

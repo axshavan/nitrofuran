@@ -246,6 +246,66 @@ do
 			break 2;
 		}
 	}
+	// 3.10) выборка с фильтрацией "больше"
+	$subject_res = $subject->read($table_name, array('>field_0' => 'r'));
+	foreach($subject_res as $v)
+	{
+		if($v['field_0'] <= 'r')
+		{
+			echo 'test 3.10 failed in line '.__LINE__."\n";
+			break 2;
+		}
+	}
+	// 3.11) выборка с фильтрацией "меньше"
+	$subject_res = $subject->read($table_name, array('<field_0' => 'g'));
+	foreach($subject_res as $v)
+	{
+		if($v['field_0'] >= 'g')
+		{
+			echo 'test 3.11 failed in line '.__LINE__."\n";
+			break 2;
+		}
+	}
+	// 3.12) выборка с фильтрацией "больше или равно"
+	$subject_res = $subject->read($table_name, array('>=field_0' => 'k'));
+	foreach($subject_res as $v)
+	{
+		if($v['field_0'] < 'k')
+		{
+			echo 'test 3.12 failed in line '.__LINE__."\n";
+			break 2;
+		}
+	}
+	// 3.13) выборка с фильтрацией "меньше или равно"
+	$subject_res = $subject->read($table_name, array('<=field_0' => 'k'));
+	foreach($subject_res as $v)
+	{
+		if($v['field_0'] > 'k')
+		{
+			echo 'test 3.13 failed in line '.__LINE__."\n";
+			break 2;
+		}
+	}
+	// 3.14) выборка с фильтрацией "не равно" для скалярного значения
+	$subject_res = $subject->read($table_name, array('!field_0' => $_records[10]['field_0']));
+	foreach($subject_res as $v)
+	{
+		if($v['field_0'] == $_records[10]['field_0'])
+		{
+			echo 'test 3.14 failed in line '.__LINE__."\n";
+			break 2;
+		}
+	}
+	// 3.15) выборка с фильтрацией "не равно" для массива
+	$subject_res = $subject->read($table_name, array('!field_0' => array($_records[10]['field_0'], $_records[11]['field_0'])));
+	foreach($subject_res as $v)
+	{
+		if($v['field_0'] == $_records[10]['field_0'] || $v['field_0'] == $_records[11]['field_0'])
+		{
+			echo 'test 3.15 failed in line '.__LINE__."\n";
+			break 2;
+		}
+	}
 
 	// 4) обновление записей
 	// 4.1) обновление с простой выборкой

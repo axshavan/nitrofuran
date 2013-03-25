@@ -103,6 +103,11 @@ body
     {
         border-color: #202060;;
     }
+    #right .item .date
+    {
+        color: #909090;
+        float: right;
+    }
     #right .item h2
     {
         margin: 0 0 6px 0;
