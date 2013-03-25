@@ -1,19 +1,19 @@
 <?php
 
-/*
-	Библиотечка полезных функций.
-	@author Dmitry Nikiforov <axshavan@yandex.ru>
-	@license http://sam.zoy.org/wtfpl WTFPL
-	This program is free software. It comes without any warranty, to
-	the extent permitted by applicable law. You can redistribute it
-	and/or modify it under the terms of the Do What The Fuck You Want
-	To Public License, Version 2, as published by Sam Hocevar. See
-	http://sam.zoy.org/wtfpl/COPYING for more details.
-*/
+/**
+ * Библиотечка полезных функций.
+ * @author Dmitry Nikiforov <axshavan@yandex.ru>
+ * @license http://sam.zoy.org/wtfpl WTFPL
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the Do What The Fuck You Want
+ * To Public License, Version 2, as published by Sam Hocevar. See
+ * http://sam.zoy.org/wtfpl/COPYING for more details.
+ */
 
-/*
-	Ошибка 403.
-*/
+/**
+ * Ошибка 403.
+ */
 function error403()
 {
 	header("HTTP/1.0 403 Forbidden");
@@ -22,9 +22,9 @@ function error403()
 	die();
 }
 
-/*
-	Ошибка 404.
-*/
+/**
+ * Ошибка 404.
+ */
 function error404()
 {
 	header("HTTP/1.0 404 Not Found");
@@ -33,12 +33,12 @@ function error404()
 	die();
 }
 
-/*
-	Получить значение параметра.
-	@param  string $module     название модуля
-	@param  string $param_name название параметра
-	@return string
-*/
+/**
+ * Получить значение параметра.
+ * @param  string $module     название модуля
+ * @param  string $param_name название параметра
+ * @return string
+ */
 function get_param($module, $param_name)
 {
 	global $DB;
@@ -46,24 +46,42 @@ function get_param($module, $param_name)
 	return $_result['value'];
 }
 
-/*
-	htmlspecialchars писать слишком длинно.
-	@param  string $s строка, которую надо обработать
-	@return string
-*/
+/**
+ * htmlspecialchars писать слишком длинно.
+ * @param  string $s строка, которую надо обработать
+ * @return string
+ */
 function h($s)
 {
 	return htmlspecialchars($s);
 }
 
-/*
-	Добавить новый параметр.
-	@param string $module       название модуля
-	@param string $param_name   название параметра
-	@param string $display_name отображаемое название параметра
-	@param string $type         тип нового параметра
-	@param string $value        новое значение
-*/
+/**
+ * Сделать строку HTML-безопасной
+ * @param  string $s
+ * @return string
+ */
+function h2($s)
+{
+	$s = h($s);
+	$s = preg_replace('/\&lt;br[\s\S]*\&gt;/Ui', '<br />', $s);
+	$s = str_replace('&lt;a name', '&lt;a href', $s);
+	$s = preg_replace('/\&lt;a [\s\S]*href=(\'|\"|\&quot;|)([\S]+)\1[\s\S]*\&gt;/Ui', '<a href="\2" target="_blank">', $s);
+	$s = str_replace('&lt;/a&gt;', '</a>', $s);
+	$s = preg_replace('/\&lt;img [\s\S]*src=(\'|\"|\&quot;|)(http[\S]+)\1[\s\S]*\&gt;/Ui', '<img src="\2"/>', $s);
+	$s = str_replace('href="javascript', '', $s);
+	return $s;
+}
+
+/**
+ * Добавить новый параметр.
+ * @param  string $module       название модуля
+ * @param  string $param_name   название параметра
+ * @param  string $display_name отображаемое название параметра
+ * @param  string $type         тип нового параметра
+ * @param  string $value        новое значение
+ * @return bool
+ */
 function new_param($module, $param_name, $display_name = '', $type = 'text', $value = '')
 {
 	global $DB;
@@ -75,22 +93,22 @@ function new_param($module, $param_name, $display_name = '', $type = 'text', $va
 		'".$DB->EscapeString($value)."')");
 }
 
-/*
-	Сделать редирект, послав header(location).
-	@param string $location куда редирект
-*/
+/**
+ * Сделать редирект, послав header(location).
+ * @param string $location куда редирект
+ */
 function redirect($location)
 {
 	ob_end_clean();
 	header('location: '.$location);
 }
 
-/*
-	Жалкая попытка русифицировать date().
-	@param  string $format    формат даты, как в date()
-	@param  int    $timestamp таймстамп
-	@return string
-*/
+/**
+ * Жалкая попытка русифицировать date().
+ * @param  string   $format    формат даты, как в date()
+ * @param  bool|int $timestamp таймстамп
+ * @return string
+ */
 function rudate($format, $timestamp = false)
 {
 	if($timestamp === false)
@@ -109,12 +127,12 @@ function rudate($format, $timestamp = false)
 	return $result;
 }
 
-/*
-	Установить значение параметра.
-	@param string $module     название модуля
-	@param string $param_name название параметра
-	@param string $value      новое значение
-*/
+/**
+ * Установить значение параметра.
+ * @param string $module     название модуля
+ * @param string $param_name название параметра
+ * @param string $value      новое значение
+ */
 function set_param($module, $param_name, $value)
 {
 	global $DB;
@@ -133,13 +151,13 @@ function set_param($module, $param_name, $value)
 	}
 }
 
-/*
-	Заменить значение одного из параметров в строке типа ...?param1=val1&param2=val2...
-	@param  string $param_name     название параметра
-	@param  string $new_value      новое значение
-	@param  string $request_string исходная строка запроса (не обязательно)
-	@return string
-*/
+/**
+ * Заменить значение одного из параметров в строке типа ...?param1=val1&param2=val2...
+ * @param  string $param_name     название параметра
+ * @param  string $new_value      новое значение
+ * @param  string $request_string исходная строка запроса (не обязательно)
+ * @return string
+ */
 function string_request_replace($param_name, $new_value, $request_string = '')
 {
 	if(!strlen($request_string))
