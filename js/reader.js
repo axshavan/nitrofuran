@@ -132,6 +132,49 @@ function loadSubscriptions()
 }
 
 /**
+ * Отрабатывает при скроллинге правого дива
+ */
+function onRightDivScroll()
+{
+	$('#right').children('div.item').each
+	(
+		function(k, v)
+		{
+			if($(v).offset().top <= 50)
+			{
+				// как только верхушка div.item уезжает за верхнюю границу, помечаем элемент активным и прочитанным
+				if(!$(v).hasClass('active'))
+				{
+					$(v).addClass('active');
+					if(bAjaxInProgress)
+					{
+						return false;
+					}
+					bAjaxInProgress = true;
+					curtainOn();
+					jQuery.post
+					(
+						curpath,
+						{
+							ajax: 'markAsRead',
+							item_id: v.id.substr(5)
+						},
+						function(data)
+						{
+							curtainOff();
+						}
+					);
+				}
+			}
+			else
+			{
+				$(v).removeClass('active');
+			}
+		}
+	);
+}
+
+/**
  * Сохранить подписку из формы редактирования подписки
  */
 function saveSubscription()

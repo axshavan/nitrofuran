@@ -90,6 +90,16 @@ class CRUD
 		return $DB->AffectedRows();
 	}
 
+	/**
+	 * mysql_last_insert_id типа
+	 * @return int
+	 */
+	public function id()
+	{
+		global $DB;
+		return $DB->InsertedId();
+	}
+
 	// дальше идут служебные функции
 
 	/**

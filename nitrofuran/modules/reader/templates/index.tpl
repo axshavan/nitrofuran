@@ -40,7 +40,7 @@
 		<div id="subscr"></div>
 		<input class="addGroup" type="button" value="Добавить папку" onclick="$('#addgform').fadeIn(); $('#addgform input').focus();">
 	</div>
-    <div id="right"></div>
+    <div id="right" onscroll="onRightDivScroll()"></div>
     <div class="footer"></div>
 
 	<!-- формы добавления -->

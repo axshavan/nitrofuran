@@ -85,6 +85,13 @@ switch($_POST['ajax'])
 		break;
 	}
 
+	// пометить элемент прочитанным
+	case 'markAsRead':
+	{
+		$reader->readItem($_POST['item_id']);
+		break;
+	}
+
 	// сохранение одной подписки
 	case 'saveSubscription':
 	{

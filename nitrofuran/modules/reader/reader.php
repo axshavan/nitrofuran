@@ -49,8 +49,9 @@ class CReader
 
 	/**
 	 * Добавить непрочитанный элемент подписки.
-	 * @param array $item
-	 * @param int   $subscription_id идентификатор подписки
+	 * @param  array $item
+	 * @param  int   $subscription_id идентификатор подписки
+	 * @return int   идентификатор добавленного элемента
 	 */
 	public function addItem($item, $subscription_id)
 	{
@@ -77,6 +78,11 @@ class CReader
 					'date'            => (int)$item['date'] ? (int)$item['date'] : time(),
 				)
 			);
+			return $this->crud->id();
+		}
+		else
+		{
+			return $res[0]['id'];
 		}
 	}
 
@@ -153,7 +159,7 @@ class CReader
 			{
 				$mostEarlierDate = $item['date'];
 			}
-			$this->addItem($item, $subscription['id']);
+			$item['id'] = $this->addItem($item, $subscription['id']);
 		}
 		$res = $this->crud->read
 		(
@@ -269,7 +275,15 @@ class CReader
 		return $result;
 	}
 
-	public function readItem() {}
+	/**
+	 * Пометить элемент прочитанным
+	 * @param int $id
+	 */
+	public function readItem($id)
+	{
+		$this->crud->update(READER_SUBSCRIPTION_ITEM_TABLE, array('id' => $id), array('read_flag' => 1));
+	}
+
 	public function refreshAll() {}
 	public function refreshSubscription() {}
 	public function unreadItem() {}
