@@ -340,6 +340,18 @@ function onTypeGroupClick2(obj, group_id)
 }
 
 /**
+ * Поставить в форме "внести задним числом" вчерашнее число
+ */
+function setBackDateYesterday()
+{
+	var d = new Date();
+	d = new Date(d.getTime() - 86400000);
+	ge('backyear_select').value = d.getFullYear();
+	ge('backmonth_select').value = d.getMonth() + 1;
+	ge('backday_select').value = d.getDate();
+}
+
+/**
  * Установить значение комментария в форме добавления.
  * @param {string} val
  */

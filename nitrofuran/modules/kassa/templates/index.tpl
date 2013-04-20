@@ -234,6 +234,7 @@
 							<option value="<?= $d ?>"><?= $d ?></option>
 						<? endfor; ?>
 					</select>
+					<span class="command" onclick="setBackDateYesterday()">Вчера</span>
 				</div>
 			</form>
 		</div>
