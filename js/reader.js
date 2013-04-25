@@ -261,6 +261,7 @@ function showSubscribtion(obj, id)
 	bAjaxInProgress = true;
 	$('.left *').removeClass('active');
 	$(obj).addClass('active');
+	$('#right')[0].scrollTop = 0;
 	jQuery.post
 	(
 		curpath,

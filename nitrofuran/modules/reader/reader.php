@@ -22,6 +22,7 @@ class CReader
 	public function __construct()
 	{
 		$this->crud = new CRUD();
+		$this->someProcedures();
 	}
 
 	/**
@@ -76,6 +77,7 @@ class CReader
 					'subscription_id' => $subscription_id,
 					'read_flag'       => 0,
 					'date'            => (int)$item['date'] ? (int)$item['date'] : time(),
+					'text'            => $item['description']
 				)
 			);
 			return $this->crud->id();
@@ -184,8 +186,10 @@ class CReader
 					continue 2;
 				}
 			}
-			$res_row['title'] = $res_row['name'];
-			$data['items'][]  = $res_row;
+			$res_row['title']       = $res_row['name'];
+			$res_row['description'] = $res_row['text'];
+			unset($res_row['text']);
+			$data['items'][] = $res_row;
 		}
 		$res = $this->crud->read
 		(
@@ -369,6 +373,35 @@ class CReader
 			);
 		}
 		return $_result;
+	}
+
+	/**
+	 * Некоторые процедуры
+	 */
+	protected function someProcedures()
+	{
+		// у прочитанных постов старше двух недель удалим текст
+		$this->crud->update
+		(
+			READER_SUBSCRIPTION_ITEM_TABLE,
+			array
+			(
+				'read_flag' => 1,
+				'<date'     => time() - 86400 * 14
+			),
+			array('text' => '')
+		);
+
+		// прочитанные посты старше месяца просто удалим
+		$this->crud->delete
+		(
+			READER_SUBSCRIPTION_ITEM_TABLE,
+			array
+			(
+				'read_flag' => 1,
+				'<date'     => time() - 86400 * 31
+			)
+		);
 	}
 }
 
