@@ -162,6 +162,10 @@ function onRightDivScroll()
 						function(data)
 						{
 							curtainOff();
+							if(data != 'ok')
+							{
+								alert(data);
+							}
 						}
 					);
 				}
@@ -244,6 +248,35 @@ function saveSubscriptionGroup()
 			}
 		}
 	);
+}
+
+/**
+ * Пометить элемент прочитанным и скрыть его
+ * @param id идентификатор элемента
+ */
+function setItemRead(id)
+{
+	curtainOn();
+	jQuery.post
+		(
+			curpath,
+			{
+				ajax:    'markAsRead',
+				item_id: id
+			},
+			function(data)
+			{
+				curtainOff();
+				if(data == 'ok')
+				{
+					$('#item_' + id).fadeOut();
+				}
+				else
+				{
+					alert(data);
+				}
+			}
+		);
 }
 
 /**

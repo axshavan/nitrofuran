@@ -89,6 +89,7 @@ switch($_POST['ajax'])
 	case 'markAsRead':
 	{
 		$reader->readItem($_POST['item_id']);
+		echo 'ok';
 		break;
 	}
 
