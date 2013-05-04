@@ -137,6 +137,8 @@ class CReader
 	public function getItems($subscription)
 	{
 		$curl = curl_init($subscription['href']);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
 		ob_start();
 		curl_exec($curl);
 		$xml = simplexml_load_string(ob_get_clean());
@@ -147,6 +149,11 @@ class CReader
 			if((string)$xml->attributes()->version == '2.0' && $xml->channel)
 			{
 				$data = $this->parseRSS20($xml);
+			}
+			// может быть, это что-то похожее на Atom
+			else
+			{
+				$data = $this->parseAtom($xml);
 			}
 		}
 
@@ -336,6 +343,42 @@ class CReader
 	public function updateItem() {}
 
 	// PROTECTED AREA
+
+	/**
+	 * Достать элементы из Atom
+	 * @param  SimpleXMLElement $xml
+	 * @return array
+	 */
+	protected function parseAtom(&$xml)
+	{
+		$_result = array
+		(
+			'items' => array()
+		);
+		foreach($xml->entry as $entry)
+		{
+			$href = '';
+			foreach($entry->link as $link)
+			{
+				if
+				(
+					(string)$link->attributes()->type == 'text/html'
+					&& (string)$link->attributes()->rel == 'alternate'
+				)
+				{
+					$href = (string)$link->attributes()->href;
+				}
+			}
+			$_result['items'][] = array
+			(
+				'title'       => (string)$entry->title,
+				'href'        => $href,
+				'description' => (string)$entry->content,
+				'date'        => strtotime((string)$entry->updated)
+			);
+		}
+		return $_result;
+	}
 
 	/**
 	 * Достать элементы из  RSS 2.0

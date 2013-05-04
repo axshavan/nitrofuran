@@ -101,11 +101,27 @@ function curtainOff()
 }
 
 /**
+ * Убрать аяксовую занавесочку-2
+ */
+function curtain2Off()
+{
+	$('#rightcurtain').fadeOut();
+}
+
+/**
  * Показать аяксовую занавесочку
  */
 function curtainOn()
 {
 	$('#curtain').fadeIn();
+}
+
+/**
+ * Показать аяксовую занавесочку-2
+ */
+function curtain2On()
+{
+	$('#rightcurtain').fadeIn();
 }
 
 /**
@@ -151,7 +167,6 @@ function onRightDivScroll()
 						return false;
 					}
 					bAjaxInProgress = true;
-					curtainOn();
 					jQuery.post
 					(
 						curpath,
@@ -161,7 +176,7 @@ function onRightDivScroll()
 						},
 						function(data)
 						{
-							curtainOff();
+							bAjaxInProgress = false;
 							if(data != 'ok')
 							{
 								alert(data);
@@ -256,7 +271,7 @@ function saveSubscriptionGroup()
  */
 function setItemRead(id)
 {
-	curtainOn();
+	curtain2On();
 	jQuery.post
 		(
 			curpath,
@@ -266,7 +281,7 @@ function setItemRead(id)
 			},
 			function(data)
 			{
-				curtainOff();
+				curtain2Off();
 				if(data == 'ok')
 				{
 					$('#item_' + id).fadeOut();
@@ -311,7 +326,8 @@ function showSubscribtion(obj, id)
 			$('#editsform_id').val(data['id']);
 			$('#editsform_group').val(data['group_id']);
 			$('#editsform_name').val(data['name']);
-			//$('#right').html(data['items']);
+			curtainOff();
+			curtain2On();
 			jQuery.post
 			(
 				curpath,
@@ -321,7 +337,7 @@ function showSubscribtion(obj, id)
 				},
 				function(data)
 				{
-					curtainOff();
+					curtain2Off();
 					$('#right').html(data);
 				}
 			);

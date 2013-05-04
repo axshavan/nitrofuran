@@ -89,6 +89,7 @@ body
     right: 0;
     background-color: #d4d4d4;
     overflow-y: scroll;
+    z-index: 1;
 }
     #right .item
     {
@@ -136,6 +137,20 @@ body
     bottom: 0;
     opacity: 0.4;
     z-index: 10;
+}
+#rightcurtain
+{
+    position: absolute;
+    left: 300px;
+    top: 50px;
+    bottom: 0;
+    right: 0;
+    background-color: #404040;
+    text-align: center;
+    padding-top: 200px;
+    opacity: 0.3;
+    z-index: 2;
+    display: none;
 }
 
 /* формы */
