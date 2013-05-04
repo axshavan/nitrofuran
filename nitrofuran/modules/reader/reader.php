@@ -224,7 +224,6 @@ class CReader
 	{
 		$result = $this->crud->read(READER_SUBSCRIPTION_TABLE, array('id' => (int)$id));
 		$result = $result[0];
-		$result['items'] = $this->getItems($result);
 		return $result;
 	}
 

@@ -311,8 +311,20 @@ function showSubscribtion(obj, id)
 			$('#editsform_id').val(data['id']);
 			$('#editsform_group').val(data['group_id']);
 			$('#editsform_name').val(data['name']);
-			$('#right').html(data['items']);
-			curtainOff();
+			//$('#right').html(data['items']);
+			jQuery.post
+			(
+				curpath,
+				{
+					ajax: 'getSubscriptionItems',
+					id: id
+				},
+				function(data)
+				{
+					curtainOff();
+					$('#right').html(data);
+				}
+			);
 		}
 	);
 }
