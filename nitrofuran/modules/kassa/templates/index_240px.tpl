@@ -47,7 +47,7 @@
 		foreach($_optypes as $k => $_group):
 			?><select class="half optype" id="inp_optype<?= $k ?>" onchange="onTypeSelectChange(this.value)"><?
 				foreach($_group as $_optype):
-					?><option value="<?= $_optype['id'] ?>"><?= $_optype['name'] ?></span><?
+					?><option value="<?= $_optype['id'] ?>"><?= $_optype['name'] ?></option><?
 				endforeach;
 			?></select><?
 		endforeach;

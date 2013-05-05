@@ -213,7 +213,7 @@
 					</div>
 				</div>
 				<input type="hidden" name="optype" id="inp_optype">
-				<input type="submit" onclick="return checkAddForm()" value="Добавить запись">
+				<input type="submit" onclick="this.disabled='disabled'; if(checkAddForm()) return true; else { this.disabled=false; return false; }" value="Добавить запись">
 				<span class="command" onclick="$('#backtimediv').slideToggle(); ge('backyear_select').value=''; ge('backmonth_select').value=''; ge('backday_select').value=''; ">задним числом</span>
 				<div class="hidden" id="backtimediv">
 					<select id="backyear_select" name="backyear">
