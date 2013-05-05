@@ -54,6 +54,25 @@ switch($_POST['ajax'])
 		break;
 	}
 
+	// удаление подписки
+	case 'delSubscription':
+	{
+		if($reader->deleteSubscription($_POST['id'], $error))
+		{
+			echo 'ok';
+		}
+		else
+		{
+			echo 'Не удалось удалить подписку: ';
+			switch($error)
+			{
+				case 'NO_ID':    echo 'нет идентификатора подписки'; break;
+				default:         echo 'непонятно почему'; break;
+			}
+		}
+		break;
+	}
+
 	// получить данные об одной подписке
 	case 'getSubsription':
 	{

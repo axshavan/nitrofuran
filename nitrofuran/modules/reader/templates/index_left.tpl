@@ -16,7 +16,9 @@ function draw_subscriptions_recursively(&$tree)
 	echo '</ul><ul class="feeds">';
 	foreach($tree['data']['subscriptions'] as &$subscription)
 	{
-		echo '<li onclick="showSubscribtion(this, '.$subscription['id'].')">'.$subscription['name'].'</li>';
+		echo '<li onclick="showSubscribtion(this, '.$subscription['id'].')">'.$subscription['name']
+			.'<span class="delete" onclick="deleteSubscription(this, '.$subscription['id'].')"></span>'
+			.'</li>';
 	}
 	echo '</ul>';
 }

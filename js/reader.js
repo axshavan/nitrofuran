@@ -125,6 +125,44 @@ function curtain2On()
 }
 
 /**
+ * Удалить подписку (отписаться типа)
+ * @param {HTMLElement} obj объект, вызвавший событие
+ * @param {Int}         id  идентификатор подписки
+ */
+function deleteSubscription(obj, id)
+{
+	if(confirm('Что, правда удалить?'))
+	{
+		if(bAjaxInProgress)
+		{
+			return false;
+		}
+		bAjaxInProgress = true;
+		curtainOn();
+		jQuery.post
+		(
+			curpath,
+			{
+				ajax: 'delSubscription',
+				id:   id
+			},
+			function(data)
+			{
+				curtainOff();
+				if(data != 'ok')
+				{
+					alert(data);
+				}
+				else
+				{
+					$(obj).parent().hide();
+				}
+			}
+		);
+	}
+}
+
+/**
  * Загрузить список подписок в соответствующий див
  */
 function loadSubscriptions()

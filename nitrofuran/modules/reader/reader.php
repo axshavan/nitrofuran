@@ -126,7 +126,26 @@ class CReader
 	}
 
 	public function deleteGroup() {}
-	public function deleteSubscription() {}
+
+	/**
+	 * Удаление подписки
+	 * @param  int    $id идентификатор подписки
+	 * @param  string $error
+	 * @return bool
+	 */
+	public function deleteSubscription($id, &$error)
+	{
+		$error = '';
+		if(!$id)
+		{
+			$error = 'NO_ID';
+			return false;
+		}
+		$this->crud->delete(READER_SUBSCRIPTION_TABLE, array('id' => $id));
+		$this->crud->delete(READER_SUBSCRIPTION_ITEM_TABLE, array('subscription_id' => $id));
+		return true;
+	}
+
 	public function getItem() {}
 
 	/**
@@ -353,6 +372,7 @@ class CReader
 	{
 		$_result = array
 		(
+			'meta'  => array(),
 			'items' => array()
 		);
 		foreach($xml->entry as $entry)
