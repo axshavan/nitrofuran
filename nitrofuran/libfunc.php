@@ -63,6 +63,7 @@ function h($s)
  */
 function h2($s)
 {
+	$_tags = array('small', 'strong', 'em', 'b', 'i', 'sub', 'sup', 'blockquote', 'pre');
 	$s = h($s);
 	$s = preg_replace('/\&lt;br[\s\S]*\&gt;/Ui', '<br />', $s);
 	$s = str_replace('&lt;a name', '&lt;a href', $s);
@@ -70,6 +71,10 @@ function h2($s)
 	$s = str_replace('&lt;/a&gt;', '</a>', $s);
 	$s = preg_replace('/\&lt;img [\s\S]*src=(\'|\"|\&quot;|)(http[\S]+)\1[\s\S]*\&gt;/Ui', '<img src="\2"/>', $s);
 	$s = str_replace('href="javascript', '', $s);
+	foreach($_tags as $tag)
+	{
+		$s = preg_replace('/\&lt;'.$tag.'\&gt;([\s\S]*)\&lt;\/'.$tag.'\&gt;/Ui', '<'.$tag.'>\1</'.$tag.'>', $s);
+	}
 	return $s;
 }
 

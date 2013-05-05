@@ -127,7 +127,7 @@ function curtain2On()
 /**
  * Удалить подписку (отписаться типа)
  * @param {HTMLElement} obj объект, вызвавший событие
- * @param {Int}         id  идентификатор подписки
+ * @param {Integer}     id  идентификатор подписки
  */
 function deleteSubscription(obj, id)
 {

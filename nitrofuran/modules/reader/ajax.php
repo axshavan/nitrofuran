@@ -66,8 +66,8 @@ switch($_POST['ajax'])
 			echo 'Не удалось удалить подписку: ';
 			switch($error)
 			{
-				case 'NO_ID':    echo 'нет идентификатора подписки'; break;
-				default:         echo 'непонятно почему'; break;
+				case 'NO_ID': echo 'нет идентификатора подписки'; break;
+				default:      echo 'непонятно почему'; break;
 			}
 		}
 		break;
