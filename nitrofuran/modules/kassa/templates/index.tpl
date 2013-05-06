@@ -171,7 +171,7 @@
 		
 		<!-- форма добавления -->
 		<div class="add-form" id="add_form">
-			<form action="<?= HTTP_ROOT ?>/kassa/add/" method="post">
+			<form action="<?= HTTP_ROOT ?>/kassa/add/" method="post" onsubmit="ge('addformsubmit').disabled='disabled';">
 				<strong>Добавить запись</strong>
 				<? foreach($_frequent_types as $_type): ?>
 					<span class="command frequent" title="<?= $_type['gname'] ?>/<?= $_type['tname'] ?>" onclick="onFrequentTypeClick(<?= $_type['tid'] ?>, <?= $_type['gid'] ?>)"><?= $_type['tname'] ?></span>
@@ -213,7 +213,7 @@
 					</div>
 				</div>
 				<input type="hidden" name="optype" id="inp_optype">
-				<input type="submit" onclick="this.disabled='disabled'; if(checkAddForm()) return true; else { this.disabled=false; return false; }" value="Добавить запись">
+				<input type="submit" id="addformsubmit" onclick="return checkAddForm();" value="Добавить запись">
 				<span class="command" onclick="$('#backtimediv').slideToggle(); ge('backyear_select').value=''; ge('backmonth_select').value=''; ge('backday_select').value=''; ">задним числом</span>
 				<div class="hidden" id="backtimediv">
 					<select id="backyear_select" name="backyear">

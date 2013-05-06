@@ -136,7 +136,6 @@ function adminPlanRepeatTypeD2(day, bAdd)
  */
 function checkAddForm()
 {
-
 	var obj = ge('inp_optype');
 	if(obj)
 	{
