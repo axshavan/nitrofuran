@@ -84,6 +84,10 @@ class CReader
 		}
 		else
 		{
+			if($res[0]['read_flag'])
+			{
+				return -1;
+			}
 			return $res[0]['id'];
 		}
 	}
@@ -177,7 +181,7 @@ class CReader
 		}
 
 		$mostEarlierDate = time();
-		foreach($data['items'] as &$item)
+		foreach($data['items'] as $k => &$item)
 		{
 			if(!$item['date'])
 			{
@@ -188,6 +192,11 @@ class CReader
 				$mostEarlierDate = $item['date'];
 			}
 			$item['id'] = $this->addItem($item, $subscription['id']);
+			if($item['id'] == -1)
+			{
+				unset($item);
+				unset($data['items'][$k]);
+			}
 		}
 		$res = $this->crud->read
 		(
@@ -372,7 +381,10 @@ class CReader
 	{
 		$_result = array
 		(
-			'meta'  => array(),
+			'meta'  => array
+			(
+				'title' => (string)$xml->title
+			),
 			'items' => array()
 		);
 		foreach($xml->entry as $entry)
@@ -431,7 +443,7 @@ class CReader
 				'title'       => (string)$item->title,
                 'href'        => (string)$item->link,
                 'description' => (string)$item->description,
-                'date'        => (string)$item->pubDateUT
+                'date'        => (string)$item->pubDateUT ? (string)$item->pubDateUT : strtotime((string)$item->pubDate)
 			);
 		}
 		return $_result;
