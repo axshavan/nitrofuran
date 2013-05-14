@@ -37,6 +37,10 @@ foreach($_allowed_languages as $l)
 		break;
 	}
 }
+if(!$language)
+{
+	$language = $_allowed_languages[0];
+}
 
 if($TREE_INFO['current']['template'] && file_exists(dirname(__FILE__).'/templates/'.$TREE_INFO['current']['template']))
 {
