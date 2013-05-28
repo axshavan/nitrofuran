@@ -136,6 +136,10 @@ body
         font-size: 10px;
         float: right;
     }
+    #right .item img
+    {
+        max-width: 100%;
+    }
 #curtain
 {
     position: fixed;
