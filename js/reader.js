@@ -125,6 +125,24 @@ function curtain2On()
 }
 
 /**
+ * Уменьшить количество непрочитанных элементов в названии подписки
+ */
+function decreaseUnread()
+{
+	var unread_count = new String($('#subscr').find('.active.unread').find('.unread').html());
+	unread_count = parseInt(unread_count.substring(2, unread_count.length - 1));
+	if(unread_count > 1)
+	{
+		$('#subscr').find('.active.unread').find('.unread').html(' (' + --unread_count + ')');
+	}
+	else
+	{
+		$('#subscr').find('.active.unread').find('.unread').remove();
+		$('#subscr').find('.active.unread').removeClass('unread');
+	}
+}
+
+/**
  * Удалить подписку (отписаться типа)
  * @param {HTMLElement} obj объект, вызвавший событие
  * @param {Integer}     id  идентификатор подписки
@@ -200,6 +218,7 @@ function onRightDivScroll()
 				if(!$(v).hasClass('active'))
 				{
 					$(v).addClass('active');
+					$(v).find('button').hide();
 					if(bAjaxInProgress)
 					{
 						return false;
@@ -219,6 +238,7 @@ function onRightDivScroll()
 							{
 								alert(data);
 							}
+							decreaseUnread();
 						}
 					);
 				}
@@ -323,6 +343,7 @@ function setItemRead(id)
 				if(data == 'ok')
 				{
 					$('#item_' + id).fadeOut();
+					decreaseUnread();
 				}
 				else
 				{

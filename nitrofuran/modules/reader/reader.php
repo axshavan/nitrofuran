@@ -286,6 +286,7 @@ class CReader
 	{
 		require_once(DOCUMENT_ROOT.'/nitrofuran/graph.class.php');
 		global $AUTH;
+		global $DB;
 
 		// надо собрать массив с ключами, соответствующими id групп
 		$res_g = array();
@@ -297,7 +298,12 @@ class CReader
 		unset($tmp);
 
 		// выборка подписок и раскладывание их по папкам
-		$res_s = $this->crud->read(READER_SUBSCRIPTION_TABLE, array('user_id' => $AUTH->sess_data['user_id']));
+		//$res_s = $this->crud->read(READER_SUBSCRIPTION_TABLE, array('user_id' => $AUTH->sess_data['user_id']));
+		$res_s = $DB->QueryFetched("select s.*, count(i.id) as unread_count from
+			`".READER_SUBSCRIPTION_TABLE."` s
+			left join `".READER_SUBSCRIPTION_ITEM_TABLE."` i on (i.`subscription_id` = s.id and !i.`read_flag`)
+			where s.`user_id` = '".$AUTH->sess_data['user_id']."'
+			group by s.`id`");
 		foreach($res_s as $v)
 		{
 			$res_g[$v['group_id']]['subscriptions'][$v['id']] = $v;

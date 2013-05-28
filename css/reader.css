@@ -74,6 +74,10 @@ body
         {
             background-color: #f0f0f0;
         }
+        .left #subscr ul li.unread
+        {
+            font-weight: bold;
+        }
         .left #subscr span.delete
         {
             display: inline-block;
