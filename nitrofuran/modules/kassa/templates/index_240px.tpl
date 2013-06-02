@@ -7,7 +7,7 @@
 	<script type="text/javascript" src="<?= HTTP_ROOT ?>/js/kassa_240px.js"></script>
 </head>
 <body>
-	<form action="/kassa/add/" method="post" onsubmit="return onFormSubmit();">
+	<form action="/kassa/add/" method="post" onsubmit="a('addformsubmit').disabled='disabled';" >
 		<input type="hidden" name="optype" id="inp_optype"><?
 		?><label for="inp_amount" class="half">Сумма</label><?
 		?><input type="text" name="amount" id="inp_amount" class="half"><?
@@ -51,7 +51,7 @@
 				endforeach;
 			?></select><?
 		endforeach;
-		?><br><br><br><input class="full" type="submit" value="Добавить">
+		?><br><br><br><input id="addformsubmit" onclick="return onFormSubmit()" class="full" type="submit" value="Добавить">
 	</form>
 </body>
 </html>
