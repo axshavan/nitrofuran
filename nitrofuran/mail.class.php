@@ -108,6 +108,10 @@ class CMailSender
 		// каждый кусок письма оборачиваем заголовками и цепляем к основному тексту
 		foreach($_bodies as $part)
 		{
+			if(!strlen($part['CONTENT']))
+			{
+				continue;
+			}
 			if(strlen($mime_boundary))
 			{
 				$mailText .= "\n".'--'.$mime_boundary."\n";
