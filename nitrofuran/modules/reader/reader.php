@@ -166,10 +166,38 @@ class CReader
 		$curl = curl_init($subscription['href']);
 		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
+		curl_setopt
+		(
+			$curl,
+			CURLOPT_HTTPHEADER,
+			array
+			(
+				'Accept: text/html, text/plain',
+				'Accept-Encoding:'
+			)
+		);
 		ob_start();
 		curl_exec($curl);
-		$xml = simplexml_load_string(ob_get_clean());
+		$raw_string = ob_get_clean();
+		$xml = simplexml_load_string($raw_string);
 
+		if(!$xml)
+		{
+			// может быть, кто-то игнорирует заголовок Accept-Encoding и отдаёт сжатый gzip текст?
+			$tmp_file_name = DOCUMENT_ROOT.'/tmp/'.md5(time());
+			file_put_contents($tmp_file_name, $raw_string);
+			$cmd = 'cat '.$tmp_file_name.' | $(which gunzip) 2>/dev/null';
+			ob_start();
+			echo `$cmd`;
+			$unpacked_string = ob_get_clean();
+			if(strlen($unpacked_string) >= strlen($raw_string))
+			{
+				$raw_string = $unpacked_string;
+				unset($unpacked_string);
+			}
+			unlink($tmp_file_name);
+			$xml = simplexml_load_string($raw_string);
+		}
 		if($xml)
 		{
 			// может быть, это что-то похожее на RSS 2.0
