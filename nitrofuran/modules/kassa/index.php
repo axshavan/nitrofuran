@@ -220,7 +220,7 @@ while($_row = $DB->Fetch($res))
 		default:
 		{
 			$_row['repeat'] = date('Y-m-d', strtotime($_row['repeat']));
-			if($_row['repeat'] > date('Y-m-d'))
+			if($_row['repeat'] >= date('Y-m-d'))
 			{
 				$_plans[$_row['repeat']][] = $_row;
 			}

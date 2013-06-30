@@ -172,8 +172,7 @@ class CReader
 			CURLOPT_HTTPHEADER,
 			array
 			(
-				'Accept: text/html, text/plain',
-				'Accept-Encoding:'
+				'Accept-Encoding: '
 			)
 		);
 		ob_start();
@@ -193,8 +192,8 @@ class CReader
 			if(strlen($unpacked_string) >= strlen($raw_string))
 			{
 				$raw_string = $unpacked_string;
-				unset($unpacked_string);
 			}
+			unset($unpacked_string);
 			unlink($tmp_file_name);
 			$xml = simplexml_load_string($raw_string);
 		}
