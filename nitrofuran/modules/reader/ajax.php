@@ -77,6 +77,9 @@ switch($_POST['ajax'])
 	case 'getSubsription':
 	{
 		$result = $reader->getSubscription($_POST['id']);
+		$result = $reader->getItems($result);
+		$tplengine->assign('items', $result);
+		$result['items'] = $tplengine->template('items.tpl', true);
 		echo json_encode($result);
 		break;
 	}

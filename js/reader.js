@@ -385,21 +385,8 @@ function showSubscribtion(obj, id)
 			$('#editsform_id').val(data['id']);
 			$('#editsform_group').val(data['group_id']);
 			$('#editsform_name').val(data['name']);
+			$('#right').html(data['items']);
 			curtainOff();
-			curtain2On();
-			jQuery.post
-			(
-				curpath,
-				{
-					ajax: 'getSubscriptionItems',
-					id: id
-				},
-				function(data)
-				{
-					curtain2Off();
-					$('#right').html(data);
-				}
-			);
 		}
 	);
 }

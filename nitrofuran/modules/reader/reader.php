@@ -133,7 +133,7 @@ class CReader
 		return true;
 	}
 
-	public function deleteGroup() {}
+	//public function deleteGroup() {}
 
 	/**
 	 * Удаление подписки
@@ -154,7 +154,7 @@ class CReader
 		return true;
 	}
 
-	public function getItem() {}
+	//public function getItem() {}
 
 	/**
 	 * Получить список элементов подписки
@@ -163,80 +163,85 @@ class CReader
 	 */
 	public function getItems($subscription)
 	{
-		$curl = curl_init($subscription['href']);
-		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
-		curl_setopt
-		(
-			$curl,
-			CURLOPT_HTTPHEADER,
-			array
-			(
-				'Accept-Encoding: '
-			)
-		);
-		ob_start();
-		curl_exec($curl);
-		$raw_string = ob_get_clean();
-		$xml = simplexml_load_string($raw_string);
-
-		if(!$xml)
-		{
-			// может быть, кто-то игнорирует заголовок Accept-Encoding и отдаёт сжатый gzip текст?
-			$tmp_file_name = DOCUMENT_ROOT.'/tmp/'.md5(time());
-			file_put_contents($tmp_file_name, $raw_string);
-			$cmd = 'cat '.$tmp_file_name.' | $(which gunzip) 2>/dev/null';
-			ob_start();
-			echo `$cmd`;
-			$unpacked_string = ob_get_clean();
-			if(strlen($unpacked_string) >= strlen($raw_string))
-			{
-				$raw_string = $unpacked_string;
-			}
-			unset($unpacked_string);
-			unlink($tmp_file_name);
-			$xml = simplexml_load_string($raw_string);
-		}
-		if($xml)
-		{
-			// может быть, это что-то похожее на RSS 2.0
-			if((string)$xml->attributes()->version == '2.0' && $xml->channel)
-			{
-				$data = $this->parseRSS20($xml);
-			}
-			// может быть, это что-то похожее на Atom
-			else
-			{
-				$data = $this->parseAtom($xml);
-			}
-		}
-
+		$data = array();
 		$mostEarlierDate = time();
-		foreach($data['items'] as $k => &$item)
+		if(!get_param('reader', 'use_async_run'))
 		{
-			if(!$item['date'])
+			$curl = curl_init($subscription['href']);
+			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
+			curl_setopt
+			(
+				$curl,
+				CURLOPT_HTTPHEADER,
+				array
+				(
+					'Accept-Encoding: '
+				)
+			);
+			ob_start();
+			curl_exec($curl);
+			$raw_string = ob_get_clean();
+			$xml = simplexml_load_string($raw_string);
+
+			if(!$xml)
 			{
-				$item['date'] = time();
+				// может быть, кто-то игнорирует заголовок Accept-Encoding и отдаёт сжатый gzip текст?
+				$tmp_file_name = DOCUMENT_ROOT.'/tmp/'.md5(time());
+				file_put_contents($tmp_file_name, $raw_string);
+				$cmd = 'cat '.$tmp_file_name.' | $(which gunzip) 2>/dev/null';
+				ob_start();
+				echo `$cmd`;
+				$unpacked_string = ob_get_clean();
+				if(strlen($unpacked_string) >= strlen($raw_string))
+				{
+					$raw_string = $unpacked_string;
+				}
+				unset($unpacked_string);
+				unlink($tmp_file_name);
+				$xml = simplexml_load_string($raw_string);
 			}
-			elseif($item['date'] < $mostEarlierDate)
+			if($xml)
 			{
-				$mostEarlierDate = $item['date'];
+				// может быть, это что-то похожее на RSS 2.0
+				if((string)$xml->attributes()->version == '2.0' && $xml->channel)
+				{
+					$data = $this->parseRSS20($xml);
+				}
+				// может быть, это что-то похожее на Atom
+				else
+				{
+					$data = $this->parseAtom($xml);
+				}
 			}
-			$item['id'] = $this->addItem($item, $subscription);
-			if($item['id'] == -1)
+
+			foreach($data['items'] as $k => &$item)
 			{
-				unset($item);
-				unset($data['items'][$k]);
+				if(!$item['date'])
+				{
+					$item['date'] = time();
+				}
+				elseif($item['date'] < $mostEarlierDate)
+				{
+					$mostEarlierDate = $item['date'];
+				}
+				$item['id'] = $this->addItem($item, $subscription);
+				if($item['id'] == -1)
+				{
+					unset($item);
+					unset($data['items'][$k]);
+				}
 			}
 		}
+
 		$res = $this->crud->read
 		(
 			READER_SUBSCRIPTION_ITEM_TABLE,
 			array
 			(
 				'subscription_id' => $subscription['id'],
-				'read_flag'       => 0,
-				'<date'           => $mostEarlierDate
+				'read_flag'       => 0//,
+				//'<date'           => $mostEarlierDate
 			)
 		);
 		foreach($res as $res_row)
@@ -360,9 +365,9 @@ class CReader
 		$this->crud->update(READER_SUBSCRIPTION_ITEM_TABLE, array('id' => $id), array('read_flag' => 1));
 	}
 
-	public function refreshAll() {}
-	public function refreshSubscription() {}
-	public function unreadItem() {}
+	//public function refreshAll() {}
+	//public function refreshSubscription() {}
+	//public function unreadItem() {}
 
 	/**
 	 * Обновить группу подписок
@@ -406,7 +411,7 @@ class CReader
 		);
 	}
 
-	public function updateItem() {}
+	//public function updateItem() {}
 
 	// PROTECTED AREA
 

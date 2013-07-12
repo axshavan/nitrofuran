@@ -6,4 +6,4 @@ unzip master
 rm master
 cd $1/nitrofuran-master
 rm -rf tmp
-rn -rf tests
+rm -rf tests
