@@ -65,7 +65,7 @@ class CReader
 				'href'            => $item['href'],
 			)
 		);
-		if(!$res[0]['id'])
+		if(!$res[0] && !$res[0]['id'])
 		{
 			if((int)$item['date'] && $subscription['last_update'] > $item['date'])
 			{
@@ -133,7 +133,85 @@ class CReader
 		return true;
 	}
 
-	//public function deleteGroup() {}
+	/**
+	 * Получить список свежих элементов подписки с фида
+	 * @param  array $subscription    данные о подписке
+	 * @param  int   $mostEarlierDate таймстамп самого раннего поста
+	 * @return array
+	 */
+	public function curlGetItems($subscription, &$mostEarlierDate)
+	{
+		$data            = array();
+		$mostEarlierDate = $mostEarlierDate ? $mostEarlierDate : time();
+		$curl            = curl_init($subscription['href']);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
+		curl_setopt
+		(
+			$curl,
+			CURLOPT_HTTPHEADER,
+			array
+			(
+				'Accept-Encoding: ',
+			)
+		);
+		curl_setopt($curl, CURLOPT_USERAGENT, 'Nitrofuran Reader: PHP bot collecting RSS feeds');
+		ob_start();
+		curl_exec($curl);
+		$raw_string = ob_get_clean();
+		$xml = simplexml_load_string($raw_string);
+
+		if(!$xml)
+		{
+			// может быть, кто-то игнорирует заголовок Accept-Encoding и отдаёт сжатый gzip текст?
+			$tmp_file_name = DOCUMENT_ROOT.'/tmp/'.md5(time());
+			file_put_contents($tmp_file_name, $raw_string);
+			$cmd = 'cat '.$tmp_file_name.' | $(which gunzip) 2>/dev/null';
+			ob_start();
+			echo `$cmd`;
+			$unpacked_string = ob_get_clean();
+			if(strlen($unpacked_string) >= strlen($raw_string))
+			{
+				$raw_string = $unpacked_string;
+			}
+			unset($unpacked_string);
+			unlink($tmp_file_name);
+			$xml = simplexml_load_string($raw_string);
+		}
+		if($xml)
+		{
+			// может быть, это что-то похожее на RSS 2.0
+			if((string)$xml->attributes()->version == '2.0' && $xml->channel)
+			{
+				$data = $this->parseRSS20($xml);
+			}
+			// может быть, это что-то похожее на Atom
+			else
+			{
+				$data = $this->parseAtom($xml);
+			}
+		}
+
+		foreach($data['items'] as $k => &$item)
+		{
+			if(!$item['date'])
+			{
+				$item['date'] = time();
+			}
+			elseif($item['date'] < $mostEarlierDate)
+			{
+				$mostEarlierDate = $item['date'];
+			}
+			$item['id'] = $this->addItem($item, $subscription);
+			if($item['id'] == -1)
+			{
+				unset($item);
+				unset($data['items'][$k]);
+			}
+		}
+
+		return $data;
+	}
 
 	/**
 	 * Удаление подписки
@@ -154,8 +232,6 @@ class CReader
 		return true;
 	}
 
-	//public function getItem() {}
-
 	/**
 	 * Получить список элементов подписки
 	 * @param  array $subscription данные о подписке
@@ -167,81 +243,16 @@ class CReader
 		$mostEarlierDate = time();
 		if(!get_param('reader', 'use_async_run'))
 		{
-			$curl = curl_init($subscription['href']);
-			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
-			curl_setopt
-			(
-				$curl,
-				CURLOPT_HTTPHEADER,
-				array
-				(
-					'Accept-Encoding: '
-				)
-			);
-			ob_start();
-			curl_exec($curl);
-			$raw_string = ob_get_clean();
-			$xml = simplexml_load_string($raw_string);
-
-			if(!$xml)
-			{
-				// может быть, кто-то игнорирует заголовок Accept-Encoding и отдаёт сжатый gzip текст?
-				$tmp_file_name = DOCUMENT_ROOT.'/tmp/'.md5(time());
-				file_put_contents($tmp_file_name, $raw_string);
-				$cmd = 'cat '.$tmp_file_name.' | $(which gunzip) 2>/dev/null';
-				ob_start();
-				echo `$cmd`;
-				$unpacked_string = ob_get_clean();
-				if(strlen($unpacked_string) >= strlen($raw_string))
-				{
-					$raw_string = $unpacked_string;
-				}
-				unset($unpacked_string);
-				unlink($tmp_file_name);
-				$xml = simplexml_load_string($raw_string);
-			}
-			if($xml)
-			{
-				// может быть, это что-то похожее на RSS 2.0
-				if((string)$xml->attributes()->version == '2.0' && $xml->channel)
-				{
-					$data = $this->parseRSS20($xml);
-				}
-				// может быть, это что-то похожее на Atom
-				else
-				{
-					$data = $this->parseAtom($xml);
-				}
-			}
-
-			foreach($data['items'] as $k => &$item)
-			{
-				if(!$item['date'])
-				{
-					$item['date'] = time();
-				}
-				elseif($item['date'] < $mostEarlierDate)
-				{
-					$mostEarlierDate = $item['date'];
-				}
-				$item['id'] = $this->addItem($item, $subscription);
-				if($item['id'] == -1)
-				{
-					unset($item);
-					unset($data['items'][$k]);
-				}
-			}
+			$data = $this->curlGetItems($subscription, $mostEarlierDate);
 		}
-
 		$res = $this->crud->read
 		(
 			READER_SUBSCRIPTION_ITEM_TABLE,
 			array
 			(
 				'subscription_id' => $subscription['id'],
-				'read_flag'       => 0//,
-				//'<date'           => $mostEarlierDate
+				'read_flag'       => 0,
+				'<date'           => $mostEarlierDate
 			)
 		);
 		foreach($res as $res_row)
@@ -365,10 +376,6 @@ class CReader
 		$this->crud->update(READER_SUBSCRIPTION_ITEM_TABLE, array('id' => $id), array('read_flag' => 1));
 	}
 
-	//public function refreshAll() {}
-	//public function refreshSubscription() {}
-	//public function unreadItem() {}
-
 	/**
 	 * Обновить группу подписок
 	 * @param  $id       идентификатор группы
@@ -410,8 +417,6 @@ class CReader
 			)
 		);
 	}
-
-	//public function updateItem() {}
 
 	// PROTECTED AREA
 

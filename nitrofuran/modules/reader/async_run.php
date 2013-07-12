@@ -13,6 +13,43 @@
  */
 
 
-// тут пока ничего нет
+define('DOCUMENT_ROOT', dirname(__FILE__).'/../../..');
+require_once(DOCUMENT_ROOT.'/nitrofuran/config.php');
+require_once(DOCUMENT_ROOT.'/nitrofuran/libfunc.php');
+require_once(DOCUMENT_ROOT.'/nitrofuran/db.class.php');
+$DB = new CDatabase();
+$DB->Connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
+require_once(DOCUMENT_ROOT.'/nitrofuran/modules/reader/config.php');
+
+$res = $DB->QueryFetched("select * from `".READER_SUBSCRIPTION_TABLE."`
+	where `last_update` < unix_timestamp() - 1800 or `last_update` is NULL
+	order by `last_update` asc
+	limit 6");
+if(!sizeof($res))
+{
+	echo "No subscribtions to update\n";
+	$DB->Disconnect();
+	die();
+}
+require_once(DOCUMENT_ROOT.'/nitrofuran/modules/reader/reader.php');
+$reader                = new CReader();
+$time_start            = microtime(true);
+$updated_subscribtions = 0;
+foreach($res as $subscription)
+{
+	// LJ bot policy: не более 5 запросов в секунду
+	if($time_start > microtime(true) - 0.2)
+	{
+		usleep(200);
+	}
+	$
+	$time_start = microtime(true);
+	$reader->curlGetItems($subscription, $a);
+	$DB->Query("update `".READER_SUBSCRIPTION_TABLE."` set `last_update` = unix_timestamp()
+		where `id` = '".$subscription['id']."'");
+	$updated_subscribtions++;
+}
+echo "Updated ".$updated_subscribtions." subscibtions\n";
+$DB->Disconnect();
 
 ?>
