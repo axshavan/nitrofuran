@@ -235,13 +235,14 @@ class CReader
 	/**
 	 * Получить список элементов подписки
 	 * @param  array $subscription данные о подписке
+	 * @param  bool  $forceRead    обновить элементы насильно
 	 * @return array
 	 */
-	public function getItems($subscription)
+	public function getItems($subscription, $forceRead = false)
 	{
 		$data = array();
 		$mostEarlierDate = time();
-		if(!get_param('reader', 'use_async_run'))
+		if(!get_param('reader', 'use_async_run') || $forceRead)
 		{
 			$data = $this->curlGetItems($subscription, $mostEarlierDate);
 		}
@@ -294,7 +295,6 @@ class CReader
 			}
 		}
 		usort($data['items'], create_function('$a, $b', 'return $a["date"] < $b["date"] ? 1 : ($a["date"] > $b["date"] ? -1 : 0);'));
-		$this->crud->update(READER_SUBSCRIPTION_TABLE, array('id' => $subscription['id']), array('last_update' => time()));
 		return $data;
 	}
 

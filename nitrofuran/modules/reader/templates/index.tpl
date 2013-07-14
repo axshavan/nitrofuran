@@ -28,6 +28,7 @@
 		<!-- форма редактирования подписки -->
 		<div id="editsform" class="editform">
 			<span id="editsform_href"></span>
+			<span id="editsform_refresh" onclick="forceRefreshSubscription()"></span>
 			<input type="hidden" id="editsform_id" />
 			<input type="text" id="editsform_name" />
 			<select id="editsform_group"></select>

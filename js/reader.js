@@ -181,6 +181,41 @@ function deleteSubscription(obj, id)
 }
 
 /**
+ * Насильственно обновить подписку, перечитав фид
+ */
+function forceRefreshSubscription()
+{
+	if(bAjaxInProgress)
+	{
+		return;
+	}
+	curtainOn();
+	bAjaxInProgress = true;
+	$('.left *').removeClass('active');
+	$('#right')[0].scrollTop = 0;
+	var id = $('#editsform_id').val();
+	jQuery.post
+	(
+		curpath,
+		{
+			ajax: 'getSubsriptionF',
+			id: id
+		},
+		function(data)
+		{
+			data = jQuery.parseJSON(data);
+			$('.header .editform').hide();
+			$('#editsform').fadeIn();
+			$('#editsform_href').text(data['href'] + ' (последнее обновление ' + data['last_update'] + ')');
+			$('#editsform_group').val(data['group_id']);
+			$('#editsform_name').val(data['name']);
+			$('#right').html(data['items']);
+			curtainOff();
+		}
+	);
+}
+
+/**
  * Загрузить список подписок в соответствующий див
  */
 function loadSubscriptions()
@@ -381,7 +416,8 @@ function showSubscribtion(obj, id)
 			data = jQuery.parseJSON(data);
 			$('.header .editform').hide();
 			$('#editsform').fadeIn();
-			$('#editsform_href').text(data['href']);
+			$('#editsform_href').text(data['href'] + ' (последнее обновление ' + data['last_update'] + ')');
+
 			$('#editsform_id').val(data['id']);
 			$('#editsform_group').val(data['group_id']);
 			$('#editsform_name').val(data['name']);

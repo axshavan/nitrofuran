@@ -73,14 +73,21 @@ switch($_POST['ajax'])
 		break;
 	}
 
+	// получить данные об одной подписке насильно, обратите внимание на отсутствие break
+	case 'getSubsriptionF';
+	{
+		$bForce = true;
+	}
 	// получить данные об одной подписке
 	case 'getSubsription':
 	{
-		$result = $reader->getSubscription($_POST['id']);
-		$result = $reader->getItems($result);
-		$tplengine->assign('items', $result);
-		$result['items'] = $tplengine->template('items.tpl', true);
-		echo json_encode($result);
+		$subscription = $reader->getSubscription($_POST['id']);
+		$subscription['last_update'] = date('Y-m-d H:i:s', $subscription['last_update']);
+		$items = $reader->getItems($subscription, isset($bForce) ? $bForce : false);
+		$tplengine->assign('items', $items);
+		$subscription['items'] = $tplengine->template('items.tpl', true);
+		$subscription['items_count'] = sizeof($items['items']);
+		echo json_encode($subscription);
 		break;
 	}
 

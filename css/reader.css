@@ -29,7 +29,16 @@ body
     .header #editsform_href
     {
         font-size: 12px;
-        display: block;;
+        display: block;
+    }
+    .header #editsform_refresh
+    {
+        font-size: 12px;
+        display: inline-block;
+        background-image: url('/i/reader/rfr.gif');
+        width: 8px;
+        height: 8px;
+        cursor: pointer;
     }
 .left
 {
