@@ -82,9 +82,9 @@ switch($_POST['ajax'])
 	case 'getSubsription':
 	{
 		$subscription = $reader->getSubscription($_POST['id']);
-		$subscription['last_update'] = date('Y-m-d H:i:s', $subscription['last_update']);
 		$items = $reader->getItems($subscription, isset($bForce) ? $bForce : false);
 		$tplengine->assign('items', $items);
+		$subscription['last_update'] = date('Y-m-d H:i:s', $subscription['last_update']);
 		$subscription['items'] = $tplengine->template('items.tpl', true);
 		$subscription['items_count'] = sizeof($items['items']);
 		echo json_encode($subscription);

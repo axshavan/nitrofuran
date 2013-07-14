@@ -139,7 +139,7 @@ class CReader
 	 * @param  int   $mostEarlierDate таймстамп самого раннего поста
 	 * @return array
 	 */
-	public function curlGetItems($subscription, &$mostEarlierDate)
+	public function curlGetItems(&$subscription, &$mostEarlierDate)
 	{
 		$data            = array();
 		$mostEarlierDate = $mostEarlierDate ? $mostEarlierDate : time();
@@ -210,6 +210,8 @@ class CReader
 			}
 		}
 
+		$this->crud->update(READER_SUBSCRIPTION_TABLE, array('id' => $subscription['id']), array('last_update' => time()));
+		$subscription['last_update'] = time();
 		return $data;
 	}
 
@@ -238,7 +240,7 @@ class CReader
 	 * @param  bool  $forceRead    обновить элементы насильно
 	 * @return array
 	 */
-	public function getItems($subscription, $forceRead = false)
+	public function getItems(&$subscription, $forceRead = false)
 	{
 		$data = array();
 		$mostEarlierDate = time();
