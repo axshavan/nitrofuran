@@ -57,6 +57,7 @@ if($_GET['done'])
 
 if($_POST)
 {
+	$_POST['amount'] = str_replace(',', '.', $_POST['amount']);
 	if(!$_POST['id'])
 	{
 		// добавление записи

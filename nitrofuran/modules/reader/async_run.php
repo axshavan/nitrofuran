@@ -42,7 +42,6 @@ foreach($res as $subscription)
 	{
 		usleep(200);
 	}
-	$
 	$time_start = microtime(true);
 	$reader->curlGetItems($subscription, $a);
 	$DB->Query("update `".READER_SUBSCRIPTION_TABLE."` set `last_update` = unix_timestamp()
