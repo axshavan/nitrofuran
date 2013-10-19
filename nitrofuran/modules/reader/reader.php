@@ -80,7 +80,7 @@ class CReader
 					'href'            => $item['href'],
 					'subscription_id' => $subscription['id'],
 					'read_flag'       => 0,
-					'date'            => (int)$item['date'] ? (int)$item['date'] : time(),
+					'date'            => (int)$item['date'] ? (int)$item['date'] : gmmktime(),
 					'text'            => $item['description']
 				)
 			);
@@ -142,7 +142,7 @@ class CReader
 	public function curlGetItems(&$subscription, &$mostEarlierDate)
 	{
 		$data            = array();
-		$mostEarlierDate = $mostEarlierDate ? $mostEarlierDate : time();
+		$mostEarlierDate = $mostEarlierDate ? $mostEarlierDate : gmmktime();
 		$curl            = curl_init($subscription['href']);
 		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
@@ -191,12 +191,11 @@ class CReader
 				$data = $this->parseAtom($xml);
 			}
 		}
-
 		foreach($data['items'] as $k => &$item)
 		{
 			if(!$item['date'])
 			{
-				$item['date'] = time();
+				$item['date'] = gmmktime();
 			}
 			elseif($item['date'] < $mostEarlierDate)
 			{
@@ -209,9 +208,8 @@ class CReader
 				unset($data['items'][$k]);
 			}
 		}
-
-		$this->crud->update(READER_SUBSCRIPTION_TABLE, array('id' => $subscription['id']), array('last_update' => time()));
-		$subscription['last_update'] = time();
+		$this->crud->update(READER_SUBSCRIPTION_TABLE, array('id' => $subscription['id']), array('last_update' => gmmktime()));
+		$subscription['last_update'] = gmmktime();
 		return $data;
 	}
 
@@ -243,7 +241,7 @@ class CReader
 	public function getItems(&$subscription, $forceRead = false)
 	{
 		$data = array();
-		$mostEarlierDate = time();
+		$mostEarlierDate = gmmktime();
 		if(!get_param('reader', 'use_async_run') || $forceRead)
 		{
 			$data = $this->curlGetItems($subscription, $mostEarlierDate);
@@ -283,7 +281,7 @@ class CReader
 			(
 				'subscription_id' => $subscription['id'],
 				'read_flag'       => 1,
-				'>=date'           => $mostEarlierDate
+				'>=date'          => $mostEarlierDate
 			)
 		);
 		foreach($res as $res_row)

@@ -417,7 +417,6 @@ function showSubscribtion(obj, id)
 			$('.header .editform').hide();
 			$('#editsform').fadeIn();
 			$('#editsform_href').text(data['href'] + ' (последнее обновление ' + data['last_update'] + ')');
-
 			$('#editsform_id').val(data['id']);
 			$('#editsform_group').val(data['group_id']);
 			$('#editsform_name').val(data['name']);
