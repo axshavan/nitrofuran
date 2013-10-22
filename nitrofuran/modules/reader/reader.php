@@ -67,7 +67,9 @@ class CReader
 		);
 		if(!$res[0] && !$res[0]['id'])
 		{
-			if((int)$item['date'] && $subscription['last_update'] > $item['date'])
+			// за счёт разных часовых поясов и тупого php могут быть косяки со временными метками
+			// накинем ещё сутки
+			if((int)$item['date'] && $subscription['last_update'] > $item['date'] + 86400)
 			{
 				return -1;
 			}
