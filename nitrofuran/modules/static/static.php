@@ -19,6 +19,24 @@ class staticpage
 	public function __construct() { }
 
 	/**
+	 * Удалить страницу
+	 * @param int $page_id
+	 */
+	public function delete($page_id)
+	{
+		$page_id = (int)$page_id;
+		if(!$page_id)
+		{
+			return;
+		}
+		global $DB;
+		$DB->TransactionStart();
+		$DB->Query("delete from `".STATIC_META_TABLE."` where `page_id` = '".$page_id."'");
+		$DB->Query("delete from `".STATIC_PAGES_TABLE."` where `id` = '".$page_id."'");
+		$DB->TransactionCommit();
+	}
+
+	/**
 	 * Получить данные об одной статичной странице
 	 * @param  int  $id         идентификатор выбираемой страницы
 	 * @param  bool $bUseTreeId инспользовать идентификатор как tree_id

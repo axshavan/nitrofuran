@@ -2,9 +2,11 @@
 <script type="text/javascript" src="/js/admin.js"></script>
 <script type="text/javascript" src="/js/static.js"></script>
 
-<form action="/admin?module=static&page=3" method="post">
-	<input type="hidden" name="pageid" value="<?= $_page['page']['id'] ?>">
-	<input type="submit" value="Готово"onfocus="onSubmitFocus()"><br>
+<form action="/admin?module=static&page=3" method="post" id="pageeditform">
+	<input type="hidden" name="pageid" value="<?= $_page['page']['id'] ?>" />
+	<input type="hidden" name="delete" id="delete" value="0" />
+	<input type="submit" value="Готово" onfocus="onSubmitFocus()">
+    <input type="button" value="Удалить" onfocus="onSubmitFocus()" onclick="if(confirm('Что, правда удалить?')) { document.getElementById('delete').value='1'; document.getElementById('pageeditform').submit(); }"><br>
 	<textarea onkeypress="onTextareaKeyPress(this, event.keyCode);" name="content" id="content" class="full"><?= htmlspecialchars($_page['page']['content']) ?></textarea><br>
 	<? if(sizeof($_page['meta'])): ?>
 		Редактировать meta-данные для страницы:<br />

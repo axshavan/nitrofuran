@@ -82,6 +82,11 @@ switch($page)
 
 		if($_POST)
 		{
+			if($_POST['delete'])
+			{
+				$staticpage->delete($page_id);
+				redirect('/admin?module=static&page=2');
+			}
 			$_meta = array(array('key' => $_POST['meta_new_key'], 'value' => $_POST['meta_new_val']));
 			foreach($_POST['meta_key'] as $meta_id => $v)
 			{
