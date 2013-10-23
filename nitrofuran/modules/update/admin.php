@@ -89,7 +89,7 @@ else
 
 if(isset($_GET['proceed']) || $bConsoleRun)
 {
-	$dirname = DOCUMENT_ROOT.'/nitrofuran/modules/update/updates/';
+	$dirname = ($_GET['page'] == 3 && defined('LOCAL_ROOT') ? LOCAL_ROOT : DOCUMENT_ROOT).'/nitrofuran/modules/update/updates/';
 	// посмотреть, какие апдейты есть
 	$dir = opendir($dirname);
 	if(!$dir)
@@ -108,7 +108,7 @@ if(isset($_GET['proceed']) || $bConsoleRun)
 	else
 	{
 		$_upd_scripts = array();
-		$current_version = get_param('update', 'version');
+		$current_version = get_param('update', $_GET['page'] == 3 ? 'local_version' : 'version');
 		// выбрать необходимые апдейты
 		while($file = readdir($dir))
 		{
@@ -146,8 +146,8 @@ if(isset($_GET['proceed']) || $bConsoleRun)
 			}
 			else
 			{
-				set_param('update', 'version',     $v);
-				set_param('update', 'last_update', date('Y-m-d H:i:s'));
+				set_param('update', $_GET['page'] == 3 ? 'local_version'     : 'version',     $v);
+				set_param('update', $_GET['page'] == 3 ? 'local_last_update' : 'last_update', date('Y-m-d H:i:s'));
 			}
 		}
 	}
@@ -165,13 +165,56 @@ if(isset($_GET['proceed']) || $bConsoleRun)
 
 switch($_REQUEST['page'])
 {
+	case 3:
+	{
+		if(defined('LOCAL_ROOT'))
+		{
+			$dir = opendir(LOCAL_ROOT.'/nitrofuran/modules/update/updates/');
+			if(!$dir)
+			{
+				$tplengine->assign('error_text', 'Невозможно открыть папку со скриптами локальных апдейтов');
+			}
+			else
+			{
+				$available_version = 0;
+				while($file = readdir($dir))
+				{
+					if($file != '.' && $file != '..')
+					{
+						$file    = explode('.', $file);
+						$file[0] = (int)ltrim($file[0], '0');
+						if($file[0] > $available_version)
+						{
+							$available_version = $file[0];
+						}
+					}
+				}
+				if(!$available_version)
+				{
+					$tplengine->assign('error_text', 'Скрипты локальных апдейтов не найдены');
+				}
+				closedir($dir);
+			}
+			$tplengine->assign('version',           get_param('update', 'local_version'));
+			$tplengine->assign('last_update',       get_param('update', 'local_last_update'));
+			$tplengine->assign('available_version', $available_version);
+		}
+		else
+		{
+			$tplengine->assign('error_text', 'Нет локальной папки обновлений');
+		}
+		break;
+	}
 	case 2:
 	{
+		// не работает
+		error500();
+		/*
 		ob_start();
 		$cmd = DOCUMENT_ROOT.'nitrofuran/modules/update/download.sh '.DOCUMENT_ROOT.'tmp';
 		echo $cmd."\n";
 		echo `$cmd`;
-		$tplengine->assign('page_content', ob_get_clean());
+		$tplengine->assign('page_content', ob_get_clean());*/
 		break;
 	}
 	case 1:
@@ -203,9 +246,9 @@ switch($_REQUEST['page'])
 			}
 			closedir($dir);
 		}
-		$tplengine->assign('version',             get_param('update', 'version'));
-		$tplengine->assign('last_update',         get_param('update', 'last_update'));
-		$tplengine->assign('available_version',   $available_version);
+		$tplengine->assign('version',           get_param('update', 'version'));
+		$tplengine->assign('last_update',       get_param('update', 'last_update'));
+		$tplengine->assign('available_version', $available_version);
 		break;
 	}
 }

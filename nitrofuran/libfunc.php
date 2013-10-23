@@ -34,6 +34,28 @@ function error404()
 }
 
 /**
+ * Ошибка 500.
+ */
+function error500()
+{
+	header("HTTP/1.0 500 Internal Server Error");
+	header("Status: 500 Internal Server Error");
+	echo 'HTTP/1.0 500 Internal Server Error';
+	die();
+}
+
+/**
+ * Ошибка 666 :)
+ */
+function error666()
+{
+	header("HTTP/1.0 666 Infernal Server Error");
+	header("Status: 666 Infernal Server Error");
+	echo 'HTTP/1.0 666 Infernal Server Error';
+	die();
+}
+
+/**
  * Получить значение параметра.
  * @param  string $module     название модуля
  * @param  string $param_name название параметра

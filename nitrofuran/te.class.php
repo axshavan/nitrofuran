@@ -1,50 +1,50 @@
 <?php
 
-/*
-	Процессор шаблонов.
-	@author Dmitry Nikiforov <axshavan@yandex.ru>
-	@license http://sam.zoy.org/wtfpl WTFPL
-	This program is free software. It comes without any warranty, to
-	the extent permitted by applicable law. You can redistribute it
-	and/or modify it under the terms of the Do What The Fuck You Want
-	To Public License, Version 2, as published by Sam Hocevar. See
-	http://sam.zoy.org/wtfpl/COPYING for more details.
-*/
+/**
+ * Процессор шаблонов.
+ * @author Dmitry Nikiforov <axshavan@yandex.ru>
+ * @license http://sam.zoy.org/wtfpl WTFPL
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the Do What The Fuck You Want
+ * To Public License, Version 2, as published by Sam Hocevar. See
+ * http://sam.zoy.org/wtfpl/COPYING for more details.
+ */
 class CTemplateEngine
 {
 	public $_tpl_vars = array();
 	public $module    = '';
 	
-	/*
-		Конструктор.
-		@param string $module_name имя модуля (где искать шаблоны)
-	*/
+	/**
+	 * Конструктор.
+	 * @param string $module_name имя модуля (где искать шаблоны)
+	 */
 	public function __construct($module_name = '')
 	{
 		$this->module = $module_name;
 	}
 	
-	/*
-		Деструктор.
-	*/
+	/**
+	 * Деструктор.
+	 */
 	public function __destruct()
 	{
 	}
 	
-	/*
-		Передать переменную в шаблон.
-		@param string $var_name  имя переменной
-		@param mixed  $var_value значение переменной
-	*/
+	/**
+	 * Передать переменную в шаблон.
+	 * @param string $var_name  имя переменной
+	 * @param mixed  $var_value значение переменной
+	 */
 	public function assign($var_name, $var_value)
 	{
 		$this->_tpl_vars[$var_name] = $var_value;
 	}
 	
-	/*
-		Удалить переменную из шаблона
-		@param string $var_name имя переменной
-	*/
+	/**
+	 * Удалить переменную из шаблона
+	 * @param string $var_name имя переменной
+	 */
 	public function deassign($var_name)
 	{
 		unset($this->_tpl_vars[$var_name]);
