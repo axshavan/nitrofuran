@@ -52,6 +52,11 @@ class CModule
 			require(DOCUMENT_ROOT.'/nitrofuran/modules/'.$module_name.'/'.$file.'.php');
 			return true;
 		}
+		elseif(defined('LOCAL_ROOT') && file_exists(LOCAL_ROOT.'/nitrofuran/modules/'.$module_name.'/'.$file.'.php'))
+		{
+			require(LOCAL_ROOT.'/nitrofuran/modules/'.$module_name.'/'.$file.'.php');
+			return true;
+		}
 		else
 		{
 			// нет входного файла модуля
