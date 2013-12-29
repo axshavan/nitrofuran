@@ -184,8 +184,8 @@ class CTracer
 				}
 			}
 		}
-		$result .= CTracer::draw_element($_desc, $var_name);
-		if($_desc[0][strlen($_desc[0]) - 1] == '{')
+		$result = CTracer::draw_element($_desc, $var_name);
+		if(isset($_desc[0]) && $_desc[0][strlen($_desc[0]) - 1] == '{')
 		{
 			array_pop($_text);
 			array_shift($_text);
@@ -240,6 +240,10 @@ class CTracer
 */
 function trace($var, $return = false)
 {
+	if(!headers_sent())
+	{
+		header("Content-Type: text/html; charset=utf-8");
+	}
 	ob_start();
 	var_dump($var);
 	$raw = trim(ob_get_clean());
