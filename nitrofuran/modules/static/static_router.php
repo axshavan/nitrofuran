@@ -28,12 +28,38 @@ $_allowed_languages = explode(',', $_allowed_languages);
 
 // определение текущего языка
 $language = '';
-foreach($_allowed_languages as $l)
+if($_GET['lang'] && in_array($_GET['lang'], $_allowed_languages))
 {
-	if(strlen($l) && strpos($_SERVER['HTTP_ACCEPT_LANGUAGE'], $l) !== false)
+	$language = $_GET['lang'];
+	setcookie('lang', $_GET['lang'], time() + 365 * 86400, '/');
+}
+elseif($_COOKIE['lang'] && in_array($_COOKIE['lang'], $_allowed_languages))
+{
+	$language = $_COOKIE['lang'];
+	setcookie('lang', $_COOKIE['lang'], time() + 365 * 86400, '/');
+}
+else
+{
+	foreach($_allowed_languages as $l)
 	{
-		$language = $l;
-		break;
+		if(strlen($l) && strpos($_SERVER['HTTP_ACCEPT_LANGUAGE'], $l) !== false)
+		{
+			$language = $l;
+			break;
+		}
+	}
+	if
+	(
+		!$language
+		&& in_array('cz', $_allowed_languages)
+		&&
+		(
+			strpos($_SERVER['HTTP_ACCEPT_LANGUAGE'], 'cs') !== false
+			|| strpos($_SERVER['HTTP_ACCEPT_LANGUAGE'], 'sk') !== false
+		)
+	)
+	{
+		$language = 'cz';
 	}
 }
 if(!$language)
