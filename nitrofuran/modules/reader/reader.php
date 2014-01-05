@@ -371,11 +371,18 @@ class CReader
 
 	/**
 	 * Пометить элемент прочитанным
-	 * @param int $id
+	 * @param  int $id
+     * @return bool
 	 */
 	public function readItem($id)
 	{
+        $item = $this->crud->read(READER_SUBSCRIPTION_ITEM_TABLE, array('id' => $id), array('id' => 'desc'));
+        if($item[0]['read_flag'])
+        {
+            return false;
+        }
 		$this->crud->update(READER_SUBSCRIPTION_ITEM_TABLE, array('id' => $id), array('read_flag' => 1));
+        return true;
 	}
 
 	/**

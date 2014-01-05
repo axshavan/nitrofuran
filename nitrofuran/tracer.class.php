@@ -130,7 +130,7 @@ class CTracer
 				.'<span style="cursor: pointer; color: #404040; font-size: smaller;" onclick="document.getElementById(\''.$value_div_id.'\').style.display=\'block\';document.getElementById(\''.$value_div_id.'\').style.maxHeight=\'\';document.getElementById(\''.$value_div_id.'\').style.overflow=\'\';">[+]</span> '
 				.'<span style="cursor: pointer; color: #404040; font-size: smaller;" onclick="document.getElementById(\''.$value_div_id.'\').style.display=\'block\';document.getElementById(\''.$value_div_id.'\').style.maxHeight=\'200px\';document.getElementById(\''.$value_div_id.'\').style.overflowY=\'scroll\';">[o]</span>'
 			: '')
-			.'<div id="'.$value_div_id.'">'.$value;
+			.'<div id="'.$value_div_id.'">'.htmlspecialchars($value);
 		$tdstyle .= '; vertical-align: top;';
 		return '<tr><td style="'.$tdstyle.'">'.$name.'&nbsp;</td>'
 			.'<td style="'.$tdstyle.'">'.$type.'</td>'

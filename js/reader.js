@@ -269,11 +269,14 @@ function onRightDivScroll()
 						function(data)
 						{
 							bAjaxInProgress = false;
-							if(data != 'ok')
+							if(data != 'read' && data != 'notread')
 							{
 								alert(data);
 							}
-							decreaseUnread();
+                            if(data == 'read')
+                            {
+							    decreaseUnread();
+                            }
 						}
 					);
 				}

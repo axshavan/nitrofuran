@@ -125,8 +125,7 @@ switch($_POST['ajax'])
 	// пометить элемент прочитанным
 	case 'markAsRead':
 	{
-		$reader->readItem($_POST['item_id']);
-		echo 'ok';
+		echo $reader->readItem($_POST['item_id']) ? 'read' : 'notread';
 		break;
 	}
 
