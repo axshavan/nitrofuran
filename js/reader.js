@@ -378,15 +378,15 @@ function setItemRead(id)
 			function(data)
 			{
 				curtain2Off();
-				if(data == 'ok')
-				{
-					$('#item_' + id).fadeOut();
-					decreaseUnread();
-				}
-				else
-				{
-					alert(data);
-				}
+                if(data != 'read' && data != 'notread')
+                {
+                    alert(data);
+                }
+                if(data == 'read')
+                {
+                    decreaseUnread();
+                }
+                $('#item_' + id).fadeOut();
 			}
 		);
 }
