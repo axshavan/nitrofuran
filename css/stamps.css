@@ -13,7 +13,7 @@ a:hover
 {
     color: #c00000;
 }
-.filter
+.filter, form
 {
     border: 1px solid #606060;
     margin: 5px 0 10px 0;

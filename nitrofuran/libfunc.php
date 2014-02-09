@@ -12,6 +12,43 @@
  */
 
 /**
+ * Очистка папки tmp
+ * (вызывается без указания параметров)
+ */
+function clean_tmp_dir($level = 0, $dir = '')
+{
+	if(!$level)
+	{
+		$dir = DOCUMENT_ROOT.'/tmp/';
+	}
+	else
+	{
+		$dir = $dir.'/';
+	}
+	$d = opendir($dir);
+	while($f = readdir($d))
+	{
+		if($f != '.' && $f != '..')
+		{
+			if(!$level && $f == '.htaccess')
+			{
+				continue;
+			}
+			if(is_dir($dir.$f))
+			{
+				clean_tmp_dir($level + 1, $dir.$f);
+				rmdir($dir.$f);
+			}
+			else
+			{
+				unlink($dir.$f);
+			}
+		}
+	}
+	closedir($d);
+}
+
+/**
  * Ошибка 403.
  */
 function error403()
@@ -138,6 +175,7 @@ function redirect($location)
 {
 	ob_end_clean();
 	header('location: '.$location);
+	die();
 }
 
 /**
