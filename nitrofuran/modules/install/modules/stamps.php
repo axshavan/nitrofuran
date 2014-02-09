@@ -74,7 +74,7 @@ if(!$pid)
 }
 $DB->Query("insert into `".TREE_TABLE."`
 	(`pid`, `name`, `module`, `action`, `template`, `access`) values
-	('".$pid."', 'import', 'stamps', '', '', 0)");
+	('".$pid."', 'import', 'stamps', 'import', '', 0)");
 
 $DB->TransactionCommit();
 return true;

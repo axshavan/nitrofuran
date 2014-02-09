@@ -1,0 +1,60 @@
+body
+{
+    background-color: silver;
+    font-size: 12px;
+    font-family: sans-serif;
+}
+a
+{
+    color: maroon;
+    text-decoration: underline;
+}
+a:hover
+{
+    color: #c00000;
+}
+.filter
+{
+    border: 1px solid #606060;
+    margin: 5px 0 10px 0;
+    padding: 10px;
+    left: 10px;
+    right: 10px;
+    background-color: white;
+}
+.data
+{
+    margin-top: 10px;
+}
+.data table
+{
+    border-left: 1px solid #606060;
+    border-top: 1px solid #606060;
+    empty-cells: show;
+    border-collapse: collapse;
+    margin: 0 0 20px 0;
+    padding: 0;
+    width: 100%;
+    background-color: white;
+}
+.data td, th
+{
+    border-right: 1px solid #606060;
+    border-bottom: 1px solid #606060;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 4px;
+    vertical-align: top;
+}
+.data caption
+{
+    border-right: 1px solid #606060;
+    border-left: 1px solid #606060;
+    border-top: 1px solid #606060;
+    font-weight: bold;
+    background-color: white;
+}
+.data th a
+{
+    text-decoration: none;
+}
