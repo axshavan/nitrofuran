@@ -123,29 +123,29 @@ function h($s)
 function h2($s)
 {
 	$_tags = array('small', 'strong', 'em', 'b', 'i', 'sub', 'sup', 'blockquote', 'pre');
-    $_tags_cut = array('div', 'span');
+	$_tags_cut = array('div', 'span');
 	$s = h($s);
 	$s = preg_replace('/\&lt;br[\s\S]*\&gt;/Ui', '<br />', $s);
-    $s = preg_replace('/\&lt;hr[\s\S]*\&gt;/Ui', '<hr />', $s);
+	$s = preg_replace('/\&lt;hr[\s\S]*\&gt;/Ui', '<hr />', $s);
 	$s = str_replace('&lt;a name', '&lt;a href', $s);
 	$s = preg_replace('/\&lt;a [\s\S]*href=(\'|\"|\&quot;|)([\S]+)\1[\s\S]*\&gt;/Ui', '<a href="\2" target="_blank">', $s);
 	$s = str_replace('&lt;/a&gt;', '</a>', $s);
-    $s = preg_replace('/\&lt;img [\s\S]*src=(\'|\"|\&quot;|)(http[\S\s]+)\1[\s\S]*\&gt;/Ui', '<img src="\2"/>', $s);
+	$s = preg_replace('/\&lt;img [\s\S]*src=(\'|\"|\&quot;|)(http[\S\s]+)\1[\s\S]*\&gt;/Ui', '<img src="\2"/>', $s);
 	$s = str_replace('href="javascript', '', $s);
 	foreach($_tags as $tag)
 	{
 		$s = preg_replace('/\&lt;'.$tag.'\&gt;([\s\S]*)\&lt;\/'.$tag.'\&gt;/Ui', '<'.$tag.'>\1</'.$tag.'>', $s);
 	}
-    foreach($_tags_cut as $tag)
-    {
-        $s = preg_replace('/\&lt;'.$tag.'[\s\S]*\&gt;([\s\S]*)\&lt;\/'.$tag.'\&gt;/Ui', '\1', $s);
-    }
-    $s = str_replace('&amp;quot;', '"', $s);
-    $s = str_replace('&amp;nbsp;', ' ', $s);
-    $s = str_replace('&amp;laguo;', '&laquo;', $s);
-    $s = str_replace('&amp;raquo;', '&raquo;', $s);
-    $s = str_replace('&amp;mdash;', '&mdash;', $s);
-    $s = str_replace('&amp;ndash;', '&ndash;', $s);
+	foreach($_tags_cut as $tag)
+	{
+		$s = preg_replace('/\&lt;'.$tag.'[\s\S]*\&gt;([\s\S]*)\&lt;\/'.$tag.'\&gt;/Ui', '\1', $s);
+	}
+	$s = str_replace('&amp;quot;', '"', $s);
+	$s = str_replace('&amp;nbsp;', ' ', $s);
+	$s = str_replace('&amp;laquo;', '&laquo;', $s);
+	$s = str_replace('&amp;raquo;', '&raquo;', $s);
+	$s = str_replace('&amp;mdash;', '&mdash;', $s);
+	$s = str_replace('&amp;ndash;', '&ndash;', $s);
 	return $s;
 }
 
