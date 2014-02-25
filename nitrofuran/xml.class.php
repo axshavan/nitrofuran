@@ -38,20 +38,28 @@ class CXMLParser
 	/**
 	 * Загрузить из файла
 	 * @param string $file_name название файла
+     * @param string $parsing_mechanism см.описание в теле функции load_from_string
 	 */
-	public function load_from_file($file_name)
+	public function load_from_file($file_name, $parsing_mechanism = 'simplexml')
 	{
-		$this->load_from_string(file_get_contents($file_name));
+		$this->load_from_string(file_get_contents($file_name), $parsing_mechanism);
 	}
 
 	/**
 	 * Загрузить из строки
 	 * @param string $xml_string XML в строке
+     * @param string $parsing_mechanism см.описание в теле функции
 	 */
-	public function load_from_string(&$xml_string)
+	public function load_from_string(&$xml_string, $parsing_mechanism = 'simplexml')
 	{
-		// очистить хранилище
-		$this->storage = array();
+        /**
+         * $parsing_mechanism
+         * - simplexml - разбор с помощью SimpleXML (только для well-formed XML и вообще беспомощное говно)
+         * - regexp - разбор с помощью регулярных выражений, менее прихотлив
+         */
+
+        // очистить хранилище
+        $this->storage = array();
 		
 		// отрезать заголовок xml
 		$a = mb_stripos($xml_string, '?>', 0, 'utf-8');
@@ -67,7 +75,20 @@ class CXMLParser
 		$xml_string = str_replace("/>", '/> ', $xml_string);
 
 		// передать парсеру
-		$this->storage = $this->tags_regexp($xml_string);
+        switch($parsing_mechanism)
+        {
+            case 'regexp':
+            {
+                $this->storage = $this->tags_regexp($xml_string);
+                break;
+            }
+            case 'simplexml':
+            default:
+            {
+                $this->storage = $this->tags_simplexml($xml_string);
+                break;
+            }
+        }
 	}
 
 	/**
@@ -110,11 +131,11 @@ class CXMLParser
 			$tagname = str_replace('-', '\-', $tagname);
 			$tagname = str_replace(':', '\:', $tagname);
 			// регулярное выражение для <tag props/>
-			preg_match('/^\<'.$tagname.'([^\>]*)\/\>/u', $xml_string, $_m);
+			preg_match('/^\<'.$tagname.'([^\>]*)\/\>/uU', $xml_string, $_m);
 			if(!$_m[0])
 			{
 				// регулярное выражение для <tag props>content</tag>
-				preg_match('/^\<'.$tagname.'([^\>]*)\>([\s\S]*)\<\/'.$tagname.'\>/u', $xml_string, $_m);
+				preg_match('/^\<'.$tagname.'([^\>]*)\>([\s\S]*)\<\/'.$tagname.'\>/uU', $xml_string, $_m);
 			}
 			if(!$_m[0])
 			{
@@ -136,6 +157,49 @@ class CXMLParser
 		}
 		return $_result;
 	}
+
+    /**
+     * Разобрать строку XML при помощи SimpleXML
+     * @param $xml_string
+	 * @return array
+     */
+	protected function tags_simplexml($xml_string)
+	{
+		$sxml = simplexml_load_string($xml_string);
+		return array(0 => $this->parse_simplexml($sxml));
+	}
+
+    /**
+     * Рекурсивный обход SimpleXML для получения из него массива нужного формата
+     * @param SimpleXMLElement $sxml
+	 * @return array
+     */
+    protected function parse_simplexml($sxml)
+    {
+        $_result = array('tag' => $sxml->getName());
+        if($sxml->attributes()->count())
+        {
+			$_result['properties'] = array();
+			foreach($sxml->attributes() as $prop)
+			{
+				$_result['properties'][$prop->getName()] = (string)$prop;
+			}
+        }
+		if($sxml->children()->count())
+		{
+			$_result['content'] = array();
+			foreach($sxml->children() as $child)
+			{
+				$_result['content'][] = $this->parse_simplexml($child);
+			}
+		}
+		else
+		{
+			$_result['content'] = (string)$sxml;
+		}
+
+		return $_result;
+    }
 }
 
 ?>

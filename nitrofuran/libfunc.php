@@ -142,8 +142,10 @@ function h2($s)
     }
     $s = str_replace('&amp;quot;', '"', $s);
     $s = str_replace('&amp;nbsp;', ' ', $s);
-    $s = str_replace('&amp;laguq;', '&laquo;', $s);
-    $s = str_replace('&amp;raque;', '&raquo;', $s);
+    $s = str_replace('&amp;laguo;', '&laquo;', $s);
+    $s = str_replace('&amp;raquo;', '&raquo;', $s);
+    $s = str_replace('&amp;mdash;', '&mdash;', $s);
+    $s = str_replace('&amp;ndash;', '&ndash;', $s);
 	return $s;
 }
 
