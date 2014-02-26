@@ -14,6 +14,7 @@
 
 if($_POST['import'])
 {
+	set_time_limit(600);
 	require_once(dirname(__FILE__).'/config.php');
 	move_uploaded_file($_FILES['file']['tmp_name'], DOCUMENT_ROOT.'/tmp/stamps');
 	$cmd = 'cd '.DOCUMENT_ROOT.'/tmp && $(which unzip) -u stamps';
@@ -25,7 +26,7 @@ if($_POST['import'])
 	}
 	require_once(DOCUMENT_ROOT.'/nitrofuran/xml.class.php');
 	$xmlparser = new CXMLParser();
-	$xmlparser->load_from_file(DOCUMENT_ROOT.'/tmp/content.xml');
+	$xmlparser->load_from_file(DOCUMENT_ROOT.'/tmp/content.xml', 'string');
 	$db = $xmlparser->get_as_array();
 	unset($xmlparser);
 	clean_tmp_dir();

@@ -56,6 +56,7 @@ class CXMLParser
          * $parsing_mechanism
          * - simplexml - разбор с помощью SimpleXML (только для well-formed XML и вообще беспомощное говно)
          * - regexp - разбор с помощью регулярных выражений, менее прихотлив
+         * - string - разбор с помощью строковых функций (regexp плохо перваривают большие объёмы в PHP 5.3)
          */
 
         // очистить хранилище
@@ -82,6 +83,11 @@ class CXMLParser
                 $this->storage = $this->tags_regexp($xml_string);
                 break;
             }
+            case 'string':
+            {
+                $this->storage = $this->tags_string($xml_string);
+                break;
+            }
             case 'simplexml':
             default:
             {
@@ -99,14 +105,10 @@ class CXMLParser
 	protected function parse_properties(&$prop_string)
 	{
 		$_result = array();
-		$prop_string = explode(' ', trim($prop_string));
-		foreach($prop_string as $v)
+		preg_match_all('/(([\w\:\-\_\.]+)\=(\"|\')([\S\s]*)\3)/uU', $prop_string, $_m, PREG_SET_ORDER);
+		foreach($_m as $v)
 		{
-			if($v)
-			{
-				$v = explode('=', $v);
-				$_result[$v[0]] = trim($v[1], '"');
-			}
+			$_result[$v[2]] = $v[4];
 		}
 		return $_result;
 	}
@@ -197,9 +199,77 @@ class CXMLParser
 		{
 			$_result['content'] = (string)$sxml;
 		}
-
 		return $_result;
     }
+
+	/**
+	 * Рекурсивно распарсить xml-строку строковыми функциями
+	 * @param string $xml_string XML строка, которую надо распарсить
+	 * @return array|string
+	 */
+	protected function tags_string(&$xml_string)
+	{
+		$_result = array();
+		while(true)
+		{
+			$_result_item = array();
+			$xml_string = trim($xml_string).' ';
+			$tagname = mb_substr($xml_string, 0, mb_stripos($xml_string, ' ', 0, 'utf-8'), 'utf-8');
+			$tagname = trim($tagname, '<>/ ');
+			if(!$tagname)
+			{
+				return trim($xml_string);
+			}
+			if(mb_strpos($xml_string, '<', 0, 'utf-8') === false)
+			{
+				return trim($xml_string);
+			}
+			$_result_item['tag'] = $tagname;
+			$tmp_pos = mb_strpos($xml_string, '<', 1, 'utf-8');
+			$start_tag_finish_pos = mb_strpos($xml_string, '/>', 1, 'utf-8');
+			if(($start_tag_finish_pos > $tmp_pos || !$start_tag_finish_pos) && $tmp_pos)
+			{
+				// тэг не самозакрывающийся
+				$start_tag_finish_pos = mb_strpos($xml_string, '>', 0, 'utf-8') + 1;
+				$end_tag_pos = mb_stripos($xml_string, '</'.$tagname.'>', 0, 'utf-8');
+				if($start_tag_finish_pos > mb_strlen($tagname, 'utf-8') + 2)
+				{
+					$_result_item['properties'] = $this->parse_properties(substr($xml_string, mb_strlen($tagname, 'utf-8') + 2, $start_tag_finish_pos - mb_strlen($tagname, 'utf-8') - 3));
+				}
+				else
+				{
+					$_result_item['properties'] = array();
+				}
+
+				$_result_item['content'] = $this->tags_string(mb_substr($xml_string, $start_tag_finish_pos, $end_tag_pos - $start_tag_finish_pos, 'utf-8'));
+				$xml_string = trim(mb_substr($xml_string, $end_tag_pos + mb_strlen($tagname, 'utf-8') + 3, null, 'utf-8')).' ';
+			}
+			elseif(!$start_tag_finish_pos)
+			{
+				return $tagname;
+			}
+			else
+			{
+				// тэг самозакрывающийся
+				if($start_tag_finish_pos > mb_strlen($tagname, 'utf-8') + 3)
+				{
+					$_result_item['properties'] = $this->parse_properties(substr($xml_string, mb_strlen($tagname, 'utf-8') + 2, $start_tag_finish_pos - mb_strlen($tagname, 'utf-8') - 4));
+				}
+				else
+				{
+					$_result_item['properties'] = array();
+				}
+				$_result_item['content'] = '';
+				$xml_string = trim(mb_substr($xml_string, $start_tag_finish_pos + 2, null, 'utf-8')).' ';
+			}
+			$_result[] = $_result_item;
+			if(!strlen(trim($xml_string)))
+			{
+				break;
+			}
+		}
+		return $_result;
+	}
 }
 
 ?>
