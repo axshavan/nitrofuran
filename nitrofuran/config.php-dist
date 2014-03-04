@@ -26,7 +26,7 @@ define('SESSIONS_TABLE', 'sessions');
 define('PARAMS_TABLE',   'params');
 
 // пользовательские сессии
-define('SESSION_COOKIE_NAME', 'iliketomoveitmoveit');
+define('SESSION_COOKIE_NAME', 'attentionofyoukrutoi');
 define('SESSION_LIFETIME',    86400 * 14); // 2 weeks
 
 ?>
