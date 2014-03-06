@@ -142,10 +142,11 @@ function h2($s)
 	}
 	$s = str_replace('&amp;quot;', '"', $s);
 	$s = str_replace('&amp;nbsp;', ' ', $s);
-	$s = str_replace('&amp;laquo;', '&laquo;', $s);
-	$s = str_replace('&amp;raquo;', '&raquo;', $s);
-	$s = str_replace('&amp;mdash;', '&mdash;', $s);
-	$s = str_replace('&amp;ndash;', '&ndash;', $s);
+	$entities = array('laquo', 'raquo', 'mdash', 'ndash', 'hellip');
+	foreach($entities as $e)
+	{
+		$s = str_replace('&amp;'.$e, '&'.$e, $s);
+	}
 	return $s;
 }
 
