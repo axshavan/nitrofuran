@@ -25,7 +25,7 @@
 	<select name="book_id" id="book_id" onchange="document.getElementById('filter-form').submit()">
 		<option value="">(все)</option>
 		<? foreach($_book_ids as $v): ?>
-			<option value="<?= htmlspecialchars($v) ?>" <?= $_REQUEST['book_id'] == $v ? 'selected="selected"' : '' ?>><?= htmlspecialchars($_book_names[$v]) ?></option>
+			<option value="<?= htmlspecialchars($v) ?>" <?= $_REQUEST['book_id'] == $v ? 'selected="selected"' : '' ?>><?= $v ?> - <?= htmlspecialchars($_book_names[$v]) ?></option>
 		<? endforeach; ?>
 	</select>
 	<a href="/stamps">Сбросить фильтр</a>

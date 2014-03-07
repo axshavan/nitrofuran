@@ -30,15 +30,6 @@ if(!$DB->Query("create table ".STAMPS_TABLE." (
     $DB->TransactionRollback();
     return false;
 }
-if(!$DB->Query("create table ".STAMPS_BOOKS_TABLE." (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    `name` varchar(255) DEFAULT NULL,
-    PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM"))
-{
-    $DB->TransactionRollback();
-    return false;
-}
 
 // добавление в список модулей
 $r = get_param('admin', 'modules_installed');

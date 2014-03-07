@@ -92,6 +92,8 @@ rsort($_years);
 sort($_book_ids);
 
 $tplengine = new CTemplateEngine('stamps');
+$tplengine->assign('_book_names', unserialize(get_param('stamps', 'books')));
+$tplengine->assign('_book_ids', $_book_ids);
 $tplengine->assign('_countries', $_countries);
 $tplengine->assign('_years', $_years);
 $tplengine->assign('_data', $_data);
