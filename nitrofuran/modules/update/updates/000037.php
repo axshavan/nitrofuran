@@ -11,11 +11,18 @@ if($bReaderInstalled)
 	return true;
 }
 
-if(isset($_POST['install_reader']) && $_POST['install_reader'])
+if(isset($_POST['install_reader']))
 {
-	require(DOCUMENT_ROOT.'/nitrofuran/modules/install/modules/reader.php');
+	if($_POST['install_reader'])
+	{
+		require(DOCUMENT_ROOT.'/nitrofuran/modules/install/modules/reader.php');
+	}
+	else
+	{
+		return true;
+	}
 }
-elseif(!$_POST)
+else
 {
 	header("Content-Type: text/html; charset=utf-8");
 	?>
@@ -27,10 +34,6 @@ elseif(!$_POST)
 	</form>
 	<?
 	die();
-}
-else
-{
-	return true;
 }
 
 ?>
