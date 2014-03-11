@@ -1,14 +1,14 @@
 <?php
 
-/*
-	Инструмент для отладки.
-	@author Dmitry Nikiforov <axshavan@yandex.ru>
-	@license http://sam.zoy.org/wtfpl WTFPL
-	This program is free software. It comes without any warranty, to
-	the extent permitted by applicable law. You can redistribute it
-	and/or modify it under the terms of the Do What The Fuck You Want
-	To Public License, Version 2, as published by Sam Hocevar. See
-	http://sam.zoy.org/wtfpl/COPYING for more details.
+/**
+ * Инструмент для отладки.
+ * @author Dmitry Nikiforov <axshavan@yandex.ru>
+ * @license http://sam.zoy.org/wtfpl WTFPL
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the Do What The Fuck You Want
+ * To Public License, Version 2, as published by Sam Hocevar. See
+ * http://sam.zoy.org/wtfpl/COPYING for more details.
 */
 
 class CTracer
@@ -16,19 +16,20 @@ class CTracer
 	// внутренний счётчик div'ов
 	protected static $div_counter = 0;
 	
-	/*
-		Осуществить вывод информации о переменной.
-		@param string $dump результат выполнения функции var_dump
-		@param string $var_name опциональное имя переменой
-	*/
+	/**
+     * Осуществить вывод информации о переменной.
+     * @param string $dump результат выполнения функции var_dump
+     * @param string $var_name опциональное имя переменой
+     * @return string
+	 */
 	public static function trace($dump, $var_name = '')
 	{
 		return '<table cellpadding=3 cellspacing=0>'.CTracer::parse_dump($dump, $var_name).'</table>';
 	}
 	
-	/*
-		Непосредственный вывод переменной.
-	*/
+	/**
+     * Непосредственный вывод переменной.
+	 */
 	protected static function draw_element($_desc, $name = '')
 	{
 		$tdstyle  = 'border: 1px solid black; ';
@@ -137,10 +138,13 @@ class CTracer
 			.'<td style="'.$tdstyle2.'">'.$value;
 	}
 	
-	/*
-		Сюда передаётся результат выполнения var_dump или его часть для
-		последующего вывода.
-	*/
+	/**
+     * Сюда передаётся результат выполнения var_dump или его часть для
+     * последующего вывода.
+     * @param string $dump
+     * @param string $var_name
+     * @return string
+	 */
 	protected static function parse_dump($dump, $var_name)
 	{
 		if(trim($dump) == 'NULL')
@@ -194,9 +198,9 @@ class CTracer
 		return $result.' ';
 	}
 	
-	/*
-		Разбор элементов или вложенных переменных переменной.
-	*/
+	/**
+     * Разбор элементов или вложенных переменных переменной.
+	 */
 	protected static function parse_elements($_elements)
 	{
 		if(!count($_elements))
@@ -233,11 +237,12 @@ class CTracer
 	}
 }
 
-/*
-	Красиво отобразить какую-нибудь переменную.
-	@param mixed $var какая-нибудь переменная
-	@param bool $return если true, то вернёт текст, если false, вывалит его
-*/
+/**
+ * Красиво отобразить какую-нибудь переменную.
+ * @param mixed $var какая-нибудь переменная
+ * @param bool $return если true, то вернёт текст, если false, вывалит его
+ * @return mixed
+ */
 function trace($var, $return = false)
 {
 	if(!headers_sent())
@@ -258,9 +263,9 @@ function trace($var, $return = false)
 	}
 }
 
-/*
-	То же самое, что trace($var); die();, только покороче.
-*/
+/**
+ * То же самое, что trace($var); die();, только покороче.
+ */
 function traced($var)
 {
 	trace($var);

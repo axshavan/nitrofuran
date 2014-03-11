@@ -1,30 +1,31 @@
 <?php
 
-/*
-	Классы для работы с графами (не с графиками!)
-	@author Dmitry Nikiforov <axshavan@yandex.ru>
-	@license http://sam.zoy.org/wtfpl WTFPL
-	This program is free software. It comes without any warranty, to
-	the extent permitted by applicable law. You can redistribute it
-	and/or modify it under the terms of the Do What The Fuck You Want
-	To Public License, Version 2, as published by Sam Hocevar. See
-	http://sam.zoy.org/wtfpl/COPYING for more details.
-*/
+/**
+ * Классы для работы с графами (не с графиками!)
+ * @author Dmitry Nikiforov <axshavan@yandex.ru>
+ * @license http://sam.zoy.org/wtfpl WTFPL
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the Do What The Fuck You Want
+ * To Public License, Version 2, as published by Sam Hocevar. See
+ * http://sam.zoy.org/wtfpl/COPYING for more details.
+ */
 
-/*
-	Класс, описывающий узел графа.
-*/
+/**
+ * Класс, описывающий узел графа.
+ */
 class CGraphNode
 {
 	public    $id;          // для самоидентификации
 	public    $data;        // некие данные
 	protected $_children;   // массив ссылок на детей
 	protected $parent_node; // сылка на родителя
-	
-	/*
-		Конструктор.
-		@param mixed $id что-нибудь, чтоб узел графа знал себя по имени
-	*/
+
+	/**
+	 * Конструктор.
+	 * @param mixed $id что-нибудь, чтоб узел графа знал себя по имени
+	 * @param bool  $data
+	 */
 	public function __construct($id, $data = false)
 	{
 		$this->id          = $id;
@@ -35,19 +36,19 @@ class CGraphNode
 		}
 	}
 	
-	/*
-		Деструктор.
-	*/
+	/**
+     * Деструктор.
+	 */
 	public function __destruct()
 	{
 		$this->KillChildren();
 	}
 	
-	/*
-		Добавить ребёнка узлу.
-		@param  CGraphNode $node узел, добавляемый в качестве ребёнка
-		@return bool       success
-	*/
+	/**
+     * Добавить ребёнка узлу.
+     * @param  CGraphNode $node узел, добавляемый в качестве ребёнка
+     * @return bool       success
+	 */
 	public function AppendChild(&$node)
 	{
 		$bAdd = true;
@@ -78,13 +79,13 @@ class CGraphNode
 		}
 		return $bAdd;
 	}
-	
-	/*
-		Создать узлу графа ребёнка.
-		@param  mixed      $id    с каким айдишником будет ребёнок
-		@param  mixed      $_data внутренние данные, которые он будет хранить
-		@return CGraphNode созданный ребёнок
-	*/
+
+    /**
+     * Создать узлу графа ребёнка.
+     * @param  mixed      $id    с каким айдишником будет ребёнок
+     * @param  bool       $data  внутренние данные, которые он бедет хранить
+     * @return CGraphNode созданный ребёнок
+     */
 	public function CreateChild($id, $data = false)
 	{
 		$new_child = new CGraphNode($id, $data);
@@ -92,11 +93,11 @@ class CGraphNode
 		return $new_child;
 	}
 	
-	/*
-		Найти среди детей графа ребёнка с нужным идентификатором.
-		@param  mixed      $id идентификатор
-		@return CGraphNode найденный ребёнок или false
-	*/
+	/**
+     * Найти среди детей графа ребёнка с нужным идентификатором.
+     * @param  mixed      $id идентификатор
+     * @return CGraphNode найденный ребёнок или false
+	 */
 	public function FindChildById($id)
 	{
 		if($id == $this->id)
@@ -116,11 +117,11 @@ class CGraphNode
 		return false;
 	}
 	
-	/*
-		Получить узел и его детей в виде массива.
-		@param  bool $bWithData включать в массив содержимое $this->data или нет
-		@return array
-	*/
+	/**
+     * Получить узел и его детей в виде массива.
+     * @param  bool $bWithData включать в массив содержимое $this->data или нет
+     * @return array
+	 */
 	public function GetAsArray($bWithData)
 	{
 		$result = array(
@@ -141,11 +142,11 @@ class CGraphNode
 		return $result;
 	}
 	
-	/*
-		Выбрать все идентификаторы детей этого узла. Не рекурсивно, только
-		одно поколение.
-		@return string
-	*/
+	/**
+     * Выбрать все идентификаторы детей этого узла. Не рекурсивно, только
+     * одно поколение.
+     * @return string
+	 */
 	public function GetChildrenIds()
 	{
 		$str = '';
@@ -156,10 +157,10 @@ class CGraphNode
 		return $str;
 	}
 	
-	/*
-		Выбрать все идентификаторы все родителей этого узле рекурсивно.
-		@return string
-	*/
+	/**
+     * Выбрать все идентификаторы все родителей этого узле рекурсивно.
+     * @return string
+	 */
 	public function GetParentsIds()
 	{
 		$obj = &$this->parent_node;
@@ -172,9 +173,9 @@ class CGraphNode
 		return $ids;
 	}
 	
-	/*
-		Рекурсивно перебить всех детей данного узла. Вызывается из деструктора.
-	*/
+	/**
+     * Рекурсивно перебить всех детей данного узла. Вызывается из деструктора.
+	 */
 	public function KillChildren()
 	{
 		foreach($this->_children as $k => &$child)
@@ -188,19 +189,19 @@ class CGraphNode
 		$this->_children = array();
 	}
 	
-	/*
-		Усыновить данный узел другим узлом.
-		@param  CGraphNode $node новый родитель
-		@return bool       success
-	*/
+	/**
+	 * Усыновить данный узел другим узлом.
+	 * @param  CGraphNode $node новый родитель
+	 * @return bool       success
+	 */
 	public function MakeAdoptedBy(&$node)
 	{
 		return $node->AppendChild($this);
 	}
 	
-	/*
-		Отобрать узел у родителя, разорвав родственную связь.
-	*/
+	/**
+	 * Отобрать узел у родителя, разорвав родственную связь.
+	 */
 	public function Orphanize()
 	{
 		if($this->parent_node != null)
@@ -211,10 +212,10 @@ class CGraphNode
 		}
 	}
 	
-	/*
-		Убрать у узла одного из детей по выбранному идентификатору.
-		@param mixed $id идентификатор
-	*/
+	/**
+	 * Убрать у узла одного из детей по выбранному идентификатору.
+	 * @param mixed $id идентификатор
+	 */
 	public function RemoveChildById($id)
 	{
 		// тут жуткая заморочка, чтоб случайно не перебить всех детей по ссылке
@@ -229,12 +230,12 @@ class CGraphNode
 		}
 	}
 	
-	/*
-		Служебная функция для сброса ссылки на родительский узел и установки
-		нового родителя. Лучше пользоваться функцией CGraphNode::MakeAdoptedBy,
-		чтоб не нарушить связи между узлами.
-		@param CGraphNode $node новый родитель
-	*/
+	/**
+	 * Служебная функция для сброса ссылки на родительский узел и установки
+	 * нового родителя. Лучше пользоваться функцией CGraphNode::MakeAdoptedBy,
+	 * чтоб не нарушить связи между узлами.
+	 * @param CGraphNode $node новый родитель
+	 */
 	public function SetParent(&$node)
 	{
 		if($this->parent_node != null)
@@ -244,12 +245,12 @@ class CGraphNode
 		$this->parent_node = $node;
 	}
 	
-	/*
-		Служебная функция для отладки. Показать свой айдишник и всех детей
-		рекурсивно.
-		@param int  $spaces уровень вложенности текущего узла
-		@param bool $bShowData показывать или нет $this->data
-	*/
+	/**
+	 * Служебная функция для отладки. Показать свой айдишник и всех детей
+	 * рекурсивно.
+	 * @param int  $spaces уровень вложенности текущего узла
+	 * @param bool $bShowData показывать или нет $this->data
+	 */
 	public function Trace($spaces = 0, $bShowData = false)
 	{
 		$s = str_repeat(' ', $spaces);
@@ -272,21 +273,21 @@ class CGraphNode
 	}
 }
 
-/*
-	Класс, описывающий граф
-*/
+/**
+ * Класс, описывающий граф
+ */
 class CGraph
 {
 	protected $root_node; // корневой узел графа
 	
-	/*
-		Создать граф из массива.
-		@param array $_array массив вида array(
-			'id' => array('parent_id' => parent_id, ...)
-		)
-		@param  string $pid_key_name название ключа, который является идентификатором родителя
-		@return true или остатки массива $_array, не вписавшиеся в граф
-	*/
+	/**
+	 * Создать граф из массива.
+	 * @param array $_array массив вида array(
+	 * 	'id' => array('parent_id' => parent_id, ...)
+	 * )
+	 * @param  string $pid_key_name название ключа, который является идентификатором родителя
+	 * @return true или остатки массива $_array, не вписавшиеся в граф
+	 */
 	public function CreateFromArray($_array, $pid_key_name = 'parent_id')
 	{
 		// если граф уже был, надо его грохнуть
@@ -327,11 +328,11 @@ class CGraph
 		}
 	}
 	
-	/*
-		Достать список детей для узла с данным идентификатором.
-		@param  mixed $id идентификатор
-		@return string или false
-	*/
+	/**
+	 * Достать список детей для узла с данным идентификатором.
+	 * @param  mixed $id идентификатор
+	 * @return string или false
+	 */
 	public function GetChildrenForId($id)
 	{
 		$obj = &$this->root_node->FindChildById($id);
@@ -345,11 +346,11 @@ class CGraph
 		}
 	}
 	
-	/*
-		Вернуть список всех родителей для узла с данным идентификатором.
-		@param  mixed $id идентификатор
-		@return string или false
-	*/
+	/**
+	 * Вернуть список всех родителей для узла с данным идентификатором.
+	 * @param  mixed $id идентификатор
+	 * @return string или false
+	 */
 	public function GetParentsForId($id)
 	{
 		$obj = &$this->root_node->FindChildById($id);
@@ -363,21 +364,21 @@ class CGraph
 		}
 	}
 	
-	/*
-		Получить весь граф в виде массива, в котором дети узла представлены
-		элементами массива, который является сам элементом массива, являющегося
-		узлом.
-		@param bool $bWithData включать или нет в массив данные, хранящиеся в узлах
-	*/
+	/**
+	 * Получить весь граф в виде массива, в котором дети узла представлены
+	 * элементами массива, который является сам элементом массива, являющегося
+	 * узлом.
+	 * @param bool $bWithData включать или нет в массив данные, хранящиеся в узлах
+	 */
 	public function GetAsArray($bWithData = false)
 	{
 		return $this->root_node->GetAsArray($bWithData);
 	}
 	
-	/*
-		Показать граф для отладки.
-		@param bool $bShowData включать или нет в вывод данные, хранящиеся в узлах
-	*/
+	/**
+	 * Показать граф для отладки.
+	 * @param bool $bShowData включать или нет в вывод данные, хранящиеся в узлах
+	 */
 	public function Trace($bShowData = false)
 	{
 		echo '<pre>';

@@ -1,27 +1,27 @@
 <?php
 
-/*
-	Набор функций для работы с пользователями.
-	@author Dmitry Nikiforov <axshavan@yandex.ru>
-	@license http://sam.zoy.org/wtfpl WTFPL
-	This program is free software. It comes without any warranty, to
-	the extent permitted by applicable law. You can redistribute it
-	and/or modify it under the terms of the Do What The Fuck You Want
-	To Public License, Version 2, as published by Sam Hocevar. See
-	http://sam.zoy.org/wtfpl/COPYING for more details.
-*/
+/**
+ * Набор функций для работы с пользователями.
+ * @author Dmitry Nikiforov <axshavan@yandex.ru>
+ * @license http://sam.zoy.org/wtfpl WTFPL
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the Do What The Fuck You Want
+ * To Public License, Version 2, as published by Sam Hocevar. See
+ * http://sam.zoy.org/wtfpl/COPYING for more details.
+ */
 
 class CUser
 {
-	/*
-		Создание пользователя.
-		@param  string $login     логин
-		@param  string $password  пароль
-		@param  string $email     емейл или что-то в этом роде
-		@param  string $full_name полное имя пользователя (как к нему обращаться на сайте)
-		@param  string $error     здесь возвращается текст ошибки
-		@return mixed  номер созданного пользователя или false в случае ошибки
-	*/
+	/**
+     * Создание пользователя.
+     * @param  string $login     логин
+     * @param  string $password  пароль
+     * @param  string $email     емейл или что-то в этом роде
+     * @param  string $full_name полное имя пользователя (как к нему обращаться на сайте)
+     * @param  string $error     здесь возвращается текст ошибки
+     * @return mixed  номер созданного пользователя или false в случае ошибки
+	 */
 	public static function Add($login, $password, $email, $full_name, &$error)
 	{
 		global $DB;
@@ -56,38 +56,38 @@ class CUser
 		return $result;
 	}
 	
-	/*
-		Попытка залогиниться.
-		@param  string $login    логин
-		@param  string $password пароль
-		@param  bool   $remember длинная сессия
-		@param  bool   $bind2ip  привязать к ip
-		@param  string $error    возвращается код ошибки
-		@return bool
-	*/
+	/**
+     * Попытка залогиниться.
+     * @param  string $login    логин
+     * @param  string $password пароль
+     * @param  bool   $remember длинная сессия
+     * @param  bool   $bind2ip  привязать к ip
+     * @param  string $error    возвращается код ошибки
+     * @return bool
+	 */
 	public static function Login($login, $password, $remember, $bind2ip, &$error)
 	{
 		global $AUTH;
 		return $AUTH->Login($login, $password, $remember, $bind2ip, $error);
 	}
 	
-	/*
-		Разлогиниться.
-		@return bool
-	*/
+	/**
+     * Разлогиниться.
+     * @return bool
+	 */
 	public static function Logout()
 	{
 		global $AUTH;
 		return $AUTH->Logout();
 	}
 	
-	/*
-		Изменить пользователя.
-		@param  int    $id      id пользователя
-		@param  array  $_fields массив со значениями полей
-		@param  string &$error  возвращается код ошибки
-		@return bool
-	*/
+	/**
+     * Изменить пользователя.
+     * @param  int    $id      id пользователя
+     * @param  array  $_fields массив со значениями полей
+     * @param  string &$error  возвращается код ошибки
+     * @return bool
+	 */
 	public static function Update($id, $_fields, &$error)
 	{
 		global $DB;

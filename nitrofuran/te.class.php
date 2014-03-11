@@ -80,14 +80,13 @@ class CTemplateEngine
 		return true;
 	}
 	
-	/*
-		Вызвать любой метод любого класса из недр шаблона.
-		@param  string $class_name  имя класса
-		@param  string $method_name имя метода
-		@param  ???    любое количество параметров, которые передадутся
-			в вызываемый метод
-		@return mixed  что-нибудь
-	*/
+	/**
+	 * Вызвать любой метод любого класса из недр шаблона.
+	 * @param  string $class_name  имя класса
+	 * @param  string $method_name имя метода
+	 * @param  ???    любое количество параметров, которые передадутся в вызываемый метод
+	 * @return mixed  что-нибудь
+	 */
 	protected function CallClassMethod($class_name, $method_name)
 	{
 		if(class_exists($class_name))
@@ -107,15 +106,15 @@ class CTemplateEngine
 		}
 		else
 		{
-			return 'CLASS METHOS DOES NOT EXIST';
+			return 'CLASS METHOD DOES NOT EXIST';
 		}
 	}
 	
-	/*
-		Вызвать подшаблон из шаблона
-		@param  string $tpl_name имя подшаблона
-		@return string код ошибки
-	*/
+	/**
+	 * Вызвать подшаблон из шаблона
+	 * @param  string $tpl_name имя подшаблона
+	 * @return string код ошибки
+	 */
 	protected function IncludeTemplate($tpl_name)
 	{
 		$tplengine = new CTemplateEngine();

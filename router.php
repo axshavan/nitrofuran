@@ -1,17 +1,17 @@
 <?php
 
-/*
-	Маршрутизатор движка nitrofuran.
-	Здесь происходит подключение всех необходимых файлов, создание глобальных
-	объектов, и так далее. Сюда должен вести rewrite.
-	@author Dmitry Nikiforov <axshavan@yandex.ru>
-	@license http://sam.zoy.org/wtfpl WTFPL
-	This program is free software. It comes without any warranty, to
-	the extent permitted by applicable law. You can redistribute it
-	and/or modify it under the terms of the Do What The Fuck You Want
-	To Public License, Version 2, as published by Sam Hocevar. See
-	http://sam.zoy.org/wtfpl/COPYING for more details.
-*/
+/**
+ * Маршрутизатор движка nitrofuran.
+ * Здесь происходит подключение всех необходимых файлов, создание глобальных
+ * объектов, и так далее. Сюда должен вести rewrite.
+ * @author Dmitry Nikiforov <axshavan@yandex.ru>
+ * @license http://sam.zoy.org/wtfpl WTFPL
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the Do What The Fuck You Want
+ * To Public License, Version 2, as published by Sam Hocevar. See
+ * http://sam.zoy.org/wtfpl/COPYING for more details.
+ */
 
 error_reporting(E_ERROR);
 

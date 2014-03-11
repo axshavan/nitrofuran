@@ -1,15 +1,15 @@
 <?php
 
-/*
-	Более навороченная и чуть менее простая в эксплуатации замена для mail()
-	@author Dmitry Nikiforov <axshavan@yandex.ru>
-	@license http://sam.zoy.org/wtfpl WTFPL
-	This program is free software. It comes without any warranty, to
-	the extent permitted by applicable law. You can redistribute it
-	and/or modify it under the terms of the Do What The Fuck You Want
-	To Public License, Version 2, as published by Sam Hocevar. See
-	http://sam.zoy.org/wtfpl/COPYING for more details.
-*/
+/**
+ * Более навороченная и чуть менее простая в эксплуатации замена для mail()
+ * @author Dmitry Nikiforov <axshavan@yandex.ru>
+ * @license http://sam.zoy.org/wtfpl WTFPL
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the Do What The Fuck You Want
+ * To Public License, Version 2, as published by Sam Hocevar. See
+ * http://sam.zoy.org/wtfpl/COPYING for more details.
+ */
 
 class CMailSender
 {
@@ -18,41 +18,41 @@ class CMailSender
 	
 	protected static $_auth_types = false;
 	
-	/*
-		Послать текстовое сообщение.
-		@param string $email_from от кого
-		@param string $email_to   кому
-		@param string $subject    тема сообщения
-		@param string $text       текст сообщения
-		@return bool success
-	*/
+	/**
+     * Послать текстовое сообщение.
+     * @param string $email_from от кого
+     * @param string $email_to   кому
+     * @param string $subject    тема сообщения
+     * @param string $text       текст сообщения
+     * @return bool success
+	 */
 	public static function Send($email_from, $email_to, $subject, $text)
 	{
 		return CMailSender::SendComplicated($email_from, $email_to, $subject, array(array('CONTENT' => $text)));
 	}
 	
-	/*
-		Послать текстовое сообщение (можно с вложениями).
-		@param string $email_from от кого
-		@param string $email_to   кому
-		@param string $subject    тема сообщения
-		@param array  $_bodies    mime-куски сообщения. Имеет следующий формат:
-			array(
-				array(
-					'CONTENT_TYPE' => тип содержимого (если не указано, то text/plain)
-					'CONTENT_TRANSFER_ENCODING' => шифрование пересылаемого сообщения
-						(например, base64), не обязательно
-					'CONTENT_DISPOSITION' => если это приложение к письму, то
-						attachment; filename=example.file
-					'CONTENT' => само содержимое файла. Не то, чтоб совсем
-						обязательно, но крайне желательно
-				),
-				...
-			)
-		@param  array $headers дополнительные заголовки письма
-		@param  string $bcc кому скрытая копия
-		@return bool   success
-	*/
+	/**
+     * Послать текстовое сообщение (можно с вложениями).
+     * @param string $email_from от кого
+     * @param string $email_to   кому
+     * @param string $subject    тема сообщения
+     * @param array  $_bodies    mime-куски сообщения. Имеет следующий формат:
+     * 	array(
+     * 		array(
+     * 			'CONTENT_TYPE' => тип содержимого (если не указано, то text/plain)
+     * 			'CONTENT_TRANSFER_ENCODING' => шифрование пересылаемого сообщения
+     * 				(например, base64), не обязательно
+     * 			'CONTENT_DISPOSITION' => если это приложение к письму, то
+     * 				attachment; filename=example.file
+     * 			'CONTENT' => само содержимое файла. Не то, чтоб совсем
+     * 				обязательно, но крайне желательно
+     * 		),
+     * 		...
+     * 	)
+     * @param  array $headers дополнительные заголовки письма
+     * @param  string $bcc кому скрытая копия
+     * @return bool   success
+	 */
 	public static function SendComplicated($email_from, $email_to, $subject, $_bodies = array(), $_headers = array(), $bcc = '')
 	{
 		$smtp_server   = ini_get('SMTP');
@@ -285,9 +285,9 @@ class CMailSender
 		return $result;
 	}
 	
-	/*
-		Авторизация.
-	*/
+	/**
+     * Авторизация.
+	 */
 	protected static function auth(&$f, $login, $password)
 	{
 		// авторизация типа LOGIN
@@ -330,11 +330,11 @@ class CMailSender
 		}
 	}
 	
-	/*
-		Зафигачить заголовок сообщения в соответствии с RFC 1522.
-		@param  string $str исходная тема письма
-		@return string      зафигаченная тема письма
-	*/
+	/**
+     * Зафигачить заголовок сообщения в соответствии с RFC 1522.
+     * @param  string $str исходная тема письма
+     * @return string      зафигаченная тема письма
+	 */
 	protected static function mail_subject_RFC1522($str)
 	{
 		return iconv_mime_encode

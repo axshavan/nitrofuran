@@ -1,27 +1,28 @@
 <?php
 
 /*
-	Набор функций для повседневного ведения сессий.
-	@author Dmitry Nikiforov <axshavan@yandex.ru>
-	@license http://sam.zoy.org/wtfpl WTFPL
-	This program is free software. It comes without any warranty, to
-	the extent permitted by applicable law. You can redistribute it
-	and/or modify it under the terms of the Do What The Fuck You Want
-	To Public License, Version 2, as published by Sam Hocevar. See
-	http://sam.zoy.org/wtfpl/COPYING for more details.
-*/
+ * Набор функций для повседневного ведения сессий.
+ * @author Dmitry Nikiforov <axshavan@yandex.ru>
+ * @license http://sam.zoy.org/wtfpl WTFPL
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the Do What The Fuck You Want
+ * To Public License, Version 2, as published by Sam Hocevar. See
+ * http://sam.zoy.org/wtfpl/COPYING for more details.
+ */
 
 class CAuth
 {
 	public $sess_data = array();
 	public $user_data = array();
 	
-	/*
-		Использовать только для внутренних нужд.
-		@param int  $user_id  пользователь
-		@param bool $remember запомнить сессию
-		@param bool $bind2ip  привязать сессию к ip-адресу
-	*/
+	/**
+	 * Использовать только для внутренних нужд.
+	 * @param int  $user_id  пользователь
+     * @param bool $remember запомнить сессию
+     * @param bool $bind2ip  привязать сессию к ip-адресу
+	 * @return bool
+	 */
 	public function Authorize($user_id, $remember = true, $bind2ip = true)
 	{
 		global $DB;
@@ -63,15 +64,15 @@ class CAuth
 		return true;
 	}
 	
-	/*
-		Попытка залогиниться.
-		@param  string $login    логин
-		@param  string $password пароль
-		@param  bool   $remember длинная сессия
-		@param  bool   $bind2ip  привязать к ip
-		@param  string $error    возвращается код ошибки
-		@return bool
-	*/
+	/**
+     * Попытка залогиниться.
+     * @param  string $login    логин
+     * @param  string $password пароль
+     * @param  bool   $remember длинная сессия
+     * @param  bool   $bind2ip  привязать к ip
+     * @param  string $error    возвращается код ошибки
+     * @return bool
+	 */
 	public function Login($login, $password, $remember, $bind2ip, &$error)
 	{
 		global $DB;
@@ -91,20 +92,20 @@ class CAuth
 		return $this->Authorize($_row['id'], $remember, $bind2ip);
 	}
 	
-	/*
-		Разлогиниться.
-		@return bool
-	*/
+	/**
+     * Разлогиниться.
+     * @return bool
+	 */
 	public function Logout()
 	{
 		$this->GuestSession();
 		return true;
 	}
 	
-	/*
-		Стартануть сессию пользователя.
-		@return bool залогинен ли пользователь
-	*/
+	/**
+     * Стартануть сессию пользователя.
+     * @return bool залогинен ли пользователь
+	 */
 	public function StartSession()
 	{
 		global $DB;
@@ -158,11 +159,11 @@ class CAuth
 		}
 	}
 	
-	/*
-		Из мешанины символов достать два хэша.
-		@param  string $str то, что надо разобрать
-		@return array
-	*/
+	/**
+     * Из мешанины символов достать два хэша.
+     * @param  string $str то, что надо разобрать
+     * @return array
+	 */
 	protected function DecodeCookie($str)
 	{
 		$str1 = $str2 = '';
@@ -173,13 +174,13 @@ class CAuth
 		}
 		return array($str1, $str2);
 	}
-	
-	/*
-		Перемешать символы двух хэшей.
-		@param  string $str1 первый хэш
-		@param  string $str1 второй хэш
-		@return string
-	*/
+
+	/**
+     * Перемешать символы двух хэшей.
+     * @param  string $str1 первый хэш
+     * @param  string $str2 второй хэш
+     * @return string
+	 */
 	protected function EncodeCookie($str1, $str2)
 	{
 		$result = '';
@@ -190,10 +191,10 @@ class CAuth
 		return $result;
 	}
 	
-	/*
-		Начать сессию незарегистрированного пользователя или обнулить текущую сессию.
-		@return false
-	*/
+	/**
+     * Начать сессию незарегистрированного пользователя или обнулить текущую сессию.
+     * @return false
+	 */
 	protected function GuestSession()
 	{
 		$this->user_data = array();
@@ -202,18 +203,18 @@ class CAuth
 		return false;
 	}
 	
-	/*
-		Удалить истекшие сессии.
-	*/
+	/**
+     * Удалить истекшие сессии.
+	 */
 	protected function KillOldSessions()
 	{
 		global $DB;
 		return $DB->Query("delete from `".SESSIONS_TABLE."` where `last_action` < unix_timestamp() - ".SESSION_LIFETIME);
 	}
 	
-	/*
-		Продлить текущую сессию.
-	*/
+	/**
+     * Продлить текущую сессию.
+	 */
 	protected function ProlongSession()
 	{
 		global $DB;

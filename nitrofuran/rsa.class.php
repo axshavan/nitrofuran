@@ -1,16 +1,16 @@
 <?php
 
-/*
-	Обёртка для openssl, помогающая шифровать и дешифровать данные
-	алгоритмом RSA. Для хранения ключей применяет временные файлы.
-	@author Dmitry Nikiforov <axshavan@yandex.ru>
-	@license http://sam.zoy.org/wtfpl WTFPL
-	This program is free software. It comes without any warranty, to
-	the extent permitted by applicable law. You can redistribute it
-	and/or modify it under the terms of the Do What The Fuck You Want
-	To Public License, Version 2, as published by Sam Hocevar. See
-	http://sam.zoy.org/wtfpl/COPYING for more details.
-*/
+/**
+ * Обёртка для openssl, помогающая шифровать и дешифровать данные
+ * алгоритмом RSA. Для хранения ключей применяет временные файлы.
+ * @author Dmitry Nikiforov <axshavan@yandex.ru>
+ * @license http://sam.zoy.org/wtfpl WTFPL
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the Do What The Fuck You Want
+ * To Public License, Version 2, as published by Sam Hocevar. See
+ * http://sam.zoy.org/wtfpl/COPYING for more details.
+ */
 
 class CRSA
 {
@@ -27,17 +27,17 @@ class CRSA
 	protected $random_file1         = '';
 	protected $random_file2         = '';
 	
-	/*
-		Конструктор.
-	*/
+	/**
+     * Конструктор.
+	 */
 	public function __construct()
 	{
 		$this->generate_private_key_filename();
 	}
 	
-	/*
-		Деструктор.
-	*/
+	/**
+     * Деструктор.
+	 */
 	public function __destruct()
 	{
 		unlink($this->private_key_filename);
@@ -45,11 +45,11 @@ class CRSA
 		unlink($this->random_file2);
 	}
 	
-	/*
-		Осуществить кодирование строки. Для этого требуется ключ.
-		@param  string $str данные для кодирования
-		@return string
-	*/
+	/**
+     * Осуществить кодирование строки. Для этого требуется ключ.
+     * @param  string $str данные для кодирования
+     * @return string
+	 */
 	public function encode($str)
 	{
 		if(!$this->key_exists)
@@ -67,11 +67,11 @@ class CRSA
 		return file_get_contents($this->random_file2);
 	}
 	
-	/*
-		Декодировать строку. Для этого требуется ключ.
-		@param  string $encoded_string закодированные данные
-		@return string
-	*/
+	/**
+     * Декодировать строку. Для этого требуется ключ.
+     * @param  string $encoded_string закодированные данные
+     * @return string
+	 */
 	public function decode($encoded_string)
 	{
 		if(!$this->key_exists)
@@ -88,9 +88,9 @@ class CRSA
 		return file_get_contents($this->random_file2);
 	}
 	
-	/*
-		Сгенерировать ключ.
-	*/
+	/**
+     * Сгенерировать ключ.
+	 */
 	public function generate_key()
 	{
 		$c = str_replace('%PRIVATEKEYFILE%', $this->private_key_filename, $this->_commands['genrsa']);
@@ -100,10 +100,10 @@ class CRSA
 		$this->key_exists = true;
 	}
 	
-	/*
-		Прлучить сгенерированный ключ.
-		@return string ранее сгенерированный ключ
-	*/
+	/**
+     * Прлучить сгенерированный ключ.
+     * @return string ранее сгенерированный ключ
+	 */
 	public function get_key()
 	{
 		if(!file_exists($this->private_key_filename))
@@ -117,21 +117,21 @@ class CRSA
 		return trim(implode("\n", $text), "\n");
 	}
 	
-	/*
-		Если у вас есть ключ, его можно не генерировать, а задать.
-		@param string $key ключ
-	*/
+	/**
+     * Если у вас есть ключ, его можно не генерировать, а задать.
+     * @param string $key ключ
+	 */
 	public function set_key($key)
 	{
 		file_put_contents($this->private_key_filename, "-----BEGIN RSA PRIVATE KEY-----\n".trim($key, " \n")."\n-----END RSA PRIVATE KEY-----\n");
 		$this->key_exists = true;
 	}
 	
-	/*
-		Сгенерировать случайное имя для файла, где будет хранится ключ,
-		и двух файлов для буферов openssl (из командной строки большие
-		объёмы данных что-то херово оно принимает).
-	*/
+	/**
+     * Сгенерировать случайное имя для файла, где будет хранится ключ,
+     * и двух файлов для буферов openssl (из командной строки большие
+     * объёмы данных что-то херово оно принимает).
+	 */
 	protected function generate_private_key_filename()
 	{
 		if(strlen($this->private_key_filename))
