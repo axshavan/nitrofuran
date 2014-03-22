@@ -117,7 +117,7 @@ class CTemplateEngine
 	 */
 	protected function IncludeTemplate($tpl_name)
 	{
-		$tplengine = new CTemplateEngine();
+		$tplengine = new CTemplateEngine($this->module);
 		$tplengine->_tpl_vars = $this->_tpl_vars;
 		return $tplengine->template($tpl_name);
 	}
