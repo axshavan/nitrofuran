@@ -113,11 +113,11 @@ class CUser
 		if(isset($_fields['login']) || isset($_fields['email']))
 		{
 			$sql_str = "select `id` from `".USERS_TABLE."` where 1 = 1 and ("
-				.(isset($_fields['login']) ? "`login` = '".$DB->EscapeString($_fields['login'])."' or " : '')
-				.(isset($_fields['email']) ? "`email` = '".$DB->EscapeString($_fields['email'])."' or " : '')
-				." 1 = 1) and `id` != '".$id."'";
-			$res = $DB->Query($sql_str);
-			$res = $DB->Fetch($res);
+				.(isset($_fields['login']) ? "`login` = '".$DB->EscapeString($_fields['login'])."'" : '')
+				.(isset($_fields['login']) && isset($_fields['email']) ? ' or ' : '')
+				.(isset($_fields['email']) ? "`email` = '".$DB->EscapeString($_fields['email'])."'" : '')
+				.") and `id` != '".$id."'";
+			$res = $DB->QueryFetched($sql_str);
 			if(sizeof($res) && $res)
 			{
 				$error = 'LOGIN_EMAIL_EXISTS';
