@@ -10,9 +10,9 @@
 		</tr>
 		<? foreach($_blogs as $blog): ?>
 			<tr>
-				<td></td>
-                <td></td>
-                <td></td>
+				<td><?= h($blog['name']) ?></td>
+                <td><?= $blog['user_id'] ?></td>
+                <td><?= $blog['tree_id'] ?></td>
                 <td></td>
 			</tr>
 		<? endforeach; ?>

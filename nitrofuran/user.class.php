@@ -55,6 +55,24 @@ class CUser
 		$DB->TransactionCommit();
 		return $result;
 	}
+
+	/**
+	 * Получить список пользователей
+	 * @param array $_filter массив с параметрами фильтрации
+	 * @param array $_sort   массив с параметрами сортировки
+	 * @param array $_params массив с прочими параметрами
+	 */
+	public static function GetList($_filter = array(), $_sort = array(), $_params = array())
+	{
+		require_once(DOCUMENT_ROOT.'/nitrofuran/crud.class.php');
+		$CRUD = new CRUD();
+		$_result = $CRUD->read(USERS_TABLE, $_filter, $_sort, $_params);
+		foreach($_result as &$v)
+		{
+			unset($v['password']);
+		}
+		return $_result;
+	}
 	
 	/**
      * Попытка залогиниться.

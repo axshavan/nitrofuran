@@ -16,7 +16,7 @@ class CBlogPost
 	 * Добавить пост
 	 * @param array $_fields список значений полей
 	 */
-	public function add($_fields)
+	public function Add($_fields)
 	{
 		// ...
 	}
@@ -25,7 +25,7 @@ class CBlogPost
 	 * Удалить пост
 	 * @param int $id идентификатор удаляемого поста
 	 */
-	public function delete($id)
+	public function Delete($id)
 	{
 		// ...
 	}
@@ -35,7 +35,7 @@ class CBlogPost
 	 * @param int   $id      идентификатор редактируемого поста
 	 * @param array $_fields значения изменяемых полей
 	 */
-	public function edit($id, $_fields)
+	public function Edit($id, $_fields)
 	{
 		// ...
 	}
@@ -46,7 +46,7 @@ class CBlogPost
 	 * @param array $_sort   параметры сортировки списка
 	 * @param array $_params array(limit => limit, offset => offset)
 	 */
-	public function getList($_filter, $_sort, $_params)
+	public function GgetList($_filter, $_sort, $_params)
 	{
 		// ...
 	}
