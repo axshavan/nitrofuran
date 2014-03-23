@@ -13,7 +13,6 @@ function draw_vtree(&$item, $selected_id = 0, $path = '/')
 	{
 		draw_vtree($subitem, $selected_id, $item['data']['name'] ? $path.$item['data']['name'].'/' : $path);
 	}
-
 }
 
 if($error)

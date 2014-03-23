@@ -19,7 +19,7 @@ function get_plain_vtree(&$item, $path = '/')
 $vtree = get_plain_vtree($vtree);
 
 ?>
-<a href="?page=blogadd">Добавить новый блог</a>
+<a href="?page=blogadd"><img src="/i/admin/add.gif"/> Добавить новый блог</a>
 <? if(sizeof($_blogs)): ?>
 	<table class="admin_table">
 		<tr>

@@ -16,13 +16,38 @@ require_once(DOCUMENT_ROOT.'/nitrofuran/modules/blog/config.php');
 require_once(DOCUMENT_ROOT.'/nitrofuran/modules/blog/blog.php');
 $te->assign('_left_menu', array
 	(
-		'index'    => array('active' => false, 'name' => 'Назад в админку', 'href' => '/admin/'),
-		'bloglist' => array('active' => false, 'name' => 'Блоги',           'href' => '?page=bloglist')
+		'index'        => array('active' => false, 'name' => 'Назад в админку', 'href' => '/admin/'),
+		'bloglist'     => array('active' => false, 'name' => 'Блоги',           'href' => '?page=bloglist'),
+		'blogpostlist' => array('active' => false, 'name' => 'Посты в блоги',   'href' => '?page=blogpostlist'),
 	)
 );
 switch($_GET['page'])
 {
+	/**
+	 * Посты в блогах
+	 */
+	// добавление поста
+	case 'blogpostadd':
+	// редактирование поста
+	case 'blogpostedit':
+	{
+		// ...
+		break;
+	}
+	// список постов
+	case 'blogpostlist':
+	{
+		$te->_tpl_vars['_left_menu']['blogpostlist']['active'] = true;
+		$te->assign('inner_template_name', 'a/postlist.tpl');
+		break;
+	}
+
+	/**
+	 * Блоги
+	 */
+	// добавление блога
 	case 'blogadd':
+	// редактирование блога
 	case 'blogedit':
 	{
 		require_once(DOCUMENT_ROOT.'/nitrofuran/graph.class.php');
@@ -76,6 +101,7 @@ switch($_GET['page'])
 		}
 		break;
 	}
+	// удаление блога
 	case 'blogdelete':
 	{
 		CBlog::Delete($_REQUEST['id']);
@@ -83,6 +109,7 @@ switch($_GET['page'])
 		die();
 		break;
 	}
+	// список блогов
 	case 'bloglist':
 	default:
 	{

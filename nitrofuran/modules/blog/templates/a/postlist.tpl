@@ -1,0 +1,1 @@
+<a href="?page=blogpostadd"><img src="/i/admin/add.gif"/> Добавить новый пост в блог</a>
