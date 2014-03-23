@@ -31,6 +31,13 @@ class CBlogPost
 	}
 
 	/**
+	 * Удаление всех постов в блоге
+	 * @param  int  $blog_id ид блога
+	 * @return bool
+	 */
+	public static function DeleteBlog($blog_id) { return true; }
+
+	/**
 	 * Редактиовать пост
 	 * @param int   $id      идентификатор редактируемого поста
 	 * @param array $_fields значения изменяемых полей

@@ -16,17 +16,14 @@ function draw_vtree(&$item, $selected_id = 0, $path = '/')
 
 }
 
-if($error_add)
+if($error)
 {
-	echo '<div class="error">Произошла ошибка при добавлении. Изменения не сохранены</div>';
-}
-if($error_edit)
-{
-	echo '<div class="error">Произошла ошибка при редактировании. Изменения не сохранены</div>';
+	echo '<div class="error">Произошла ошибка. Изменения не сохранены</div>';
 }
 ?>
-<form action="?page=blogadd" method="post">
-	<h3>Форма добавления или редактирования блога</h3>
+<form action="?page=<?= $actionpage ?>" method="post">
+	<h3><?= $id ? 'Редактировать блог' : 'Добавить новый блог' ?></h3>
+	<input type="hidden" name="id" value="<?= (int) $id ?>"/>
 	<table class="admin_table">
 		<tr>
 			<td>Название блога</td>
@@ -39,7 +36,7 @@ if($error_edit)
 	        <td>
 				<select name="user_id">
 					<? foreach($userlist as $u): ?>
-						<option value="<?= $u['id'] ?>" <?= $u['id'] == $userselected ? 'selected="selected"' : '' ?>><?= $u['login'] ?> <?= $u['full_name'] ? '('.$u['full_name'].')': '' ?></option>
+						<option value="<?= $u['id'] ?>" <?= $u['id'] == $userselected ? 'selected="selected"' : '' ?>><?= h($u['login'].' '.($u['full_name'] ? '('.$u['full_name'].')': '')) ?></option>
 					<? endforeach; ?>
 				</select>
 	        </td>

@@ -61,15 +61,18 @@ class CUser
 	 * @param array $_filter массив с параметрами фильтрации
 	 * @param array $_sort   массив с параметрами сортировки
 	 * @param array $_params массив с прочими параметрами
+	 * @return array
 	 */
 	public static function GetList($_filter = array(), $_sort = array(), $_params = array())
 	{
 		require_once(DOCUMENT_ROOT.'/nitrofuran/crud.class.php');
-		$CRUD = new CRUD();
-		$_result = $CRUD->read(USERS_TABLE, $_filter, $_sort, $_params);
-		foreach($_result as &$v)
+		$CRUD    = new CRUD();
+		$_result = array();
+		$res     = $CRUD->read(USERS_TABLE, $_filter, $_sort, $_params);
+		foreach($res as &$v)
 		{
 			unset($v['password']);
+			$_result[$v['id']] = $v;
 		}
 		return $_result;
 	}

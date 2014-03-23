@@ -34,7 +34,19 @@ class CBlog
 				return false;
 			}
 		}
-		if(!$CRUD->create(BLOG_TABLE, $_fields))
+		if
+		(
+			!$CRUD->create
+			(
+				BLOG_TABLE,
+				array
+				(
+					'name'    => $_fields['name'],
+					'user_id' => (int)$_fields['user_id'],
+					'tree_id' => (int)$_fields['tree_id']
+				)
+			)
+		)
 		{
 			return false;
 		}
@@ -43,21 +55,65 @@ class CBlog
 
 	/**
 	 * Удалить пост
-	 * @param int $id идентификатор удаляемого поста
+	 * @param  int  $id идентификатор удаляемого поста
+	 * @return bool
 	 */
-	public function Delete($id)
+	public static function Delete($id)
 	{
-		// ...
+		$CRUD = new CRUD();
+		if(!$CRUD->delete(BLOG_TABLE, array('id' => $id)))
+		{
+			return false;
+		}
+		require_once(DOCUMENT_ROOT.'/nitrofuran/modules/blog/blog_post.php');
+		return CBlogPost::DeleteBlog($id);
 	}
 
 	/**
 	 * Редактиовать пост
-	 * @param int   $id      идентификатор редактируемого поста
-	 * @param array $_fields значения изменяемых полей
+	 * @param  int   $id      идентификатор редактируемого поста
+	 * @param  array $_fields значения изменяемых полей
+	 * @return bool
 	 */
-	public function Edit($id, $_fields)
+	public static function Edit($id, $_fields)
 	{
-		// ...
+		if(!$id)
+		{
+			return false;
+		}
+		$CRUD = new CRUD();
+		if(!$_fields['name'] || !$_fields['user_id'])
+		{
+			return false;
+		}
+		if($_fields['tree_id'])
+		{
+			if(sizeof(CBlog::GetList(array('tree_id' => $_fields['tree_id']))))
+			{
+				return false;
+			}
+		}
+		if
+		(
+			!$CRUD->update
+			(
+				BLOG_TABLE,
+				array
+				(
+					'id' => (int)$id
+				),
+				array
+				(
+					'name'    => $_fields['name'],
+					'user_id' => (int)$_fields['user_id'],
+					'tree_id' => (int)$_fields['tree_id']
+				)
+			)
+		)
+		{
+			return false;
+		}
+		return true;
 	}
 
 	/**
