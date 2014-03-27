@@ -31,7 +31,30 @@ switch($_GET['page'])
 	// редактирование поста
 	case 'blogpostedit':
 	{
-		// ...
+		$te->_tpl_vars['_left_menu']['blogpostlist']['active'] = true;
+		$te->assign('_blogs', CBlog::GetList());
+		$te->assign('inner_template_name', 'a/postform.tpl');
+		if($_POST)
+		{
+			if($_POST['id'])
+			{
+				// ...
+			}
+			else
+			{
+				// ...
+			}
+		}
+		elseif($_GET['id'])
+		{
+			// ...
+			$te->assign('actionpage', 'blogpostedit');
+		}
+		else
+		{
+			$te->assign('post', array('date_create' => date('Y-m-d H:i:s')));
+			$te->assign('actionpage', 'blogpostadd');
+		}
 		break;
 	}
 	// список постов
@@ -52,6 +75,7 @@ switch($_GET['page'])
 	{
 		require_once(DOCUMENT_ROOT.'/nitrofuran/graph.class.php');
 		$te->assign('inner_template_name', 'a/blogform.tpl');
+		$te->_tpl_vars['_left_menu']['bloglist']['active'] = true;
 		$te->assign('userlist', CUser::GetList());
 		$graph  = new CGraph();
 		$res    = $DB->Query("select * from `".TREE_TABLE."` order by `pid` asc, `id` asc");

@@ -22,7 +22,7 @@ if($error)
 ?>
 <form action="?page=<?= $actionpage ?>" method="post">
 	<h3><?= $id ? 'Редактировать блог' : 'Добавить новый блог' ?></h3>
-	<input type="hidden" name="id" value="<?= (int) $id ?>"/>
+	<input type="hidden" name="id" value="<?= (int)$id ?>"/>
 	<table class="admin_table">
 		<tr>
 			<td>Название блога</td>
