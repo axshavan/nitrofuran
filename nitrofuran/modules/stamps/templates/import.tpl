@@ -7,7 +7,7 @@
 </head>
 <body>
 	<form action="/stamps/import" method="post" enctype="multipart/form-data">
-		Загрузить файл *.odt в специальном формате<br />
+		Загрузить файл *.ods в специальном формате<br />
 		<input type="hidden" name="import" value="1"/>
 		<input type="file" name="file" /> <input type="submit" value="Готово"/>
 	</form>

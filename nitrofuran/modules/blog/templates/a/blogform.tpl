@@ -27,7 +27,7 @@ if($error)
 		<tr>
 			<td>Название блога</td>
 			<td>
-				<input type="text" name="name" maxlength="128" value="<?= $name ?>" />
+				<input type="text" name="name" maxlength="128" value="<?= h($name) ?>" />
 			</td>
 		</tr>
 	    <tr>

@@ -39,13 +39,13 @@ class CRUD
 	 * @param  string $table   название таблицы
 	 * @param  array  $_filter массив с параметрами фильтрации (field_name => string/array value[, ...])
 	 * @param  array  $_sort   массив с параметрами сортировки (field_name => asc|desc)
-	 * @param  array  $_params массив с прочими параметрами (limit, offset)
+	 * @param  array  $_params массив с прочими параметрами (limit, offset, get_count)
 	 * @return array
 	 */
 	public function read($table, $_filter = array(), $_sort = array(), $_params = array())
 	{
 		global $DB;
-		$query = "select * from `".$DB->EscapeString($table)."` "
+		$query = "select ".($_params['get_count'] ? "count(*)" : "*")." from `".$DB->EscapeString($table)."` "
 			.$this->strWhere($_filter)." "
 			.$this->strOrder($_sort)." "
 			.$this->strParams($_params);

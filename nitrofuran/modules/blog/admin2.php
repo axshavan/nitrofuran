@@ -14,7 +14,11 @@
 $te = new CTemplateEngine('blog');
 require_once(DOCUMENT_ROOT.'/nitrofuran/modules/blog/config.php');
 require_once(DOCUMENT_ROOT.'/nitrofuran/modules/blog/blog.php');
-$te->assign('_left_menu', array
+require_once(DOCUMENT_ROOT.'/nitrofuran/modules/blog/blog_post.php');
+$te->assign
+(
+	'_left_menu',
+	array
 	(
 		'index'        => array('active' => false, 'name' => 'Назад в админку', 'href' => '/admin/'),
 		'bloglist'     => array('active' => false, 'name' => 'Блоги',           'href' => '?page=bloglist'),
@@ -38,16 +42,40 @@ switch($_GET['page'])
 		{
 			if($_POST['id'])
 			{
-				// ...
+				if(CBlogPost::Edit($_POST['id'], $_POST))
+				{
+					redirect('?page=blogpostlist');
+					die();
+				}
+				$te->assign('actionpage', 'blogpostedit');
 			}
 			else
 			{
-				// ...
+				if(CBlogPost::Add($_POST))
+				{
+					redirect('?page=blogpostlist');
+					die();
+				}
+				$te->assign('actionpage', 'blogpostadd');
 			}
+			$te->assign('error', true);
+			$te->assign
+			(
+				'post',
+				array
+				(
+					'title'       => h($_POST['title']),
+					'text'        => h($_POST['text']),
+					'blog_id'     => (int)$_POST['blog_id'],
+					'date_create' => date('Y-m-d H:i:s', strtotime($_POST['date_create']))
+				)
+			);
 		}
 		elseif($_GET['id'])
 		{
-			// ...
+			$post = CBlogPost::GetList(array('id' => (int)$_GET['id']));
+			$post[0]['date_create'] = date('Y-m-d H:i:s', $post[0]['date_create']);
+			$te->assign('post',       $post[0]);
 			$te->assign('actionpage', 'blogpostedit');
 		}
 		else
@@ -61,6 +89,10 @@ switch($_GET['page'])
 	case 'blogpostlist':
 	{
 		$te->_tpl_vars['_left_menu']['blogpostlist']['active'] = true;
+		$_sort   = array();
+		$_params = array();
+		$te->assign('count_posts', CBlogPost::GetCount());
+		$te->assign('_posts',      CBlogPost::GetList(array(), $_sort, $_params));
 		$te->assign('inner_template_name', 'a/postlist.tpl');
 		break;
 	}
@@ -103,9 +135,10 @@ switch($_GET['page'])
 			}
 			$te->assign('error',         true);
 			$te->assign('id',            (int)$_POST['id']);
-			$te->assign('name',          h($_POST['name']));
+			$te->assign('name',          $_POST['name']);
 			$te->assign('userselected',  (int)$_POST['user_id']);
 			$te->assign('vtreeselected', (int)$_POST['tree_id']);
+			$te->assign('actionpage',    'blogedit');
 		}
 		elseif($_GET['id'])
 		{
@@ -118,7 +151,7 @@ switch($_GET['page'])
 		}
 		else
 		{
-			$te->assign('name',         '');
+			$te->assign('name',          '');
 			$te->assign('userselected',  0);
 			$te->assign('vtreeselected', 0);
 			$te->assign('actionpage',    'blogadd');

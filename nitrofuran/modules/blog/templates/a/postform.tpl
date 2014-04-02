@@ -1,3 +1,9 @@
+<?
+if($error)
+{
+	echo '<div class="error">Произошла ошибка. Изменения не сохранены</div>';
+}
+?>
 <form action="?page=<?= $actionpage ?>" method="post">
     <h3><?= $id ? 'Редактировать пост' : 'Добавить новый пост' ?></h3>
     <input type="hidden" name="id" value="<?= (int)$post['id'] ?>"/>
@@ -16,7 +22,7 @@
 			    <select name="blog_id" id="blog_id">
 				    <option value="0">-</option>
 				    <? foreach($_blogs as $blog): ?>
-				        <option value="<?= (int)$blog['id'] ?>"><?= h($blog['name']) ?></option>
+				        <option value="<?= (int)$blog['id'] ?>" <?= $blog['id'] == $post['blog_id'] ? 'selected="selected"' : '' ?>><?= h($blog['name']) ?></option>
 					<? endforeach; ?>
 			    </select>
 		    </td>

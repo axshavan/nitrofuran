@@ -66,7 +66,7 @@ class CBlog
 			return false;
 		}
 		require_once(DOCUMENT_ROOT.'/nitrofuran/modules/blog/blog_post.php');
-		return CBlogPost::DeleteBlog($id);
+		return CBlogPost::DeleteAllInBlog($id);
 	}
 
 	/**

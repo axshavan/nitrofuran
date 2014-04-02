@@ -26,7 +26,7 @@ if($_POST['import'])
 	}
 	require_once(DOCUMENT_ROOT.'/nitrofuran/xml.class.php');
 	$xmlparser = new CXMLParser();
-	$xmlparser->load_from_file(DOCUMENT_ROOT.'/tmp/content.xml', 'string');
+	$xmlparser->load_from_file(DOCUMENT_ROOT.'/tmp/content.xml', 'regexp');
 	$db = $xmlparser->get_as_array();
 	unset($xmlparser);
 	clean_tmp_dir();
