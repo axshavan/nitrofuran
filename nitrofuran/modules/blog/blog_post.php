@@ -80,27 +80,21 @@ class CBlogPost
 		{
 			return false;
 		}
-		if
+		$CRUD->update
 		(
-			!$CRUD->update
+			BLOG_POST_TABLE,
+			array
 			(
-				BLOG_POST_TABLE,
-				array
-				(
-					'id' => (int)$id
-				),
-				array
-				(
-					'title'       => $_fields['title'],
-					'blog_id'     => (int)$_fields['blog_id'],
-					'text'        => $_fields['text'],
-					'date_create' => strtotime($_fields['date_create'])
-				)
+				'id' => (int)$id
+			),
+			array
+			(
+				'title'       => $_fields['title'],
+				'blog_id'     => (int)$_fields['blog_id'],
+				'text'        => $_fields['text'],
+				'date_create' => strtotime($_fields['date_create'])
 			)
-		)
-		{
-			return false;
-		}
+		);
 		return true;
 	}
 

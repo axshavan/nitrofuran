@@ -10,6 +10,22 @@
  * To Public License, Version 2, as published by Sam Hocevar. See
  * http://sam.zoy.org/wtfpl/COPYING for more details.
  */
-trace($TREE_INFO);
+require_once(DOCUMENT_ROOT.'/nitrofuran/modules/blog/blog.php');
+require_once(DOCUMENT_ROOT.'/nitrofuran/modules/blog/blog_post.php');
+
+// блог
+$_blog = CBlog::GetList(array('tree_id' => $TREE_INFO['current']['id']));
+if(!isset($_blog[0]) || !$_blog[0]['id'])
+{
+	error404();
+}
+$_blog = $_blog[0];
+trace($_blog);
+
+// посты в блог
+$_params = array();
+// ...
+$_posts = CBlogPost::GetList(array('blog_id' => $_blog['id']), array('date_create' => 'desc'), $_params);
+trace($_posts);
+
 ?>
-under construction

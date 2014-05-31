@@ -88,31 +88,25 @@ class CBlog
 		}
 		if($_fields['tree_id'])
 		{
-			if(sizeof(CBlog::GetList(array('tree_id' => $_fields['tree_id']))))
+			if(sizeof(CBlog::GetList(array('tree_id' => $_fields['tree_id'], '!id' => $id))))
 			{
 				return false;
 			}
 		}
-		if
+		$CRUD->update
 		(
-			!$CRUD->update
+			BLOG_TABLE,
+			array
 			(
-				BLOG_TABLE,
-				array
-				(
-					'id' => (int)$id
-				),
-				array
-				(
-					'name'    => $_fields['name'],
-					'user_id' => (int)$_fields['user_id'],
-					'tree_id' => (int)$_fields['tree_id']
-				)
+				'id' => (int)$id
+			),
+			array
+			(
+				'name'    => $_fields['name'],
+				'user_id' => (int)$_fields['user_id'],
+				'tree_id' => (int)$_fields['tree_id']
 			)
-		)
-		{
-			return false;
-		}
+		);
 		return true;
 	}
 
