@@ -61,19 +61,23 @@ class CXMLParser
 
         // очистить хранилище
         $this->storage = array();
-		
-		// отрезать заголовок xml
-		$a = mb_stripos($xml_string, '?>', 0, 'utf-8');
-		if($a)
+
+		// если тип парсинга - simplexml, то оставляем входную строку как есть
+		if($parsing_mechanism != 'simplexml')
 		{
-			$a += 2;
-			$xml_string = mb_substr($xml_string, $a, mb_strlen($xml_string) - $a, 'utf-8');
+			// отрезать заголовок xml
+			$a = mb_stripos($xml_string, '?>', 0, 'utf-8');
+			if($a)
+			{
+				$a += 2;
+				$xml_string = mb_substr($xml_string, $a, mb_strlen($xml_string) - $a, 'utf-8');
+			}
+			$xml_string = str_replace("\n", ' ',   $xml_string);
+			$xml_string = str_replace("\r", ' ',   $xml_string);
+			$xml_string = str_replace("\t", ' ',   $xml_string);
+			$xml_string = str_replace(">",  '> ',  $xml_string);
+			$xml_string = str_replace("/>", '/> ', $xml_string);
 		}
-		$xml_string = str_replace("\n", ' ',   $xml_string);
-		$xml_string = str_replace("\r", ' ',   $xml_string);
-		$xml_string = str_replace("\t", ' ',   $xml_string);
-		$xml_string = str_replace(">",  '> ',  $xml_string);
-		$xml_string = str_replace("/>", '/> ', $xml_string);
 
 		// передать парсеру
         switch($parsing_mechanism)

@@ -25,7 +25,7 @@ if(!$DB->Query("create table ".STAMPS_TABLE." (
     `slaked` int(11) NOT NULL DEFAULT '0',
     `book_id` int(11) NOT NULL,
     PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM"))
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8"))
 {
     $DB->TransactionRollback();
     return false;

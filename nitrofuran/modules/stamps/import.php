@@ -80,7 +80,6 @@ if($_POST['import'])
 					$name    = $_data[$table_id][$row_id][2];
 					$slaked  = strpos($_data[$table_id][$row_id][3], 'да') !== false;
 					$book_id = $_data[$table_id][$row_id][4];
-
 				}
 				if($row_id)
 				{
