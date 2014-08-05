@@ -27,5 +27,3 @@ $DB->TransactionCommit();
 return true;
 
 ?>
-
-?>

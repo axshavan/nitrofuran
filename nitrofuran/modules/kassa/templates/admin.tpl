@@ -58,6 +58,7 @@
 			<td><input type="text" id="kassa_editaccount<?= $v['id'] ?>" name="name" value="<?= h($v['name']) ?>"></td>
 			<td><input type="checkbox" id="kassa_editaccount<?= $v['id'] ?>_default" name="default" value="1"<?= $v['default'] ? " checked" : "" ?>> <label for="kassa_editaccount<?= $v['id'] ?>_default">по умолчанию</label></td>
 			<td><input type="checkbox" id="kassa_editaccount<?= $v['id'] ?>_show" name="show" value="1"<?= $v['show'] ? " checked" : "" ?>> <label for="kassa_editaccount<?= $v['id'] ?>_show">показывать</label></td>
+            <td><input type="checkbox" id="kassa_editaccount<?= $v['id'] ?>_warnlimit" name="warnlimit" value="1"<?= $v['warnlimit'] ? " checked" : "" ?>> <label for="kassa_editaccount<?= $v['id'] ?>_warnlimit">предупреждать об уходе в минус</label></td>
 			<td><input type="submit" value="Сохранить"></td>
 			<td><input type="button" value="Удалить" onclick="location='?module=kassa&page=1&delaccount=<?= $v['id'] ?>'"></td>
 		</tr>
@@ -80,6 +81,10 @@
 			<td>Показывать сумму по счёту</td>
 			<td><input type="checkbox" id="kassa_addaccount_form_show" value="1" name="show" checked></td>
 		</tr>
+        <tr>
+            <td>Предупреждать об уходе в минус</td>
+            <td><input type="checkbox" id="kassa_addaccount_form_warnlimit" value="1" name="warnlimit" checked></td>
+        </tr>
 		<tr>
 			<td>&nbsp;</td>
 			<td><input type="submit" value="Ок"></td>

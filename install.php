@@ -12,6 +12,7 @@
  * http://sam.zoy.org/wtfpl/COPYING for more details.
  */
 
+error_reporting(0);
 if(file_exists('nitrofuran/config.php'))
 {
 	require_once('nitrofuran/config.php');

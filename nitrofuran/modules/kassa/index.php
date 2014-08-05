@@ -156,12 +156,15 @@ $tplengine->assign('_optypes_by_id', $_optypes_by_id);
 
 // валюты
 $_currencies = array();
+$_currencies_symbols = array();
 $res = $DB->Query("select * from `".KASSA_CURRENCY_TABLE."`");
 while($_row = $DB->Fetch($res))
 {
+	$_currencies_symbols[$_row['symbol']] = $_row['id'];
 	$_currencies[$_row['id']] = $_row;
 }
 $tplengine->assign('_currencies', $_currencies);
+$tplengine->assign('_currencies_symbols', $_currencies_symbols);
 
 // счета
 $_accounts = array();

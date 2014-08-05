@@ -2,7 +2,7 @@
  * Смена типа расписание в админке в форме редактирования события
  * в планировании.
  * @param repeattype {string}  тип расписания
- * @param id         {integer} номер записи
+ * @param id         {int} номер записи
  */
 function adminPlanRepeatTypeChange(repeattype, id)
 {
@@ -137,6 +137,7 @@ function adminPlanRepeatTypeD2(day, bAdd)
 function checkAddForm()
 {
 	var obj = ge('inp_optype');
+    var a, c;
 	if(obj)
 	{
 		if(!obj.value)
@@ -153,6 +154,7 @@ function checkAddForm()
 			alert('Укажите счёт');
 			return false;
 		}
+        a = obj.value;
 	}
 	obj = ge('inp_currency');
 	if(obj)
@@ -162,6 +164,7 @@ function checkAddForm()
 			alert('Укажите валюту');
 			return false;
 		}
+        c = obj.value;
 	}
 	obj = ge('inp_amount');
 	if(obj)
@@ -172,6 +175,12 @@ function checkAddForm()
 			return false;
 		}
 	}
+    // проверка оставшейся суммы на счёте
+    if(account_warnlimits[a] && account_warnlimits[a][c]) {
+        if(parseInt(obj.value) > parseInt(account_warnlimits[a][c])) {
+            return confirm('На счету останется меньше нуля');
+        }
+    }
 	return true;
 }
 

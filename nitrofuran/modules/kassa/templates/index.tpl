@@ -238,6 +238,17 @@
 				</div>
 			</form>
 		</div>
+		<script type="text/javascript">
+			var account_warnlimits = new Array();
+			<? foreach($_accounts as $_a): ?>
+				account_warnlimits['<?= $_a['id'] ?>'] = <?= $_a['warnlimit'] ? '[]' : 'false' ?>;
+				<? if($_a['warnlimit']): ?>
+					<? foreach($_sum_all[$_a['id']] as $c => $sum): ?>
+                        account_warnlimits['<?= $_a['id'] ?>']['<?= $_currencies_symbols[$c] ?>'] = <?= $sum ?>;
+                    <? endforeach; ?>
+				<? endif; ?>
+			<? endforeach; ?>
+		</script>
 		<!-- /форма добавления -->
 		
 		<!-- планирование -->
@@ -270,7 +281,7 @@
 					<tr>
 						<td <?= $_accounts[$account_id]['default'] ? 'class="default"' : '' ?>><?= $_accounts[$account_id]['name'] ?></td>
 						<td>
-							<? $bSumShown=false; foreach($data as $currency => $amount): ?>
+							<? $bSumShown = false; foreach($data as $currency => $amount): ?>
 								<? if(round($amount, 2)): ?>
 									<span class="<?= $amount > 0 ? 'inc' : 'exp' ?>"><?= round($amount, 2).'&nbsp;'.$currency ?></span>
 									<? $bSumShown = true; ?>
