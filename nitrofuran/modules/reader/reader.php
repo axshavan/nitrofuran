@@ -82,7 +82,7 @@ class CReader
 					'href'            => $item['href'],
 					'subscription_id' => $subscription['id'],
 					'read_flag'       => 0,
-					'date'            => (int)$item['date'] ? (int)$item['date'] : gmmktime(),
+					'date'            => (int)$item['date'] <= gmmktime() ? (int)$item['date'] : gmmktime(),
 					'text'            => $item['description']
 				)
 			);
