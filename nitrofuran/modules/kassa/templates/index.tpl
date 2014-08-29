@@ -240,6 +240,7 @@
 		</div>
 		<script type="text/javascript">
 			var account_warnlimits = new Array();
+			var optypes_isincome = new Array();
 			<? foreach($_accounts as $_a): ?>
 				account_warnlimits['<?= $_a['id'] ?>'] = <?= $_a['warnlimit'] ? '[]' : 'false' ?>;
 				<? if($_a['warnlimit']): ?>
@@ -247,6 +248,12 @@
                         account_warnlimits['<?= $_a['id'] ?>']['<?= $_currencies_symbols[$c] ?>'] = <?= $sum ?>;
                     <? endforeach; ?>
 				<? endif; ?>
+			<? endforeach; ?>
+
+			<? foreach($_optypes as $k => $_group): ?>
+                <? foreach($_group as $_optype): ?>
+					optypes_isincome[<?= $_optype['id'] ?>] = <?= $_optype['is_income'] ? 1 : -1 ?>;
+				<? endforeach; ?>
 			<? endforeach; ?>
 		</script>
 		<!-- /форма добавления -->

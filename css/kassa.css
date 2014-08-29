@@ -150,5 +150,6 @@ table.stat_table { background-color: #BABABA; width: 100%; border-left: 1px soli
 table.stat_table th { padding: 2px; text-align: left; border-right: 1px solid #303030; border-bottom: 1px solid #303030; background-color: white; }
 table.stat_table td { padding: 2px; border-right: 1px solid #303030; border-bottom: 1px solid #303030; font-size: 11px; }
 table.stat_table tr.odd { background-color: #DBDBDB; }
+table.stat_table a { color: black; text-decoration: underline; }
 
 div.stats_graph span.command { border-bottom: 1px dashed black; cursor: pointer; }

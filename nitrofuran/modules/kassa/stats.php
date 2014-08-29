@@ -1,15 +1,21 @@
 <?php
 
-/*
-	Статистика по кассе.
-	@author Dmitry Nikiforov <axshavan@yandex.ru>
-	@license http://sam.zoy.org/wtfpl WTFPL
-	This program is free software. It comes without any warranty, to
-	the extent permitted by applicable law. You can redistribute it
-	and/or modify it under the terms of the Do What The Fuck You Want
-	To Public License, Version 2, as published by Sam Hocevar. See
-	http://sam.zoy.org/wtfpl/COPYING for more details.
-*/
+/**
+ * Статистика по кассе.
+ * @author Dmitry Nikiforov <axshavan@yandex.ru>
+ * @license http://sam.zoy.org/wtfpl WTFPL
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the Do What The Fuck You Want
+ * To Public License, Version 2, as published by Sam Hocevar. See
+ * http://sam.zoy.org/wtfpl/COPYING for more details.
+ */
+
+if(isset($_GET['m']))
+{
+	//require('stats_month.php');
+	//return;
+}
 
 require_once('config.php');
 global $DB;
@@ -39,6 +45,7 @@ $tplengine->assign('_optypegroups', $_optypegroups);
 // типы операций
 $_optypes       = array();
 $_optypes_by_id = array();
+$_optypes_g     = array();
 $group          = false;
 $res = $DB->Query("select * from `".KASSA_OPERATION_TYPE_TABLE."`");
 while($_row = $DB->Fetch($res))

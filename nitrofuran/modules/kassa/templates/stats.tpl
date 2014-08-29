@@ -23,9 +23,9 @@
 				<th>Расход</th>
 				<th>Итого</th>
 			</tr>
-			<? foreach($_months as $_m): $bOdd = !$bOdd; $month_sum = array(); ?>
+			<? foreach($_months as $mkey => $_m): $bOdd = !$bOdd; $month_sum = array(); ?>
 					<tr<?= $bOdd ? ' class="odd"' : '' ?>>
-						<td><?= $_m['name'] ?></td>
+						<td><a href="/kassa/stats/?m=<?= $mkey ?>"><?= $_m['name'] ?></a></td>
 						<td>
 							<? foreach($_m['income'] as $currency => $sum): $month_sum[$currency] += $sum; ?>
 								<?= round($sum, 2) ?>&nbsp;<?= $currency ?><br />

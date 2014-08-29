@@ -137,7 +137,7 @@ function adminPlanRepeatTypeD2(day, bAdd)
 function checkAddForm()
 {
 	var obj = ge('inp_optype');
-    var a, c;
+    var a, c, o;
 	if(obj)
 	{
 		if(!obj.value)
@@ -145,6 +145,7 @@ function checkAddForm()
 			alert('Укажите тип добавляемой записи');
 			return false;
 		}
+		o = obj.value;
 	}
 	obj = ge('inp_account');
 	if(obj)
@@ -177,7 +178,7 @@ function checkAddForm()
 	}
     // проверка оставшейся суммы на счёте
     if(account_warnlimits[a] && account_warnlimits[a][c]) {
-        if(parseInt(obj.value) > parseInt(account_warnlimits[a][c])) {
+        if(parseInt(account_warnlimits[a][c]) + parseInt(obj.value) * optypes_isincome[o] < 0) {
             return confirm('На счету останется меньше нуля');
         }
     }
