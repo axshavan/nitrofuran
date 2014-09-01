@@ -4,6 +4,7 @@ body { font-size: 11px; color: black; background-color: #576B50; font-family: sa
 .floatr { float: right; }
 .clear { clear: both; }
 .p5 { padding: 5px; }
+.mb15 { margin-bottom: 15px; }
 img.button { cursor: pointer; }
 a.reset { color: #303030; display: block; margin-bottom: 2px; text-decoration: underline; }
 a.reset:hover { color: #505050; }

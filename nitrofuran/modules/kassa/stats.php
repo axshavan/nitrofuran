@@ -13,8 +13,8 @@
 
 if(isset($_GET['m']))
 {
-	//require('stats_month.php');
-	//return;
+	require('stats_month.php');
+	return;
 }
 
 require_once('config.php');

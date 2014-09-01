@@ -12,7 +12,8 @@
 <a class="reset" href="/kassa/">&laquo; вернуться в кассу</a>
 <a class="reset" href="/kassa/stats">&laquo; вернуться в статистику</a>
 
-<div class="container">
+<div class="container mb15">
+	<strong>Итоги за месяц по типам операций</strong>
 	<table class="optable planstable" cellspacing="0">
         <tr>
             <th>&nbsp;</th>
@@ -27,8 +28,8 @@
 					<th><?= number_format($_group[$c], 2, '.', ' ') ?></th>
 				<? endforeach; ?>
 			</tr>
-			<? foreach($_sum_by_optypes[$gid] as $oname => $_optype): ?>
-				<tr>
+			<? foreach($_sum_by_optypes[$gid] as $oname => $_optype): $bOdd = !$bOdd; ?>
+				<tr class="<?= ($_group[$c] > 0 ? 'inc' : 'exp').($bOdd ? '_odd' : '') ?>">
 					<td><?= $oname ?></td>
 					<? foreach($_used_currencies as $c): ?>
                         <td><?= number_format($_optype[$c], 2, '.', ' ') ?></td>
@@ -39,8 +40,37 @@
 	</table>
 </div>
 
-<? trace($_sum_by_accounts) ?>
-<? trace($_sum) ?>
+<div class="container mb15">
+	<strong>Итоги за месяц по различным счетам в кассе</strong>
+    <table class="optable" cellspacing="0">
+	    <? foreach($_sum_by_accounts as $account => $sums): $tr0 = true; $bOdd = !$bOdd; ?>
+
+		        <? foreach($sums as $k => $v): $bOdd = !$bOdd; ?>
+		            <?
+		            if($tr0)
+		            {
+			            echo '<tr class="'.($v > 0 ? 'inc' : 'exp').($bOdd ? '_odd' : '').'"><td rowspan="'.sizeof($sums).'">'.$account.'</td>';
+			            $tr0 = false;
+		            }
+		            else
+		            {
+			            echo '<tr class="'.($v > 0 ? 'inc' : 'exp').($bOdd ? '_odd' : '').'">';
+		            }
+		            ?><td><?= $v.'&nbsp;'.$k ?></td></tr>
+		        <? endforeach; ?>
+	        </tr>
+		<? endforeach; ?>
+	</table>
+    <strong>Общий итог за месяц по валютам</strong>
+    <table class="optable" cellspacing="0">
+		<? foreach($_sum as $k => $v): $bOdd = !$bOdd; ?>
+        <tr class="<?= ($v > 0 ? 'inc': 'exp').($bOdd ? '_odd' : '') ?>">
+            <td><?= $k ?></td>
+            <td><?= $v ?></td>
+        </tr>
+		<? endforeach; ?>
+    </table>
+</div>
 
 </body>
 </html>
