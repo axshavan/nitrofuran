@@ -73,7 +73,7 @@ if($_REQUEST['year'])
 }
 if($_REQUEST['book_id'])
 {
-	$filter_string .= 'year='.htmlspecialchars($_REQUEST['book_id']).'&';
+	$filter_string .= 'book_id='.htmlspecialchars($_REQUEST['book_id']).'&';
 	$_filter['book_id'] .= $_REQUEST['book_id'];
 }
 $_data      = $crud->read(STAMPS_TABLE, $_filter, $_sort);
@@ -92,6 +92,7 @@ rsort($_years);
 sort($_book_ids);
 
 $tplengine = new CTemplateEngine('stamps');
+$tplengine->assign('filter_string', '?'.$filter_string);
 $tplengine->assign('_book_names', unserialize(get_param('stamps', 'books')));
 $tplengine->assign('_book_ids', $_book_ids);
 $tplengine->assign('_countries', $_countries);
