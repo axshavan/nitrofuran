@@ -191,7 +191,6 @@ function forceRefreshSubscription()
 	}
 	curtainOn();
 	bAjaxInProgress = true;
-	$('.left *').removeClass('active');
 	$('#right')[0].scrollTop = 0;
 	var id = $('#editsform_id').val();
 	jQuery.post
@@ -210,6 +209,22 @@ function forceRefreshSubscription()
 			$('#editsform_group').val(data['group_id']);
 			$('#editsform_name').val(data['name']);
 			$('#right').html(data['items']);
+			if(data['items_count'])
+			{
+				var ln = $('#subscr').find('.active');
+				if(ln) {
+					ln.addClass('unread');
+					ln.find('.unread').html(' (' + data['items_count'] + ')');
+				}
+			}
+			else
+			{
+				var ln = $('#subscr').find('.active');
+				if(ln) {
+					ln.removeClass('unread');
+					ln.find('.unread').html('');
+				}
+			}
 			curtainOff();
 		}
 	);
@@ -252,8 +267,6 @@ function onRightDivScroll()
 				// как только верхушка div.item уезжает за верхнюю границу, помечаем элемент активным и прочитанным
 				if(!$(v).hasClass('active'))
 				{
-					$(v).addClass('active');
-					$(v).find('button').hide();
 					if(bAjaxInProgress)
 					{
 						return false;
@@ -276,6 +289,8 @@ function onRightDivScroll()
                             if(data == 'read')
                             {
 							    decreaseUnread();
+								$(v).addClass('active');
+								$(v).find('button').hide();
                             }
 						}
 					);
