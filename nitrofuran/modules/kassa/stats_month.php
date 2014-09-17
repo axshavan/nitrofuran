@@ -96,7 +96,7 @@ while($_row = $DB->Fetch($res))
 	$_sum[$currency] += $amount;
 	$_sum_by_accounts[$_accounts[$_row['account_id']]['name']][$currency] += $amount;
 	$optype = $_optypes[$_row['type_id']];
-	$_sum_by_optypes[$optype['group_id']][$optype['name']][$currency] += $amount;
+	$_sum_by_optypes[$optype['group_id']][$optype['id']][$currency] += $amount;
 	$_sum_by_optypegroups[$optype['group_id']][$currency] += $amount;
 }
 $tplengine->assign('_sum', $_sum);
@@ -104,6 +104,7 @@ $tplengine->assign('_sum_by_accounts', $_sum_by_accounts);
 $tplengine->assign('_sum_by_optypes', $_sum_by_optypes);
 $tplengine->assign('_sum_by_optypegroups', $_sum_by_optypegroups);
 $tplengine->assign('_used_currencies', $_used_currencies);
+$tplengine->assign('_optypes', $_optypes);
 
 $tplengine->template('stats_month.tpl');
 

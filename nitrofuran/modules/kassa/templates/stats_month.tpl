@@ -28,9 +28,9 @@
 					<th><?= number_format($_group[$c], 2, '.', ' ') ?></th>
 				<? endforeach; ?>
 			</tr>
-			<? foreach($_sum_by_optypes[$gid] as $oname => $_optype): $bOdd = !$bOdd; ?>
-				<tr class="<?= ($_group[$c] > 0 ? 'inc' : 'exp').($bOdd ? '_odd' : '') ?>">
-					<td><?= $oname ?></td>
+			<? foreach($_sum_by_optypes[$gid] as $oid => $_optype): $bOdd = !$bOdd; ?>
+				<tr class="<?= ($_optypes[$oid]['is_income'] ? 'inc' : 'exp').($bOdd ? '_odd' : '') ?>">
+					<td><?= $_optypes[$oid]['name'] ?></td>
 					<? foreach($_used_currencies as $c): ?>
                         <td><?= number_format($_optype[$c], 2, '.', ' ') ?></td>
 					<? endforeach; ?>
