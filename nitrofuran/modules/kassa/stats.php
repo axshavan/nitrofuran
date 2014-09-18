@@ -20,8 +20,13 @@ if(isset($_GET['m']))
 require_once('config.php');
 global $DB;
 
+$OPTYPE_CUREXCH_MINUS = get_param('kassa', 'OPTYPE_CUREXCH_MINUS');
+$OPTYPE_CUREXCH_PLUS = get_param('kassa', 'OPTYPE_CUREXCH_PLUS');
+
 $tplengine = new CTemplateEngine('kassa');
 $tplengine->assign('title', get_param('kassa', 'stats_title'));
+$tplengine->assign('OPTYPE_CUREXCH_MINUS', $OPTYPE_CUREXCH_MINUS);
+$tplengine->assign('OPTYPE_CUREXCH_PLUS', $OPTYPE_CUREXCH_PLUS);
 $tplengine->assign('use_blue_template', get_param('kassa', 'use_blue_template'));
 
 // валюты
@@ -66,6 +71,8 @@ $_operation_count = array();
 $_operation_sum   = array();
 $_months          = array();
 $_weekdays        = array();
+$_exchanges       = array();
+
 // всякая статистика за последний месяц
 $_operation_count_m = array();
 $_operation_max_m   = array();
@@ -105,6 +112,38 @@ while($_row = $DB->Fetch($res))
 	$_weekdays[date('N', $_row['backtime'])]['opnum']++;
 	$_weekdays[date('N', $_row['backtime'])]['opnum_c'][$_row['currency_id']]++;
 	$_weekdays[date('N', $_row['backtime'])]['opsum_c'][$_row['currency_id']] += $_row['amount'] * ($_optypes[$_row['type_id']]['is_income'] ? 1 : -1);
+	if($_row['type_id'] == $OPTYPE_CUREXCH_MINUS || $_row['type_id'] == $OPTYPE_CUREXCH_PLUS)
+	{
+		$currency_guess = 0;
+		if(preg_match('/валют(у|ы) ([а-яА-Я\w\s\W]+) (на счёт|со счёта)/', $_row['comment'], $_m))
+		{
+			foreach($_currencies as $c) {
+				if($c['name'] == $_m[2])
+				{
+					$currency_guess = $c['id'];
+				}
+			}
+		}
+		$_exchanges[$_row['currency_id']][$_row['type_id'] == $OPTYPE_CUREXCH_PLUS ? '+' : '-'][$currency_guess] += $_row['amount'];
+	}
+}
+foreach($_exchanges as $cur_id1 => $e)
+{
+	foreach($e['-'] as $cur_id2 => $amount)
+	{
+		if(isset($_exchanges[$cur_id2]))
+		{
+			$_exchanges[$cur_id1]['courses'][$cur_id2] = $_exchanges[$cur_id2]['+'][$cur_id1] / $amount;
+		}
+	}
+	foreach($e['+'] as $cur_id2 => $amount)
+	{
+		if(isset($_exchanges[$cur_id2]))
+		{
+			$course = $_exchanges[$cur_id2]['-'][$cur_id1] / $amount;
+			$_exchanges[$cur_id1]['courses'][$cur_id2] = isset($_exchanges[$cur_id1]['courses'][$cur_id2]) ? ($course + $_exchanges[$cur_id1]['courses'][$cur_id2]) / 2 : $course;
+		}
+	}
 }
 krsort($_months);
 foreach($_months as $k => &$_m)
@@ -154,6 +193,7 @@ $tplengine->assign('_operation_sum_m',   $_operation_sum_m);
 $tplengine->assign('_months',            $_months);
 $tplengine->assign('kassa_action_time',  $kassa_action_time);
 $tplengine->assign('_weekdays',          $_weekdays);
+$tplengine->assign('_exchanges',         $_exchanges);
 
 $tplengine->template('stats.tpl');
 

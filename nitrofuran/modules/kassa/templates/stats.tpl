@@ -169,7 +169,30 @@
 			<? endforeach; ?>
 		</table>
 	</div>
-	<!-- разбивка максимумов по типам операций и валютам -->
+	<!-- /разбивка максимумов по типам операций и валютам -->
+
+	<!-- получающиеся курсы валют -->
+	<div class="container">
+		<strong>Курсы конвертации валют</strong>
+		<table class="optable" cellspacing="0">
+			<tr>
+				<th>Валюта 1</th>
+				<th>Валюта 2</th>
+				<th>Курс</th>
+			</tr>
+			<? foreach($_exchanges as $cur_id1 => $e): $bOdd = !$bOdd; ?>
+				<tr class="<?= $bOdd ? 'odd' : 'notodd' ?>">
+					<td rowspan="<?= sizeof($e['courses']) ?>"><?= $_currencies[$cur_id1]['name'] ?></td>
+					<? foreach($e['courses'] as $cur_id2 => $course): ?>
+						<td><?= $_currencies[$cur_id2]['name'] ?></td>
+						<td><?= round($course, 3) ?></td>
+						</tr><tr class="<?= $bOdd ? 'odd' : 'notodd' ?>">
+					<? endforeach; ?>
+				</tr>
+			<? endforeach; ?>
+		</table>
+	</div>
+	<!-- /получающиеся курсы валют -->
 	
 </div>
 
