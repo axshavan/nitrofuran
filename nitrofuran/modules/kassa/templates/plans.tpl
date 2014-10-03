@@ -30,7 +30,6 @@
 	<table class="optable planstable" cellspacing="0">
 		<tr>
 			<th>Тип операции</th>
-			<th>Валюта</th>
 			<th>Сумма</th>
 			<th>Кол-во раз</th>
 			<th>Первый раз</th>
@@ -54,18 +53,17 @@
 						<? if($rowspan) :?>
 							<td rowspan="<?= $rowspan ?>"><?= $_optypes[$optype_id]['name'] ?></td>
 						<? endif; ?>
-						<td><?= $_currencies[$currency_id]['symbol'] ?></td>
-						<td><?= $_op['sum'] ?></td>
+						<td><?= $_op['sum'].'&nbsp;'.$_currencies[$currency_id]['symbol'] ?></td>
 						<td><?= $_op['count'] ?></td>
 						<td><?= date('Y-m-d', $_op['first_time']) ?></td>
 						<td><?= date('Y-m-d', $_op['last_time']) ?></td>
-						<td><?= $_op['average_c'] ?></td>
-						<td><?= $_op['average_m'] ?></td>
+						<td><?= $_op['average_c'].'&nbsp;'.$_currencies[$currency_id]['symbol'] ?></td>
+						<td><?= $_op['average_m'].'&nbsp;'.$_currencies[$currency_id]['symbol'] ?></td>
 						<td>
 							<? if(!$_op['do_not_count']): ?>
 								<strong>
 							<? endif; ?>
-							<?= $_op['left_m'] ?>
+							<?= $_op['left_m'].'&nbsp;'.$_currencies[$currency_id]['symbol'] ?>
 							<? if($_op['do_not_count']): ?>
 								(не считаем<?
 								switch($_op['do_not_count'])
@@ -102,12 +100,11 @@
 		<? foreach($_plans as $_plan): $bOdd = !$bOdd; ?>
 			<tr class="<?= ($_optypes[$_plan['operation_type_id']]['is_income'] ? 'inc' : 'exp').($bOdd ? '_odd' : '') ?>">
 				<td><?= $_plan['name'] == $_optypes[$_plan['operation_type_id']]['name'] ? $_plan['name'] : $_plan['name'].' / '.$_optypes[$_plan['operation_type_id']]['name'] ?></td>
-				<td><?= $_currencies[$_plan['currency_id']]['symbol'] ?></td>
-				<td><?= $_plan['amount'] ?></td>
+				<td><?= $_plan['amount'].'&nbsp;'.$_currencies[$currency_id]['symbol'] ?></td>
 				<td colspan="2">&nbsp;</td>
 				<td><?= $_plan['repeat'] ?></td>
 				<td colspan="2">&nbsp;</td>
-				<td><strong><?= $_plan['amount'] ?></strong></td>
+				<td><strong><?= $_plan['amount'].'&nbsp;'.$_currencies[$currency_id]['symbol'] ?></strong></td>
 				<td colspan="2">&nbsp;</td>
 			</tr>
 		<? endforeach; ?>

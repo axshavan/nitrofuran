@@ -43,18 +43,18 @@
 <div class="container mb15">
 	<strong>Итоги за месяц по различным счетам в кассе</strong>
     <table class="optable" cellspacing="0">
-	    <? foreach($_sum_by_accounts as $account => $sums): $tr0 = true; $bOdd = !$bOdd; ?>
+	    <? foreach($_sum_by_accounts as $account => $sums): $tr0 = true; ?>
 
 		        <? foreach($sums as $k => $v): $bOdd = !$bOdd; ?>
 		            <?
 		            if($tr0)
 		            {
-			            echo '<tr class="'.($v > 0 ? 'inc' : 'exp').($bOdd ? '_odd' : '').'"><td rowspan="'.sizeof($sums).'">'.$account.'</td>';
+			            echo '<tr class="'.($v > 0 ? 'inc' : 'exp').'"><td rowspan="'.sizeof($sums).'">'.$account.'</td>';
 			            $tr0 = false;
 		            }
 		            else
 		            {
-			            echo '<tr class="'.($v > 0 ? 'inc' : 'exp').($bOdd ? '_odd' : '').'">';
+			            echo '<tr class="'.($v > 0 ? 'inc' : 'exp').'">';
 		            }
 		            ?><td><?= $v.'&nbsp;'.$k ?></td></tr>
 		        <? endforeach; ?>
