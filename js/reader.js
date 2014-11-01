@@ -1,3 +1,5 @@
+/* 01.11.2014 */
+
 var bAjaxInProgress = false;
 
 $(document).ready

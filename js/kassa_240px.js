@@ -1,3 +1,5 @@
+/* 01.11.2014 */
+
 var maxTypeGroupId = 0;
 
 /*
