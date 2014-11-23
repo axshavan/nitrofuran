@@ -1,4 +1,4 @@
-/* 01.11.2014 */
+/* 22.11.2014 */
 
 var bAjaxInProgress = false;
 
@@ -264,7 +264,7 @@ function onRightDivScroll()
 	(
 		function(k, v)
 		{
-			if($(v).offset().top <= 50)
+			if($(v).offset().top <= 50 && $(v).is(':visible') && $(v).data('read') != 1)
 			{
 				// как только верхушка div.item уезжает за верхнюю границу, помечаем элемент активным и прочитанным
 				if(!$(v).hasClass('active'))
@@ -292,6 +292,7 @@ function onRightDivScroll()
                             {
 							    decreaseUnread();
 								$(v).addClass('active');
+								$(v).data('read', 1);
 								$(v).find('button').hide();
                             }
 						}
@@ -403,7 +404,7 @@ function setItemRead(id)
                 {
                     decreaseUnread();
                 }
-                $('#item_' + id).fadeOut();
+                $('#item_' + id).data('read', 1).fadeOut();
 			}
 		);
 }
