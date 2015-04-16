@@ -123,7 +123,7 @@ function h($s)
 function h2($s)
 {
 	$_tags = array('small', 'strong', 'em', 'b', 'i', 'sub', 'sup', 'blockquote', 'pre');
-	$_tags_cut = array('div', 'span');
+	$_tags_cut = array('div', 'span', 'p');
 	$s = h($s);
 	$s = preg_replace('/\&lt;br[\s\S]*\&gt;/Ui', '<br />', $s);
 	$s = preg_replace('/\&lt;hr[\s\S]*\&gt;/Ui', '<hr />', $s);
