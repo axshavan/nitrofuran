@@ -19,7 +19,7 @@
                     <th>Комментарии</th>
                     <th>&nbsp;</th>
                 </tr>
-		        <? foreach($_acts as $act): $bOdd = !$bOdd; ?>
+		        <? $bOdd = false; foreach($_acts as $act): $bOdd = !$bOdd; ?>
                 <tr class="<?= $bOdd ? 'odd' : '' ?>">
                     <td><?= date('Y-m-d', $act['date_drinked']) ?></td>
                     <td><?= $_drink_types[$_drinks[$act['drink_id']]['type_id']]['name'] ?> / <?= h($_drinks[$act['drink_id']]['name']) ?> (<?= (int)$_drinks[$act['drink_id']]['strength'] ?>%)</td>
