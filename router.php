@@ -13,7 +13,9 @@
  * http://sam.zoy.org/wtfpl/COPYING for more details.
  */
 
-error_reporting(E_ERROR);
+// development environment
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 if($_SERVER['REMOTE_ADDR'] == '127.0.0.1' && isset($_SERVER['HTTP_X_REAL_IP']))
 {
@@ -109,7 +111,7 @@ for($i = 0; $i <= $max_i; $i++)
 		'template'       => $_fetch['t'.$i.'template'],
 		'access'         => $_fetch['t'.$i.'access'],
 		'name'           => $_fetch['t'.$i.'name'],
-		'name_requested' => $REQUEST_URI[$i - 1]
+		'name_requested' => isset($REQUEST_URI[$i - 1]) ? $REQUEST_URI[$i - 1] : ''
 	);
 }
 $i = $max_i;
@@ -121,7 +123,7 @@ $TREE_INFO['current'] = array(
 	'template'       => $_fetch['t'.$i.'template'],
 	'access'         => $_fetch['t'.$i.'access'],
 	'name'           => $_fetch['t'.$i.'name'],
-	'name_requested' => $REQUEST_URI[$i - 1]
+	'name_requested' => isset($REQUEST_URI[$i - 1]) ? $REQUEST_URI[$i - 1] : ''
 );
 
 global $AUTH;

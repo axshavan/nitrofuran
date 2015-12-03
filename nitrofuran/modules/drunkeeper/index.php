@@ -31,7 +31,7 @@ while($_r = $DB->Fetch($res))
 }
 
 $_acts   = array();
-$_stats  = array();
+$_stats  = ['allvolume' => 0, '40volume' => 0, '100volume' => 0, 'median' => 0, 'volume_d' => [], 'volume_dtype' => []];
 $res     = $DB->Query("select * from `".DRUNKEEPER_ACTS_TABLE."` order by `date_drinked` desc, `id` desc");
 $count   = 0;
 $_last3m = array();
@@ -46,14 +46,18 @@ while($_r = $DB->Fetch($res))
 	$_stats['40volume']   += $_r['volume'] / (40 / $_drinks[$_r['drink_id']]['strength']);
 	$_stats['100volume']  += $_r['volume'] / (95.6 / $_drinks[$_r['drink_id']]['strength']);
 	$_stats['median']     += $_r['volume'] * $_drinks[$_r['drink_id']]['strength'];
-	$_stats['volume_dtype'][$_drinks[$_r['drink_id']]['type_id']] += $_r['volume'];
-	$_stats['volume_d'][$_r['drink_id']] += $_r['volume'];
+	$_stats['volume_dtype'][$_drinks[$_r['drink_id']]['type_id']] = (isset($_stats['volume_dtype'][$_drinks[$_r['drink_id']]['type_id']]) ? $_stats['volume_dtype'][$_drinks[$_r['drink_id']]['type_id']] : 0) + $_r['volume'];
+	$_stats['volume_d'][$_r['drink_id']] = (isset($_stats['volume_d'][$_r['drink_id']]) ? $_stats['volume_d'][$_r['drink_id']] : 0) + $_r['volume'];
 	$n = (int)date('Ym', $_r['date_drinked']);
 	if($n > $n_cur)
 	{
-		$_last3m[$n]['allvolume'] += $_r['volume'];
-		$_last3m[$n]['40volume']      += $_r['volume'] / (40 / $_drinks[$_r['drink_id']]['strength']);
-		$_last3m[$n]['100volume']     += $_r['volume'] / (95.6 / $_drinks[$_r['drink_id']]['strength']);
+		$_last3m[$n]['allvolume']     = (isset($_last3m[$n]['allvolume']) ? $_last3m[$n]['allvolume'] : 0) + $_r['volume'];
+		$_last3m[$n]['40volume']      = (isset($_last3m[$n]['40volume'])  ? $_last3m[$n]['40volume']  : 0) + $_r['volume'] / (40 / $_drinks[$_r['drink_id']]['strength']);
+		$_last3m[$n]['100volume']     = (isset($_last3m[$n]['100volume']) ? $_last3m[$n]['100volume'] : 0) + $_r['volume'] / (95.6 / $_drinks[$_r['drink_id']]['strength']);
+		if(!isset($_last3m[$n]['volume_dtype'][$_drinks[$_r['drink_id']]['type_id']]))
+		{
+			$_last3m[$n]['volume_dtype'][$_drinks[$_r['drink_id']]['type_id']] = 0;
+		}
 		$_last3m[$n]['volume_dtype'][$_drinks[$_r['drink_id']]['type_id']] += $_r['volume'];
 	}
 	$count++;
