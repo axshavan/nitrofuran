@@ -264,5 +264,3 @@ function string_request_replace($param_name, $new_value, $request_string = '')
 	$request_string = $request_string[0].'?'.$s;
 	return $request_string;
 }
-
-?>

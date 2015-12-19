@@ -12,43 +12,76 @@
  * http://sam.zoy.org/wtfpl/COPYING for more details.
  */
 
-$bProcess = FALSE;
+$iProcess = 0;
+require_once(dirname(__FILE__).'/config.php');
 if(isset($_SERVER['PWD'])) {
+	define('DOCUMENT_ROOT', dirname(__FILE__).'/../../..');
+	require_once(dirname(__FILE__).'/../../config.php');
+	require_once(dirname(__FILE__).'/../../libfunc.php');
+	require_once(dirname(__FILE__).'/../../db.class.php');
+	$DB = new CDatabase();
+	$DB->Connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
 	set_time_limit(0);
 	$cmd = 'cd '.DOCUMENT_ROOT.'/tmp && $(which unzip) -u stamps.ods';
 	shell_exec($cmd);
-	$bProcess = TRUE;
+	$iProcess = 2;
+	$method = 'string';
 }
-if($_POST['import'])
+if(isset($_POST['import']) && $_POST['import'])
 {
 	set_time_limit(600);
 	move_uploaded_file($_FILES['file']['tmp_name'], DOCUMENT_ROOT.'/tmp/stamps');
 	$cmd = 'cd '.DOCUMENT_ROOT.'/tmp && $(which unzip) -u stamps';
 	shell_exec($cmd);
-	$bProcess = TRUE;
+	$iProcess = 1;
+	$method = 'regexp';
 }
-if($bProcess)
+if($iProcess)
 {
-	require_once(dirname(__FILE__).'/config.php');
 	if(!file_exists(DOCUMENT_ROOT.'/tmp/content.xml'))
 	{
 		clean_tmp_dir();
 		error500();
 	}
+	if($iProcess == 2)
+	{
+		echo "content.xml exists, xml loading with method '".$method."'...";
+	}
 	require_once(DOCUMENT_ROOT.'/nitrofuran/xml.class.php');
 	$xmlparser = new CXMLParser();
-	$xmlparser->load_from_file(DOCUMENT_ROOT.'/tmp/content.xml', 'regexp');
+	$xmlparser->load_from_file(DOCUMENT_ROOT.'/tmp/content.xml', $method);
+	if($iProcess == 2)
+	{
+		echo "done\ngetting stamps as array...";
+	}
 	$db = $xmlparser->get_as_array();
+	if($iProcess == 2)
+	{
+		echo "done\nworking with database...\n";
+	}
 	unset($xmlparser);
 	clean_tmp_dir();
-	$db       = $db[0]['content']; // office:document-content
-	$db       = $db[3]['content']; // office:body
-	$db       = $db[0]['content']; // office:spreadsheet
+	if(!isset($db[0]['content'])) {
+		error500();
+	}
+	$db = $db[0]['content']; // office:document-content
+	if(!isset($db[3]['content'])) {
+		error500();
+	}
+	$db = $db[3]['content']; // office:body
+	if(!isset($db[0]['content'])) {
+		error500();
+	}
+	$db = $db[0]['content']; // office:spreadsheet
 	$table_id = "";
 	$DB->Query("truncate table ".STAMPS_TABLE);
+	if($iProcess == 2)
+	{
+		echo "table ".STAMPS_TABLE." truncated\n";
+	}
 	foreach($db as $table) // table:table
 	{
-		$table_id = $table['properties']['table:name'];
+		$table_id = isset($table['properties']['table:name']) ? $table['properties']['table:name'] : '';
 		if($table['tag'] != 'table:table')
 		{
 			continue;
@@ -66,13 +99,13 @@ if($bProcess)
 				{
 					break;
 				}
-				$text = $cell['content'][0]['content']; // text:p
+				$text = isset($cell['content'][0]['content']) ? $cell['content'][0]['content'] : ''; // text:p
 				if($text)
 				{
 					$_data[$table_id][$row_id][] = $text;
 				}
 			}
-			if(sizeof($_data[$table_id][$row_id]))
+			if(isset($_data[$table_id][$row_id]) && sizeof($_data[$table_id][$row_id]))
 			{
 				if(sizeof($_data[$table_id][$row_id]) > 5)
 				{
@@ -108,8 +141,7 @@ if($bProcess)
 								'".(int)$slaked."',
 								'".addslashes($nominal)."',
 								'".(int)$book_id."'
-							)",
-							$cid
+							)"
 						)
 					)
 					{
@@ -122,12 +154,16 @@ if($bProcess)
 		}
 	}
 	unset($db);
-	redirect('/stamps');
+	if($iProcess == 1)
+	{
+		redirect('/stamps');
+	}
+	elseif($iProcess == 2) {
+		echo "job finished\n";
+	}
 }
 else
 {
 	$tplengine = new CTemplateEngine('stamps');
 	$tplengine->template('import.tpl');
 }
-
-?>

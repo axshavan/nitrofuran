@@ -138,12 +138,12 @@ class CXMLParser
 			$tagname = str_replace(':', '\:', $tagname);
 			// регулярное выражение для <tag props/>
 			preg_match('/^\<'.$tagname.'([^\>]*)\/\>/uU', $xml_string, $_m);
-			if(!$_m[0])
+			if(!isset($_m[0]) || !$_m[0])
 			{
 				// регулярное выражение для <tag props>content</tag>
 				preg_match('/^\<'.$tagname.'([^\>]*)\>([\s\S]*)\<\/'.$tagname.'\>/uU', $xml_string, $_m);
 			}
-			if(!$_m[0])
+			if(!isset($_m[0]) || !$_m[0])
 			{
 				return trim($xml_string);
 			}
