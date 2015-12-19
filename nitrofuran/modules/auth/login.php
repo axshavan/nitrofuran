@@ -32,7 +32,7 @@ if($_POST)
 	}
 }
 global $AUTH;
-if($AUTH->user_data['id'])
+if(isset($AUTH->user_data['id']) && $AUTH->user_data['id'])
 {
 	redirect('..');
 	die();

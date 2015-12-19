@@ -5,14 +5,14 @@
 	<title>Добро пожаловать</title>
 </head>
 <body>
-	<?= $error ?>
+	<?= isset($error) ? $error : '' ?>
 	<fieldset>
 		<legend>Форма авторизации</legend>
 		<form action="/login/" method="post">
 			<table>
 				<tr>
 					<td><label for="login">Логин</label></td>
-					<td><input type="text" name="login" id="login" value="<?= $login ?>"></td>
+					<td><input type="text" name="login" id="login" value="<?= isset($lodgin) ? $login : '' ?>"></td>
 				</tr>
 				<tr>
 					<td><label for="password">Пароль</label></td>
@@ -20,11 +20,11 @@
 				</tr>
 				<tr>
 					<td><label for="remember">Запомнить</label></td>
-					<td><input type="checkbox" name="remember" id="remember" value="1"<?= $remember ? ' checked' : ''?>></td>
+					<td><input type="checkbox" name="remember" id="remember" value="1"<?= isset($remember) && $remember ? ' checked' : ''?>></td>
 				</tr>
 				<tr>
 					<td><label for="bind2ip">Привязать к ip</label></td>
-					<td><input type="checkbox" name="bind2ip" id="bind2ip" value="1"<?= $bind2ip ? ' checked' : ''?>></td>
+					<td><input type="checkbox" name="bind2ip" id="bind2ip" value="1"<?= isset($bind2ip) && $bind2ip ? ' checked' : ''?>></td>
 				</tr>
 				<tr>
 					<td><input type="submit" value="Войти"></td>

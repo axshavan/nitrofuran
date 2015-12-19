@@ -110,7 +110,7 @@ class CAuth
 	{
 		global $DB;
 		// кукис прилетел?
-		if($_COOKIE[SESSION_COOKIE_NAME])
+		if(isset($_COOKIE[SESSION_COOKIE_NAME]) && $_COOKIE[SESSION_COOKIE_NAME])
 		{
 			if(strlen($_COOKIE[SESSION_COOKIE_NAME]) != 64)
 			{
