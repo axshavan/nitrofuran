@@ -13,19 +13,19 @@
 	<select name="country" id="country" onchange="document.getElementById('filter-form').submit()">
 		<option value="">(все)</option>
 		<? foreach($_countries as $v): ?>
-			<option value="<?= htmlspecialchars($v) ?>" <?= $_REQUEST['country'] == $v ? 'selected="selected"' : '' ?>><?= htmlspecialchars($v) ?></option>
+			<option value="<?= htmlspecialchars($v) ?>" <?= isset($_REQUEST['country']) && $_REQUEST['country'] == $v ? 'selected="selected"' : '' ?>><?= htmlspecialchars($v) ?></option>
 		<? endforeach; ?>
 	</select>
 	<select name="year" id="year" onchange="document.getElementById('filter-form').submit()">
 		<option value="">(все)</option>
 		<? foreach($_years as $v): ?>
-			<option value="<?= htmlspecialchars($v) ?>" <?= $_REQUEST['year'] == $v ? 'selected="selected"' : '' ?>><?= htmlspecialchars($v) ?></option>
+			<option value="<?= htmlspecialchars($v) ?>" <?= isset($_REQUEST['year']) && $_REQUEST['year'] == $v ? 'selected="selected"' : '' ?>><?= htmlspecialchars($v) ?></option>
 		<? endforeach; ?>
 	</select>
 	<select name="book_id" id="book_id" onchange="document.getElementById('filter-form').submit()">
 		<option value="">(все)</option>
 		<? foreach($_book_ids as $v): ?>
-			<option value="<?= htmlspecialchars($v) ?>" <?= $_REQUEST['book_id'] == $v ? 'selected="selected"' : '' ?>><?= $v ?> - <?= htmlspecialchars($_book_names[$v]) ?></option>
+			<option value="<?= htmlspecialchars($v) ?>" <?= isset($_REQUEST['book_id']) && $_REQUEST['book_id'] == $v ? 'selected="selected"' : '' ?>><?= $v ?> - <?= htmlspecialchars($_book_names[$v]) ?></option>
 		<? endforeach; ?>
 	</select>
 	<a href="/stamps">Сбросить фильтр</a>
@@ -43,7 +43,7 @@
 		<? foreach($_data as $row): ?>
 			<tr>
 				<? foreach($_headers as $h): ?>
-					<td><?= $h['boolean'] ? ($row[$h['code']] ? 'Да' : 'Нет' ) : htmlspecialchars($row[$h['code']]) ?></td>
+					<td><?= isset($h['boolean']) && $h['boolean'] ? ($row[$h['code']] ? 'Да' : 'Нет' ) : htmlspecialchars($row[$h['code']]) ?></td>
 				<? endforeach; ?>
 			</tr>
 		<? endforeach; ?>

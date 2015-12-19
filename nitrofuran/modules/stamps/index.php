@@ -55,23 +55,23 @@ require_once(DOCUMENT_ROOT.'/nitrofuran/crud.class.php');
 $crud = new CRUD();
 
 $_sort = array();
-if($_REQUEST['sort'])
+if(isset($_REQUEST['sort']) && $_REQUEST['sort'])
 {
 	$_sort[$_REQUEST['sort']] = $_REQUEST['dir'] == 'desc' ? 'desc' : 'asc';
 }
 $filter_string = "";
 $_filter       = array();
-if($_REQUEST['country'])
+if(isset($_REQUEST['country']) && $_REQUEST['country'])
 {
 	$filter_string .= 'country='.htmlspecialchars($_REQUEST['country']).'&';
 	$_filter['country'] .= $_REQUEST['country'];
 }
-if($_REQUEST['year'])
+if(isset($_REQUEST['year']) && $_REQUEST['year'])
 {
 	$filter_string .= 'year='.htmlspecialchars($_REQUEST['year']).'&';
 	$_filter['year'] .= $_REQUEST['year'];
 }
-if($_REQUEST['book_id'])
+if(isset($_REQUEST['book_id']) && $_REQUEST['book_id'])
 {
 	$filter_string .= 'book_id='.htmlspecialchars($_REQUEST['book_id']).'&';
 	$_filter['book_id'] .= $_REQUEST['book_id'];

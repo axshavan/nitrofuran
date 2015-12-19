@@ -45,7 +45,7 @@ class CRUD
 	public function read($table, $_filter = array(), $_sort = array(), $_params = array())
 	{
 		global $DB;
-		$query = "select ".($_params['get_count'] ? "count(*)" : "*")." from `".$DB->EscapeString($table)."` "
+		$query = "select ".(isset($_params['get_count']) && $_params['get_count'] ? "count(*)" : "*")." from `".$DB->EscapeString($table)."` "
 			.$this->strWhere($_filter)." "
 			.$this->strOrder($_sort)." "
 			.$this->strParams($_params);
