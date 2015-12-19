@@ -12,13 +12,24 @@
  * http://sam.zoy.org/wtfpl/COPYING for more details.
  */
 
+$bProcess = FALSE;
+if(isset($_SERVER['PWD'])) {
+	set_time_limit(0);
+	$cmd = 'cd '.DOCUMENT_ROOT.'/tmp && $(which unzip) -u stamps.ods';
+	shell_exec($cmd);
+	$bProcess = TRUE;
+}
 if($_POST['import'])
 {
 	set_time_limit(600);
-	require_once(dirname(__FILE__).'/config.php');
 	move_uploaded_file($_FILES['file']['tmp_name'], DOCUMENT_ROOT.'/tmp/stamps');
 	$cmd = 'cd '.DOCUMENT_ROOT.'/tmp && $(which unzip) -u stamps';
 	shell_exec($cmd);
+	$bProcess = TRUE;
+}
+if($bProcess)
+{
+	require_once(dirname(__FILE__).'/config.php');
 	if(!file_exists(DOCUMENT_ROOT.'/tmp/content.xml'))
 	{
 		clean_tmp_dir();
