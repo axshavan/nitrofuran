@@ -123,7 +123,7 @@ function h($s)
 function h2($s)
 {
 	$_tags = array('small', 'strong', 'em', 'b', 'i', 'sub', 'sup', 'blockquote', 'pre');
-	$_tags_cut = array('div', 'span', 'p');
+	$_tags_cut = array('div', 'span', 'p', 'noindex');
 	$s = h($s);
 	$s = preg_replace('/\&lt;br[\s\S]*\&gt;/Ui', '<br />', $s);
 	$s = preg_replace('/\&lt;hr[\s\S]*\&gt;/Ui', '<hr />', $s);
@@ -142,7 +142,7 @@ function h2($s)
 	}
 	$s = str_replace('&amp;quot;', '"', $s);
 	$s = str_replace('&amp;nbsp;', ' ', $s);
-	$entities = array('laquo', 'raquo', 'mdash', 'ndash', 'hellip');
+	$entities = array('laquo', 'raquo', 'mdash', 'ndash', 'hellip', 'lt', 'gt');
 	foreach($entities as $e)
 	{
 		$s = str_replace('&amp;'.$e, '&'.$e, $s);
